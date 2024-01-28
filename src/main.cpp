@@ -1,5 +1,5 @@
 #include "App.hpp"
-
+#include <iostream>
 #include "Core/Context.hpp"
 
 int main(int, char **) {
@@ -7,6 +7,7 @@ int main(int, char **) {
     App app;
 
     while (!context->GetExit()) {
+
         switch (app.GetCurrentState()) {
         case App::State::START:
             app.Start();

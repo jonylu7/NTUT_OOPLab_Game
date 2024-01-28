@@ -9,7 +9,7 @@ void App::Start() {
     LOG_TRACE("Start");
 
     m_Giraffe->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/giraffe.png"));
+        std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
     m_Giraffe->SetZIndex(5);
     m_Giraffe->Start();
 
@@ -19,7 +19,11 @@ void App::Start() {
     gf->Start();
     m_Giraffe->AppendChild(gf);
 
+    m_Capybara->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
+    m_Capybara->Start();
+
     m_CurrentState = State::UPDATE;
+
 }
 
 void App::Update() {
@@ -37,7 +41,7 @@ void App::Update() {
         LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
     }
     if (Util::Input::IsMouseMoving()) {
-        // LOG_DEBUG("Mouse moving! x:{}, y{}", cursorPos.x, cursorPos.y);
+        LOG_DEBUG("Mouse moving! x:{}, y{}", Util::Input::GetCursorPosition().x, Util::Input::GetCursorPosition().y);
     }
 
     if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE) ||
@@ -52,8 +56,22 @@ void App::Update() {
         LOG_DEBUG("B");
         Util::Input::SetCursorPosition({0.0F, 0.0F});
     }
+    if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)){
+        LOG_DEBUG("Left");
+    }
 
-    m_Giraffe->Update();
+    if(Util::Input::IsKeyPressed(Util::Keycode::UP)){
+        LOG_DEBUG("UP");
+    }
+    if(Util::Input::IsKeyPressed(Util::Keycode::RIGHT)){
+        LOG_DEBUG("RIght");
+    }
+    if(Util::Input::IsKeyPressed(Util::Keycode::DOWN)){
+        LOG_DEBUG("Down");
+    }
+
+    //m_Giraffe->Update();
+    m_Capybara->Update();
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)

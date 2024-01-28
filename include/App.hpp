@@ -4,6 +4,7 @@
 #include "pch.hpp" // IWYU pragma: export
 
 #include "Giraffe.hpp"
+#include "Capybara.hpp"
 #include "Triangle.hpp"
 
 class App {
@@ -24,7 +25,8 @@ private:
     State m_CurrentState = State::START;
 
     Triangle m_Triangle;
-    std::shared_ptr<Giraffe> m_Giraffe= std::make_shared<Giraffe>();
+    std::shared_ptr<Util::GameObject> m_Giraffe= std::make_shared<Giraffe>();
+    std::shared_ptr<Util::GameObject> m_Capybara=std::make_shared<Capybara>();
 };
 
 #endif

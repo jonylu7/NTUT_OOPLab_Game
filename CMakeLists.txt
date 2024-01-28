@@ -46,6 +46,7 @@ set(SRC_FILES
     ${SRC_DIR}/App.cpp
     ${SRC_DIR}/Triangle.cpp
     ${SRC_DIR}/Giraffe.cpp
+        ${SRC_DIR}/Capybara.cpp
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
@@ -78,6 +79,7 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Triangle.hpp
     ${INCLUDE_DIR}/Giraffe.hpp
     ${INCLUDE_DIR}/config.hpp
+        ${INCLUDE_DIR}/Capybara.hpp
 )
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(TEST_FILES
@@ -150,6 +152,7 @@ target_include_directories(AudioTest PRIVATE
 target_compile_options(AudioTest PRIVATE
     ${TARGET_COMPILE_OPTIONS}
 )
+
 
 include(GoogleTest)
 gtest_discover_tests(Tests)
