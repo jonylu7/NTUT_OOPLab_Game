@@ -47,6 +47,7 @@ set(SRC_FILES
     ${SRC_DIR}/Triangle.cpp
     ${SRC_DIR}/Giraffe.cpp
         ${SRC_DIR}/Capybara.cpp
+        ${SRC_DIR}/Barracks.cpp
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
@@ -80,6 +81,7 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Giraffe.hpp
     ${INCLUDE_DIR}/config.hpp
         ${INCLUDE_DIR}/Capybara.hpp
+        ${INCLUDE_DIR}/Barracks.hpp
 )
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(TEST_FILES

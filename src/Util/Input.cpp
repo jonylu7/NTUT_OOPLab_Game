@@ -17,9 +17,16 @@ bool Input::s_Scroll = false;
 bool Input::s_MouseMoving = false;
 bool Input::s_Exit = false;
 
+bool Input::s_LBUp=false;
+
+
 bool Input::IsKeyPressed(const Keycode &key) {
     const auto temp = static_cast<const int>(key);
     return s_KeyState[temp] != 0;
+}
+
+bool Input::IsLButtonUp() {
+    return s_LBUp;
 }
 
 bool Input::IsLButtonPressed() {
@@ -68,6 +75,10 @@ void Input::Update() {
         s_MBPressed = (s_Event.type == SDL_MOUSEBUTTONDOWN &&
                        s_Event.button.button == SDL_BUTTON_MIDDLE) ||
                       s_MBPressed;
+
+        s_LBUp=(s_Event.type==SDL_MOUSEBUTTONUP && s_Event.button.button == SDL_BUTTON_LEFT) || s_LBUp;
+
+
         s_Scroll = s_Event.type == SDL_MOUSEWHEEL || s_Scroll;
         if (s_Scroll) {
             s_ScrollDistance.x = static_cast<float>(s_Event.wheel.x);

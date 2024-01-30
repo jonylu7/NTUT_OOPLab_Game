@@ -80,6 +80,14 @@ public:
      * @return  true if the right mouse button is currently pressed, false
      * otherwise.
      */
+
+    static bool IsLButtonUp();
+    /**
+     * @brief Checks if the left mouse button is pressing currently.
+     * @return  true if the middle mouse button is still pressing, false
+     * otherwise.
+     */
+
     static bool IsRButtonPressed();
 
     /**
@@ -139,6 +147,8 @@ private:
     static bool s_Scroll;
     static bool s_MouseMoving;
     static bool s_Exit;
+
+    static bool s_LBUp;
 };
 
 } // namespace Util

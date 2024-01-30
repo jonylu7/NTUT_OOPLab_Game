@@ -5,6 +5,7 @@
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
 
+
 void App::Start() {
     LOG_TRACE("Start");
 
@@ -22,26 +23,38 @@ void App::Start() {
     m_Capybara->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
     m_Capybara->Start();
 
+    m_Barracks->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
+    m_Barracks->Start();
+
     m_CurrentState = State::UPDATE;
 
 }
-
+glm::vec2 ogLBlocation=glm::vec2(0,0);
+bool LBPressing=false;
 void App::Update() {
-    if (Util::Input::IsLButtonPressed()) {
-        LOG_DEBUG("Left button pressed");
-    }
-    if (Util::Input::IsRButtonPressed()) {
-        LOG_DEBUG("Right button pressed");
-    }
-    if (Util::Input::IsMButtonPressed()) {
-        LOG_DEBUG("Middle button pressed");
-    }
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
         LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
     }
-    if (Util::Input::IsMouseMoving()) {
-        LOG_DEBUG("Mouse moving! x:{}, y{}", Util::Input::GetCursorPosition().x, Util::Input::GetCursorPosition().y);
+    if(Util::Input::IsLButtonUp()&&LBPressing==true){
+        ogLBlocation=glm::vec2(0,0);
+        LBPressing=false;
+    }
+
+    if(Util::Input::IsLButtonPressed()){
+        glm::vec2 ogLBlocation=Util::Input::GetCursorPosition();
+        LBPressing=true;
+    }
+
+    if(Util::Input::IsMouseMoving() && LBPressing==true){
+        glm::vec2 nowLBLocation=Util::Input::GetCursorPosition();
+        LOG_DEBUG("drawned size x:{}, y{}", nowLBLocation.x-ogLBlocation.x,nowLBLocation.y-ogLBlocation.y);
+    }
+
+
+    if(Util::Input::IsRButtonPressed()){
+        LOG_DEBUG("RPressed");
+        m_Barracks->Update();
     }
 
     if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE) ||
@@ -71,7 +84,7 @@ void App::Update() {
     }
 
     //m_Giraffe->Update();
-    m_Capybara->Update();
+    m_Barracks->Update();
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)
