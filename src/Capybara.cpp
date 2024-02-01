@@ -10,7 +10,7 @@
 #include "Util/Input.hpp"
 #include "config.hpp"
 
-void Capybara::Update([[maybe_unused]] const Util::Transform &transform) {
+void Capybara::Update( const Util::Transform &transform) {
     static glm::vec2 dir = {1, 0.5};
 
     auto &pos = m_Transform.translation;
@@ -22,16 +22,11 @@ void Capybara::Update([[maybe_unused]] const Util::Transform &transform) {
         dir.x *= -1;
     }
 
-    auto delta = static_cast<float>(Util::Time::GetDeltaTime());
-
-    Util::Transform tras{Util::Input::GetCursorPosition()};
-
-    pos =tras.translation;
+    pos = transform.translation;
 
     m_Drawable->Draw(m_Transform, m_ZIndex);
-    for (auto &child : m_Children) {
-        child->Update(tras);
+    if (pos.x!=pos.y){
+        LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
     }
 
-    // LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
 }

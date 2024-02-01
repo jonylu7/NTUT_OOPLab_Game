@@ -11,8 +11,10 @@ class Capybara:public Util::GameObject{
 private:
 
 public:
-void Update(const Util::Transform &transform = Util::Transform()) override;
+void Update(const Util::Transform &transform) override;
 void Start()override{};
+Capybara(){};
+~Capybara(){};
 
 
 };

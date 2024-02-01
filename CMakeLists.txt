@@ -48,6 +48,8 @@ set(SRC_FILES
     ${SRC_DIR}/Giraffe.cpp
         ${SRC_DIR}/Capybara.cpp
         ${SRC_DIR}/Barracks.cpp
+        ${SRC_DIR}/button.cpp
+        ${SRC_DIR}/Rectangle.cpp
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
@@ -82,6 +84,7 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/config.hpp
         ${INCLUDE_DIR}/Capybara.hpp
         ${INCLUDE_DIR}/Barracks.hpp
+        ${INCLUDE_DIR}/button.hpp
 )
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(TEST_FILES

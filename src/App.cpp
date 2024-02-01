@@ -26,12 +26,19 @@ void App::Start() {
     m_Barracks->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
     m_Barracks->Start();
 
+
+    m_Barracks->AppendChild(gf);
+
     m_CurrentState = State::UPDATE;
 
 }
 glm::vec2 ogLBlocation=glm::vec2(0,0);
 bool LBPressing=false;
+Util::Transform lbLocation;
 void App::Update() {
+
+
+
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
         LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
@@ -44,6 +51,9 @@ void App::Update() {
     if(Util::Input::IsLButtonPressed()){
         glm::vec2 ogLBlocation=Util::Input::GetCursorPosition();
         LBPressing=true;
+        LOG_DEBUG("LButton");
+        lbLocation.translation=ogLBlocation;
+        LOG_DEBUG("location x:{}, y{}",lbLocation.translation.x,lbLocation.translation.y);
     }
 
     if(Util::Input::IsMouseMoving() && LBPressing==true){
@@ -54,7 +64,6 @@ void App::Update() {
 
     if(Util::Input::IsRButtonPressed()){
         LOG_DEBUG("RPressed");
-        m_Barracks->Update();
     }
 
     if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE) ||
@@ -83,8 +92,10 @@ void App::Update() {
         LOG_DEBUG("Down");
     }
 
-    //m_Giraffe->Update();
+
     m_Barracks->Update();
+    m_Giraffe->Update();
+    m_Capybara->Update(lbLocation);
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)
