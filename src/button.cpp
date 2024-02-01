@@ -4,3 +4,12 @@
 
 #include "button.hpp"
 
+bool button::Click() {
+
+
+}
+
+bool button::CheckCursorClick(glm::vec2 cursorLocation) {
+
+
+}

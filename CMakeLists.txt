@@ -85,6 +85,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Capybara.hpp
         ${INCLUDE_DIR}/Barracks.hpp
         ${INCLUDE_DIR}/button.hpp
+        ${INCLUDE_DIR}/Clickable.hpp
 )
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(TEST_FILES
