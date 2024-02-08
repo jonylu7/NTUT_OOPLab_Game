@@ -4,19 +4,21 @@
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
-
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl2.h"
+#include "imgui/imgui_impl_sdlrenderer2.h"
 
 void App::Start() {
     LOG_TRACE("Start");
 
     m_Giraffe->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
-    m_Giraffe->SetZIndex(5);
+    m_Giraffe->SetZIndex(10);
     m_Giraffe->Start();
 
     auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 500,
                                             "Giraffe");
-    gf->SetZIndex(m_Giraffe->GetZIndex() - 1);
+    gf->SetZIndex(m_Giraffe->GetZIndex() - 3);
     gf->Start();
     m_Giraffe->AppendChild(gf);
 
@@ -26,9 +28,11 @@ void App::Start() {
     m_Barracks->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
     m_Barracks->Start();
 
+    buttonTest->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Airfield.png"));
+    buttonTest->Start();
+
 
     m_Barracks->AppendChild(gf);
-
     m_CurrentState = State::UPDATE;
 
 }
@@ -54,6 +58,12 @@ void App::Update() {
         LOG_DEBUG("LButton");
         lbLocation.translation=ogLBlocation;
         LOG_DEBUG("location x:{}, y{}",lbLocation.translation.x,lbLocation.translation.y);
+
+        auto newCappy=std::make_shared<Capybara>();
+        newCappy->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
+        newCappy->SetZIndex(-1);
+        m_Capybara->AppendChild(newCappy);
+
     }
 
     if(Util::Input::IsMouseMoving() && LBPressing==true){
@@ -96,6 +106,8 @@ void App::Update() {
     m_Barracks->Update();
     m_Giraffe->Update();
     m_Capybara->Update(lbLocation);
+    m_Triangle.Update();
+    buttonTest->Update();
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)

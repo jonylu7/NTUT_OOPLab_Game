@@ -50,6 +50,13 @@ set(SRC_FILES
         ${SRC_DIR}/Barracks.cpp
         ${SRC_DIR}/button.cpp
         ${SRC_DIR}/Rectangle.cpp
+        ${SRC_DIR}/imgui/imgui.cpp
+        ${SRC_DIR}/imgui/imgui_demo.cpp
+        ${SRC_DIR}/imgui/imgui_draw.cpp
+        ${SRC_DIR}/imgui/imgui_impl_sdl2.cpp
+        ${SRC_DIR}/imgui/imgui_tables.cpp
+        ${SRC_DIR}/imgui/imgui_widgets.cpp
+        ${SRC_DIR}/imgui/imgui_impl_sdlrenderer2.cpp
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
@@ -85,7 +92,14 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Capybara.hpp
         ${INCLUDE_DIR}/Barracks.hpp
         ${INCLUDE_DIR}/button.hpp
-        ${INCLUDE_DIR}/Clickable.hpp
+        ${INCLUDE_DIR}/imgui/imconfig.h
+        ${INCLUDE_DIR}/imgui/imgui.h
+        ${INCLUDE_DIR}/imgui/imgui_impl_sdl2.h
+        ${INCLUDE_DIR}/imgui/imgui_internal.h
+        ${INCLUDE_DIR}/imgui/imstb_rectpack.h
+        ${INCLUDE_DIR}/imgui/imstb_textedit.h
+        ${INCLUDE_DIR}/imgui/imstb_truetype.h
+        ${INCLUDE_DIR}/imgui/imgui_impl_sdlrenderer2..h
 )
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(TEST_FILES
@@ -116,6 +130,9 @@ endif()
 target_compile_options(Sample PRIVATE
     ${TARGET_COMPILE_OPTIONS}
 )
+
+
+
 
 enable_testing()
 

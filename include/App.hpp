@@ -7,6 +7,7 @@
 #include "Capybara.hpp"
 #include "Triangle.hpp"
 #include "Barracks.hpp"
+#include "button.hpp"
 
 class App {
 public:
@@ -29,6 +30,7 @@ private:
     std::shared_ptr<Util::GameObject> m_Giraffe= std::make_shared<Giraffe>();
     std::shared_ptr<Util::GameObject> m_Capybara=std::make_shared<Capybara>();
     std::shared_ptr<Util::GameObject> m_Barracks=std::make_shared<Barracks>();
+    std::shared_ptr<Util::GameObject> buttonTest=std::make_shared<button>();
 };
 
 #endif
