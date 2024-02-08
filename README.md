@@ -1,51 +1,54 @@
-# Practical Tools for Simple Design
+# Purpose
+## No man is an island by John Jonne
+o man is an island,  
+Entire of itself.  
 
-## Getting Started
+Each is a piece of the continent,  
+A part of the main.  
 
-Required: Git, CMake, C/C++ compiler
+If a clod be washed away by the sea,  
+Europe is the less.  
 
-Optional: Ninja Build, clang
+As well as if a promontory were.  
+As well as if a manor of thine own  
+Or of thine friend's were.  
 
-### Command Line
+Each man's death diminishes me,  
+For I am involved in mankind.  
+Therefore, send not to know  
 
-```
-git clone https://ntut-open-source-club/practical-tools-for-simple-design.git
+For whom the bell tolls,  
+It tolls for thee.
 
-cmake -B build
-cmake --build build
-```
+## translation in Chinese by 李敖
 
-> If Ninja Build is install use `cmake -B build -G Ninja` to speed compile time
+有人能自全，
+沒有人是孤島，
 
-> For older versions of CMake(`<3.13`? verification needed) use
-> ```
-> mkdir build
-> cd build
-> cmake .
-> cmake --build .
-> ```
-> if the `-B` flag is unsupported
+每人都是大陸的一片，
+要為本土應卯
 
-> If using Neovim or other LSP supported editors, append `-DCMAKE_EXPORT_COMPILE_COMMANDS=ON` to the generation command for `clangd` to work
+一旦海水沖走，
+歐洲就要變小。
 
-### VSCode
+那便是一塊土地，
+那便是一方海角，
+那便是一座莊園，
+不論是你的、還是朋友的，
 
-TODO
+任何人的死亡，都是我的減少，
+作為人類的一員，我與生靈共老。
 
-### CLion
+喪鐘在為誰敲，我本茫然不曉，
+不為幽明永隔，它正為你哀悼。
 
-TODO
 
-### Visual Studio
+# Goal
 
-TODO
+# Methodology
 
-## Generate Doxygen Documents
-
-Required: Doxygen 1.9.6
-
-```
-doxygen docs/Doxyfile
-```
-
-Open the generated documents with your favorite browser at `docs/html/index.html`
+## Packages
+1. openGL
+2. PTSD game Engine
+3. SDL2
+4. Imgui
