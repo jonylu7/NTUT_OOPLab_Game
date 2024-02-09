@@ -4,9 +4,6 @@
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl2.h"
-#include "imgui/imgui_impl_sdlrenderer2.h"
 
 void App::Start() {
 
@@ -37,14 +34,11 @@ void App::Start() {
     m_CurrentState = State::UPDATE;
 
 
-
-
 }
 glm::vec2 ogLBlocation=glm::vec2(0,0);
 bool LBPressing=false;
 Util::Transform lbLocation;
 void App::Update() {
-
 
 
     if (Util::Input::IfScroll()) {
@@ -112,8 +106,6 @@ void App::Update() {
     m_Capybara->Update(lbLocation);
     m_Triangle.Update();
     buttonTest->Update();
-
-
 
 
 }

@@ -41,9 +41,8 @@ Context::Context() {
         LOG_ERROR("Failed to initialize SDL_mixer");
         LOG_ERROR(SDL_GetError());
     }
-    //SDL_CreateWindowAndRenderer(WINDOW_WIDTH,WINDOW_HEIGHT,SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN,&m_Window,&m_Renderer);
     m_Window =SDL_CreateWindow(TITLE, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH,WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-    //m_Renderer=SDL_CreateRenderer(m_Window,-1,0);
+
 
     if (m_Window == nullptr) {
         LOG_ERROR("Failed to create window");
@@ -77,6 +76,7 @@ Context::Context() {
     ImGui_ImplSDL2_InitForOpenGL(m_Window, m_GlContext);
     ImGui_ImplOpenGL3_Init();
 
+
 #ifndef __APPLE__
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -96,9 +96,11 @@ Context::Context() {
 std::shared_ptr<Context> Context::s_Instance(nullptr);
 
 Context::~Context() {
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
+
 
     SDL_DestroyWindow(m_Window);
     SDL_GL_DeleteContext(m_GlContext);
@@ -121,11 +123,14 @@ void Context::Update() {
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
     ImGui::ShowDemoWindow();
-    ImGui::Render();
 
+    ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        SDL_GL_SwapWindow(m_Window);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    SDL_GL_SwapWindow(m_Window);
+
+
 }
 std::shared_ptr<Context> Context::GetInstance() {
     if (s_Instance == nullptr) {
