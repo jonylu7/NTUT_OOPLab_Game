@@ -57,6 +57,7 @@ set(SRC_FILES
         ${SRC_DIR}/imgui/imgui_tables.cpp
         ${SRC_DIR}/imgui/imgui_widgets.cpp
         ${SRC_DIR}/imgui/imgui_impl_sdlrenderer2.cpp
+        ${SRC_DIR}/imgui/imgui_impl_opengl3.cpp
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
@@ -100,6 +101,8 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/imgui/imstb_textedit.h
         ${INCLUDE_DIR}/imgui/imstb_truetype.h
         ${INCLUDE_DIR}/imgui/imgui_impl_sdlrenderer2..h
+        ${INCLUDE_DIR}/imgui/imgui_impl_opengl3.h
+        ${INCLUDE_DIR}/imgui/imgui_impl_opengl3_loader.h
 )
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(TEST_FILES

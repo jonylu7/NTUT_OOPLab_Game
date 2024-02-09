@@ -9,6 +9,7 @@
 #include "imgui/imgui_impl_sdlrenderer2.h"
 
 void App::Start() {
+
     LOG_TRACE("Start");
 
     m_Giraffe->SetDrawable(
@@ -34,6 +35,9 @@ void App::Start() {
 
     m_Barracks->AppendChild(gf);
     m_CurrentState = State::UPDATE;
+
+
+
 
 }
 glm::vec2 ogLBlocation=glm::vec2(0,0);
@@ -108,6 +112,10 @@ void App::Update() {
     m_Capybara->Update(lbLocation);
     m_Triangle.Update();
     buttonTest->Update();
+
+
+
+
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)
