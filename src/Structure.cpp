@@ -25,7 +25,7 @@ void Structure::Update([[maybe_unused]] const Util::Transform &transform) {
         dir.x *= -1;
     }
 
-    auto delta = static_cast<float>(Util::Time::GetDeltaTime());
+    m_Transform.scale={0.5,0.5};
     switch (m_CurrentState) {
 case(updateMode::Invisidable):
         break;

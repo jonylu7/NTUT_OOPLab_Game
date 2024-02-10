@@ -46,7 +46,6 @@ case(updateMode::Uncreated):
         m_Drawable->Draw(m_Transform, m_ZIndex);
         break;
     case(updateMode::Attacking):
-        pos = ObjectLocation;
         m_Drawable->Draw(m_Transform, m_ZIndex);
         break;
     }
