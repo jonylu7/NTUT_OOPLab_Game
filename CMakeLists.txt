@@ -50,6 +50,8 @@ set(SRC_FILES
         ${SRC_DIR}/Barracks.cpp
         ${SRC_DIR}/Structure.cpp
         ${SRC_DIR}/Rectangle.cpp
+        ${SRC_DIR}/Infantry.cpp
+
         ${SRC_DIR}/imgui/imgui.cpp
         ${SRC_DIR}/imgui/imgui_demo.cpp
         ${SRC_DIR}/imgui/imgui_draw.cpp
@@ -93,6 +95,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Capybara.hpp
         ${INCLUDE_DIR}/Barracks.hpp
         ${INCLUDE_DIR}/Structure.hpp
+        ${INCLUDE_DIR}/Infantry.hpp
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h
         ${INCLUDE_DIR}/imgui/imgui_impl_sdl2.h

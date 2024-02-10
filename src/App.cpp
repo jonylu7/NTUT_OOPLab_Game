@@ -29,7 +29,7 @@ void App::Start() {
     m_Barracks->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
     m_Barracks->Start();
 
-    m_Structure->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Airfield.png"));
+    m_Structure->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
     m_Structure->Start();
 
 
@@ -123,29 +123,39 @@ void App::Update() {
     ImGui::Text("$ {}",1000);
     ImGui::Text("02:31");
     ImGui::Text("{} L",50);
-    if (ImGui::Button("Power Plants")){
-        currentModde=buttonMode::A;
-    }else if (ImGui::Button("Barracks")){
-        currentModde=buttonMode::B;
-        m_Structure->SetCurrentUpdateMode(Structure::updateMode::Moveable);
-        }else if (ImGui::Button("Naval Yard")){
-        currentModde=buttonMode::C;
-        }else if (ImGui::Button("Ore Refinery")){
-        currentModde=buttonMode::C;
-        }else if (ImGui::Button("War Factory")){
-        currentModde=buttonMode::C;
-        }else if (ImGui::Button("Radar Dome")){
-        currentModde=buttonMode::C;
-        }else if (ImGui::Button("Service Depot")){
-        currentModde=buttonMode::C;
-        }else if (ImGui::Button("Advance Power")){
-        currentModde=buttonMode::C;
-        }else if (ImGui::Button("HeliPad")){
-        currentModde=buttonMode::C;
-        }else if (ImGui::Button("Tech Center")){
-        currentModde=buttonMode::C;
+    if(ImGui::BeginTabBar("",ImGuiTabBarFlags_None) ){
+        if (ImGui::BeginTabItem("Buildings")) {
+        if (ImGui::Button("Power Plants")) {
+            currentModde = buttonMode::A;
+        } else if (ImGui::Button("Barracks")) {
+            currentModde = buttonMode::B;
+            m_Structure->SetCurrentUpdateMode(Structure::updateMode::Moveable);
+        } else if (ImGui::Button("Naval Yard")) {
+            currentModde = buttonMode::C;
+        } else if (ImGui::Button("Ore Refinery")) {
+            currentModde = buttonMode::C;
+        } else if (ImGui::Button("War Factory")) {
+            currentModde = buttonMode::C;
+        } else if (ImGui::Button("Radar Dome")) {
+            currentModde = buttonMode::C;
+        } else if (ImGui::Button("Service Depot")) {
+            currentModde = buttonMode::C;
+        } else if (ImGui::Button("Advance Power")) {
+            currentModde = buttonMode::C;
+        } else if (ImGui::Button("HeliPad")) {
+            currentModde = buttonMode::C;
+        } else if (ImGui::Button("Tech Center")) {
+            currentModde = buttonMode::C;
         }
+        ImGui::EndTabItem();
+        } else if (ImGui::BeginTabItem("Barracks")) {
+        if (ImGui::Button("Normal Troops")) {
 
+        }
+        ImGui::EndTabItem();
+        }
+        ImGui::EndTabBar();
+    }
     ImGui::End();
 
     //and above
