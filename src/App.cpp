@@ -120,6 +120,9 @@ void App::Update() {
     ImGui::NewFrame();
     // put the stuff in here
     ImGui::Begin("Structure Selection Menu");
+    ImGui::Text("$ {}",1000);
+    ImGui::Text("02:31");
+    ImGui::Text("{} L",50);
     if (ImGui::Button("Power Plants")){
         currentModde=buttonMode::A;
     }else if (ImGui::Button("Barracks")){

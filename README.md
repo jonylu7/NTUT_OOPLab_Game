@@ -1,6 +1,13 @@
 # Purpose
-## No man is an island by John Jonne
-o man is an island,  
+
+For too long, video games have been expressed, in Hideo Kojima's words, in the format of "sticks," as players confront and compete with each other online. The cultural meaning behind this ever-growing industry is something we, as players, must ask ourselves: Is this the meaning we are trying to express after all?
+
+Now we live in a world that values separation, isolation, and disconnection more than togetherness and connection.
+
+Inspired by the video game "Death Stranding," which was released in 2019, the vision for this project aims to revolutionize the RTS genre, transforming its competitive nature into collaboration.
+
+## No man is an island by John Donne
+No man is an island,  
 Entire of itself.  
 
 Each is a piece of the continent,  
@@ -20,7 +27,7 @@ Therefore, send not to know
 For whom the bell tolls,  
 It tolls for thee.
 
-## translation in Chinese by 李敖
+## translated to Chinese by 李敖
 
 有人能自全，
 沒有人是孤島，
@@ -47,8 +54,8 @@ It tolls for thee.
 
 # Methodology
 
-## Packages
-1. openGL
+## Packages used
+1. openGL version 4.1
 2. PTSD game Engine
 3. SDL2
 4. Imgui
