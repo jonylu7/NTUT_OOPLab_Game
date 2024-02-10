@@ -43,7 +43,7 @@
 //   1.11 (2017-03-03) fix HOME on last line, dragging off single-line textfield
 //   1.10 (2016-10-25) supress warnings about casting away const with -Wcast-qual
 //   1.9  (2016-08-27) customizable move-by-word
-//   1.8  (2016-04-02) better keyboard handling when mouse button is down
+//   1.8  (2016-04-02) better keyboard handling when mouse Structure is down
 //   1.7  (2015-09-13) change y range handling in case baseline is non-0
 //   1.6  (2015-04-15) allow STB_TEXTEDIT_memmove
 //   1.5  (2014-09-10) add support for secondary keys for OS X

@@ -991,7 +991,7 @@ void ImGui::TableUpdateLayout(ImGuiTable* table)
     // - In principle we'd like to use the equivalent of IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem),
     //   but because our item is partially submitted at this point we use ItemHoverable() and a workaround (temporarily
     //   clear ActiveId, which is equivalent to the change provided by _AllowWhenBLockedByActiveItem).
-    // - This allows columns to be marked as hovered when e.g. clicking a button inside the column, or using drag and drop.
+    // - This allows columns to be marked as hovered when e.g. clicking a Structure inside the column, or using drag and drop.
     ImGuiTableInstanceData* table_instance = TableGetInstanceData(table, table->InstanceCurrent);
     table_instance->HoveredRowLast = table_instance->HoveredRowNext;
     table_instance->HoveredRowNext = -1;
@@ -3150,7 +3150,7 @@ void ImGui::TableHeader(const char* label)
 
 // Unlike TableHeadersRow() it is not expected that you can reimplement or customize this with custom widgets.
 // FIXME: highlight without ImGuiTableFlags_HighlightHoveredColumn
-// FIXME: No hit-testing/button on the angled header.
+// FIXME: No hit-testing/Structure on the angled header.
 void ImGui::TableAngledHeadersRow()
 {
     ImGuiContext& g = *GImGui;

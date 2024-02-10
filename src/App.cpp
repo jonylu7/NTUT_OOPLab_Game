@@ -4,6 +4,9 @@
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl2.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 void App::Start() {
 
@@ -26,8 +29,8 @@ void App::Start() {
     m_Barracks->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
     m_Barracks->Start();
 
-    buttonTest->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Airfield.png"));
-    buttonTest->Start();
+    m_Structure->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Airfield.png"));
+    m_Structure->Start();
 
 
     m_Barracks->AppendChild(gf);
@@ -38,6 +41,8 @@ void App::Start() {
 glm::vec2 ogLBlocation=glm::vec2(0,0);
 bool LBPressing=false;
 Util::Transform lbLocation;
+enum buttonMode{A,B,C};
+buttonMode currentModde;
 void App::Update() {
 
 
@@ -61,7 +66,11 @@ void App::Update() {
         newCappy->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
         newCappy->SetZIndex(-1);
         m_Capybara->AppendChild(newCappy);
-
+    if(m_Structure->GetCurrentUpdateMode()==Structure::updateMode::Moveable){
+        m_Structure->SetObjectLocation(ogLBlocation);
+        m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
+        LOG_DEBUG("Fixed");
+    }
     }
 
     if(Util::Input::IsMouseMoving() && LBPressing==true){
@@ -100,13 +109,46 @@ void App::Update() {
         LOG_DEBUG("Down");
     }
 
-
     m_Barracks->Update();
     m_Giraffe->Update();
     m_Capybara->Update(lbLocation);
     m_Triangle.Update();
-    buttonTest->Update();
+    m_Structure->Update();
 
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+    ImGui::NewFrame();
+    // put the stuff in here
+    ImGui::Begin("Structure Selection Menu");
+    if (ImGui::Button("Power Plants")){
+        currentModde=buttonMode::A;
+    }else if (ImGui::Button("Barracks")){
+        currentModde=buttonMode::B;
+        m_Structure->SetCurrentUpdateMode(Structure::updateMode::Moveable);
+        }else if (ImGui::Button("Naval Yard")){
+        currentModde=buttonMode::C;
+        }else if (ImGui::Button("Ore Refinery")){
+        currentModde=buttonMode::C;
+        }else if (ImGui::Button("War Factory")){
+        currentModde=buttonMode::C;
+        }else if (ImGui::Button("Radar Dome")){
+        currentModde=buttonMode::C;
+        }else if (ImGui::Button("Service Depot")){
+        currentModde=buttonMode::C;
+        }else if (ImGui::Button("Advance Power")){
+        currentModde=buttonMode::C;
+        }else if (ImGui::Button("HeliPad")){
+        currentModde=buttonMode::C;
+        }else if (ImGui::Button("Tech Center")){
+        currentModde=buttonMode::C;
+        }
+
+    ImGui::End();
+
+    //and above
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    //ImGui::ShowDemoWindow();
 
 }
 

@@ -2,18 +2,18 @@
 // Created by 盧威任 on 1/30/24.
 //
 
-#include "button.hpp"
+#include "Structure.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
+#include "Util/Input.hpp"
 #include "Util/Text.hpp"
 #include "Util/Time.hpp"
 #include "Util/Transform.hpp"
-#include "Util/Input.hpp"
 #include "config.hpp"
 
 
 
-void button::Update([[maybe_unused]] const Util::Transform &transform) {
+void Structure::Update([[maybe_unused]] const Util::Transform &transform) {
     static glm::vec2 dir = {1, 0.5};
 
     auto &pos = m_Transform.translation;
@@ -26,12 +26,23 @@ void button::Update([[maybe_unused]] const Util::Transform &transform) {
     }
 
     auto delta = static_cast<float>(Util::Time::GetDeltaTime());
+    switch (m_CurrentState) {
+case(updateMode::Invisidable):
+        break;
+    case(updateMode::Moveable):
+        pos=Util::Input::GetCursorPosition();
+        m_Drawable->Draw(m_Transform, m_ZIndex);
+        break;
+    case(updateMode::Fixed):
+        pos = ObjectLocation;
+        m_Drawable->Draw(m_Transform, m_ZIndex);
+        break;
+    }
 
-    pos = ObjectLocation;
 
-
-    m_Drawable->Draw(m_Transform, m_ZIndex);
 
     // LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
 }
+
+
 

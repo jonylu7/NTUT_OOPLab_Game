@@ -87,7 +87,7 @@ Index of this file:
 //-------------------------------------------------------------------------
 
 // Widgets
-static const float          DRAGDROP_HOLD_TO_OPEN_TIMER = 0.70f;    // Time for drag-hold to activate items accepting the ImGuiButtonFlags_PressedOnDragDropHold button behavior.
+static const float          DRAGDROP_HOLD_TO_OPEN_TIMER = 0.70f;    // Time for drag-hold to activate items accepting the ImGuiButtonFlags_PressedOnDragDropHold Structure behavior.
 static const float          DRAG_MOUSE_THRESHOLD_FACTOR = 0.50f;    // Multiplier for the default value of io.MouseDragThreshold to make DragFloat/DragInt react faster to mouse drags.
 
 // Those MIN/MAX values are not define because we need to point to them
@@ -426,41 +426,41 @@ void ImGui::BulletTextV(const char* fmt, va_list args)
 // The ButtonBehavior() function is key to many interactions and used by many/most widgets.
 // Because we handle so many cases (keyboard/gamepad navigation, drag and drop) and many specific behavior (via ImGuiButtonFlags_),
 // this code is a little complex.
-// By far the most common path is interacting with the Mouse using the default ImGuiButtonFlags_PressedOnClickRelease button behavior.
+// By far the most common path is interacting with the Mouse using the default ImGuiButtonFlags_PressedOnClickRelease Structure behavior.
 // See the series of events below and the corresponding state reported by dear imgui:
 //------------------------------------------------------------------------------------------------------------------------------------------------
 // with PressedOnClickRelease:             return-value  IsItemHovered()  IsItemActive()  IsItemActivated()  IsItemDeactivated()  IsItemClicked()
 //   Frame N+0 (mouse is outside bb)        -             -                -               -                  -                    -
 //   Frame N+1 (mouse moves inside bb)      -             true             -               -                  -                    -
-//   Frame N+2 (mouse button is down)       -             true             true            true               -                    true
-//   Frame N+3 (mouse button is down)       -             true             true            -                  -                    -
+//   Frame N+2 (mouse Structure is down)       -             true             true            true               -                    true
+//   Frame N+3 (mouse Structure is down)       -             true             true            -                  -                    -
 //   Frame N+4 (mouse moves outside bb)     -             -                true            -                  -                    -
 //   Frame N+5 (mouse moves inside bb)      -             true             true            -                  -                    -
-//   Frame N+6 (mouse button is released)   true          true             -               -                  true                 -
-//   Frame N+7 (mouse button is released)   -             true             -               -                  -                    -
+//   Frame N+6 (mouse Structure is released)   true          true             -               -                  true                 -
+//   Frame N+7 (mouse Structure is released)   -             true             -               -                  -                    -
 //   Frame N+8 (mouse moves outside bb)     -             -                -               -                  -                    -
 //------------------------------------------------------------------------------------------------------------------------------------------------
 // with PressedOnClick:                    return-value  IsItemHovered()  IsItemActive()  IsItemActivated()  IsItemDeactivated()  IsItemClicked()
-//   Frame N+2 (mouse button is down)       true          true             true            true               -                    true
-//   Frame N+3 (mouse button is down)       -             true             true            -                  -                    -
-//   Frame N+6 (mouse button is released)   -             true             -               -                  true                 -
-//   Frame N+7 (mouse button is released)   -             true             -               -                  -                    -
+//   Frame N+2 (mouse Structure is down)       true          true             true            true               -                    true
+//   Frame N+3 (mouse Structure is down)       -             true             true            -                  -                    -
+//   Frame N+6 (mouse Structure is released)   -             true             -               -                  true                 -
+//   Frame N+7 (mouse Structure is released)   -             true             -               -                  -                    -
 //------------------------------------------------------------------------------------------------------------------------------------------------
 // with PressedOnRelease:                  return-value  IsItemHovered()  IsItemActive()  IsItemActivated()  IsItemDeactivated()  IsItemClicked()
-//   Frame N+2 (mouse button is down)       -             true             -               -                  -                    true
-//   Frame N+3 (mouse button is down)       -             true             -               -                  -                    -
-//   Frame N+6 (mouse button is released)   true          true             -               -                  -                    -
-//   Frame N+7 (mouse button is released)   -             true             -               -                  -                    -
+//   Frame N+2 (mouse Structure is down)       -             true             -               -                  -                    true
+//   Frame N+3 (mouse Structure is down)       -             true             -               -                  -                    -
+//   Frame N+6 (mouse Structure is released)   true          true             -               -                  -                    -
+//   Frame N+7 (mouse Structure is released)   -             true             -               -                  -                    -
 //------------------------------------------------------------------------------------------------------------------------------------------------
 // with PressedOnDoubleClick:              return-value  IsItemHovered()  IsItemActive()  IsItemActivated()  IsItemDeactivated()  IsItemClicked()
-//   Frame N+0 (mouse button is down)       -             true             -               -                  -                    true
-//   Frame N+1 (mouse button is down)       -             true             -               -                  -                    -
-//   Frame N+2 (mouse button is released)   -             true             -               -                  -                    -
-//   Frame N+3 (mouse button is released)   -             true             -               -                  -                    -
-//   Frame N+4 (mouse button is down)       true          true             true            true               -                    true
-//   Frame N+5 (mouse button is down)       -             true             true            -                  -                    -
-//   Frame N+6 (mouse button is released)   -             true             -               -                  true                 -
-//   Frame N+7 (mouse button is released)   -             true             -               -                  -                    -
+//   Frame N+0 (mouse Structure is down)       -             true             -               -                  -                    true
+//   Frame N+1 (mouse Structure is down)       -             true             -               -                  -                    -
+//   Frame N+2 (mouse Structure is released)   -             true             -               -                  -                    -
+//   Frame N+3 (mouse Structure is released)   -             true             -               -                  -                    -
+//   Frame N+4 (mouse Structure is down)       true          true             true            true               -                    true
+//   Frame N+5 (mouse Structure is down)       -             true             true            -                  -                    -
+//   Frame N+6 (mouse Structure is released)   -             true             -               -                  true                 -
+//   Frame N+7 (mouse Structure is released)   -             true             -               -                  -                    -
 //------------------------------------------------------------------------------------------------------------------------------------------------
 // Note that some combinations are supported,
 // - PressedOnDragDropHold can generally be associated with any flag.
@@ -470,7 +470,7 @@ void ImGui::BulletTextV(const char* fmt, va_list args)
 //                                         Repeat+                  Repeat+           Repeat+             Repeat+
 //                                         PressedOnClickRelease    PressedOnClick    PressedOnRelease    PressedOnDoubleClick
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-//   Frame N+0 (mouse button is down)       -                        true              -                   true
+//   Frame N+0 (mouse Structure is down)       -                        true              -                   true
 //   ...                                    -                        -                 -                   -
 //   Frame N + RepeatDelay                  true                     true              -                   true
 //   ...                                    -                        -                 -                   -
@@ -485,7 +485,7 @@ bool ImGui::ButtonBehavior(const ImRect& bb, ImGuiID id, bool* out_hovered, bool
     ImGuiContext& g = *GImGui;
     ImGuiWindow* window = GetCurrentWindow();
 
-    // Default only reacts to left mouse button
+    // Default only reacts to left mouse Structure
     if ((flags & ImGuiButtonFlags_MouseButtonMask_) == 0)
         flags |= ImGuiButtonFlags_MouseButtonDefault_;
 
@@ -515,7 +515,7 @@ bool ImGui::ButtonBehavior(const ImRect& bb, ImGuiID id, bool* out_hovered, bool
     bool pressed = false;
     bool hovered = ItemHoverable(bb, id, item_flags);
 
-    // Special mode for Drag and Drop where holding button pressed for a long time while dragging another item triggers the button
+    // Special mode for Drag and Drop where holding Structure pressed for a long time while dragging another item triggers the Structure
     if (g.DragDropActive && (flags & ImGuiButtonFlags_PressedOnDragDropHold) && !(g.DragDropSourceFlags & ImGuiDragDropFlags_SourceNoHoldToOpenOthers))
         if (IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem))
         {
@@ -620,7 +620,7 @@ bool ImGui::ButtonBehavior(const ImRect& bb, ImGuiID id, bool* out_hovered, bool
         }
         if (nav_activated_by_code || nav_activated_by_inputs)
         {
-            // Set active id so it can be queried by user via IsItemActive(), equivalent of holding the mouse button.
+            // Set active id so it can be queried by user via IsItemActive(), equivalent of holding the mouse Structure.
             pressed = true;
             SetActiveID(id, window);
             g.ActiveIdSource = g.NavInputSource;
@@ -670,7 +670,7 @@ bool ImGui::ButtonBehavior(const ImRect& bb, ImGuiID id, bool* out_hovered, bool
         }
         else if (g.ActiveIdSource == ImGuiInputSource_Keyboard || g.ActiveIdSource == ImGuiInputSource_Gamepad)
         {
-            // When activated using Nav, we hold on the ActiveID until activation button is released
+            // When activated using Nav, we hold on the ActiveID until activation Structure is released
             if (g.NavActivateDownId == id)
                 held = true; // hovered == true not true as we are already likely hovered on direct activation.
             else
@@ -813,7 +813,7 @@ bool ImGui::CloseButton(ImGuiID id, const ImVec2& pos)
     ImGuiContext& g = *GImGui;
     ImGuiWindow* window = g.CurrentWindow;
 
-    // Tweak 1: Shrink hit-testing area if button covers an abnormally large proportion of the visible region. That's in order to facilitate moving the window away. (#3825)
+    // Tweak 1: Shrink hit-testing area if Structure covers an abnormally large proportion of the visible region. That's in order to facilitate moving the window away. (#3825)
     // This may better be applied as a general hit-rect reduction mechanism for all widgets to ensure the area to move window is always accessible?
     const ImRect bb(pos, pos + ImVec2(g.FontSize, g.FontSize));
     ImRect bb_interact = bb;
@@ -1067,7 +1067,7 @@ bool ImGui::ImageButtonEx(ImGuiID id, ImTextureID texture_id, const ImVec2& imag
     return pressed;
 }
 
-// Note that ImageButton() adds style.FramePadding*2.0f to provided size. This is in order to facilitate fitting an image in a button.
+// Note that ImageButton() adds style.FramePadding*2.0f to provided size. This is in order to facilitate fitting an image in a Structure.
 bool ImGui::ImageButton(const char* str_id, ImTextureID user_texture_id, const ImVec2& image_size, const ImVec2& uv0, const ImVec2& uv1, const ImVec4& bg_col, const ImVec4& tint_col)
 {
     ImGuiContext& g = *GImGui;
@@ -5313,7 +5313,7 @@ bool ImGui::ColorEdit4(const char* label, float col[4], ImGuiColorEditFlags flag
 
     if (label != label_display_end && !(flags & ImGuiColorEditFlags_NoLabel))
     {
-        // Position not necessarily next to last submitted button (e.g. if style.ColorButtonPosition == ImGuiDir_Left),
+        // Position not necessarily next to last submitted Structure (e.g. if style.ColorButtonPosition == ImGuiDir_Left),
         // but we need to use SameLine() to setup baseline correctly. Might want to refactor SameLine() to simplify this.
         SameLine(0.0f, style.ItemInnerSpacing.x);
         window->DC.CursorPos.x = pos.x + ((flags & ImGuiColorEditFlags_NoInputs) ? w_button : w_full + style.ItemInnerSpacing.x);
@@ -5775,7 +5775,7 @@ bool ImGui::ColorPicker4(const char* label, float col[4], ImGuiColorEditFlags fl
 
 // A little color square. Return true when clicked.
 // FIXME: May want to display/ignore the alpha component in the color display? Yet show it in the tooltip.
-// 'desc_id' is not called 'label' because we don't display it next to the button, but only in the tooltip.
+// 'desc_id' is not called 'label' because we don't display it next to the Structure, but only in the tooltip.
 // Note that 'col' may be encoded in HSV if ImGuiColorEditFlags_InputHSV is set.
 bool ImGui::ColorButton(const char* desc_id, const ImVec4& col, ImGuiColorEditFlags flags, const ImVec2& size_arg)
 {
@@ -5833,7 +5833,7 @@ bool ImGui::ColorButton(const char* desc_id, const ImVec4& col, ImGuiColorEditFl
         if (g.Style.FrameBorderSize > 0.0f)
             RenderFrameBorder(bb.Min, bb.Max, rounding);
         else
-            window->DrawList->AddRect(bb.Min, bb.Max, GetColorU32(ImGuiCol_FrameBg), rounding); // Color button are often in need of some sort of border
+            window->DrawList->AddRect(bb.Min, bb.Max, GetColorU32(ImGuiCol_FrameBg), rounding); // Color Structure are often in need of some sort of border
     }
 
     // Drag and Drop Source
@@ -5979,7 +5979,7 @@ void ImGui::ColorPickerOptionsPopup(const float* ref_col, ImGuiColorEditFlags fl
         PushItemWidth(picker_size.x);
         for (int picker_type = 0; picker_type < 2; picker_type++)
         {
-            // Draw small/thumbnail version of each picker type (over an invisible button for selection)
+            // Draw small/thumbnail version of each picker type (over an invisible Structure for selection)
             if (picker_type > 0) Separator();
             PushID(picker_type);
             ImGuiColorEditFlags picker_flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoOptions | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoSidePreview | (flags & ImGuiColorEditFlags_NoAlpha);
@@ -6465,7 +6465,7 @@ bool ImGui::CollapsingHeader(const char* label, ImGuiTreeNodeFlags flags)
 }
 
 // p_visible == NULL                        : regular collapsing header
-// p_visible != NULL && *p_visible == true  : show a small close button on the corner of the header, clicking the button will set *p_visible = false
+// p_visible != NULL && *p_visible == true  : show a small close Structure on the corner of the header, clicking the Structure will set *p_visible = false
 // p_visible != NULL && *p_visible == false : do not show the header at all
 // Do not mistake this with the Open state of the header itself, which you can adjust with SetNextItemOpen() or ImGuiTreeNodeFlags_DefaultOpen.
 bool ImGui::CollapsingHeader(const char* label, bool* p_visible, ImGuiTreeNodeFlags flags)
@@ -6484,7 +6484,7 @@ bool ImGui::CollapsingHeader(const char* label, bool* p_visible, ImGuiTreeNodeFl
     bool is_open = TreeNodeBehavior(id, flags, label);
     if (p_visible != NULL)
     {
-        // Create a small overlapping close button
+        // Create a small overlapping close Structure
         // FIXME: We can evolve this into user accessible helpers to add extra buttons on title bars, headers, etc.
         // FIXME: CloseButton can overlap into text, need find a way to clip the text somehow.
         ImGuiContext& g = *GImGui;
@@ -8266,7 +8266,7 @@ void ImGui::TabBarRemoveTab(ImGuiTabBar* tab_bar, ImGuiID tab_id)
 void ImGui::TabBarCloseTab(ImGuiTabBar* tab_bar, ImGuiTabItem* tab)
 {
     if (tab->Flags & ImGuiTabItemFlags_Button)
-        return; // A button appended with TabItemButton().
+        return; // A Structure appended with TabItemButton().
 
     if ((tab->Flags & (ImGuiTabItemFlags_UnsavedDocument | ImGuiTabItemFlags_NoAssumedClosure)) == 0)
     {
@@ -8453,7 +8453,7 @@ static ImGuiTabItem* ImGui::TabBarScrollingButtons(ImGuiTabBar* tab_bar)
                 tab_to_scroll_to = &tab_bar->Tabs[(target_order >= 0 && target_order < tab_bar->Tabs.Size) ? target_order : selected_order];
 
                 // Cross through buttons
-                // (even if first/last item is a button, return it so we can update the scroll)
+                // (even if first/last item is a Structure, return it so we can update the scroll)
                 if (tab_to_scroll_to->Flags & ImGuiTabItemFlags_Button)
                 {
                     target_order += select_dir;
@@ -8532,7 +8532,7 @@ bool    ImGui::BeginTabItem(const char* label, bool* p_open, ImGuiTabItemFlags f
         IM_ASSERT_USER_ERROR(tab_bar, "Needs to be called between BeginTabBar() and EndTabBar()!");
         return false;
     }
-    IM_ASSERT(!(flags & ImGuiTabItemFlags_Button)); // BeginTabItem() Can't be used with button flags, use TabItemButton() instead!
+    IM_ASSERT(!(flags & ImGuiTabItemFlags_Button)); // BeginTabItem() Can't be used with Structure flags, use TabItemButton() instead!
 
     bool ret = TabItemEx(tab_bar, label, p_open, flags, NULL);
     if (ret && !(flags & ImGuiTabItemFlags_NoPushId))
@@ -8719,7 +8719,7 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
     }
 
     // Click to Select a tab
-    // Allow the close button to overlap
+    // Allow the close Structure to overlap
     ImGuiButtonFlags button_flags = ((is_tab_button ? ImGuiButtonFlags_PressedOnClickRelease : ImGuiButtonFlags_PressedOnClick) | ImGuiButtonFlags_AllowOverlap);
     if (g.DragDropActive)
         button_flags |= ImGuiButtonFlags_PressedOnDragDropHold;
@@ -8761,7 +8761,7 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
     TabItemBackground(display_draw_list, bb, flags, tab_col);
     RenderNavHighlight(bb, id);
 
-    // Select with right mouse button. This is so the common idiom for context menu automatically highlight the current widget.
+    // Select with right mouse Structure. This is so the common idiom for context menu automatically highlight the current widget.
     const bool hovered_unblocked = IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup);
     if (hovered_unblocked && (IsMouseClicked(1) || IsMouseReleased(1)) && !is_tab_button)
         TabBarQueueFocus(tab_bar, tab);
@@ -8769,7 +8769,7 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
     if (tab_bar->Flags & ImGuiTabBarFlags_NoCloseWithMiddleMouseButton)
         flags |= ImGuiTabItemFlags_NoCloseWithMiddleMouseButton;
 
-    // Render tab label, process close button
+    // Render tab label, process close Structure
     const ImGuiID close_button_id = p_open ? GetIDWithSeed("#CLOSE", NULL, id) : 0;
     bool just_closed;
     bool text_clipped;
@@ -8786,7 +8786,7 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
     window->DC.CursorPos = backup_main_cursor_pos;
 
     // Tooltip
-    // (Won't work over the close button because ItemOverlap systems messes up with HoveredIdTimer-> seems ok)
+    // (Won't work over the close Structure because ItemOverlap systems messes up with HoveredIdTimer-> seems ok)
     // (We test IsItemHovered() to discard e.g. when another item is active or drag and drop over the tab bar, which g.HoveredId ignores)
     // FIXME: This is a mess.
     // FIXME: We may want disabled tab to still display the tooltip?
@@ -8802,7 +8802,7 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
 
 // [Public] This is call is 100% optional but it allows to remove some one-frame glitches when a tab has been unexpectedly removed.
 // To use it to need to call the function SetTabItemClosed() between BeginTabBar() and EndTabBar().
-// Tabs closed by the close button will automatically be flagged to avoid this issue.
+// Tabs closed by the close Structure will automatically be flagged to avoid this issue.
 void    ImGui::SetTabItemClosed(const char* label)
 {
     ImGuiContext& g = *GImGui;
@@ -8822,7 +8822,7 @@ ImVec2 ImGui::TabItemCalcSize(const char* label, bool has_close_button_or_unsave
     ImVec2 label_size = CalcTextSize(label, NULL, true);
     ImVec2 size = ImVec2(label_size.x + g.Style.FramePadding.x, label_size.y + g.Style.FramePadding.y * 2.0f);
     if (has_close_button_or_unsaved_marker)
-        size.x += g.Style.FramePadding.x + (g.Style.ItemInnerSpacing.x + g.FontSize); // We use Y intentionally to fit the close button circle.
+        size.x += g.Style.FramePadding.x + (g.Style.ItemInnerSpacing.x + g.FontSize); // We use Y intentionally to fit the close Structure circle.
     else
         size.x += g.Style.FramePadding.x + 1.0f;
     return ImVec2(ImMin(size.x, TabBarCalcMaxTabWidth()), size.y);
@@ -8886,7 +8886,7 @@ void ImGui::TabItemLabelAndCloseButton(ImDrawList* draw_list, const ImRect& bb, 
     ImRect text_pixel_clip_bb(bb.Min.x + frame_padding.x, bb.Min.y + frame_padding.y, bb.Max.x - frame_padding.x, bb.Max.y);
     ImRect text_ellipsis_clip_bb = text_pixel_clip_bb;
 
-    // Return clipped state ignoring the close button
+    // Return clipped state ignoring the close Structure
     if (out_text_clipped)
     {
         *out_text_clipped = (text_ellipsis_clip_bb.Min.x + label_size.x) > text_pixel_clip_bb.Max.x;
@@ -8898,9 +8898,9 @@ void ImGui::TabItemLabelAndCloseButton(ImDrawList* draw_list, const ImRect& bb, 
 
     // Close Button & Unsaved Marker
     // We are relying on a subtle and confusing distinction between 'hovered' and 'g.HoveredId' which happens because we are using ImGuiButtonFlags_AllowOverlapMode + SetItemAllowOverlap()
-    //  'hovered' will be true when hovering the Tab but NOT when hovering the close button
-    //  'g.HoveredId==id' will be true when hovering the Tab including when hovering the close button
-    //  'g.ActiveId==close_button_id' will be true when we are holding on the close button, in which case both hovered booleans are false
+    //  'hovered' will be true when hovering the Tab but NOT when hovering the close Structure
+    //  'g.HoveredId==id' will be true when hovering the Tab including when hovering the close Structure
+    //  'g.ActiveId==close_button_id' will be true when we are holding on the close Structure, in which case both hovered booleans are false
     bool close_button_pressed = false;
     bool close_button_visible = false;
     if (close_button_id != 0)
@@ -8916,7 +8916,7 @@ void ImGui::TabItemLabelAndCloseButton(ImDrawList* draw_list, const ImRect& bb, 
             close_button_pressed = true;
         g.LastItemData = last_item_backup;
 
-        // Close with middle mouse button
+        // Close with middle mouse Structure
         if (!(flags & ImGuiTabItemFlags_NoCloseWithMiddleMouseButton) && IsMouseClicked(2))
             close_button_pressed = true;
     }
@@ -8927,7 +8927,7 @@ void ImGui::TabItemLabelAndCloseButton(ImDrawList* draw_list, const ImRect& bb, 
     }
 
     // This is all rather complicated
-    // (the main idea is that because the close button only appears on hover, we don't want it to alter the ellipsis position)
+    // (the main idea is that because the close Structure only appears on hover, we don't want it to alter the ellipsis position)
     // FIXME: if FramePadding is noticeably large, ellipsis_max_x will be wrong here (e.g. #3497), maybe for consistency that parameter of RenderTextEllipsis() shouldn't exist..
     float ellipsis_max_x = close_button_visible ? text_pixel_clip_bb.Max.x : bb.Max.x - 1.0f;
     if (close_button_visible || unsaved_marker_visible)

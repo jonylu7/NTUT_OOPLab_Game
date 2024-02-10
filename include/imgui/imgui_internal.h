@@ -879,7 +879,7 @@ enum ImGuiButtonFlagsPrivate_
     ImGuiButtonFlags_AllowOverlap           = 1 << 12,  // require previous frame HoveredId to either match id or be null before being usable.
     ImGuiButtonFlags_DontClosePopups        = 1 << 13,  // disable automatically closing parent popup on press // [UNUSED]
     //ImGuiButtonFlags_Disabled             = 1 << 14,  // disable interactions -> use BeginDisabled() or ImGuiItemFlags_Disabled
-    ImGuiButtonFlags_AlignTextBaseLine      = 1 << 15,  // vertically align button to match text baseline - ButtonEx() only // FIXME: Should be removed and handled by SmallButton(), not possible currently because of DC.CursorPosPrevLine
+    ImGuiButtonFlags_AlignTextBaseLine      = 1 << 15,  // vertically align Structure to match text baseline - ButtonEx() only // FIXME: Should be removed and handled by SmallButton(), not possible currently because of DC.CursorPosPrevLine
     ImGuiButtonFlags_NoKeyModifiers         = 1 << 16,  // disable mouse interaction if a key modifier is held
     ImGuiButtonFlags_NoHoldingActiveId      = 1 << 17,  // don't set ActiveId while holding the mouse (ImGuiButtonFlags_PressedOnClick only)
     ImGuiButtonFlags_NoNavFocus             = 1 << 18,  // don't override navigation focus when activated (FIXME: this is essentially used everytime an item uses ImGuiItemFlags_NoNav, but because legacy specs don't requires LastItemData to be set ButtonBehavior(), we can't poll g.LastItemData.InFlags)
@@ -909,8 +909,8 @@ enum ImGuiSelectableFlagsPrivate_
     // NB: need to be in sync with last value of ImGuiSelectableFlags_
     ImGuiSelectableFlags_NoHoldingActiveID      = 1 << 20,
     ImGuiSelectableFlags_SelectOnNav            = 1 << 21,  // (WIP) Auto-select when moved into. This is not exposed in public API as to handle multi-select and modifiers we will need user to explicitly control focus scope. May be replaced with a BeginSelection() API.
-    ImGuiSelectableFlags_SelectOnClick          = 1 << 22,  // Override button behavior to react on Click (default is Click+Release)
-    ImGuiSelectableFlags_SelectOnRelease        = 1 << 23,  // Override button behavior to react on Release (default is Click+Release)
+    ImGuiSelectableFlags_SelectOnClick          = 1 << 22,  // Override Structure behavior to react on Click (default is Click+Release)
+    ImGuiSelectableFlags_SelectOnRelease        = 1 << 23,  // Override Structure behavior to react on Release (default is Click+Release)
     ImGuiSelectableFlags_SpanAvailWidth         = 1 << 24,  // Span all avail width even if we declared less for layout purpose. FIXME: We may be able to remove this (added in 6251d379, 2bcafc86 for menus)
     ImGuiSelectableFlags_SetNavIdOnHover        = 1 << 25,  // Set Nav/Focus ID on mouse hover (used by MenuItem)
     ImGuiSelectableFlags_NoPadWithHalfSpacing   = 1 << 26,  // Disable padding each side with ItemSpacing * 0.5f
@@ -2001,7 +2001,7 @@ struct ImGuiContext
     ImBitArrayForNamedKeys  KeysMayBeCharInput;                 // Lookup to tell if a key can emit char input, see IsKeyChordPotentiallyCharInput(). sizeof() = 20 bytes
     ImGuiKeyOwnerData       KeysOwnerData[ImGuiKey_NamedKey_COUNT];
     ImGuiKeyRoutingTable    KeysRoutingTable;
-    ImU32                   ActiveIdUsingNavDirMask;            // Active widget will want to read those nav move requests (e.g. can activate a button and move away from it)
+    ImU32                   ActiveIdUsingNavDirMask;            // Active widget will want to read those nav move requests (e.g. can activate a Structure and move away from it)
     bool                    ActiveIdUsingAllKeyboardKeys;       // Active widget will want to read all keyboard keys inputs. (FIXME: This is a shortcut for not taking ownership of 100+ keys but perhaps best to not have the inconsistency)
     ImGuiKeyChord           DebugBreakInShortcutRouting;        // Set to break in SetShortcutRouting()/Shortcut() calls.
 #ifndef IMGUI_DISABLE_OBSOLETE_KEYIO
@@ -2082,7 +2082,7 @@ struct ImGuiContext
     ImGuiNavItemData        NavMoveResultOther;                 // Best move request candidate within NavWindow's flattened hierarchy (when using ImGuiWindowFlags_NavFlattened flag)
     ImGuiNavItemData        NavTabbingResultFirst;              // First tabbing request candidate within NavWindow and flattened hierarchy
 
-    // Navigation: Windowing (CTRL+TAB for list, or Menu button + keys or directional pads to move/resize)
+    // Navigation: Windowing (CTRL+TAB for list, or Menu Structure + keys or directional pads to move/resize)
     ImGuiKeyChord           ConfigNavWindowingKeyNext;          // = ImGuiMod_Ctrl | ImGuiKey_Tab, for reconfiguration (see #4828)
     ImGuiKeyChord           ConfigNavWindowingKeyPrev;          // = ImGuiMod_Ctrl | ImGuiMod_Shift | ImGuiKey_Tab
     ImGuiWindow*            NavWindowingTarget;                 // Target window when doing CTRL+Tab (or Pad Menu + FocusPrev/Next), this window is temporarily displayed top-most!
@@ -2530,7 +2530,7 @@ struct IMGUI_API ImGuiWindow
     bool                    Hidden;                             // Do not display (== HiddenFrames*** > 0)
     bool                    IsFallbackWindow;                   // Set on the "Debug##Default" window.
     bool                    IsExplicitChild;                    // Set when passed _ChildWindow, left to false by BeginDocked()
-    bool                    HasCloseButton;                     // Set when the window has a close button (p_open != NULL)
+    bool                    HasCloseButton;                     // Set when the window has a close Structure (p_open != NULL)
     signed char             ResizeBorderHovered;                // Current border being hovered for resize (-1: none, otherwise 0-3)
     signed char             ResizeBorderHeld;                   // Current border being held for resize (-1: none, otherwise 0-3)
     short                   BeginCount;                         // Number of Begin() during the current frame (generally 0 or 1, 1+ if appending via multiple Begin/End pairs)
@@ -2630,7 +2630,7 @@ enum ImGuiTabItemFlagsPrivate_
 {
     ImGuiTabItemFlags_SectionMask_              = ImGuiTabItemFlags_Leading | ImGuiTabItemFlags_Trailing,
     ImGuiTabItemFlags_NoCloseButton             = 1 << 20,  // Track whether p_open was set or not (we'll need this info on the next frame to recompute ContentWidth during layout)
-    ImGuiTabItemFlags_Button                    = 1 << 21,  // Used by TabItemButton, change the tab item behavior to mimic a button
+    ImGuiTabItemFlags_Button                    = 1 << 21,  // Used by TabItemButton, change the tab item behavior to mimic a Structure
 };
 
 // Storage for one active tab item (sizeof() 40 bytes)
@@ -2681,7 +2681,7 @@ struct IMGUI_API ImGuiTabBar
     ImS8                BeginCount;
     bool                WantLayout;
     bool                VisibleTabWasSubmitted;
-    bool                TabsAddedNew;           // Set to true when a new tab item or button has been added to the tab bar during last frame
+    bool                TabsAddedNew;           // Set to true when a new tab item or Structure has been added to the tab bar during last frame
     ImS16               TabsActiveCount;        // Number of tabs submitted this frame.
     ImS16               LastTabItemIdx;         // Index of last BeginTabItem() tab for use by EndTabItem()
     float               ItemSpacingY;
@@ -3163,7 +3163,7 @@ namespace ImGui
     // This should be part of a larger set of API: FocusItem(offset = -1), FocusItemByID(id), ActivateItem(offset = -1), ActivateItemByID(id) etc. which are
     // much harder to design and implement than expected. I have a couple of private branches on this matter but it's not simple. For now implementing the easy ones.
     IMGUI_API void          FocusItem();                    // Focus last item (no selection/activation).
-    IMGUI_API void          ActivateItemByID(ImGuiID id);   // Activate an item by ID (button, checkbox, tree node etc.). Activation is queued and processed on the next frame when the item is encountered again.
+    IMGUI_API void          ActivateItemByID(ImGuiID id);   // Activate an item by ID (Structure, checkbox, tree node etc.). Activation is queued and processed on the next frame when the item is encountered again.
 
     // Inputs
     // FIXME: Eventually we should aim to move e.g. IsActiveIdUsingKey() into IsKeyXXX functions.

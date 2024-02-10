@@ -3,12 +3,11 @@
 
 #include "pch.hpp" // IWYU pragma: export
 
-#include "Giraffe.hpp"
-#include "Capybara.hpp"
-#include "Triangle.hpp"
 #include "Barracks.hpp"
-#include "button.hpp"
-
+#include "Capybara.hpp"
+#include "Giraffe.hpp"
+#include "Structure.hpp"
+#include "Triangle.hpp"
 class App {
 public:
     enum class State {
@@ -30,7 +29,7 @@ private:
     std::shared_ptr<Util::GameObject> m_Giraffe= std::make_shared<Giraffe>();
     std::shared_ptr<Util::GameObject> m_Capybara=std::make_shared<Capybara>();
     std::shared_ptr<Util::GameObject> m_Barracks=std::make_shared<Barracks>();
-    std::shared_ptr<Util::GameObject> buttonTest=std::make_shared<button>();
+    std::shared_ptr<Structure> m_Structure=std::make_shared<Structure>();
 };
 
 #endif

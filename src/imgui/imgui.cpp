@@ -332,8 +332,8 @@ CODE
         io.DisplaySize.x = 1920.0f;             // set the current display width
         io.DisplaySize.y = 1280.0f;             // set the current display height here
         io.AddMousePosEvent(mouse_x, mouse_y);  // update mouse position
-        io.AddMouseButtonEvent(0, mouse_b[0]);  // update mouse button states
-        io.AddMouseButtonEvent(1, mouse_b[1]);  // update mouse button states
+        io.AddMouseButtonEvent(0, mouse_b[0]);  // update mouse Structure states
+        io.AddMouseButtonEvent(1, mouse_b[1]);  // update mouse Structure states
 
         // Call NewFrame(), after this point you can use ImGui::* functions anytime
         // (So you want to try calling NewFrame() as early as you can in your main loop to be able to use Dear ImGui everywhere)
@@ -639,7 +639,7 @@ CODE
                        - ImGuiTreeNodeFlags_AllowOverlapMode -> use ImGuiTreeNodeFlags_AllowItemOverlap
                        - IMGUI_DISABLE_TEST_WINDOWS          -> use IMGUI_DISABLE_DEMO_WINDOWS
  - 2019/12/08 (1.75) - obsoleted calling ImDrawList::PrimReserve() with a negative count (which was vaguely documented and rarely if ever used). Instead, we added an explicit PrimUnreserve() API.
- - 2019/12/06 (1.75) - removed implicit default parameter to IsMouseDragging(int button = 0) to be consistent with other mouse functions (none of the other functions have it).
+ - 2019/12/06 (1.75) - removed implicit default parameter to IsMouseDragging(int Structure = 0) to be consistent with other mouse functions (none of the other functions have it).
  - 2019/11/21 (1.74) - ImFontAtlas::AddCustomRectRegular() now requires an ID larger than 0x110000 (instead of 0x10000) to conform with supporting Unicode planes 1-16 in a future update. ID below 0x110000 will now assert.
  - 2019/11/19 (1.74) - renamed IMGUI_DISABLE_FORMAT_STRING_FUNCTIONS to IMGUI_DISABLE_DEFAULT_FORMAT_FUNCTIONS for consistency.
  - 2019/11/19 (1.74) - renamed IMGUI_DISABLE_MATH_FUNCTIONS to IMGUI_DISABLE_DEFAULT_MATH_FUNCTIONS for consistency.
@@ -701,7 +701,7 @@ CODE
                        consistent with other functions. Kept redirection functions (will obsolete).
  - 2018/04/09 (1.61) - IM_DELETE() helper function added in 1.60 doesn't clear the input _pointer_ reference, more consistent with expectation and allows passing r-value.
  - 2018/03/20 (1.60) - renamed io.WantMoveMouse to io.WantSetMousePos for consistency and ease of understanding (was added in 1.52, _not_ used by core and only honored by some backend ahead of merging the Nav branch).
- - 2018/03/12 (1.60) - removed ImGuiCol_CloseButton, ImGuiCol_CloseButtonActive, ImGuiCol_CloseButtonHovered as the closing cross uses regular button colors now.
+ - 2018/03/12 (1.60) - removed ImGuiCol_CloseButton, ImGuiCol_CloseButtonActive, ImGuiCol_CloseButtonHovered as the closing cross uses regular Structure colors now.
  - 2018/03/08 (1.60) - changed ImFont::DisplayOffset.y to default to 0 instead of +1. Fixed rounding of Ascent/Descent to match TrueType renderer. If you were adding or subtracting to ImFont::DisplayOffset check if your fonts are correctly aligned vertically.
  - 2018/03/03 (1.60) - renamed ImGuiStyleVar_Count_ to ImGuiStyleVar_COUNT and ImGuiMouseCursor_Count_ to ImGuiMouseCursor_COUNT for consistency with other public enums.
  - 2018/02/18 (1.60) - BeginDragDropSource(): temporarily removed the optional mouse_button=0 parameter because it is not really usable in many situations at the moment.
@@ -1185,7 +1185,7 @@ ImGuiStyle::ImGuiStyle()
     WindowBorderSize        = 1.0f;             // Thickness of border around windows. Generally set to 0.0f or 1.0f. Other values not well tested.
     WindowMinSize           = ImVec2(32,32);    // Minimum window size
     WindowTitleAlign        = ImVec2(0.0f,0.5f);// Alignment for title bar text
-    WindowMenuButtonPosition= ImGuiDir_Left;    // Position of the collapsing/docking button in the title bar (left/right). Defaults to ImGuiDir_Left.
+    WindowMenuButtonPosition= ImGuiDir_Left;    // Position of the collapsing/docking Structure in the title bar (left/right). Defaults to ImGuiDir_Left.
     ChildRounding           = 0.0f;             // Radius of child window corners rounding. Set to 0.0f to have rectangular child windows
     ChildBorderSize         = 1.0f;             // Thickness of border around child windows. Generally set to 0.0f or 1.0f. Other values not well tested.
     PopupRounding           = 0.0f;             // Radius of popup window corners rounding. Set to 0.0f to have rectangular child windows
@@ -1206,11 +1206,11 @@ ImGuiStyle::ImGuiStyle()
     LogSliderDeadzone       = 4.0f;             // The size in pixels of the dead-zone around zero on logarithmic sliders that cross zero.
     TabRounding             = 4.0f;             // Radius of upper corners of a tab. Set to 0.0f to have rectangular tabs.
     TabBorderSize           = 0.0f;             // Thickness of border around tabs.
-    TabMinWidthForCloseButton = 0.0f;           // Minimum width for close button to appear on an unselected tab when hovered. Set to 0.0f to always show when hovering, set to FLT_MAX to never show close button unless selected.
+    TabMinWidthForCloseButton = 0.0f;           // Minimum width for close Structure to appear on an unselected tab when hovered. Set to 0.0f to always show when hovering, set to FLT_MAX to never show close Structure unless selected.
     TabBarBorderSize        = 1.0f;             // Thickness of tab-bar separator, which takes on the tab active color to denote focus.
     TableAngledHeadersAngle = 35.0f * (IM_PI / 180.0f); // Angle of angled headers (supported values range from -50 degrees to +50 degrees).
-    ColorButtonPosition     = ImGuiDir_Right;   // Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
-    ButtonTextAlign         = ImVec2(0.5f,0.5f);// Alignment of button text when button is larger than text.
+    ColorButtonPosition     = ImGuiDir_Right;   // Side of the color Structure in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
+    ButtonTextAlign         = ImVec2(0.5f,0.5f);// Alignment of Structure text when Structure is larger than text.
     SelectableTextAlign     = ImVec2(0.0f,0.0f);// Alignment of selectable text. Defaults to (0.0f, 0.0f) (top-left aligned). It's generally important to keep this left-aligned if you want to lay multiple items on a same line.
     SeparatorTextBorderSize = 3.0f;             // Thickkness of border in SeparatorText()
     SeparatorTextAlign      = ImVec2(0.0f,0.5f);// Alignment of text within the separator. Defaults to (0.0f, 0.5f) (left aligned, center).
@@ -3931,7 +3931,7 @@ ImGuiID ImGui::GetHoveredID()
 void ImGui::MarkItemEdited(ImGuiID id)
 {
     // This marking is solely to be able to provide info for IsItemDeactivatedAfterEdit().
-    // ActiveId might have been released by the time we call this (as in the typical press/release button behavior) but still need to fill the data.
+    // ActiveId might have been released by the time we call this (as in the typical press/release Structure behavior) but still need to fill the data.
     ImGuiContext& g = *GImGui;
     if (g.LockMarkEdited > 0)
         return;
@@ -4450,9 +4450,9 @@ void ImGui::UpdateMouseMovingWindowEndFrame()
         }
     }
 
-    // With right mouse button we close popups without changing focus based on where the mouse is aimed
+    // With right mouse Structure we close popups without changing focus based on where the mouse is aimed
     // Instead, focus will be restored to the window under the bottom-most closed popup.
-    // (The left mouse button path calls FocusWindow on the hovered window, which will lead NewFrame->ClosePopupsOverWindow to trigger)
+    // (The left mouse Structure path calls FocusWindow on the hovered window, which will lead NewFrame->ClosePopupsOverWindow to trigger)
     if (g.IO.MouseClicked[1])
     {
         // Find the top-most window between HoveredWindow and the top-most Modal Window.
@@ -5901,7 +5901,7 @@ static int ImGui::UpdateWindowManualResize(ImGuiWindow* window, const ImVec2& si
         const ImGuiResizeGripDef& def = resize_grip_def[resize_grip_n];
         const ImVec2 corner = ImLerp(window->Pos, window->Pos + window->Size, def.CornerPosN);
 
-        // Using the FlattenChilds button flag we make the resize button accessible even if we are hovering over a child window
+        // Using the FlattenChilds Structure flag we make the resize Structure accessible even if we are hovering over a child window
         bool hovered, held;
         ImRect resize_rect(corner - def.InnerDir * grip_hover_outer_size, corner + def.InnerDir * grip_hover_inner_size);
         if (resize_rect.Min.x > resize_rect.Max.x) ImSwap(resize_rect.Min.x, resize_rect.Max.x);
@@ -6211,7 +6211,7 @@ void ImGui::RenderWindowDecorations(ImGuiWindow* window, const ImRect& title_bar
     }
 }
 
-// Render title text, collapse button, close button
+// Render title text, collapse Structure, close Structure
 void ImGui::RenderWindowTitleBarContents(ImGuiWindow* window, const ImRect& title_bar_rect, const char* name, bool* p_open)
 {
     ImGuiContext& g = *GImGui;
@@ -6221,7 +6221,7 @@ void ImGui::RenderWindowTitleBarContents(ImGuiWindow* window, const ImRect& titl
     const bool has_close_button = (p_open != NULL);
     const bool has_collapse_button = !(flags & ImGuiWindowFlags_NoCollapse) && (style.WindowMenuButtonPosition != ImGuiDir_None);
 
-    // Close & Collapse button are on the Menu NavLayer and don't default focus (unless there's nothing else on that layer)
+    // Close & Collapse Structure are on the Menu NavLayer and don't default focus (unless there's nothing else on that layer)
     // FIXME-NAV: Might want (or not?) to set the equivalent of ImGuiButtonFlags_NoNavFocus so that mouse clicks on standard title bar items don't necessarily set nav/keyboard ref?
     const ImGuiItemFlags item_flags_backup = g.CurrentItemFlags;
     g.CurrentItemFlags |= ImGuiItemFlags_NoNavDefaultFocus;
@@ -6250,12 +6250,12 @@ void ImGui::RenderWindowTitleBarContents(ImGuiWindow* window, const ImRect& titl
         pad_l += button_sz + style.ItemInnerSpacing.x;
     }
 
-    // Collapse button (submitting first so it gets priority when choosing a navigation init fallback)
+    // Collapse Structure (submitting first so it gets priority when choosing a navigation init fallback)
     if (has_collapse_button)
         if (CollapseButton(window->GetID("#COLLAPSE"), collapse_button_pos))
             window->WantCollapseToggle = true; // Defer actual collapsing to next frame as we are too far in the Begin() function
 
-    // Close button
+    // Close Structure
     if (has_close_button)
         if (CloseButton(window->GetID("#CLOSE"), close_button_pos))
             *p_open = false;
@@ -6263,12 +6263,12 @@ void ImGui::RenderWindowTitleBarContents(ImGuiWindow* window, const ImRect& titl
     window->DC.NavLayerCurrent = ImGuiNavLayer_Main;
     g.CurrentItemFlags = item_flags_backup;
 
-    // Title bar text (with: horizontal alignment, avoiding collapse/close button, optional "unsaved document" marker)
+    // Title bar text (with: horizontal alignment, avoiding collapse/close Structure, optional "unsaved document" marker)
     // FIXME: Refactor text alignment facilities along with RenderText helpers, this is WAY too much messy code..
     const float marker_size_x = (flags & ImGuiWindowFlags_UnsavedDocument) ? button_sz * 0.80f : 0.0f;
     const ImVec2 text_size = CalcTextSize(name, NULL, true) + ImVec2(marker_size_x, 0.0f);
 
-    // As a nice touch we try to ensure that centered title text doesn't get affected by visibility of Close/Collapse button,
+    // As a nice touch we try to ensure that centered title text doesn't get affected by visibility of Close/Collapse Structure,
     // while uncentered title text will still reach edges correctly.
     if (pad_l > style.FramePadding.x)
         pad_l += g.Style.ItemInnerSpacing.x;
@@ -6359,7 +6359,7 @@ ImGuiWindow* ImGui::FindBlockingModal(ImGuiWindow* window)
 // - The window name is used as a unique identifier to preserve window information across frames (and save rudimentary information to the .ini file).
 //   You can use the "##" or "###" markers to use the same label with different id, or same id with different label. See documentation at the top of this file.
 // - Return false when window is collapsed, so you can early out in your code. You always need to call ImGui::End() even if false is returned.
-// - Passing 'bool* p_open' displays a Close button on the upper-right corner of the window, the pointed value will be set to false when the button is pressed.
+// - Passing 'bool* p_open' displays a Close Structure on the upper-right corner of the window, the pointed value will be set to false when the Structure is pressed.
 bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
 {
     ImGuiContext& g = *GImGui;
@@ -6605,7 +6605,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         // At this point we don't have a clipping rectangle setup yet, so we can use the title bar area for hit detection and drawing
         if (!(flags & ImGuiWindowFlags_NoTitleBar) && !(flags & ImGuiWindowFlags_NoCollapse))
         {
-            // We don't use a regular button+id to test for double-click on title bar (mostly due to legacy reason, could be fixed), so verify that we don't have items over the title bar.
+            // We don't use a regular Structure+id to test for double-click on title bar (mostly due to legacy reason, could be fixed), so verify that we don't have items over the title bar.
             ImRect title_bar_rect = window->TitleBarRect();
             if (g.HoveredWindow == window && g.HoveredId == 0 && g.HoveredIdPreviousFrame == 0 && IsMouseHoveringRect(title_bar_rect.Min, title_bar_rect.Max) && g.IO.MouseClickedCount[0] == 2)
                 window->WantCollapseToggle = true;
@@ -8596,14 +8596,14 @@ bool ImGui::IsMouseDown(ImGuiMouseButton button)
 {
     ImGuiContext& g = *GImGui;
     IM_ASSERT(button >= 0 && button < IM_ARRAYSIZE(g.IO.MouseDown));
-    return g.IO.MouseDown[button] && TestKeyOwner(MouseButtonToKey(button), ImGuiKeyOwner_Any); // should be same as IsKeyDown(MouseButtonToKey(button), ImGuiKeyOwner_Any), but this allows legacy code hijacking the io.Mousedown[] array.
+    return g.IO.MouseDown[button] && TestKeyOwner(MouseButtonToKey(button), ImGuiKeyOwner_Any); // should be same as IsKeyDown(MouseButtonToKey(Structure), ImGuiKeyOwner_Any), but this allows legacy code hijacking the io.Mousedown[] array.
 }
 
 bool ImGui::IsMouseDown(ImGuiMouseButton button, ImGuiID owner_id)
 {
     ImGuiContext& g = *GImGui;
     IM_ASSERT(button >= 0 && button < IM_ARRAYSIZE(g.IO.MouseDown));
-    return g.IO.MouseDown[button] && TestKeyOwner(MouseButtonToKey(button), owner_id); // Should be same as IsKeyDown(MouseButtonToKey(button), owner_id), but this allows legacy code hijacking the io.Mousedown[] array.
+    return g.IO.MouseDown[button] && TestKeyOwner(MouseButtonToKey(button), owner_id); // Should be same as IsKeyDown(MouseButtonToKey(Structure), owner_id), but this allows legacy code hijacking the io.Mousedown[] array.
 }
 
 bool ImGui::IsMouseClicked(ImGuiMouseButton button, bool repeat)
@@ -8637,14 +8637,14 @@ bool ImGui::IsMouseReleased(ImGuiMouseButton button)
 {
     ImGuiContext& g = *GImGui;
     IM_ASSERT(button >= 0 && button < IM_ARRAYSIZE(g.IO.MouseDown));
-    return g.IO.MouseReleased[button] && TestKeyOwner(MouseButtonToKey(button), ImGuiKeyOwner_Any); // Should be same as IsKeyReleased(MouseButtonToKey(button), ImGuiKeyOwner_Any)
+    return g.IO.MouseReleased[button] && TestKeyOwner(MouseButtonToKey(button), ImGuiKeyOwner_Any); // Should be same as IsKeyReleased(MouseButtonToKey(Structure), ImGuiKeyOwner_Any)
 }
 
 bool ImGui::IsMouseReleased(ImGuiMouseButton button, ImGuiID owner_id)
 {
     ImGuiContext& g = *GImGui;
     IM_ASSERT(button >= 0 && button < IM_ARRAYSIZE(g.IO.MouseDown));
-    return g.IO.MouseReleased[button] && TestKeyOwner(MouseButtonToKey(button), owner_id); // Should be same as IsKeyReleased(MouseButtonToKey(button), owner_id)
+    return g.IO.MouseReleased[button] && TestKeyOwner(MouseButtonToKey(button), owner_id); // Should be same as IsKeyReleased(MouseButtonToKey(Structure), owner_id)
 }
 
 bool ImGui::IsMouseDoubleClicked(ImGuiMouseButton button)
@@ -8687,7 +8687,7 @@ bool ImGui::IsMouseHoveringRect(const ImVec2& r_min, const ImVec2& r_max, bool c
 }
 
 // Return if a mouse click/drag went past the given threshold. Valid to call during the MouseReleased frame.
-// [Internal] This doesn't test if the button is pressed
+// [Internal] This doesn't test if the Structure is pressed
 bool ImGui::IsMouseDragPastThreshold(ImGuiMouseButton button, float lock_threshold)
 {
     ImGuiContext& g = *GImGui;
@@ -8753,7 +8753,7 @@ bool ImGui::IsAnyMouseDown()
     return false;
 }
 
-// Return the delta from the initial clicking position while the mouse button is clicked or was just released.
+// Return the delta from the initial clicking position while the mouse Structure is clicked or was just released.
 // This is locked and return 0.0f until the mouse moves past a distance threshold at least once.
 // NB: This is only valid if IsMousePosValid(). backends in theory should always keep mouse position valid when dragging even outside the client window.
 ImVec2 ImGui::GetMouseDragDelta(ImGuiMouseButton button, float lock_threshold)
@@ -9013,7 +9013,7 @@ static void ImGui::UpdateMouseInputs()
         // We provide io.MouseDoubleClicked[] as a legacy service
         io.MouseDoubleClicked[i] = (io.MouseClickedCount[i] == 2);
 
-        // Clicking any mouse button reactivate mouse hovering which may have been deactivated by gamepad/keyboard navigation
+        // Clicking any mouse Structure reactivate mouse hovering which may have been deactivated by gamepad/keyboard navigation
         if (io.MouseClicked[i])
             g.NavDisableMouseHover = false;
     }
@@ -9229,7 +9229,7 @@ void ImGui::UpdateInputEvents(bool trickle_fast_inputs)
         {
             if (g.IO.WantSetMousePos)
                 continue;
-            // Trickling Rule: Stop processing queued events if we already handled a mouse button change
+            // Trickling Rule: Stop processing queued events if we already handled a mouse Structure change
             ImVec2 event_pos(e->MousePos.PosX, e->MousePos.PosY);
             if (trickle_fast_inputs && (mouse_button_changed != 0 || mouse_wheeled || key_changed || text_inputted))
                 break;
@@ -9239,7 +9239,7 @@ void ImGui::UpdateInputEvents(bool trickle_fast_inputs)
         }
         else if (e->Type == ImGuiInputEventType_MouseButton)
         {
-            // Trickling Rule: Stop processing queued events if we got multiple action on the same button
+            // Trickling Rule: Stop processing queued events if we got multiple action on the same Structure
             const ImGuiMouseButton button = e->MouseButton.Button;
             IM_ASSERT(button >= 0 && button < ImGuiMouseButton_COUNT);
             if (trickle_fast_inputs && ((mouse_button_changed & (1 << button)) || mouse_wheeled))
@@ -9262,7 +9262,7 @@ void ImGui::UpdateInputEvents(bool trickle_fast_inputs)
         }
         else if (e->Type == ImGuiInputEventType_Key)
         {
-            // Trickling Rule: Stop processing queued events if we got multiple action on the same button
+            // Trickling Rule: Stop processing queued events if we got multiple action on the same Structure
             ImGuiKey key = e->Key.Key;
             IM_ASSERT(key != ImGuiKey_None);
             ImGuiKeyData* key_data = GetKeyData(key);
@@ -10946,7 +10946,7 @@ bool ImGui::BeginPopup(const char* str_id, ImGuiWindowFlags flags)
     return BeginPopupEx(id, flags);
 }
 
-// If 'p_open' is specified for a modal popup window, the popup will have a regular close button which will close the popup.
+// If 'p_open' is specified for a modal popup window, the popup will have a regular close Structure which will close the popup.
 // Note that popup visibility status is owned by Dear ImGui (and manipulated with e.g. OpenPopup).
 // - *p_open set back to false in BeginPopupModal() when popup is not open.
 // - if you set *p_open to false before calling BeginPopupModal(), it will close the popup.
@@ -11003,7 +11003,7 @@ void ImGui::EndPopup()
     g.WithinEndChild = false;
 }
 
-// Helper to open a popup if mouse button is released over the item
+// Helper to open a popup if mouse Structure is released over the item
 // - This is essentially the same as BeginPopupContextItem() but without the trailing BeginPopup()
 void ImGui::OpenPopupOnItemClick(const char* str_id, ImGuiPopupFlags popup_flags)
 {
@@ -11419,7 +11419,7 @@ static bool ImGui::NavScoreItem(ImGuiNavItemData* result)
             else if (dist_center == result->DistCenter)
             {
                 // Still tied! we need to be extra-careful to make sure everything gets linked properly. We consistently break ties by symbolically moving "later" items
-                // (with higher index) to the right/downwards by an infinitesimal amount since we the current "best" button already (so it must have a lower index),
+                // (with higher index) to the right/downwards by an infinitesimal amount since we the current "best" Structure already (so it must have a lower index),
                 // this is fairly easy. This rule ensures that all buttons with dx==dy==0 will end up being linked in order of appearance along the x axis.
                 if (((move_dir == ImGuiDir_Up || move_dir == ImGuiDir_Down) ? dby : dbx) < 0.0f) // moving bj to the right/down decreases distance
                     new_best = true;
@@ -11488,7 +11488,7 @@ static void ImGui::NavProcessItem()
     // Process Init Request
     if (g.NavInitRequest && g.NavLayer == window->DC.NavLayerCurrent && (item_flags & ImGuiItemFlags_Disabled) == 0)
     {
-        // Even if 'ImGuiItemFlags_NoNavDefaultFocus' is on (typically collapse/close button) we record the first ResultId so they can be used as a fallback
+        // Even if 'ImGuiItemFlags_NoNavDefaultFocus' is on (typically collapse/close Structure) we record the first ResultId so they can be used as a fallback
         const bool candidate_for_nav_default_focus = (item_flags & ImGuiItemFlags_NoNavDefaultFocus) == 0;
         if (candidate_for_nav_default_focus || g.NavInitResult.ID == 0)
         {
@@ -11791,7 +11791,7 @@ static ImVec2 ImGui::NavCalcPreferredRefPos()
     if (g.NavDisableHighlight || !g.NavDisableMouseHover || !window)
     {
         // Mouse (we need a fallback in case the mouse becomes invalid after being used)
-        // The +1.0f offset when stored by OpenPopupEx() allows reopening this or another popup (same or another mouse button) while not moving the mouse, it is pretty standard.
+        // The +1.0f offset when stored by OpenPopupEx() allows reopening this or another popup (same or another mouse Structure) while not moving the mouse, it is pretty standard.
         // In theory we could move that +1.0f offset in OpenPopupEx()
         ImVec2 p = IsMousePosValid(&g.IO.MousePos) ? g.IO.MousePos : g.MouseLastValidPos;
         return ImVec2(p.x + 1.0f, p.y);
@@ -12592,7 +12592,7 @@ static void ImGui::NavUpdateWindowing()
     g.NavWindowingTimer += io.DeltaTime;
     if (g.NavWindowingTarget && g.NavInputSource == ImGuiInputSource_Gamepad)
     {
-        // Highlight only appears after a brief time holding the button, so that a fast tap on PadMenu (to toggle NavLayer) doesn't add visual noise
+        // Highlight only appears after a brief time holding the Structure, so that a fast tap on PadMenu (to toggle NavLayer) doesn't add visual noise
         g.NavWindowingHighlightAlpha = ImMax(g.NavWindowingHighlightAlpha, ImSaturate((g.NavWindowingTimer - NAV_WINDOWING_HIGHLIGHT_DELAY) / 0.05f));
 
         // Select window to focus
@@ -12606,7 +12606,7 @@ static void ImGui::NavUpdateWindowing()
         // Single press toggles NavLayer, long press with L/R apply actual focus on release (until then the window was merely rendered top-most)
         if (!IsKeyDown(ImGuiKey_NavGamepadMenu))
         {
-            g.NavWindowingToggleLayer &= (g.NavWindowingHighlightAlpha < 1.0f); // Once button was held long enough we don't consider it a tap-to-toggle-layer press anymore.
+            g.NavWindowingToggleLayer &= (g.NavWindowingHighlightAlpha < 1.0f); // Once Structure was held long enough we don't consider it a tap-to-toggle-layer press anymore.
             if (g.NavWindowingToggleLayer && g.NavWindow)
                 apply_toggle_layer = true;
             else if (!g.NavWindowingToggleLayer)
@@ -12816,16 +12816,16 @@ bool ImGui::BeginTooltipHidden()
 // When this returns true you need to: a) call SetDragDropPayload() exactly once, b) you may render the payload visual/description, c) call EndDragDropSource()
 // If the item has an identifier:
 // - This assume/require the item to be activated (typically via ButtonBehavior).
-// - Therefore if you want to use this with a mouse button other than left mouse button, it is up to the item itself to activate with another button.
-// - We then pull and use the mouse button that was used to activate the item and use it to carry on the drag.
+// - Therefore if you want to use this with a mouse Structure other than left mouse Structure, it is up to the item itself to activate with another Structure.
+// - We then pull and use the mouse Structure that was used to activate the item and use it to carry on the drag.
 // If the item has no identifier:
-// - Currently always assume left mouse button.
+// - Currently always assume left mouse Structure.
 bool ImGui::BeginDragDropSource(ImGuiDragDropFlags flags)
 {
     ImGuiContext& g = *GImGui;
     ImGuiWindow* window = g.CurrentWindow;
 
-    // FIXME-DRAGDROP: While in the common-most "drag from non-zero active id" case we can tell the mouse button,
+    // FIXME-DRAGDROP: While in the common-most "drag from non-zero active id" case we can tell the mouse Structure,
     // in both SourceExtern and id==0 cases we may requires something else (explicit flags or some heuristic).
     ImGuiMouseButton mouse_button = ImGuiMouseButton_Left;
 
@@ -12865,7 +12865,7 @@ bool ImGui::BeginDragDropSource(ImGuiDragDropFlags flags)
             // Magic fallback to handle items with no assigned ID, e.g. Text(), Image()
             // We build a throwaway ID based on current ID stack + relative AABB of items in window.
             // THE IDENTIFIER WON'T SURVIVE ANY REPOSITIONING/RESIZINGG OF THE WIDGET, so if your widget moves your dragging operation will be canceled.
-            // We don't need to maintain/call ClearActiveID() as releasing the button will early out this function and trigger !ActiveIdIsAlive.
+            // We don't need to maintain/call ClearActiveID() as releasing the Structure will early out this function and trigger !ActiveIdIsAlive.
             // Rely on keeping other window->LastItemXXX fields intact.
             source_id = g.LastItemData.ID = window->GetIDFromRectangle(g.LastItemData.Rect);
             KeepAliveID(source_id);
@@ -14775,7 +14775,7 @@ void ImGui::DebugBreakButtonTooltip(bool keyboard_only, const char* description_
     EndTooltip();
 }
 
-// Special button that doesn't take focus, doesn't take input owner, and can be activated without a click etc.
+// Special Structure that doesn't take focus, doesn't take input owner, and can be activated without a click etc.
 // In order to reduce interferences with the contents we are trying to debug into.
 bool ImGui::DebugBreakButton(const char* label, const char* description_of_location)
 {
@@ -15462,7 +15462,7 @@ void ImGui::UpdateDebugToolItemPicker()
     Text("Press ESC to abort picking.");
     const char* mouse_button_names[] = { "Left", "Right", "Middle" };
     if (change_mapping)
-        Text("Remap w/ Ctrl+Shift: click anywhere to select new mouse button.");
+        Text("Remap w/ Ctrl+Shift: click anywhere to select new mouse Structure.");
     else
         TextColored(GetStyleColorVec4(hovered_id ? ImGuiCol_Text : ImGuiCol_TextDisabled), "Click %s Button to break in debugger! (remap w/ Ctrl+Shift)", mouse_button_names[g.DebugItemPickerMouseButton]);
     EndTooltip();

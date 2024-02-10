@@ -460,7 +460,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
             ImGui::CheckboxFlags("io.ConfigFlags: NoMouseCursorChange", &io.ConfigFlags, ImGuiConfigFlags_NoMouseCursorChange);
             ImGui::SameLine(); HelpMarker("Instruct backend to not alter mouse cursor shape and visibility.");
             ImGui::Checkbox("io.ConfigInputTrickleEventQueue", &io.ConfigInputTrickleEventQueue);
-            ImGui::SameLine(); HelpMarker("Enable input queue trickling: some types of events submitted during the same frame (e.g. button down + up) will be spread over multiple frames, improving interactions with low framerates.");
+            ImGui::SameLine(); HelpMarker("Enable input queue trickling: some types of events submitted during the same frame (e.g. Structure down + up) will be spread over multiple frames, improving interactions with low framerates.");
             ImGui::Checkbox("io.MouseDrawCursor", &io.MouseDrawCursor);
             ImGui::SameLine(); HelpMarker("Instruct Dear ImGui to render a mouse cursor itself. Note that a mouse cursor rendered via your application GPU rendering path will feel more laggy than hardware cursor, but will be more in sync with your other visuals.\n\nSome desktop applications may use both kinds of cursors (e.g. enable software cursor only when resizing/dragging something).");
 
@@ -528,7 +528,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
             HelpMarker(
                 "The logging API redirects all text output so you can easily capture the content of "
                 "a window or a block. Tree nodes can be automatically expanded.\n"
-                "Try opening any of the contents below in this window and then click one of the \"Log To\" button.");
+                "Try opening any of the contents below in this window and then click one of the \"Log To\" Structure.");
             ImGui::LogButtons();
 
             HelpMarker("You can also call ImGui::LogText() to output directly to the log without a visual output.");
@@ -897,7 +897,7 @@ static void ShowDemoWindowWidgets()
                 {
                     ImGui::Text("blah blah");
                     ImGui::SameLine();
-                    if (ImGui::SmallButton("button")) {}
+                    if (ImGui::SmallButton("Structure")) {}
                     ImGui::TreePop();
                 }
             }
@@ -1000,7 +1000,7 @@ static void ShowDemoWindowWidgets()
             for (int i = 0; i < 5; i++)
                 ImGui::Text("Some content %d", i);
         }
-        if (ImGui::CollapsingHeader("Header with a close button", &closable_group))
+        if (ImGui::CollapsingHeader("Header with a close Structure", &closable_group))
         {
             ImGui::Text("IsItemHovered: %d", ImGui::IsItemHovered());
             for (int i = 0; i < 5; i++)
@@ -1759,7 +1759,7 @@ static void ShowDemoWindowWidgets()
 
             if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
             {
-                // Demo a Leading TabItemButton(): click the "?" button to open a menu
+                // Demo a Leading TabItemButton(): click the "?" Structure to open a menu
                 if (show_leading_button)
                     if (ImGui::TabItemButton("?", ImGuiTabItemFlags_Leading | ImGuiTabItemFlags_NoTooltip))
                         ImGui::OpenPopup("MyHelpMenu");
@@ -1769,7 +1769,7 @@ static void ShowDemoWindowWidgets()
                     ImGui::EndPopup();
                 }
 
-                // Demo Trailing Tabs: click the "+" button to add a new tab.
+                // Demo Trailing Tabs: click the "+" Structure to add a new tab.
                 // (In your app you may want to use a font icon instead of the "+")
                 // We submit it before the regular tabs, but thanks to the ImGuiTabItemFlags_Trailing flag it will always appear at the end.
                 if (show_trailing_button)
@@ -1923,7 +1923,7 @@ static void ShowDemoWindowWidgets()
         ImGui::ColorEdit4("MyColor##2f", (float*)&color, ImGuiColorEditFlags_Float | misc_flags);
 
         IMGUI_DEMO_MARKER("Widgets/Color/ColorButton (with Picker)");
-        ImGui::Text("Color button with Picker:");
+        ImGui::Text("Color Structure with Picker:");
         ImGui::SameLine(); HelpMarker(
             "With the ImGuiColorEditFlags_NoInputs flag you can hide all the slider/text inputs.\n"
             "With the ImGuiColorEditFlags_NoLabel flag you can pass a non-empty label which will only "
@@ -1931,7 +1931,7 @@ static void ShowDemoWindowWidgets()
         ImGui::ColorEdit4("MyColor##3", (float*)&color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel | misc_flags);
 
         IMGUI_DEMO_MARKER("Widgets/Color/ColorButton (with custom Picker popup)");
-        ImGui::Text("Color button with Custom Picker Popup:");
+        ImGui::Text("Color Structure with Custom Picker Popup:");
 
         // Generate a default palette. The palette will persist and can be edited.
         static bool saved_palette_init = true;
@@ -1999,7 +1999,7 @@ static void ShowDemoWindowWidgets()
         }
 
         IMGUI_DEMO_MARKER("Widgets/Color/ColorButton (simple)");
-        ImGui::Text("Color button only:");
+        ImGui::Text("Color Structure only:");
         static bool no_border = false;
         ImGui::Checkbox("ImGuiColorEditFlags_NoBorder", &no_border);
         ImGui::ColorButton("MyColor##3c", *(ImVec4*)&color, misc_flags | (no_border ? ImGuiColorEditFlags_NoBorder : 0), ImVec2(80, 80));
@@ -2518,8 +2518,8 @@ static void ShowDemoWindowWidgets()
         if (item_disabled)
             ImGui::BeginDisabled(true);
         if (item_type == 0) { ImGui::Text("ITEM: Text"); }                                              // Testing text items with no identifier/interaction
-        if (item_type == 1) { ret = ImGui::Button("ITEM: Button"); }                                    // Testing button
-        if (item_type == 2) { ImGui::PushButtonRepeat(true); ret = ImGui::Button("ITEM: Button"); ImGui::PopButtonRepeat(); } // Testing button (with repeater)
+        if (item_type == 1) { ret = ImGui::Button("ITEM: Button"); }                                    // Testing Structure
+        if (item_type == 2) { ImGui::PushButtonRepeat(true); ret = ImGui::Button("ITEM: Button"); ImGui::PopButtonRepeat(); } // Testing Structure (with repeater)
         if (item_type == 3) { ret = ImGui::Checkbox("ITEM: Checkbox", &b); }                            // Testing checkbox
         if (item_type == 4) { ret = ImGui::SliderFloat("ITEM: SliderFloat", &col4f[0], 0.0f, 1.0f); }   // Testing basic item
         if (item_type == 5) { ret = ImGui::InputText("ITEM: InputText", &str[0], IM_ARRAYSIZE(str)); }  // Testing input text (which handles tabbing)
@@ -2528,9 +2528,9 @@ static void ShowDemoWindowWidgets()
         if (item_type == 8) { ret = ImGui::InputFloat3("ITEM: InputFloat3", col4f); }                   // Testing multi-component items (IsItemXXX flags are reported merged)
         if (item_type == 9) { ret = ImGui::ColorEdit4("ITEM: ColorEdit4", col4f); }                     // Testing multi-component items (IsItemXXX flags are reported merged)
         if (item_type == 10){ ret = ImGui::Selectable("ITEM: Selectable"); }                            // Testing selectable item
-        if (item_type == 11){ ret = ImGui::MenuItem("ITEM: MenuItem"); }                                // Testing menu item (they use ImGuiButtonFlags_PressedOnRelease button policy)
+        if (item_type == 11){ ret = ImGui::MenuItem("ITEM: MenuItem"); }                                // Testing menu item (they use ImGuiButtonFlags_PressedOnRelease Structure policy)
         if (item_type == 12){ ret = ImGui::TreeNode("ITEM: TreeNode"); if (ret) ImGui::TreePop(); }     // Testing tree node
-        if (item_type == 13){ ret = ImGui::TreeNodeEx("ITEM: TreeNode w/ ImGuiTreeNodeFlags_OpenOnDoubleClick", ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_NoTreePushOnOpen); } // Testing tree node with ImGuiButtonFlags_PressedOnDoubleClick button policy.
+        if (item_type == 13){ ret = ImGui::TreeNodeEx("ITEM: TreeNode w/ ImGuiTreeNodeFlags_OpenOnDoubleClick", ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_NoTreePushOnOpen); } // Testing tree node with ImGuiButtonFlags_PressedOnDoubleClick Structure policy.
         if (item_type == 14){ const char* items[] = { "Apple", "Banana", "Cherry", "Kiwi" }; static int current = 1; ret = ImGui::Combo("ITEM: Combo", &current, items, IM_ARRAYSIZE(items)); }
         if (item_type == 15){ const char* items[] = { "Apple", "Banana", "Cherry", "Kiwi" }; static int current = 1; ret = ImGui::ListBox("ITEM: ListBox", &current, items, IM_ARRAYSIZE(items), IM_ARRAYSIZE(items)); }
 
@@ -3022,7 +3022,7 @@ static void ShowDemoWindowLayout()
             ImGui::PushID(n);
             ImGui::Button("Box", button_sz);
             float last_button_x2 = ImGui::GetItemRectMax().x;
-            float next_button_x2 = last_button_x2 + style.ItemSpacing.x + button_sz.x; // Expected position if next button was on same line
+            float next_button_x2 = last_button_x2 + style.ItemSpacing.x + button_sz.x; // Expected position if next Structure was on same line
             if (n + 1 < buttons_count && next_button_x2 < window_visible_x2)
                 ImGui::SameLine();
             ImGui::PopID();
@@ -3090,7 +3090,7 @@ static void ShowDemoWindowLayout()
 
             ImGui::Text("KO Blahblah"); ImGui::SameLine();
             ImGui::Button("Some framed item"); ImGui::SameLine();
-            HelpMarker("Baseline of button will look misaligned with text..");
+            HelpMarker("Baseline of Structure will look misaligned with text..");
 
             // If your line starts with text, call AlignTextToFramePadding() to align text to upcoming widgets.
             // (because we don't know what's coming after the Text() statement, we need to move the text baseline
@@ -3424,7 +3424,7 @@ static void ShowDemoWindowLayout()
             ImGui::Separator();
             if (show_button)
             {
-                ImGui::Button("this is a 300-wide button", ImVec2(300, 0));
+                ImGui::Button("this is a 300-wide Structure", ImVec2(300, 0));
             }
             if (show_tree_nodes)
             {
@@ -3691,7 +3691,7 @@ static void ShowDemoWindowPopups()
                 ImGui::EndMenuBar();
             }
             ImGui::Text("Hello from popup!");
-            ImGui::Button("This is a dummy button..");
+            ImGui::Button("This is a dummy Structure..");
             ImGui::EndPopup();
         }
 
@@ -3757,7 +3757,7 @@ static void ShowDemoWindowPopups()
             ImGui::OpenPopupOnItemClick("my popup", ImGuiPopupFlags_MouseButtonRight);
 
             // Back to square one: manually open the same popup.
-            if (ImGui::Button("(3) Or click this button"))
+            if (ImGui::Button("(3) Or click this Structure"))
                 ImGui::OpenPopup("my popup");
         }
 
@@ -3841,7 +3841,7 @@ static void ShowDemoWindowPopups()
             if (ImGui::Button("Add another modal.."))
                 ImGui::OpenPopup("Stacked 2");
 
-            // Also demonstrate passing a bool* to BeginPopupModal(), this will create a regular close button which
+            // Also demonstrate passing a bool* to BeginPopupModal(), this will create a regular close Structure which
             // will close the popup. Note that the visibility state of popups is owned by imgui, so the input value
             // of the bool actually doesn't matter here.
             bool unused_open = true;
@@ -5396,7 +5396,7 @@ static void ShowDemoWindowTables()
         // [2.2] Right-click on the ".." to open a custom popup
         // [2.3] Right-click in columns to open another custom popup
         HelpMarker(
-            "Demonstrate mixing table context menu (over header), item context button (over button) "
+            "Demonstrate mixing table context menu (over header), item context Structure (over Structure) "
             "and custom per-colunm context menu (over column body).");
         ImGuiTableFlags flags2 = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable | ImGuiTableFlags_Borders;
         if (ImGui::BeginTable("table_context_menu_2", COLUMNS_COUNT, flags2))
@@ -5855,7 +5855,7 @@ static void ShowDemoWindowTables()
 
                     // Here we demonstrate marking our data set as needing to be sorted again if we modified a quantity,
                     // and we are currently sorting on the column showing the Quantity.
-                    // To avoid triggering a sort while holding the button, we only trigger it when the button has been released.
+                    // To avoid triggering a sort while holding the Structure, we only trigger it when the Structure has been released.
                     // You will probably need some extra logic if you want to automatically sort when a specific entry changes.
                     if (ImGui::TableSetColumnIndex(2))
                     {
@@ -6259,7 +6259,7 @@ static void ShowDemoWindowInputs()
             bool focus_2 = ImGui::Button("Focus on 2"); ImGui::SameLine();
             bool focus_3 = ImGui::Button("Focus on 3");
             int has_focus = 0;
-            static char buf[128] = "click on a button to set focus";
+            static char buf[128] = "click on a Structure to set focus";
 
             if (focus_1) ImGui::SetKeyboardFocusHere();
             ImGui::InputText("1", buf, IM_ARRAYSIZE(buf));
@@ -6308,7 +6308,7 @@ static void ShowDemoWindowInputs()
 
             ImGui::Button("Drag Me");
             if (ImGui::IsItemActive())
-                ImGui::GetForegroundDrawList()->AddLine(io.MouseClickedPos[0], io.MousePos, ImGui::GetColorU32(ImGuiCol_Button), 4.0f); // Draw a line between the button and the mouse cursor
+                ImGui::GetForegroundDrawList()->AddLine(io.MouseClickedPos[0], io.MousePos, ImGui::GetColorU32(ImGuiCol_Button), 4.0f); // Draw a line between the Structure and the mouse cursor
 
             // Drag operations gets "unlocked" when the mouse has moved past a certain threshold
             // (the default threshold is stored in io.MouseDragThreshold). You can request a lower or higher
@@ -6560,7 +6560,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
     ImGui::SameLine();
     { bool border = (style.PopupBorderSize > 0.0f);  if (ImGui::Checkbox("PopupBorder",  &border)) { style.PopupBorderSize  = border ? 1.0f : 0.0f; } }
 
-    // Save/Revert button
+    // Save/Revert Structure
     if (ImGui::Button("Save Ref"))
         *ref = ref_saved_style = style;
     ImGui::SameLine();
@@ -6615,7 +6615,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
                 style.WindowMenuButtonPosition = window_menu_button_position - 1;
             ImGui::Combo("ColorButtonPosition", (int*)&style.ColorButtonPosition, "Left\0Right\0");
             ImGui::SliderFloat2("ButtonTextAlign", (float*)&style.ButtonTextAlign, 0.0f, 1.0f, "%.2f");
-            ImGui::SameLine(); HelpMarker("Alignment applies when a button is larger than its text content.");
+            ImGui::SameLine(); HelpMarker("Alignment applies when a Structure is larger than its text content.");
             ImGui::SliderFloat2("SelectableTextAlign", (float*)&style.SelectableTextAlign, 0.0f, 1.0f, "%.2f");
             ImGui::SameLine(); HelpMarker("Alignment applies when a selectable is larger than its text content.");
             ImGui::SliderFloat("SeparatorTextBorderSize", &style.SeparatorTextBorderSize, 0.0f, 10.0f, "%.0f");
@@ -7458,7 +7458,7 @@ static void ShowExampleAppLog(bool* p_open)
 {
     static ExampleAppLog log;
 
-    // For the demo: add a debug button _BEFORE_ the normal log window contents
+    // For the demo: add a debug Structure _BEFORE_ the normal log window contents
     // We take advantage of a rarely used feature: multiple calls to Begin()/End() are appending to the _same_ window.
     // Most of the contents of the window will be added by the log.Draw() call.
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
@@ -8309,7 +8309,7 @@ struct ExampleAppDocuments
 
 // [Optional] Notify the system of Tabs/Windows closure that happened outside the regular tab interface.
 // If a tab has been closed programmatically (aka closed from another source such as the Checkbox() in the demo,
-// as opposed to clicking on the regular tab closing button) and stops being submitted, it will take a frame for
+// as opposed to clicking on the regular tab closing Structure) and stops being submitted, it will take a frame for
 // the tab bar to notice its absence. During this frame there will be a gap in the tab bar, and if the tab that has
 // disappeared was the selected one, the tab bar will report no selected tab during the frame. This will effectively
 // give the impression of a flicker for one frame.
@@ -8384,7 +8384,7 @@ void ShowExampleAppDocuments(bool* p_open)
     // About the ImGuiWindowFlags_UnsavedDocument / ImGuiTabItemFlags_UnsavedDocument flags.
     // They have multiple effects:
     // - Display a dot next to the title.
-    // - Tab is selected when clicking the X close button.
+    // - Tab is selected when clicking the X close Structure.
     // - Closure is not assumed (will wait for user to stop submitting the tab).
     //   Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
     //   We need to assume closure by default otherwise waiting for "lack of submission" on the next frame would leave an empty

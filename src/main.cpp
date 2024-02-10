@@ -1,9 +1,7 @@
 #include "App.hpp"
 #include <iostream>
 #include "Core/Context.hpp"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl2.h"
-#include "imgui/imgui_impl_opengl3.h"
+
 
 int main(int, char **) {
 

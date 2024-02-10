@@ -101,7 +101,6 @@ Context::~Context() {
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
-
     SDL_DestroyWindow(m_Window);
     SDL_GL_DeleteContext(m_GlContext);
     SDL_VideoQuit();
@@ -117,15 +116,6 @@ Context::~Context() {
 void Context::Update() {
     Util::Time::Update();
     Util::Input::Update();
-
-
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
-    ImGui::NewFrame();
-    ImGui::ShowDemoWindow();
-
-    ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         SDL_GL_SwapWindow(m_Window);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
