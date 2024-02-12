@@ -3,14 +3,9 @@
 //
 
 #include "Structure.hpp"
-#include "Util/GameObject.hpp"
-#include "Util/Image.hpp"
 #include "Util/Input.hpp"
-#include "Util/Text.hpp"
-#include "Util/Time.hpp"
 #include "Util/Transform.hpp"
 #include "config.hpp"
-
 
 
 void Structure::Update([[maybe_unused]] const Util::Transform &transform) {

@@ -11,8 +11,12 @@
 #include "Util/Transform.hpp"
 #include "config.hpp"
 
-float CalculateDistance(glm::vec2 d1,glm::vec2 d2){
-    return pow(pow(d2.x-d1.x,2)+pow(d2.y-d1.y,2),0.5);
+glm::vec2 CalculateDistanceReturnVec(glm::vec2 d1,glm::vec2 d2){
+    return glm::vec2(d2.x-d1.x,d2.y-d1.y);
+}
+
+float CalculateDisanceReturnFloat(glm::vec2 d){
+    return pow(pow(d.x,2)+pow(d.y,2),0.5);
 }
 
 float MoveToDestination(glm::vec2 Destination){
@@ -33,19 +37,26 @@ void Infantry::Update([[maybe_unused]] const Util::Transform &transform) {
         dir.x *= -1;
     }
 
-    auto delta = static_cast<float>(Util::Time::GetDeltaTime());
     switch (m_CurrentState) {
 case(updateMode::Uncreated):
         break;
     case(updateMode::MovingToDestination):
-        if(pos==Destination){
+        if(CalculateDisanceReturnFloat(CalculateDistanceReturnVec(pos,Destination))<1){
             updateMode::Standing;
         }else{
-            float dis=CalculateDistance(pos,Destination);
+            glm::vec2 distance=CalculateDistanceReturnVec(pos,Destination);
+            float totalDistance=pow(pow(distance.x,2)+pow(distance.y,2),0.5);
+            float totalFrameCount=totalDistance/DistanceInFrame;
+            pos.x+=(distance.x/totalFrameCount);
+            pos.y+=(distance.y/totalFrameCount);
         }
         m_Drawable->Draw(m_Transform, m_ZIndex);
         break;
     case(updateMode::Attacking):
+        m_Transform.translation=Util::Input::GetCursorPosition();
+        m_Drawable->Draw(m_Transform, m_ZIndex);
+        break;
+    case (updateMode::Standing):
         m_Drawable->Draw(m_Transform, m_ZIndex);
         break;
     }
