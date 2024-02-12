@@ -1,51 +1,61 @@
-# Practical Tools for Simple Design
+# Purpose
 
-## Getting Started
+For too long, video games have been expressed, in Hideo Kojima's words, in the format of "sticks," as players confront and compete with each other online. The cultural meaning behind this ever-growing industry is something we, as players, must ask ourselves: Is this the meaning we are trying to express after all?
 
-Required: Git, CMake, C/C++ compiler
+Now we live in a world that values separation, isolation, and disconnection more than togetherness and connection.
 
-Optional: Ninja Build, clang
+Inspired by the video game "Death Stranding," which was released in 2019, the vision for this project aims to revolutionize the RTS genre, transforming its competitive nature into collaboration.
 
-### Command Line
+## No man is an island by John Donne
+No man is an island,  
+Entire of itself.  
 
-```
-git clone https://ntut-open-source-club/practical-tools-for-simple-design.git
+Each is a piece of the continent,  
+A part of the main.  
 
-cmake -B build
-cmake --build build
-```
+If a clod be washed away by the sea,  
+Europe is the less.  
 
-> If Ninja Build is install use `cmake -B build -G Ninja` to speed compile time
+As well as if a promontory were.  
+As well as if a manor of thine own  
+Or of thine friend's were.  
 
-> For older versions of CMake(`<3.13`? verification needed) use
-> ```
-> mkdir build
-> cd build
-> cmake .
-> cmake --build .
-> ```
-> if the `-B` flag is unsupported
+Each man's death diminishes me,  
+For I am involved in mankind.  
+Therefore, send not to know  
 
-> If using Neovim or other LSP supported editors, append `-DCMAKE_EXPORT_COMPILE_COMMANDS=ON` to the generation command for `clangd` to work
+For whom the bell tolls,  
+It tolls for thee.
 
-### VSCode
+## translated to Chinese by 李敖
 
-TODO
+有人能自全，
+沒有人是孤島，
 
-### CLion
+每人都是大陸的一片，
+要為本土應卯
 
-TODO
+一旦海水沖走，
+歐洲就要變小。
 
-### Visual Studio
+那便是一塊土地，
+那便是一方海角，
+那便是一座莊園，
+不論是你的、還是朋友的，
 
-TODO
+任何人的死亡，都是我的減少，
+作為人類的一員，我與生靈共老。
 
-## Generate Doxygen Documents
+喪鐘在為誰敲，我本茫然不曉，
+不為幽明永隔，它正為你哀悼。
 
-Required: Doxygen 1.9.6
 
-```
-doxygen docs/Doxyfile
-```
+# Goal
 
-Open the generated documents with your favorite browser at `docs/html/index.html`
+# Methodology
+
+## Packages used
+1. openGL version 4.1
+2. PTSD game Engine
+3. SDL2
+4. Imgui

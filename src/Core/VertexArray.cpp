@@ -56,4 +56,10 @@ void VertexArray::DrawTriangles() const {
     glDrawElements(GL_TRIANGLES, static_cast<GLint>(m_IndexBuffer->GetCount()),
                    GL_UNSIGNED_INT, nullptr);
 }
+
+void VertexArray::DrawRectangles() const {
+    glDrawElements(GL_TRIANGLES, static_cast<GLint>(m_IndexBuffer->GetCount()),
+                   GL_UNSIGNED_INT, nullptr);
+
+}
 } // namespace Core

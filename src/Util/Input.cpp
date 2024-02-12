@@ -1,5 +1,5 @@
 #include "Util/Input.hpp"
-
+#include "imgui/imgui_impl_sdl2.h"
 #include <SDL_events.h> // for SDL_Event
 #include "config.hpp"
 
@@ -66,6 +66,9 @@ void Input::Update() {
     s_LBPressed = s_RBPressed = s_MBPressed = s_Scroll = s_MouseMoving = false;
 
     while (SDL_PollEvent(&s_Event) != 0) {
+
+        ImGui_ImplSDL2_ProcessEvent(&s_Event);
+
         s_LBPressed = (s_Event.type == SDL_MOUSEBUTTONDOWN &&
                        s_Event.button.button == SDL_BUTTON_LEFT) ||
                       s_LBPressed;

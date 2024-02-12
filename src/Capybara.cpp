@@ -25,8 +25,15 @@ void Capybara::Update( const Util::Transform &transform) {
     pos = transform.translation;
 
     m_Drawable->Draw(m_Transform, m_ZIndex);
-    if (pos.x!=pos.y){
-        LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
+
+    for (auto &child : m_Children) {
+        auto newtransform=transform;
+        newtransform.translation.x=newtransform.translation.x-10;
+        child->Update(newtransform);
     }
+
+    /**if (pos.x!=pos.y){
+        LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
+    }**/
 
 }

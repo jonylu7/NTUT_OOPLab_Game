@@ -37,6 +37,7 @@ public:
     void SetIndexBuffer(std::unique_ptr<IndexBuffer> indexBuffer);
 
     void DrawTriangles() const;
+    void DrawRectangles() const;
 
 private:
     GLuint m_ArrayId;

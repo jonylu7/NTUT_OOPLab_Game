@@ -17,7 +17,6 @@ void draweRect(void)
     glVertex2i(100,150);
     glVertex2i(50,150);
     glEnd();
-
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     glFlush();
