@@ -96,6 +96,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Barracks.hpp
         ${INCLUDE_DIR}/Structure.hpp
         ${INCLUDE_DIR}/Infantry.hpp
+        ${INCLUDE_DIR}/Cell.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h

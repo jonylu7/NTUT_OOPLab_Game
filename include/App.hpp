@@ -9,6 +9,7 @@
 #include "Structure.hpp"
 #include "Triangle.hpp"
 #include "Infantry.hpp"
+#include "Cell.hpp"
 class App {
 public:
     enum class State {
@@ -39,10 +40,12 @@ private:
 
     glm::vec2 CameraStartingPosition=glm::vec2(0.F,0.F);
     glm::vec2 CameraPosition=CameraStartingPosition;
-    float CameraZoom;
-    float CameraMovingSpeed=1.F;
+    float CameraZoom=0.F;
+    float CameraMovingSpeed=0.5F;
+    float CameraZoomingSpeed=0.5F;
 
     std::time_t initialTime=std::time(0);
+    CellClass cellTest;
 
 
 };

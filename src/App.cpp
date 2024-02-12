@@ -8,6 +8,7 @@
 #include "imgui/imgui_impl_sdl2.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "Core/Context.hpp"
+#include "Cell.hpp"
 
 void App::Start() {
 
@@ -46,12 +47,14 @@ bool LBPressing=false;
 Util::Transform lbLocation;
 enum buttonMode{A,B,C};
 buttonMode currentModde;
+
 void App::Update() {
 
 
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
-        LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
+        CameraZoom+=delta.y*CameraZoomingSpeed;
+        //LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
     }
     if(Util::Input::IsLButtonUp()&&LBPressing==true){
         ogLBlocation=glm::vec2(0,0);
@@ -133,13 +136,16 @@ void App::Update() {
     case(4):
         break;
     }
-
+    cellTest.Draw();
     m_Barracks->Update();
-    m_Giraffe->Update();
+    //m_Giraffe->Update();
     m_Capybara->Update(lbLocation);
     m_Triangle.Update();
     m_Structure->Update();
     m_Inf->Update();
+
+
+
 
     //Ui->update at here
 
@@ -148,13 +154,14 @@ void App::Update() {
     ImGui::NewFrame();
     // put the stuff in here
     ImGui::Begin("Structure Selection Menu");
-    const char* s = fmt::format("Camera Position: X:{},Y:{}",CameraPosition.x,CameraPosition.y).c_str();
-    const char* w = std::string("X: "+std::to_string(CameraPosition.x)+"  Y: "+std::to_string(CameraPosition.y)).c_str();
-    ImGui::Text(w);
+
+    ImGui::Text(std::string("X: "+std::to_string(CameraPosition.x)+"  Y: "+std::to_string(CameraPosition.y)).c_str());
+    ImGui::Text(fmt::format("Zoom: {}",CameraZoom).c_str());
     ImGui::Text(fmt::format("$ {}",1000).c_str());
-    ImGui::Text(fmt::format("⚡️ {}",50).c_str());
+    ImGui::Text(fmt::format("Power {}",50).c_str());
     if(ImGui::BeginTabBar("",ImGuiTabBarFlags_None) ){
         if (ImGui::BeginTabItem("Buildings")) {
+
         if (ImGui::Button("Power Plants")) {
             currentModde = buttonMode::A;
         } else if (ImGui::Button("Barracks")) {
@@ -182,6 +189,7 @@ void App::Update() {
         }
         ImGui::EndTabItem();
         } else if (ImGui::BeginTabItem("Barracks")) {
+        //it wont show up, need to be fixed
         if (ImGui::Button("Normal Troops")) {
             currentModde = buttonMode::C;
         }
