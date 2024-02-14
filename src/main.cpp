@@ -1,6 +1,6 @@
 #include "App.hpp"
 #include "Core/Context.hpp"
-
+#include "Rectangle.hpp"
 
 int main(int, char **) {
 
@@ -11,10 +11,13 @@ int main(int, char **) {
         context->Update();
         switch (app.GetCurrentState()) {
         case App::State::START:
+
             app.Start();
+
 
             break;
         case App::State::UPDATE:
+
             app.Update();
 
             break;

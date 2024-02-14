@@ -16,6 +16,9 @@ class Image : public Core::Drawable {
 public:
     Image(const std::string &filepath);
 
+    unsigned int getTextureID(){
+        return m_Texture->GetTextureId();
+    }
     void Draw(const Util::Transform &transform, const float zIndex) override;
 
 private:

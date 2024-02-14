@@ -39,6 +39,7 @@ void App::Start() {
 
     m_Barracks->AppendChild(gf);
     m_CurrentState = State::UPDATE;
+    //rect.Init();
 
 
 }
@@ -47,10 +48,28 @@ bool LBPressing=false;
 Util::Transform lbLocation;
 enum buttonMode{A,B,C};
 buttonMode currentModde;
+ImVec2 start_pos;
+ImVec2 end_pos;
+
+bool ShowSelectionRect(ImVec2* start_pos, ImVec2* end_pos, ImGuiMouseButton mouse_button = ImGuiMouseButton_Left)
+{
+    IM_ASSERT(start_pos != NULL);
+    IM_ASSERT(end_pos != NULL);
+    if (ImGui::IsMouseClicked(mouse_button))
+        *start_pos = ImGui::GetMousePos();
+    if (ImGui::IsMouseDown(mouse_button))
+    {
+        *end_pos = ImGui::GetMousePos();
+        ImDrawList* draw_list = ImGui::GetForegroundDrawList(); //ImGui::GetWindowDrawList();
+        draw_list->AddRect(*start_pos, *end_pos, ImGui::GetColorU32(IM_COL32(255, 255, 255, 255)));   // Border
+        //draw_list->AddRectFilled(*start_pos, *end_pos, ImGui::GetColorU32(IM_COL32(0, 130, 216, 50)));    // Background
+    }
+    return ImGui::IsMouseReleased(mouse_button);
+}
 
 void App::Update() {
 
-
+    //rect.Draw();
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
         CameraZoom+=delta.y*CameraZoomingSpeed;
@@ -63,11 +82,6 @@ void App::Update() {
 
     if(Util::Input::IsLButtonPressed()){
         glm::vec2 ogLBlocation=Util::Input::GetCursorPosition();
-        LBPressing=true;
-        LOG_DEBUG("LButton");
-        lbLocation.translation=ogLBlocation;
-        LOG_DEBUG("location x:{}, y{}",lbLocation.translation.x,lbLocation.translation.y);
-
         auto newCappy=std::make_shared<Capybara>();
         newCappy->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
         newCappy->SetZIndex(-1);
@@ -78,13 +92,6 @@ void App::Update() {
         LOG_DEBUG("Fixed");
     }
     }
-
-    if(Util::Input::IsMouseMoving() && LBPressing==true){
-        glm::vec2 nowLBLocation=Util::Input::GetCursorPosition();
-        LOG_DEBUG("drawned size x:{}, y{}", nowLBLocation.x-ogLBlocation.x,nowLBLocation.y-ogLBlocation.y);
-    }
-
-
     if(Util::Input::IsRButtonPressed()){
         LOG_DEBUG("RPressed");
     }
@@ -139,10 +146,11 @@ void App::Update() {
     cellTest.Draw();
     m_Barracks->Update();
     //m_Giraffe->Update();
-    m_Capybara->Update(lbLocation);
-    m_Triangle.Update();
+    //m_Capybara->Update(lbLocation);
+    //m_Triangle.Update();
     m_Structure->Update();
     m_Inf->Update();
+    rect.Update();
 
 
 
@@ -188,22 +196,28 @@ void App::Update() {
             currentModde = buttonMode::C;
         }
         ImGui::EndTabItem();
-        } else if (ImGui::BeginTabItem("Barracks")) {
-        //it wont show up, need to be fixed
-        if (ImGui::Button("Normal Troops")) {
+        }
+        if (ImGui::BeginTabItem("Barracks")) {
+        Util::Image image("../assets/sprites/Service.png");
+        ImGui::Image((void*)(intptr_t)image.getTextureID(),ImVec2(48,64));
+
+        if (ImGui::Button("Infantry")) {
             currentModde = buttonMode::C;
+        }
+        else if(ImGui::ImageButton("",(void*)(intptr_t)image.getTextureID(),ImVec2(48,64))){
+
         }
         ImGui::EndTabItem();
         }
 
         ImGui::EndTabBar();
     }
+    ShowSelectionRect(&start_pos,&end_pos);
     ImGui::End();
 
     //and above
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    //ImGui::ShowDemoWindow();
 
 }
 
