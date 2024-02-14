@@ -45,6 +45,7 @@ void VertexArray::AddVertexBuffer(std::unique_ptr<VertexBuffer> vertexBuffer) {
                           static_cast<GLint>(vertexBuffer->GetComponentCount()),
                           vertexBuffer->GetType(), GL_FALSE, 0, nullptr);
 
+
     m_VertexBuffers.push_back(std::move(vertexBuffer));
 }
 
@@ -58,8 +59,8 @@ void VertexArray::DrawTriangles() const {
 }
 
 void VertexArray::DrawRectangles() const {
-    glDrawElements(GL_TRIANGLES, static_cast<GLint>(m_IndexBuffer->GetCount()),
-                   GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_LINE_LOOP, 6,
+                   GL_UNSIGNED_INT, 0);
 
 }
 } // namespace Core

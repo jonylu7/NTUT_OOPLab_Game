@@ -10,6 +10,7 @@
 #include "Triangle.hpp"
 #include "Infantry.hpp"
 #include "Cell.hpp"
+#include "Rectangle.hpp"
 class App {
 public:
     enum class State {
@@ -30,8 +31,8 @@ public:
 
 private:
     State m_CurrentState = State::START;
-
-    Triangle m_Triangle;
+    //Triangle m_Triangle;
+    Rectangle rect;
     std::shared_ptr<Util::GameObject> m_Giraffe= std::make_shared<Giraffe>();
     std::shared_ptr<Util::GameObject> m_Capybara=std::make_shared<Capybara>();
     std::shared_ptr<Util::GameObject> m_Barracks=std::make_shared<Barracks>();
@@ -46,6 +47,7 @@ private:
 
     std::time_t initialTime=std::time(0);
     CellClass cellTest;
+
 
 
 };

@@ -28,7 +28,7 @@ private:
 
     std::unique_ptr<Core::UniformBuffer<Matrices>> m_Matrices =
         std::make_unique<Core::UniformBuffer<Matrices>>(m_Program, "Triangle",
-                                                        1);
+                                                        0);
 };
 
 #endif

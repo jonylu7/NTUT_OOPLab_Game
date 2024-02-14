@@ -39,6 +39,7 @@ void App::Start() {
 
     m_Barracks->AppendChild(gf);
     m_CurrentState = State::UPDATE;
+    //rect.Init();
 
 
 }
@@ -50,7 +51,7 @@ buttonMode currentModde;
 
 void App::Update() {
 
-
+    //rect.Draw();
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
         CameraZoom+=delta.y*CameraZoomingSpeed;
@@ -140,9 +141,10 @@ void App::Update() {
     m_Barracks->Update();
     //m_Giraffe->Update();
     m_Capybara->Update(lbLocation);
-    m_Triangle.Update();
+    //m_Triangle.Update();
     m_Structure->Update();
     m_Inf->Update();
+    rect.Update();
 
 
 
