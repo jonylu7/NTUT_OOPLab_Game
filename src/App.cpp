@@ -48,6 +48,24 @@ bool LBPressing=false;
 Util::Transform lbLocation;
 enum buttonMode{A,B,C};
 buttonMode currentModde;
+ImVec2 start_pos;
+ImVec2 end_pos;
+
+bool ShowSelectionRect(ImVec2* start_pos, ImVec2* end_pos, ImGuiMouseButton mouse_button = ImGuiMouseButton_Left)
+{
+    IM_ASSERT(start_pos != NULL);
+    IM_ASSERT(end_pos != NULL);
+    if (ImGui::IsMouseClicked(mouse_button))
+        *start_pos = ImGui::GetMousePos();
+    if (ImGui::IsMouseDown(mouse_button))
+    {
+        *end_pos = ImGui::GetMousePos();
+        ImDrawList* draw_list = ImGui::GetForegroundDrawList(); //ImGui::GetWindowDrawList();
+        draw_list->AddRect(*start_pos, *end_pos, ImGui::GetColorU32(IM_COL32(255, 255, 255, 255)));   // Border
+        //draw_list->AddRectFilled(*start_pos, *end_pos, ImGui::GetColorU32(IM_COL32(0, 130, 216, 50)));    // Background
+    }
+    return ImGui::IsMouseReleased(mouse_button);
+}
 
 void App::Update() {
 
@@ -64,10 +82,7 @@ void App::Update() {
 
     if(Util::Input::IsLButtonPressed()){
         glm::vec2 ogLBlocation=Util::Input::GetCursorPosition();
-        LBPressing=true;
-        LOG_DEBUG("LButton");
-        lbLocation.translation=ogLBlocation;
-        LOG_DEBUG("location x:{}, y{}",lbLocation.translation.x,lbLocation.translation.y);
+
 
         auto newCappy=std::make_shared<Capybara>();
         newCappy->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
@@ -80,10 +95,6 @@ void App::Update() {
     }
     }
 
-    if(Util::Input::IsMouseMoving() && LBPressing==true){
-        glm::vec2 nowLBLocation=Util::Input::GetCursorPosition();
-        LOG_DEBUG("drawned size x:{}, y{}", nowLBLocation.x-ogLBlocation.x,nowLBLocation.y-ogLBlocation.y);
-    }
 
 
     if(Util::Input::IsRButtonPressed()){
@@ -200,12 +211,12 @@ void App::Update() {
 
         ImGui::EndTabBar();
     }
+    ShowSelectionRect(&start_pos,&end_pos);
     ImGui::End();
 
     //and above
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    //ImGui::ShowDemoWindow();
 
 }
 
