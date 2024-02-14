@@ -63,5 +63,5 @@ void Triangle::Update() {
     m_Matrices->SetData(0, data);
 
     m_VertexArray->Bind();
-    m_VertexArray->DrawRectangles();
+    m_VertexArray->DrawTriangles();
 }

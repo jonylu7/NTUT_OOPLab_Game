@@ -18,6 +18,7 @@ layout(location = 0) out vec3 vertexColor;
  */
 
 void main() {
+
     gl_Position = vec4(vertexPos.x, vertexPos.y, 0, 1);
     vertexColor=vec3(1.F,1.F,1.F);
 }

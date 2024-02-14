@@ -82,8 +82,6 @@ void App::Update() {
 
     if(Util::Input::IsLButtonPressed()){
         glm::vec2 ogLBlocation=Util::Input::GetCursorPosition();
-
-
         auto newCappy=std::make_shared<Capybara>();
         newCappy->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
         newCappy->SetZIndex(-1);
@@ -94,9 +92,6 @@ void App::Update() {
         LOG_DEBUG("Fixed");
     }
     }
-
-
-
     if(Util::Input::IsRButtonPressed()){
         LOG_DEBUG("RPressed");
     }
@@ -151,7 +146,7 @@ void App::Update() {
     cellTest.Draw();
     m_Barracks->Update();
     //m_Giraffe->Update();
-    m_Capybara->Update(lbLocation);
+    //m_Capybara->Update(lbLocation);
     //m_Triangle.Update();
     m_Structure->Update();
     m_Inf->Update();
@@ -201,10 +196,16 @@ void App::Update() {
             currentModde = buttonMode::C;
         }
         ImGui::EndTabItem();
-        } else if (ImGui::BeginTabItem("Barracks")) {
-        //it wont show up, need to be fixed
-        if (ImGui::Button("Normal Troops")) {
+        }
+        if (ImGui::BeginTabItem("Barracks")) {
+        Util::Image image("../assets/sprites/Service.png");
+        ImGui::Image((void*)(intptr_t)image.getTextureID(),ImVec2(48,64));
+
+        if (ImGui::Button("Infantry")) {
             currentModde = buttonMode::C;
+        }
+        else if(ImGui::ImageButton("",(void*)(intptr_t)image.getTextureID(),ImVec2(48,64))){
+
         }
         ImGui::EndTabItem();
         }
