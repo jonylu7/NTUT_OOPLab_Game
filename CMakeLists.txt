@@ -43,6 +43,7 @@ set(SRC_FILES
     ${SRC_DIR}/Util/TransformUtils.cpp
     ${SRC_DIR}/Util/GameObject.cpp
 
+
     ${SRC_DIR}/App.cpp
     ${SRC_DIR}/Triangle.cpp
     ${SRC_DIR}/Giraffe.cpp
@@ -60,6 +61,8 @@ set(SRC_FILES
         ${SRC_DIR}/imgui/imgui_widgets.cpp
         ${SRC_DIR}/imgui/imgui_impl_sdlrenderer2.cpp
         ${SRC_DIR}/imgui/imgui_impl_opengl3.cpp
+
+        ${SRC_DIR}/Scene/Scene.cpp
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
@@ -110,6 +113,9 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/imgui/imgui_impl_sdlrenderer2..h
         ${INCLUDE_DIR}/imgui/imgui_impl_opengl3.h
         ${INCLUDE_DIR}/imgui/imgui_impl_opengl3_loader.h
+
+
+        ${INCLUDE_DIR}/Scene/Scene.hpp
 )
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(TEST_FILES

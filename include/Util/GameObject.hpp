@@ -48,7 +48,7 @@ public:
     virtual void
     Update(const Util::Transform &transform = Util::Transform()) = 0;
 
-    void Draw();
+    virtual void Draw();
 
 protected:
     Util::Transform m_Transform; // idk if this should be here.
