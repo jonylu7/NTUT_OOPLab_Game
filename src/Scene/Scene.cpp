@@ -71,7 +71,6 @@ void Scene::imgui(){
 }
 
 void Scene::Update(){
-
         m_SpriteSheet.Update();
         //rect.Draw();
         if (Util::Input::IfScroll()) {
@@ -83,10 +82,9 @@ void Scene::Update(){
 
         if(Util::Input::IsLButtonPressed()){
             glm::vec2 ogLBlocation=Util::Input::GetCursorPosition();
-            auto newCappy=std::make_shared<Capybara>();
-            newCappy->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
-            newCappy->SetZIndex(-1);
-            m_Capybara->AppendChild(newCappy);
+
+
+
             if(m_Structure->GetCurrentUpdateMode()==Structure::updateMode::Moveable){
                 m_Structure->SetObjectLocation(ogLBlocation);
                 m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
@@ -144,10 +142,9 @@ void Scene::Update(){
             break;
         }
         cellTest.Draw();
-        m_Barracks->Update();
-        //m_Giraffe->Update();
-        //m_Capybara->Update(lbLocation);
-        //m_Triangle.Update();
+        for (auto i:m_GameObjectList){
+            i->Update();
+        }
         m_Structure->Update();
         m_Inf->Update();
         rect.Update();
@@ -171,22 +168,21 @@ void Scene::Start(){
 
         LOG_TRACE("Start");
 
-        m_Giraffe->SetDrawable(
+        m_GameObjectList[0]->SetDrawable(
             std::make_unique<Util::Image>("../assets/sprites/Raccoon3.jpg"));
-        m_Giraffe->SetZIndex(10);
-        m_Giraffe->Start();
+        m_GameObjectList[0]->SetZIndex(10);
 
         auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 500,
                                                 "Giraffe");
-        gf->SetZIndex(m_Giraffe->GetZIndex() - 3);
+        gf->SetZIndex(m_GameObjectList[0]->GetZIndex() - 3);
         gf->Start();
-        m_Giraffe->AppendChild(gf);
+        m_GameObjectList[0]->AppendChild(gf);
 
-        m_Capybara->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
-        m_Capybara->Start();
+        m_GameObjectList[1]->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
 
-        m_Barracks->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
-        m_Barracks->Start();
+
+        m_GameObjectList[2]->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
+
 
         m_Structure->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
         m_Structure->Start();
@@ -194,7 +190,12 @@ void Scene::Start(){
         m_Inf->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/rac.png"));
         m_Inf->Start();
 
-        m_Barracks->AppendChild(gf);
+        m_GameObjectList[2]->AppendChild(gf);
         //rect.Init();
         m_SpriteSheet.Start(std::make_shared<Util::Image>("../assets/sprites/Allied Strucutre/Allied Structure SpriteSheet.png"),48,64,24,0);
+
+        for (auto i:m_GameObjectList){
+            i->Start();
+        }
+
 }

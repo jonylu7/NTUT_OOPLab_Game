@@ -50,9 +50,11 @@ void imgui_ShowSelectionRect(ImVec2* start_pos, ImVec2* end_pos, ImGuiMouseButto
 
 private:
     Rectangle rect;
-    std::shared_ptr<Util::GameObject> m_Giraffe= std::make_shared<Giraffe>();
-    std::shared_ptr<Util::GameObject> m_Capybara=std::make_shared<Capybara>();
-    std::shared_ptr<Util::GameObject> m_Barracks=std::make_shared<Barracks>();
+
+    std::vector<std::shared_ptr<Util::GameObject>> m_GameObjectList={
+        std::make_shared<Giraffe>(),std::make_shared<Capybara>(),std::make_shared<Barracks>()
+    };
+
     std::shared_ptr<Structure> m_Structure=std::make_shared<Structure>();
     std::shared_ptr<Infantry> m_Inf=std::make_shared<Infantry>();
 
