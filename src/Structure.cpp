@@ -8,7 +8,7 @@
 #include "config.hpp"
 
 
-void Structure::Update([[maybe_unused]] const Util::Transform &transform) {
+void Structure::Update([[maybe_unused]] const Util::Transform &transsform) {
     static glm::vec2 dir = {1, 0.5};
 
     auto &pos = m_Transform.translation;
@@ -33,8 +33,6 @@ case(updateMode::Invisidable):
         m_Drawable->Draw(m_Transform, m_ZIndex);
         break;
     }
-
-
 
     // LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
 }

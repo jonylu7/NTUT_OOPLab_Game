@@ -11,6 +11,7 @@
 
 #include "Texture.hpp"
 #include "Util/Transform.hpp"
+#include "Camera.hpp"
 
 namespace Core {
 struct Matrices {
@@ -22,6 +23,7 @@ class Drawable {
 public:
     virtual ~Drawable() = default;
     virtual void Draw(const Util::Transform &transform, const float zIndex) = 0;
+    virtual void DrawUsingCamera(Core::Matrices){};
 };
 } // namespace Core
 

@@ -7,6 +7,9 @@
 #include "Selectable.hpp"
 #include "Util/GameObject.hpp"
 #include "glm/glm.hpp"
+#include "Util/Input.hpp"
+#include "Util/TransformUtils.hpp"
+
 
 class Structure :public Util::GameObject{
 
@@ -16,6 +19,15 @@ public:
     ~Structure(){};
 
     void Update(const Util::Transform &transform = Util::Transform()) override;
+    //test
+    void UpdateUsingCamera(CameraClass camera){
+        Util::Transform transform;
+        Core::Matrices data = {
+            Util::TransformToMat4(transform, 0),
+            camera.getProjectionMatrix() * camera.getViewMatrix(),
+        };
+        m_Drawable->DrawUsingCamera(data);
+    }
     void Start()override{
     };
     updateMode GetCurrentUpdateMode()const {return m_CurrentState;};

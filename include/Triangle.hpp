@@ -8,7 +8,7 @@
 #include "Core/VertexArray.hpp"
 
 struct Matrices {
-    glm::mat2 m_Model;
+    glm::mat2 m_View;
     glm::mat2 m_Projection;
 };
 

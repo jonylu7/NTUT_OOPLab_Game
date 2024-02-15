@@ -10,6 +10,7 @@
 
 #include "Util/Logger.hpp"
 #include "Util/Transform.hpp"
+#include "Camera.hpp"
 
 namespace Util {
 class Image : public Core::Drawable {
@@ -21,6 +22,18 @@ public:
     }
     void Draw(const Util::Transform &transform, const float zIndex) override;
 
+    void DrawUsingCamera(Core::Matrices data) override{
+        s_UniformBuffer->SetData(0, data);
+
+        m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
+        s_Program->Bind();
+        s_Program->Validate();
+
+        s_VertexArray->Bind();
+        s_VertexArray->DrawTriangles();
+    }
+
+
     int getHeight(){return m_Surface->h;};
     int getWidth(){return m_Surface->w;};
 
@@ -29,6 +42,14 @@ private:
     void InitVertexArray();
     void
     InitUniformBuffer(const Util::Transform &transform = Util::Transform(), const float zIndex = -1);
+
+    //temp place here until batch
+    void InitUniformBuffer(CameraClass camera){
+        Core::Matrices data={{},camera.getProjectionMatrix()*camera.getViewMatrix()};
+        s_UniformBuffer->SetData(0, data);
+    };
+
+
 
     static constexpr int UNIFORM_SURFACE_LOCATION = 0;
 

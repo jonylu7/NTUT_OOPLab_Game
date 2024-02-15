@@ -8,10 +8,12 @@ void App::Start() {
 }
 
 void App::Update() {
-
+    if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE) ||
+        Util::Input::IfExit()) {
+        m_CurrentState = State::END;
+    }
 testScene.Update();
 testScene.imgui();
-m_CurrentState=App::State::UPDATE;
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)

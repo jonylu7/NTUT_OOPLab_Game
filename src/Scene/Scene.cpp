@@ -5,85 +5,54 @@
 
 ImVec2 start_pos;
 ImVec2 end_pos;
+void Scene::Start(){
 
-void Scene::imgui(){
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
-    ImGui::NewFrame();
-    // put the stuff in here
-    ImGui::Begin("Structure Selection Menu");
+    LOG_TRACE("Start");
+    m_GameObjectList[0]->SetDrawable(
+        std::make_unique<Util::Image>("../assets/sprites/Raccoon3.jpg"));
+    m_GameObjectList[0]->SetZIndex(10);
 
-    ImGui::Text(std::string("X: "+std::to_string(CameraPosition.x)+"  Y: "+std::to_string(CameraPosition.y)).c_str());
-    ImGui::Text(fmt::format("Zoom: {}",CameraZoom).c_str());
-    ImGui::Text(fmt::format("$ {}",1000).c_str());
-    ImGui::Text(fmt::format("Power {}",50).c_str());
-    if(ImGui::BeginTabBar("",ImGuiTabBarFlags_None) ){
-        if (ImGui::BeginTabItem("Buildings")) {
+    auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 500,
+                                            "Giraffe");
+    gf->SetZIndex(m_GameObjectList[0]->GetZIndex() - 3);
+    gf->Start();
+    m_GameObjectList[0]->AppendChild(gf);
 
-            if (ImGui::Button("Power Plants")) {
-                LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Barracks")) {
-                LOG_DEBUG("TEST");
-                m_Structure->SetCurrentUpdateMode(Structure::updateMode::Moveable);
-            } else if (ImGui::Button("Naval Yard")) {
-                LOG_DEBUG("TEST");
-                m_Inf->SetObjectLocation(glm::vec2(-190,100));
-                m_Inf->SetCurrentUpdateMode(Infantry::updateMode::MovingToDestination);
-            } else if (ImGui::Button("Ore Refinery")) {
-                LOG_DEBUG("TEST");
-                m_Inf->SetCurrentUpdateMode(Infantry::updateMode::Standing);
-            } else if (ImGui::Button("War Factory")) {
-                LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Radar Dome")) {
-                LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Service Depot")) {
-                LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Advance Power")) {
-                LOG_DEBUG("TEST");
-            } else if (ImGui::Button("HeliPad")) {
-                LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Tech Center")) {
-                LOG_DEBUG("TEST");
-            }
-            ImGui::EndTabItem();
-        }
-        if (ImGui::BeginTabItem("Barracks")) {
-            Util::Image image("../assets/sprites/Service.png");
-            ImGui::Image((void*)image.getTextureID(),ImVec2(48,64));
+    m_GameObjectList[1]->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
 
-            if (ImGui::Button("Infantry")) {
-                LOG_DEBUG("TEST");
-            }
-            else if(ImGui::ImageButton("",(void*)(intptr_t)image.getTextureID(),ImVec2(48,64))){
 
-            }
-            ImGui::EndTabItem();
-        }
+    m_GameObjectList[2]->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/rac.png"));
 
-        ImGui::EndTabBar();
+
+    m_Structure->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/barracks.gif"));
+    m_Structure->Start();
+    m_Structure->SetCurrentUpdateMode(Structure::updateMode::Moveable);
+
+    m_Inf->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/rac.png"));
+    m_Inf->Start();
+
+    m_GameObjectList[2]->AppendChild(gf);
+    //rect.Init();
+    m_SpriteSheet.Start(std::make_shared<Util::Image>("../assets/sprites/Allied Strucutre/Allied Structure SpriteSheet.png"),48,64,24,0);
+
+    for (auto i:m_GameObjectList){
+        i->Start();
     }
-    imgui_ShowSelectionRect(&start_pos,&end_pos);
-    ImGui::End();
 
-    //and above
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void Scene::Update(){
-        m_SpriteSheet.Update();
+   // m_Structure->Update();
+    m_Structure->UpdateUsingCamera(m_SceneCamera);
         //rect.Draw();
         if (Util::Input::IfScroll()) {
             auto delta = Util::Input::GetScrollDistance();
-            CameraZoom+=delta.y*CameraZoomingSpeed;
+            m_SceneCamera.addCameraZoom(delta.y*CameraZoomingSpeed);
             //LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
         }
 
-
         if(Util::Input::IsLButtonPressed()){
             glm::vec2 ogLBlocation=Util::Input::GetCursorPosition();
-
-
 
             if(m_Structure->GetCurrentUpdateMode()==Structure::updateMode::Moveable){
                 m_Structure->SetObjectLocation(ogLBlocation);
@@ -142,12 +111,14 @@ void Scene::Update(){
             break;
         }
         cellTest.Draw();
+        m_SpriteSheet.Update();
+
+        m_Inf->Update();
+        rect.Update();
+
         for (auto i:m_GameObjectList){
             i->Update();
         }
-        m_Structure->Update();
-        m_Inf->Update();
-        rect.Update();
 }
 
 void Scene::imgui_ShowSelectionRect(ImVec2* start_pos, ImVec2* end_pos, ImGuiMouseButton mouse_button){
@@ -164,38 +135,69 @@ void Scene::imgui_ShowSelectionRect(ImVec2* start_pos, ImVec2* end_pos, ImGuiMou
         }
 }
 
-void Scene::Start(){
-
-        LOG_TRACE("Start");
-
-        m_GameObjectList[0]->SetDrawable(
-            std::make_unique<Util::Image>("../assets/sprites/Raccoon3.jpg"));
-        m_GameObjectList[0]->SetZIndex(10);
-
-        auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 500,
-                                                "Giraffe");
-        gf->SetZIndex(m_GameObjectList[0]->GetZIndex() - 3);
-        gf->Start();
-        m_GameObjectList[0]->AppendChild(gf);
-
-        m_GameObjectList[1]->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
 
 
-        m_GameObjectList[2]->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
 
+void Scene::imgui(){
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
+        // put the stuff in here
+        ImGui::Begin("Structure Selection Menu");
+        m_SceneCamera.setPosition(CameraPosition);
+        ImGui::Text(std::string("X: "+std::to_string(CameraPosition.x)+"  Y: "+std::to_string(CameraPosition.y)).c_str());
+        ImGui::Text(fmt::format("Zoom: {}",CameraZoom).c_str());
+        ImGui::Text(fmt::format("$ {}",1000).c_str());
+        ImGui::Text(fmt::format("Power {}",50).c_str());
+        if(ImGui::BeginTabBar("",ImGuiTabBarFlags_None) ){
+            if (ImGui::BeginTabItem("Buildings")) {
 
-        m_Structure->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Barracks.gif"));
-        m_Structure->Start();
+                if (ImGui::Button("Power Plants")) {
+                    LOG_DEBUG("TEST");
+                } else if (ImGui::Button("Barracks")) {
+                    LOG_DEBUG("TEST");
+                    m_Structure->SetCurrentUpdateMode(Structure::updateMode::Moveable);
+                } else if (ImGui::Button("Naval Yard")) {
+                    LOG_DEBUG("TEST");
+                    m_Inf->SetObjectLocation(glm::vec2(-190,100));
+                    m_Inf->SetCurrentUpdateMode(Infantry::updateMode::MovingToDestination);
+                } else if (ImGui::Button("Ore Refinery")) {
+                    LOG_DEBUG("TEST");
+                    m_Inf->SetCurrentUpdateMode(Infantry::updateMode::Standing);
+                } else if (ImGui::Button("War Factory")) {
+                    LOG_DEBUG("TEST");
+                } else if (ImGui::Button("Radar Dome")) {
+                    LOG_DEBUG("TEST");
+                } else if (ImGui::Button("Service Depot")) {
+                    LOG_DEBUG("TEST");
+                } else if (ImGui::Button("Advance Power")) {
+                    LOG_DEBUG("TEST");
+                } else if (ImGui::Button("HeliPad")) {
+                    LOG_DEBUG("TEST");
+                } else if (ImGui::Button("Tech Center")) {
+                    LOG_DEBUG("TEST");
+                }
+                ImGui::EndTabItem();
+            }
+            if (ImGui::BeginTabItem("Barracks")) {
+                Util::Image image("../assets/sprites/Service.png");
+                ImGui::Image((void*)image.getTextureID(),ImVec2(48,64));
 
-        m_Inf->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/rac.png"));
-        m_Inf->Start();
+                if (ImGui::Button("Infantry")) {
+                    LOG_DEBUG("TEST");
+                }
+                else if(ImGui::ImageButton("",(void*)(intptr_t)image.getTextureID(),ImVec2(48,64))){
 
-        m_GameObjectList[2]->AppendChild(gf);
-        //rect.Init();
-        m_SpriteSheet.Start(std::make_shared<Util::Image>("../assets/sprites/Allied Strucutre/Allied Structure SpriteSheet.png"),48,64,24,0);
+                }
+                ImGui::EndTabItem();
+            }
 
-        for (auto i:m_GameObjectList){
-            i->Start();
+            ImGui::EndTabBar();
         }
+        imgui_ShowSelectionRect(&start_pos,&end_pos);
+        ImGui::End();
 
+        //and above
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

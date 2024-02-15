@@ -3134,7 +3134,7 @@ void ImGui::TableHeader(const char* label)
         }
     }
 
-    // Render clipped label. Clipping here ensure that in the majority of situations, all our header cells will
+    // Renderer clipped label. Clipping here ensure that in the majority of situations, all our header cells will
     // be merged into a single draw call.
     //window->DrawList->AddCircleFilled(ImVec2(ellipsis_max, label_pos.y), 40, IM_COL32_WHITE);
     RenderTextEllipsis(window->DrawList, label_pos, ImVec2(ellipsis_max, label_pos.y + label_height + g.Style.FramePadding.y), ellipsis_max, ellipsis_max, label, label_end, &label_size);

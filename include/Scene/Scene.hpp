@@ -26,14 +26,12 @@
 #include "Cell.hpp"
 #include "Rectangle.hpp"
 #include "SpriteSheet.hpp"
-
+#include "Camera.hpp"
 
 class Scene{
 public:
-
-
-Scene(){}
-~Scene(){}
+Scene(){};
+~Scene(){};
 
 void Start();
 void Update();
@@ -49,12 +47,13 @@ std::time_t How_long_has_passed(){
 void imgui_ShowSelectionRect(ImVec2* start_pos, ImVec2* end_pos, ImGuiMouseButton mouse_button = ImGuiMouseButton_Left);
 
 private:
-    Rectangle rect;
+
 
     std::vector<std::shared_ptr<Util::GameObject>> m_GameObjectList={
         std::make_shared<Giraffe>(),std::make_shared<Capybara>(),std::make_shared<Barracks>()
     };
 
+    Rectangle rect;
     std::shared_ptr<Structure> m_Structure=std::make_shared<Structure>();
     std::shared_ptr<Infantry> m_Inf=std::make_shared<Infantry>();
 
@@ -67,6 +66,8 @@ private:
     std::time_t initialTime=std::time(0);
     CellClass cellTest;
     SpriteSheet m_SpriteSheet;
+
+    CameraClass m_SceneCamera;
 
 };
 
