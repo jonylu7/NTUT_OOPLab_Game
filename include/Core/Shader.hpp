@@ -27,9 +27,6 @@ public:
 
     void uploadMat4f(std::string varName,glm::mat4x4 matf){
         //int varLocation=glGetUniformLocation(m_ShaderId);
-
-
-
     };
 
 
