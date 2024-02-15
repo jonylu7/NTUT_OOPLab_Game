@@ -22,6 +22,7 @@ public:
     //test
     void UpdateUsingCamera(CameraClass camera){
         Util::Transform transform;
+        transform.scale=glm::vec2(camera.getCameraZoom());
         Core::Matrices data = {
             Util::TransformToMat4(transform, 0),
             camera.getProjectionMatrix() * camera.getViewMatrix(),

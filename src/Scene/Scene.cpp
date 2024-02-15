@@ -145,6 +145,7 @@ void Scene::imgui(){
         // put the stuff in here
         ImGui::Begin("Structure Selection Menu");
         m_SceneCamera.setPosition(CameraPosition);
+
         ImGui::Text(std::string("X: "+std::to_string(CameraPosition.x)+"  Y: "+std::to_string(CameraPosition.y)).c_str());
         ImGui::Text(fmt::format("Zoom: {}",CameraZoom).c_str());
         ImGui::Text(fmt::format("$ {}",1000).c_str());

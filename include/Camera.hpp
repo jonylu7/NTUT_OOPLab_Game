@@ -44,7 +44,7 @@ public:
          * adjust projection matrix when window size is changing
          */
         m_ProjectionMatrix=glm::identity<glm::mat4x4>();
-        m_ProjectionMatrix=glm::ortho(0.0F,32.F*42.F,0.0F,32.F*42.F,0.F,100.F);
+        m_ProjectionMatrix=glm::ortho(0.0F,32.F*42.F,0.0F,32.F*42.F,-200.F,200.F);
     }
 
     glm::mat4x4 getProjectionMatrix(){
@@ -57,7 +57,7 @@ public:
          */
         glm::vec3 cameraFront(0.F,0.F,-1.F);
         glm::vec3 cameraUp(0.F,1.F,0.F);
-        m_ViewMatrix=glm::lookAt(glm::vec3(m_Position.x,m_Position.y,20.F), // position
+        m_ViewMatrix=glm::lookAt(glm::vec3(m_Position.x,m_Position.y,50.F), // position
                                    cameraFront+glm::vec3(m_Position.x,m_Position.y,0.F),
                                    cameraUp
                                    );
@@ -67,7 +67,7 @@ public:
 
 
 private:
-    float m_Zoom=-1.F;
+    float m_Zoom=1.F;
     glm::vec2 m_Position={0.F,0.F};
     glm::mat4x4 m_ProjectionMatrix,m_ViewMatrix;
 
