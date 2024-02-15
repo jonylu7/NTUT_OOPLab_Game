@@ -21,6 +21,9 @@ public:
     }
     void Draw(const Util::Transform &transform, const float zIndex) override;
 
+    int getHeight(){return m_Surface->h;};
+    int getWidth(){return m_Surface->w;};
+
 private:
     void InitProgram();
     void InitVertexArray();

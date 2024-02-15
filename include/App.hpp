@@ -11,6 +11,7 @@
 #include "Infantry.hpp"
 #include "Cell.hpp"
 #include "Rectangle.hpp"
+#include "SpriteSheet.hpp"
 class App {
 public:
     enum class State {
@@ -47,6 +48,7 @@ private:
 
     std::time_t initialTime=std::time(0);
     CellClass cellTest;
+    SpriteSheet m_SpriteSheet;
 
 
 

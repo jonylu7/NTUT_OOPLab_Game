@@ -9,6 +9,7 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "Core/Context.hpp"
 #include "Cell.hpp"
+#include "SpriteSheet.hpp"
 
 void App::Start() {
 
@@ -40,7 +41,7 @@ void App::Start() {
     m_Barracks->AppendChild(gf);
     m_CurrentState = State::UPDATE;
     //rect.Init();
-
+    m_SpriteSheet.Start(std::make_shared<Util::Image>("../assets/sprites/Allied Strucutre/Allied Structure SpriteSheet.png"),48,64,24,0);
 
 }
 glm::vec2 ogLBlocation=glm::vec2(0,0);
@@ -68,7 +69,7 @@ bool ShowSelectionRect(ImVec2* start_pos, ImVec2* end_pos, ImGuiMouseButton mous
 }
 
 void App::Update() {
-
+    m_SpriteSheet.Update();
     //rect.Draw();
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
@@ -199,7 +200,7 @@ void App::Update() {
         }
         if (ImGui::BeginTabItem("Barracks")) {
         Util::Image image("../assets/sprites/Service.png");
-        ImGui::Image((void*)(intptr_t)image.getTextureID(),ImVec2(48,64));
+        ImGui::Image((void*)image.getTextureID(),ImVec2(48,64));
 
         if (ImGui::Button("Infantry")) {
             currentModde = buttonMode::C;
