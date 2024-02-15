@@ -21,8 +21,6 @@ int main(int, char **) {
             context->SetExit(true);
             break;
         }
-
-
     }
     return 0;
 }

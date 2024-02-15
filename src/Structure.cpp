@@ -7,7 +7,6 @@
 #include "Util/Transform.hpp"
 #include "config.hpp"
 
-
 void Structure::Update([[maybe_unused]] const Util::Transform &transsform) {
     static glm::vec2 dir = {1, 0.5};
 
@@ -20,15 +19,15 @@ void Structure::Update([[maybe_unused]] const Util::Transform &transsform) {
         dir.x *= -1;
     }
 
-    m_Transform.scale={0.5,0.5};
+    m_Transform.scale = {0.5, 0.5};
     switch (m_CurrentState) {
-case(updateMode::Invisidable):
+    case (updateMode::Invisidable):
         break;
-    case(updateMode::Moveable):
-        pos=Util::Input::GetCursorPosition();
+    case (updateMode::Moveable):
+        pos = Util::Input::GetCursorPosition();
         m_Drawable->Draw(m_Transform, m_ZIndex);
         break;
-    case(updateMode::Fixed):
+    case (updateMode::Fixed):
         pos = ObjectLocation;
         m_Drawable->Draw(m_Transform, m_ZIndex);
         break;
@@ -36,6 +35,3 @@ case(updateMode::Invisidable):
 
     // LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
 }
-
-
-

@@ -4,10 +4,10 @@
 #include "Barracks.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
+#include "Util/Input.hpp"
 #include "Util/Text.hpp"
 #include "Util/Time.hpp"
 #include "Util/Transform.hpp"
-#include "Util/Input.hpp"
 #include "config.hpp"
 
 void Barracks::Update([[maybe_unused]] const Util::Transform &transform) {
@@ -26,7 +26,7 @@ void Barracks::Update([[maybe_unused]] const Util::Transform &transform) {
 
     Util::Transform tras{Util::Input::GetCursorPosition()};
 
-    pos =tras.translation;
+    pos = tras.translation;
 
     m_Drawable->Draw(m_Transform, m_ZIndex);
     for (auto &child : m_Children) {

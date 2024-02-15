@@ -16,7 +16,8 @@ glm::mat4 TransformToMat4(const Transform &transform, const float zIndex) {
 Core::Matrices ConvertToUniformBufferData(const Util::Transform &transform,
                                           const float zIndex) {
     /*
-     * it converts from the transform data, which has translation, rotation...etc. to Matrices.
+     * it converts from the transform data, which has translation,
+     * rotation...etc. to Matrices.
      */
     constexpr glm::mat4 eye(1.F);
 

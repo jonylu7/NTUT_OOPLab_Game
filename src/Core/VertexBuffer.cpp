@@ -2,7 +2,7 @@
 
 namespace Core {
 VertexBuffer::VertexBuffer(const std::vector<float> &vertices,
-                           unsigned int componentCount,DrawingType type)
+                           unsigned int componentCount, DrawingType type)
     : m_ComponentCount(componentCount) {
     /*
      * There are three drawing types,
@@ -19,19 +19,17 @@ VertexBuffer::VertexBuffer(const std::vector<float> &vertices,
                      static_cast<GLsizeiptr>(vertices.size() * sizeof(GLfloat)),
                      vertices.data(), GL_STATIC_DRAW);
         break;
-    case(DYNAMIC):
+    case (DYNAMIC):
         glBufferData(GL_ARRAY_BUFFER,
                      static_cast<GLsizeiptr>(vertices.size() * sizeof(GLfloat)),
                      vertices.data(), GL_DYNAMIC_DRAW);
         break;
-    case(STREAM):
+    case (STREAM):
         glBufferData(GL_ARRAY_BUFFER,
-                    static_cast<GLsizeiptr>(vertices.size() * sizeof(GLfloat)),
-                    vertices.data(), GL_STREAM_DRAW);
+                     static_cast<GLsizeiptr>(vertices.size() * sizeof(GLfloat)),
+                     vertices.data(), GL_STREAM_DRAW);
         break;
-
-}
-
+    }
 }
 
 VertexBuffer::VertexBuffer(VertexBuffer &&other) {

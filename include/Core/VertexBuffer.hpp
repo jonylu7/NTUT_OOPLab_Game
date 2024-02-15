@@ -9,9 +9,9 @@ namespace Core {
  */
 class VertexBuffer {
 public:
-    enum DrawingType{ STATIC,DYNAMIC,STREAM};
+    enum DrawingType { STATIC, DYNAMIC, STREAM };
     VertexBuffer(const std::vector<float> &vertices,
-                 unsigned int componentCount,DrawingType type=STATIC);
+                 unsigned int componentCount, DrawingType type = STATIC);
     VertexBuffer(const VertexBuffer &) = delete;
     VertexBuffer(VertexBuffer &&other);
 

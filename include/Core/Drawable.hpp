@@ -9,9 +9,9 @@
 #include "Core/UniformBuffer.hpp"
 #include "Core/VertexArray.hpp"
 
+#include "Camera.hpp"
 #include "Texture.hpp"
 #include "Util/Transform.hpp"
-#include "Camera.hpp"
 
 namespace Core {
 struct Matrices {

@@ -4,17 +4,18 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_WORLD_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_WORLD_HPP
-#include <vector>
-#include <memory>
 #include "Cell.hpp"
+#include <memory>
+#include <vector>
 typedef unsigned int CELL;
-class WorldClass{
+class WorldClass {
 public:
     WorldClass(){};
     ~WorldClass(){};
+
 private:
-    CELL WorldWidth=100;
-    CELL WorldHeight=100;
+    CELL WorldWidth = 100;
+    CELL WorldHeight = 100;
     std::vector<std::shared_ptr<CellClass>> Map;
 };
 

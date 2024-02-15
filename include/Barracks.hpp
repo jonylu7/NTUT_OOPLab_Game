@@ -7,14 +7,11 @@
 
 #include "Util/GameObject.hpp"
 
-class Barracks:public Util::GameObject{
+class Barracks : public Util::GameObject {
 private:
-
 public:
-void Update(const Util::Transform &transform = Util::Transform()) override;
-void Start()override{};
-
-
+    void Update(const Util::Transform &transform = Util::Transform()) override;
+    void Start() override{};
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_CAPYBARA_HPP

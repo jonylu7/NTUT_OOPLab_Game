@@ -1,8 +1,8 @@
 #ifndef APP_HPP
 #define APP_HPP
 
-#include "pch.hpp" // IWYU pragma: export
 #include "Scene/Scene.hpp"
+#include "pch.hpp" // IWYU pragma: export
 class App {
 public:
     enum class State {
@@ -18,7 +18,6 @@ public:
 private:
     State m_CurrentState = State::START;
     Scene testScene;
-
 };
 
 #endif

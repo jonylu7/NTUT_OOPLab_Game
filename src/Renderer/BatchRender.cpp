@@ -24,12 +24,9 @@ void BatchRender::Start(const char *filepath) {
     m_Texture = std::make_unique<Core::Texture>(
         m_Surface->format->BytesPerPixel, m_Surface->w, m_Surface->h,
         m_Surface->pixels);
-
-
 }
 
-
-void BatchRender::InitVertexArray(){
+void BatchRender::InitVertexArray() {
     s_VertexArray = std::make_unique<Core::VertexArray>();
 
     // hard coded value
@@ -68,21 +65,18 @@ void BatchRender::InitVertexArray(){
     // NOLINTEND
 }
 
-
 void BatchRender::InitUniformBuffer(const Util::Transform &transform,
-                              const float zIndex) { // YESLINT
+                                    const float zIndex) { // YESLINT
     s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
         *s_Program, "Matrices", 0);
 
     auto data = Util::ConvertToUniformBufferData(transform, zIndex);
     s_UniformBuffer->SetData(0, data);
-
 }
 std::unique_ptr<Core::Program> BatchRender::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> BatchRender::s_VertexArray = nullptr;
-std::unique_ptr<Core::UniformBuffer<Core::Matrices>> BatchRender::s_UniformBuffer =
-    nullptr;
-
+std::unique_ptr<Core::UniformBuffer<Core::Matrices>>
+    BatchRender::s_UniformBuffer = nullptr;
 
 void BatchRender::InitProgram() {
     // TODO: Create `BaseProgram` from `Program` and pass it into `Drawable`
@@ -94,13 +88,12 @@ void BatchRender::InitProgram() {
     glUniform1i(location, UNIFORM_SURFACE_LOCATION);
 }
 
-//loadVertexProperties(int index) SpriteRenderer sprite = this.sprites[index];
+// loadVertexProperties(int index) SpriteRenderer sprite = this.sprites[index];
 
-//render
+// render
 
-//addSprite(SpriteRenderer spr)
+// addSprite(SpriteRenderer spr)
 
-//generateIndices
+// generateIndices
 
-//loadElementIndices(int[] elements, int index)
-
+// loadElementIndices(int[] elements, int index)

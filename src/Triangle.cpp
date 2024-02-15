@@ -7,22 +7,19 @@
 
 Triangle::Triangle() {
     std::vector<float> vertex({
-        100.f,  100.f,100.f ,  // top right
-        -100.f,100.f, -100.f ,// bottom right
-        150.f, 150.f, -10.f ,// bottom left
-        100.f,  150.f,-200.f
-         // NOLINT
+        100.f, 100.f, 100.f,   // top right
+        -100.f, 100.f, -100.f, // bottom right
+        150.f, 150.f, -10.f,   // bottom left
+        100.f, 150.f, -200.f
+        // NOLINT
     });
     std::vector<float> color({
-        1.0F, 1.0F, 1.0F, //
-        1.0F, 1.0F, 1.0F, //
-        1.0F, 1.0F, 1.0F,
-        1.0F, 1.0F, 1.0F//
+        1.0F, 1.0F, 1.0F,                  //
+        1.0F, 1.0F, 1.0F,                  //
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F //
     });
-    std::vector<unsigned int> index({
-//element array
-        0,1,2,
-        1,2,3
+    std::vector<unsigned int> index({// element array
+                                     0, 1, 2, 1, 2, 3
 
     });
 
@@ -40,8 +37,8 @@ void Triangle::Update() {
     m_Program.Validate();
 
     static float counter = 0.0F;
-    //counter += static_cast<float>(50.0F * Util::Time::GetDeltaTime()); // NOLINT
-    //const float angle = glm::radians(counter);
+    // counter += static_cast<float>(50.0F * Util::Time::GetDeltaTime()); //
+    // NOLINT const float angle = glm::radians(counter);
     float fixedangle = glm::radians(0.0F);
 
     const float width = 1280.0F / 2.0F;
@@ -50,15 +47,13 @@ void Triangle::Update() {
     Matrices data = {
         {
             glm::cos(fixedangle), glm::sin(fixedangle), //
-            glm::sin(fixedangle), glm::cos(fixedangle)   //
+            glm::sin(fixedangle), glm::cos(fixedangle)  //
         },
         {
             1.0F / width, 0.0F, //
             0.0F, 1.0F / height //
         },
     };
-
-
 
     m_Matrices->SetData(0, data);
 

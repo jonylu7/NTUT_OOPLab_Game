@@ -50,6 +50,4 @@ void Shader::CheckStatus(const std::string &filepath) const {
     }
 }
 
-
-
 } // namespace Core

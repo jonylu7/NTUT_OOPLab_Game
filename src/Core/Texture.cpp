@@ -15,8 +15,8 @@ GLint ChannelsToInternalFormat(unsigned int channels) {
 };
 
 GLint ChannelsToFormat(unsigned int channels) {
-    // Since the color channel in MacOS is invert, we need to return the channel by the condition.
-    // Solved #57
+    // Since the color channel in MacOS is invert, we need to return the channel
+    // by the condition. Solved #57
     switch (channels) {
     case 3:
 #ifdef __APPLE__

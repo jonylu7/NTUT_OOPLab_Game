@@ -4,13 +4,10 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_RENDERER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_RENDERER_HPP
-class Renderer{
+class Renderer {
 private:
 public:
     Renderer();
     ~Renderer(){};
-
-
-
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_RENDERER_HPP
