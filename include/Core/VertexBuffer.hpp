@@ -25,6 +25,9 @@ public:
 
     void Bind() const;
     void Unbind() const;
+    
+    template <class T>
+    void ModifyBufferData(int size, std::vector<T> data);
 
 private:
     GLuint m_BufferId;

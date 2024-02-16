@@ -61,7 +61,7 @@ void Scene::Start() {
     std::vector<Line> test{
         Line(glm::vec2(0.F, 100.F), glm::vec2(100.F, 0.F)),
         Line(glm::vec2(-100.F, -100.F), glm::vec2(0.F, 100.F))};
-    // testGrid.Start(test);
+    testGrid.Start(test);
 }
 
 void Scene::Update() {

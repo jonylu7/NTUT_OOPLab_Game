@@ -30,10 +30,11 @@ private:
     std::unique_ptr<Core::UniformBuffer<Matrices>> m_Matrices =
         std::make_unique<Core::UniformBuffer<Matrices>>(m_Program, "Rectangle",
                                                         0);
-    float lineWidth = 2.0F;
+    float lineWidth = 10.0F;
 
-    Core::VertexArray m_VertexArray;
-    GLuint vaoID;
+    std::unique_ptr<Core::VertexArray> m_VertexArray =
+        std::make_unique<Core::VertexArray>();
+
     GLuint vboID;
 };
 

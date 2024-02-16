@@ -45,6 +45,7 @@ void VertexArray::AddVertexBuffer(std::unique_ptr<VertexBuffer> vertexBuffer) {
                           static_cast<GLint>(vertexBuffer->GetComponentCount()),
                           vertexBuffer->GetType(), GL_FALSE, 0, nullptr);
 
+    // m_VertexBuffer is basically useless
     m_VertexBuffers.push_back(std::move(vertexBuffer));
 }
 

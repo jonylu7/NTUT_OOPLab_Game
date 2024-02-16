@@ -9,6 +9,7 @@ VertexBuffer::VertexBuffer(const std::vector<float> &vertices,
      * Static: set only once and used many times.
      * Dynamic: the data is changed a lot and used many times.
      * Stream: the data is set only once and used by the GPU at most a few times
+     * componentCount stands for...
      */
 
     glGenBuffers(1, &m_BufferId);
@@ -61,4 +62,10 @@ void VertexBuffer::Bind() const {
 void VertexBuffer::Unbind() const {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+template <typename T>
+void VertexBuffer::ModifyBufferData(int size, std::vector<T> data) {
+    glBindBuffer(GL_ARRAY_BUFFER, m_BufferId);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, size, &data);
+}
+
 } // namespace Core
