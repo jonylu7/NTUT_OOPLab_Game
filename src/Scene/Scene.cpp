@@ -49,19 +49,20 @@ void Scene::Start() {
     std::vector<Line> horz = {};
     std::vector<Line> vert = {};
     for (float i = (WINDOW_HEIGHT / 2); i > 0; i -= cellWidth) {
-        horz.push_back(Line(glm::vec2(i, -(WINDOW_WIDTH / 2)),
-                            glm::vec2(i, (WINDOW_WIDTH / 2))));
+        horz.push_back(Line(glm::vec2(int(i), int(-(WINDOW_WIDTH / 2))),
+                            glm::vec2(int(i), int(WINDOW_WIDTH / 2))));
     }
 
     for (float i = WINDOW_WIDTH / 2; i > 0; i -= cellHeight) {
-        vert.push_back(Line(glm::vec2(-(WINDOW_HEIGHT / 2), i),
-                            glm::vec2((WINDOW_HEIGHT / 2), i)));
+        vert.push_back(Line(glm::vec2(int(-(WINDOW_HEIGHT / 2)), int(i)),
+                            glm::vec2(int(WINDOW_HEIGHT / 2), int(i))));
     }
 
     std::vector<Line> test{
-        Line(glm::vec2(0.F, 100.F), glm::vec2(100.F, 0.F)),
-        Line(glm::vec2(-100.F, -100.F), glm::vec2(0.F, 100.F))};
-    testGrid.Start(test);
+        Line(glm::vec2(360, 940), glm::vec2(360, -940)),
+        Line(glm::vec2(-(WINDOW_HEIGHT / 2), (WINDOW_WIDTH / 2) - 48),
+             glm::vec2((WINDOW_HEIGHT / 2), (WINDOW_WIDTH / 2) - 48))};
+    testGrid.Start(horz);
 }
 
 void Scene::Update() {
