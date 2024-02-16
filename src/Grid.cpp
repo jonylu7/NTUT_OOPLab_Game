@@ -5,24 +5,7 @@
 #include "Grid.hpp"
 #include "Core/Drawable.hpp"
 
-void Grid::Start(std::vector<Line> lineVector) {
-    glLineWidth(100.F);
-    m_lineVector = lineVector;
-    /*
-    // Create the vbo and buffer some memory
-    glGenBuffers(1, &vboID);
-    glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ARRAY_BUFFER, m_lineVector.size() * sizeof(float), 0,
-                 GL_DYNAMIC_DRAW);
-
-    // Enable the vertex array attributes
-    glVertexAttribPointer(0, 2, GL_FLOAT, false, 6 * sizeof(float), 0);
-    glEnableVertexAttribArray(0);
-
-    glVertexAttribPointer(1, 2, GL_FLOAT, false, 5 * sizeof(float),
-                          (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    */
+void Grid::Start() {
 
     std::vector<float> vertex = {};
     std::vector<float> color = {};
@@ -46,11 +29,12 @@ void Grid::Start(std::vector<Line> lineVector) {
 }
 
 void Grid::Update() {
-
+    if (m_Activate == false) {
+        return;
+    }
+    glLineWidth(m_lineWidth);
     const float width = 1280.0F / 2.0F;
     const float height = 720.0F / 2.0F;
-
-    // m_lineVector.size() * 5 * 2 & vertex
 
     m_Program.Bind();
     m_Program.Validate();
@@ -89,4 +73,30 @@ void Grid::Update() {
     m_VertexArray->Bind();
 
     m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
+}
+
+void Grid::StartDrawingGridByWindowSize() {
+    float cellWidth = 48.F;
+    float cellHeight = 48.F;
+
+    for (int i = (WINDOW_WIDTH / 2); i > int(-(WINDOW_WIDTH / 2));
+         i -= cellHeight) {
+        // vertical
+        m_lineVector.push_back(Line(glm::vec2(i, int(-(WINDOW_HEIGHT / 2))),
+                                    glm::vec2(i, int(WINDOW_HEIGHT / 2))));
+    }
+
+    for (int i = (WINDOW_HEIGHT / 2); i > int(-(WINDOW_HEIGHT / 2));
+         i -= cellWidth) {
+        // horz
+        m_lineVector.push_back(Line(glm::vec2(int(-(WINDOW_WIDTH / 2)), i),
+                                    glm::vec2(int(WINDOW_WIDTH / 2), i)));
+    }
+
+    std::vector<Line> test{
+        Line(glm::vec2(360, 940), glm::vec2(360, -940)),
+        Line(glm::vec2(-(WINDOW_HEIGHT / 2), (WINDOW_WIDTH / 2) - 48),
+             glm::vec2((WINDOW_HEIGHT / 2), (WINDOW_WIDTH / 2) - 48))};
+
+    this->Start();
 }

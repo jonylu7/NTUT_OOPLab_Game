@@ -19,8 +19,13 @@ class Grid {
 public:
     Grid(){};
     ~Grid(){};
-    void Start(std::vector<Line> m_lineVector);
+    void StartDrawingGridByWindowSize();
+    void Start();
     void Update();
+    void switchActivate() { m_Activate = !m_Activate; };
+
+    void setgridActivate() { m_Activate = true; };
+    void setgridDeactivate() { m_Activate = false; };
 
 private:
     std::vector<Line> m_lineVector;
@@ -30,12 +35,12 @@ private:
     std::unique_ptr<Core::UniformBuffer<Matrices>> m_Matrices =
         std::make_unique<Core::UniformBuffer<Matrices>>(m_Program, "Rectangle",
                                                         0);
-    float lineWidth = 10.0F;
+    float m_lineWidth = 1.0F;
 
     std::unique_ptr<Core::VertexArray> m_VertexArray =
         std::make_unique<Core::VertexArray>();
 
-    GLuint vboID;
+    bool m_Activate = false;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GRID_HPP

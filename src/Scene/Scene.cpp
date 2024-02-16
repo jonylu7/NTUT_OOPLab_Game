@@ -43,26 +43,7 @@ void Scene::Start() {
     for (auto i : m_GameObjectList) {
         i->Start();
     }
-
-    float cellWidth = 48.F;
-    float cellHeight = 48.F;
-    std::vector<Line> horz = {};
-    std::vector<Line> vert = {};
-    for (float i = (WINDOW_HEIGHT / 2); i > 0; i -= cellWidth) {
-        horz.push_back(Line(glm::vec2(int(i), int(-(WINDOW_WIDTH / 2))),
-                            glm::vec2(int(i), int(WINDOW_WIDTH / 2))));
-    }
-
-    for (float i = WINDOW_WIDTH / 2; i > 0; i -= cellHeight) {
-        vert.push_back(Line(glm::vec2(int(-(WINDOW_HEIGHT / 2)), int(i)),
-                            glm::vec2(int(WINDOW_HEIGHT / 2), int(i))));
-    }
-
-    std::vector<Line> test{
-        Line(glm::vec2(360, 940), glm::vec2(360, -940)),
-        Line(glm::vec2(-(WINDOW_HEIGHT / 2), (WINDOW_WIDTH / 2) - 48),
-             glm::vec2((WINDOW_HEIGHT / 2), (WINDOW_WIDTH / 2) - 48))};
-    testGrid.Start(horz);
+    testGrid.StartDrawingGridByWindowSize();
 }
 
 void Scene::Update() {
@@ -182,7 +163,11 @@ void Scene::imgui() {
     ImGui::Text(fmt::format("Zoom: {}", m_SceneCamera.getCameraZoom()).c_str());
     ImGui::Text(fmt::format("$ {}", 1000).c_str());
     ImGui::Text(fmt::format("Power {}", 50).c_str());
+    if (ImGui::Button("Grid")) {
+        testGrid.switchActivate();
+    }
     if (ImGui::BeginTabBar("", ImGuiTabBarFlags_None)) {
+
         if (ImGui::BeginTabItem("Buildings")) {
 
             if (ImGui::Button("Power Plants")) {
