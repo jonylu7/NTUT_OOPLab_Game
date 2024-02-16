@@ -1,7 +1,7 @@
 #include "Util/Input.hpp"
+#include "config.hpp"
 #include "imgui/imgui_impl_sdl2.h"
 #include <SDL_events.h> // for SDL_Event
-#include "config.hpp"
 
 namespace Util {
 
@@ -17,8 +17,7 @@ bool Input::s_Scroll = false;
 bool Input::s_MouseMoving = false;
 bool Input::s_Exit = false;
 
-bool Input::s_LBUp=false;
-
+bool Input::s_LBUp = false;
 
 bool Input::IsKeyPressed(const Keycode &key) {
     const auto temp = static_cast<const int>(key);
@@ -61,7 +60,8 @@ void Input::Update() {
     s_CursorPosition.y = static_cast<float>(y);
 
     s_CursorPosition.x -= static_cast<float>(WINDOW_WIDTH) / 2;
-    s_CursorPosition.y = -(s_CursorPosition.y - static_cast<float>(WINDOW_HEIGHT) / 2);
+    s_CursorPosition.y =
+        -(s_CursorPosition.y - static_cast<float>(WINDOW_HEIGHT) / 2);
 
     s_LBPressed = s_RBPressed = s_MBPressed = s_Scroll = s_MouseMoving = false;
 
@@ -79,8 +79,9 @@ void Input::Update() {
                        s_Event.button.button == SDL_BUTTON_MIDDLE) ||
                       s_MBPressed;
 
-        s_LBUp=(s_Event.type==SDL_MOUSEBUTTONUP && s_Event.button.button == SDL_BUTTON_LEFT) || s_LBUp;
-
+        s_LBUp = (s_Event.type == SDL_MOUSEBUTTONUP &&
+                  s_Event.button.button == SDL_BUTTON_LEFT) ||
+                 s_LBUp;
 
         s_Scroll = s_Event.type == SDL_MOUSEWHEEL || s_Scroll;
         if (s_Scroll) {

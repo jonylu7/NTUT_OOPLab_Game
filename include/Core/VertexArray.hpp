@@ -31,6 +31,7 @@ public:
     void Unbind() const;
 
     void AddVertexBuffer(std::unique_ptr<VertexBuffer> vertexBuffer);
+    void AddVertexBufferWithCustomizableAttribute() {}
     /**
      * Index buffer must be set or else there will be a segfault
      */
@@ -38,10 +39,14 @@ public:
 
     void DrawTriangles() const;
     void DrawRectangles() const;
+    void DrawLines(int count) const;
+    template <class T>
+    void modifyVertexBuffersByIndex(int index, int size, std::vector<T> data) {
+        m_VertexBuffers[index]->ModifyBufferData(size, data);
+    }
 
 private:
     GLuint m_ArrayId;
-
     std::vector<std::unique_ptr<VertexBuffer>> m_VertexBuffers;
     std::unique_ptr<IndexBuffer> m_IndexBuffer;
 };

@@ -27,7 +27,7 @@ void main() {
     mat2 model = mat2(_model);
     mat2 projection = mat2(_projection);
 
-    vec2 pos = vertexPos*projection;
+    vec2 pos = vertexPos*projection*model;
 
     gl_Position = vec4(pos.x, pos.y, 0, 1);
     vertexColor = color;

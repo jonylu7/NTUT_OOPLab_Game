@@ -43,7 +43,7 @@ void Giraffe::Update([[maybe_unused]] const Util::Transform &transform) {
         dir * delta * 1000.0F, 2 * delta,
         glm::vec2(1, 1) * (std::sin(rotation / 2) + 1.0F) * 100.0F};
 
-    pos = glm::vec2(123,123);
+    pos = glm::vec2(123, 123);
     rotation += deltaTransform.rotation;
 
     m_Drawable->Draw(m_Transform, m_ZIndex);

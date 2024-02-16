@@ -1,22 +1,23 @@
-#ifndef UTIL_TEXT_HPP
-#define UTIL_TEXT_HPP
+//
+// Created by 盧威任 on 2/15/24.
+//
 
-#include "pch.hpp" // IWYU pragma: export
-
-#include <functional>
-
-#include "Core/Drawable.hpp"
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_BATCHRENDER_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_BATCHRENDER_HPP
+#include "Core/Program.hpp"
 #include "Core/Texture.hpp"
-
-#include "Util/Logger.hpp"
+#include "Core/UniformBuffer.hpp"
+#include "Core/VertexArray.hpp"
 #include "Util/Transform.hpp"
+#include "pch.hpp"
 
-namespace Util {
-class Text : public Core::Drawable {
+class BatchRender {
+
 public:
-    Text(const std::string &font, int size, const std::string &text);
-
-    void Draw(const Transform &transform, const float zIndex) override;
+    BatchRender();
+    ~BatchRender() {}
+    void Start(const char *filePath);
+    void Update();
 
 private:
     void InitProgram();
@@ -31,12 +32,12 @@ private:
     static std::unique_ptr<Core::UniformBuffer<Core::Matrices>> s_UniformBuffer;
 
 private:
+    std::unique_ptr<Core::Program> m_Program;
     std::unique_ptr<Core::Texture> m_Texture = nullptr;
     std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>> m_Surface =
         nullptr;
 
-    std::unique_ptr<TTF_Font, std::function<void(TTF_Font *)>> m_Font;
+    bool hasRoom;
 };
-} // namespace Util
 
-#endif
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_BATCHRENDER_HPP

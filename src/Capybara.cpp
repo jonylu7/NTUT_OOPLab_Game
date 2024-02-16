@@ -4,13 +4,13 @@
 #include "Capybara.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
+#include "Util/Input.hpp"
 #include "Util/Text.hpp"
 #include "Util/Time.hpp"
 #include "Util/Transform.hpp"
-#include "Util/Input.hpp"
 #include "config.hpp"
 
-void Capybara::Update( const Util::Transform &transform) {
+void Capybara::Update(const Util::Transform &transform) {
     static glm::vec2 dir = {1, 0.5};
 
     auto &pos = m_Transform.translation;
@@ -27,13 +27,12 @@ void Capybara::Update( const Util::Transform &transform) {
     m_Drawable->Draw(m_Transform, m_ZIndex);
 
     for (auto &child : m_Children) {
-        auto newtransform=transform;
-        newtransform.translation.x=newtransform.translation.x-10;
+        auto newtransform = transform;
+        newtransform.translation.x = newtransform.translation.x - 10;
         child->Update(newtransform);
     }
 
     /**if (pos.x!=pos.y){
         LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
     }**/
-
 }

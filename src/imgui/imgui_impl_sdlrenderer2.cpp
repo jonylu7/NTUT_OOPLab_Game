@@ -146,7 +146,7 @@ void ImGui_ImplSDLRenderer2_RenderDrawData(ImDrawData* draw_data)
 	ImVec2 clip_off = draw_data->DisplayPos;         // (0,0) unless using multi-viewports
 	ImVec2 clip_scale = render_scale;
 
-    // Render command lists
+    // Renderer command lists
     ImGui_ImplSDLRenderer2_SetupRenderState();
     for (int n = 0; n < draw_data->CmdListsCount; n++)
     {

@@ -7,16 +7,13 @@
 
 #include "Util/GameObject.hpp"
 
-class Capybara:public Util::GameObject{
+class Capybara : public Util::GameObject {
 private:
-
 public:
-void Update(const Util::Transform &transform) override;
-void Start()override{};
-Capybara(){};
-~Capybara(){};
-
-
+    void Update(const Util::Transform &transform) override;
+    void Start() override{};
+    Capybara(){};
+    ~Capybara(){};
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_CAPYBARA_HPP

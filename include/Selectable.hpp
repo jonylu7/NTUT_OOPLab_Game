@@ -8,9 +8,7 @@
 template <typename T>
 class Selectable {
 public:
-    virtual T Selected()=0;
+    virtual T Selected() = 0;
 };
-
-
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SELECTABLE_HPP
