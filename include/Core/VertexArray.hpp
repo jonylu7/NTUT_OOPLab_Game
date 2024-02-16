@@ -38,10 +38,10 @@ public:
 
     void DrawTriangles() const;
     void DrawRectangles() const;
+    void DrawLines(int count) const;
 
 private:
     GLuint m_ArrayId;
-
     std::vector<std::unique_ptr<VertexBuffer>> m_VertexBuffers;
     std::unique_ptr<IndexBuffer> m_IndexBuffer;
 };

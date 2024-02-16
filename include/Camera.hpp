@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
 #include "config.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 class CameraClass {
 public:
     CameraClass() {
@@ -33,9 +34,8 @@ public:
         /*
          * adjust projection matrix when window size is changing
          */
-        m_ProjectionMatrix = glm::identity<glm::mat4x4>();
         m_ProjectionMatrix =
-            glm::ortho(0.0F, 32.F * 42.F, 0.0F, 32.F * 42.F, -200.F, 200.F);
+            glm::ortho(0.0F, 32.F * 42.F, 0.0F, 32.F * 42.F, 0.F, 100.F);
     }
     glm::mat4x4 getProjectionMatrix() { return m_ProjectionMatrix; }
 
@@ -51,10 +51,15 @@ public:
         return m_ViewMatrix;
     }
 
+    float getMovingSpeed() { return m_MovingSpeed; }
+    float getZoomingSpeed() { return m_ZoomingSpeed; }
+
 private:
     float m_Zoom = 1.F;
     glm::vec2 m_Position = {0.F, 0.F};
     glm::mat4x4 m_ProjectionMatrix, m_ViewMatrix;
+    float m_MovingSpeed = 0.5F;
+    float m_ZoomingSpeed = 0.5F;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP

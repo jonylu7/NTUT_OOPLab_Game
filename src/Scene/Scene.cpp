@@ -43,15 +43,35 @@ void Scene::Start() {
     for (auto i : m_GameObjectList) {
         i->Start();
     }
+
+    float cellWidth = 48.F;
+    float cellHeight = 48.F;
+    std::vector<Line> horz = {};
+    std::vector<Line> vert = {};
+    for (float i = (WINDOW_HEIGHT / 2); i > 0; i -= cellWidth) {
+        horz.push_back(Line(glm::vec2(i, -(WINDOW_WIDTH / 2)),
+                            glm::vec2(i, (WINDOW_WIDTH / 2))));
+    }
+
+    for (float i = WINDOW_WIDTH / 2; i > 0; i -= cellHeight) {
+        vert.push_back(Line(glm::vec2(-(WINDOW_HEIGHT / 2), i),
+                            glm::vec2((WINDOW_HEIGHT / 2), i)));
+    }
+
+    std::vector<Line> test{
+        Line(glm::vec2(0.F, 100.F), glm::vec2(100.F, 0.F)),
+        Line(glm::vec2(-100.F, -100.F), glm::vec2(0.F, 100.F))};
+    // testGrid.Start(test);
 }
 
 void Scene::Update() {
-    // m_Structure->Update();
+    testGrid.Update();
+    //  m_Structure->Update();
     m_Structure->UpdateUsingCamera(m_SceneCamera);
     // rect.Draw();
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
-        m_SceneCamera.addCameraZoom(delta.y * CameraZoomingSpeed);
+        m_SceneCamera.addCameraZoom(delta.y * m_SceneCamera.getZoomingSpeed());
         // LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
     }
 
@@ -99,6 +119,8 @@ void Scene::Update() {
      */
 
     int cursorAtBoarder = Core::Context::IsCurosrAtBoarder();
+    glm::vec2 CameraPosition = m_SceneCamera.getPosition();
+    float CameraMovingSpeed = m_SceneCamera.getMovingSpeed();
     switch (cursorAtBoarder) {
     case (0):
         CameraPosition.y += CameraMovingSpeed;
@@ -115,7 +137,8 @@ void Scene::Update() {
     case (4):
         break;
     }
-    cellTest.Draw();
+    m_SceneCamera.setPosition(CameraPosition);
+
     m_SpriteSheet.Update();
 
     m_Inf->Update();
@@ -150,12 +173,12 @@ void Scene::imgui() {
     ImGui::NewFrame();
     // put the stuff in here
     ImGui::Begin("Structure Selection Menu");
-    m_SceneCamera.setPosition(CameraPosition);
 
-    ImGui::Text(std::string("X: " + std::to_string(CameraPosition.x) +
-                            "  Y: " + std::to_string(CameraPosition.y))
-                    .c_str());
-    ImGui::Text(fmt::format("Zoom: {}", CameraZoom).c_str());
+    ImGui::Text(
+        std::string("X: " + std::to_string(m_SceneCamera.getPosition().x) +
+                    "  Y: " + std::to_string(m_SceneCamera.getPosition().y))
+            .c_str());
+    ImGui::Text(fmt::format("Zoom: {}", m_SceneCamera.getCameraZoom()).c_str());
     ImGui::Text(fmt::format("$ {}", 1000).c_str());
     ImGui::Text(fmt::format("Power {}", 50).c_str());
     if (ImGui::BeginTabBar("", ImGuiTabBarFlags_None)) {

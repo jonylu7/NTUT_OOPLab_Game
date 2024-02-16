@@ -28,10 +28,12 @@ void Barracks::Update([[maybe_unused]] const Util::Transform &transform) {
 
     pos = tras.translation;
 
-    m_Drawable->Draw(m_Transform, m_ZIndex);
     for (auto &child : m_Children) {
         child->Update(tras);
     }
+
+    // should be put inside renderer
+    m_Drawable->Draw(m_Transform, m_ZIndex);
 
     // LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
 }

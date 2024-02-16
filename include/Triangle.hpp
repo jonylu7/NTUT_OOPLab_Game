@@ -7,12 +7,12 @@
 #include "Core/UniformBuffer.hpp"
 #include "Core/VertexArray.hpp"
 
-struct Matrices {
-    glm::mat2 m_View;
-    glm::mat2 m_Projection;
-};
-
 class Triangle {
+    struct Matrices {
+        glm::mat2 m_View;
+        glm::mat2 m_Projection;
+    };
+
 public:
     Triangle();
 

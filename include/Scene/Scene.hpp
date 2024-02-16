@@ -11,6 +11,7 @@
 #include "Cell.hpp"
 #include "Core/Context.hpp"
 #include "Giraffe.hpp"
+#include "Grid.hpp"
 #include "Infantry.hpp"
 #include "Rectangle.hpp"
 #include "SpriteSheet.hpp"
@@ -51,17 +52,12 @@ private:
     std::shared_ptr<Structure> m_Structure = std::make_shared<Structure>();
     std::shared_ptr<Infantry> m_Inf = std::make_shared<Infantry>();
 
-    glm::vec2 CameraStartingPosition = glm::vec2(0.F, 0.F);
-    glm::vec2 CameraPosition = CameraStartingPosition;
-    float CameraZoom = 0.F;
-    float CameraMovingSpeed = 0.5F;
-    float CameraZoomingSpeed = 0.5F;
-
     std::time_t initialTime = std::time(0);
     CellClass cellTest;
     SpriteSheet m_SpriteSheet;
 
     CameraClass m_SceneCamera;
-}
+    Grid testGrid;
+};
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SCENE_HPP
