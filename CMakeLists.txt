@@ -63,7 +63,8 @@ set(SRC_FILES
         ${SRC_DIR}/imgui/imgui_impl_sdlrenderer2.cpp
         ${SRC_DIR}/imgui/imgui_impl_opengl3.cpp
 
-        ${SRC_DIR}/Scene/Scene.cpp
+        ${SRC_DIR}/Scene/DefaultScene.cpp
+        ${SRC_DIR}/Camera.cpp
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES

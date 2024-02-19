@@ -1,11 +1,11 @@
 //
 // Created by 盧威任 on 2/15/24.
 //
-#include "Scene/Scene.hpp"
+#include "Scene/DefaultScene.hpp"
 
 ImVec2 start_pos;
 ImVec2 end_pos;
-void Scene::Start() {
+void DefaultScene::Start() {
 
     LOG_TRACE("Start");
     m_GameObjectList[0]->SetDrawable(
@@ -46,16 +46,11 @@ void Scene::Start() {
     testGrid.StartDrawingGridByWindowSize();
 }
 
-void Scene::Update() {
+void DefaultScene::Update() {
     testGrid.Update();
-    //  m_Structure->Update();
+    // m_Structure->Update();
     m_Structure->UpdateUsingCamera(m_SceneCamera);
     // rect.Draw();
-    if (Util::Input::IfScroll()) {
-        auto delta = Util::Input::GetScrollDistance();
-        m_SceneCamera.addCameraZoom(delta.y * m_SceneCamera.getZoomingSpeed());
-        // LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
-    }
 
     if (Util::Input::IsLButtonPressed()) {
         glm::vec2 ogLBlocation = Util::Input::GetCursorPosition();
@@ -95,31 +90,7 @@ void Scene::Update() {
     if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
         LOG_DEBUG("Down");
     }
-
-    /*
-     *
-     */
-
-    int cursorAtBoarder = Core::Context::IsCurosrAtBoarder();
-    glm::vec2 CameraPosition = m_SceneCamera.getPosition();
-    float CameraMovingSpeed = m_SceneCamera.getMovingSpeed();
-    switch (cursorAtBoarder) {
-    case (0):
-        CameraPosition.y += CameraMovingSpeed;
-        break;
-    case (1):
-        CameraPosition.x += CameraMovingSpeed;
-        break;
-    case (2):
-        CameraPosition.y -= CameraMovingSpeed;
-        break;
-    case (3):
-        CameraPosition.x -= CameraMovingSpeed;
-        break;
-    case (4):
-        break;
-    }
-    m_SceneCamera.setPosition(CameraPosition);
+    m_SceneCamera.Update();
 
     m_SpriteSheet.Update();
 
@@ -131,8 +102,8 @@ void Scene::Update() {
     }
 }
 
-void Scene::imgui_ShowSelectionRect(ImVec2 *start_pos, ImVec2 *end_pos,
-                                    ImGuiMouseButton mouse_button) {
+void DefaultScene::imgui_ShowSelectionRect(ImVec2 *start_pos, ImVec2 *end_pos,
+                                           ImGuiMouseButton mouse_button) {
     IM_ASSERT(start_pos != NULL);
     IM_ASSERT(end_pos != NULL);
     if (ImGui::IsMouseClicked(mouse_button))
@@ -149,7 +120,7 @@ void Scene::imgui_ShowSelectionRect(ImVec2 *start_pos, ImVec2 *end_pos,
     }
 }
 
-void Scene::imgui() {
+void DefaultScene::imgui() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();

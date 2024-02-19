@@ -1,7 +1,7 @@
 #ifndef APP_HPP
 #define APP_HPP
 
-#include "Scene/Scene.hpp"
+#include "Scene/DefaultScene.hpp"
 #include "pch.hpp" // IWYU pragma: export
 class App {
 public:
@@ -17,7 +17,7 @@ public:
 
 private:
     State m_CurrentState = State::START;
-    Scene testScene;
+    DefaultScene testScene;
 };
 
 #endif

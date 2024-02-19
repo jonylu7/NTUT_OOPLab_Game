@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_BATCHRENDER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_BATCHRENDER_HPP
+#include "Component/Component.hpp"
 #include "Core/Program.hpp"
 #include "Core/Texture.hpp"
 #include "Core/UniformBuffer.hpp"
@@ -11,13 +12,13 @@
 #include "Util/Transform.hpp"
 #include "pch.hpp"
 
-class BatchRender {
+class BatchRender : public Component {
 
 public:
     BatchRender();
     ~BatchRender() {}
-    void Start(const char *filePath);
-    void Update();
+    void Start() override{};
+    void Update() override{};
 
 private:
     void InitProgram();
@@ -29,7 +30,6 @@ private:
 
     static std::unique_ptr<Core::Program> s_Program;
     static std::unique_ptr<Core::VertexArray> s_VertexArray;
-    static std::unique_ptr<Core::UniformBuffer<Core::Matrices>> s_UniformBuffer;
 
 private:
     std::unique_ptr<Core::Program> m_Program;

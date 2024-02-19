@@ -4,7 +4,6 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
-#include "Selectable.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Input.hpp"
 #include "Util/TransformUtils.hpp"

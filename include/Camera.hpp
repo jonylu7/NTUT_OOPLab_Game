@@ -4,9 +4,11 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
+#include "Component/Component.hpp"
+#include "Core/Context.hpp"
 #include "config.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-class CameraClass {
+class CameraClass : public Component {
 public:
     CameraClass() {
         m_ProjectionMatrix = glm::mat4x4();
@@ -24,7 +26,7 @@ public:
     float getCameraZoom() { return m_Zoom; }
     void setCameraZoom(float zoom) { m_Zoom = zoom; }
 
-    void addCameraZoom(float add) { m_Zoom += add; }
+    void addCameraZoom(float add);
 
     glm::vec2 getPosition() { return m_Position; }
 
@@ -34,8 +36,8 @@ public:
         /*
          * adjust projection matrix when window size is changing
          */
-        m_ProjectionMatrix =
-            glm::ortho(0.0F, 32.F * 42.F, 0.0F, 32.F * 42.F, 0.F, 100.F);
+        m_ProjectionMatrix = glm::ortho(0.0F, float(WINDOW_WIDTH / 2), 0.0F,
+                                        float(WINDOW_HEIGHT / 2), 0.F, 100.F);
     }
     glm::mat4x4 getProjectionMatrix() { return m_ProjectionMatrix; }
 
@@ -53,6 +55,11 @@ public:
 
     float getMovingSpeed() { return m_MovingSpeed; }
     float getZoomingSpeed() { return m_ZoomingSpeed; }
+
+    void Start() override;
+    void Update() override;
+    void UpdateWhenCursorAtBoarder();
+    void UpdateWhenCursorScroll();
 
 private:
     float m_Zoom = 1.F;

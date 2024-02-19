@@ -25,10 +25,6 @@ public:
 
     GLuint GetShaderId() const { return m_ShaderId; }
 
-    void uploadMat4f(std::string varName, glm::mat4x4 matf){
-        // int varLocation=glGetUniformLocation(m_ShaderId);
-    };
-
 private:
     void Compile(const std::string &src) const;
     void CheckStatus(const std::string &filepath) const;
