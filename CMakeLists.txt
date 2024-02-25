@@ -6,16 +6,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 if (MSVC)
     set(TARGET_COMPILE_OPTIONS
-        /W4
+            /W4
     )
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/build)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/build)
-else()
+else ()
     set(TARGET_COMPILE_OPTIONS
-        -Wall -Wextra -pedantic
+            -Wall -Wextra -pedantic
     )
-endif()
+endif ()
 
 option(PTSD_ENABLE_PCH "Turn on PCH to increase compilation speed" OFF)
 
@@ -33,6 +33,7 @@ set(SRC_FILES
     ${SRC_DIR}/Core/Texture.cpp
     ${SRC_DIR}/Core/TextureUtils.cpp
 
+
     ${SRC_DIR}/Util/LoadTextFile.cpp
     ${SRC_DIR}/Util/Logger.cpp
     ${SRC_DIR}/Util/Time.cpp
@@ -47,10 +48,28 @@ set(SRC_FILES
     ${SRC_DIR}/Util/Color.cpp
     ${SRC_DIR}/Util/Animation.cpp
 
+        ${SRC_DIR}/imgui/imgui.cpp
+        ${SRC_DIR}/imgui/imgui_demo.cpp
+        ${SRC_DIR}/imgui/imgui_draw.cpp
+        ${SRC_DIR}/imgui/imgui_impl_sdl2.cpp
+        ${SRC_DIR}/imgui/imgui_tables.cpp
+        ${SRC_DIR}/imgui/imgui_widgets.cpp
+        ${SRC_DIR}/imgui/imgui_impl_sdlrenderer2.cpp
+        ${SRC_DIR}/imgui/imgui_impl_opengl3.cpp
+
     ${SRC_DIR}/App.cpp
-    ${SRC_DIR}/Giraffe.cpp
-    ${SRC_DIR}/GiraffeText.cpp
-    ${SRC_DIR}/Cat.cpp
+        ${SRC_DIR}/Triangle.cpp
+        ${SRC_DIR}/Giraffe.cpp
+        ${SRC_DIR}/Capybara.cpp
+        ${SRC_DIR}/Barracks.cpp
+        ${SRC_DIR}/Structure.cpp
+        ${SRC_DIR}/Rectangle.cpp
+        ${SRC_DIR}/Infantry.cpp
+        ${SRC_DIR}/Grid.cpp
+
+        ${SRC_DIR}/Scene/DefaultScene.cpp
+        ${SRC_DIR}/Camera.cpp
+
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
@@ -66,6 +85,8 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Core/Texture.hpp
     ${INCLUDE_DIR}/Core/TextureUtils.hpp
     ${INCLUDE_DIR}/Core/Drawable.hpp
+
+
 
     ${INCLUDE_DIR}/Util/LoadTextFile.hpp
     ${INCLUDE_DIR}/Util/Logger.hpp
@@ -83,83 +104,122 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Util/Color.hpp
     ${INCLUDE_DIR}/Util/Animation.hpp
 
+
     ${INCLUDE_DIR}/App.hpp
     ${INCLUDE_DIR}/Giraffe.hpp
     ${INCLUDE_DIR}/GiraffeText.hpp
     ${INCLUDE_DIR}/Cat.hpp
     ${INCLUDE_DIR}/config.hpp
+        ${INCLUDE_DIR}/Triangle.hpp
+        ${INCLUDE_DIR}/config.hpp
+        ${INCLUDE_DIR}/Capybara.hpp
+        ${INCLUDE_DIR}/Barracks.hpp
+        ${INCLUDE_DIR}/Structure.hpp
+        ${INCLUDE_DIR}/Infantry.hpp
+        ${INCLUDE_DIR}/Cell.hpp
+        ${INCLUDE_DIR}/Rectangle.hpp
+        ${INCLUDE_DIR}/Sprite.hpp
+        ${INCLUDE_DIR}/Settings.hpp
+
+        ${INCLUDE_DIR}/imgui/imconfig.h
+        ${INCLUDE_DIR}/imgui/imgui.h
+        ${INCLUDE_DIR}/imgui/imgui_impl_sdl2.h
+        ${INCLUDE_DIR}/imgui/imgui_internal.h
+        ${INCLUDE_DIR}/imgui/imstb_rectpack.h
+        ${INCLUDE_DIR}/imgui/imstb_textedit.h
+        ${INCLUDE_DIR}/imgui/imstb_truetype.h
+        ${INCLUDE_DIR}/imgui/imgui_impl_sdlrenderer2..h
+        ${INCLUDE_DIR}/imgui/imgui_impl_opengl3.h
+        ${INCLUDE_DIR}/imgui/imgui_impl_opengl3_loader.h
+
+        ${INCLUDE_DIR}/Scene/Scene.hpp
+
+        ${INCLUDE_DIR}/Core/Context.hpp
+        ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp
+        ${INCLUDE_DIR}/Core/VertexArray.hpp
+        ${INCLUDE_DIR}/Core/VertexBuffer.hpp
+        ${INCLUDE_DIR}/Core/UniformBuffer.hpp
+        ${INCLUDE_DIR}/Core/UniformBuffer.inl
+        ${INCLUDE_DIR}/Core/IndexBuffer.hpp
+        ${INCLUDE_DIR}/Core/Shader.hpp
+        ${INCLUDE_DIR}/Core/Program.hpp
+        ${INCLUDE_DIR}/Core/Texture.hpp
+
 )
+
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(TEST_FILES
-    ${TEST_DIR}/SimpleTest.cpp
-    ${TEST_DIR}/NotSimpleTest.cpp
-    ${TEST_DIR}/TransformTest.cpp
+        ${TEST_DIR}/SimpleTest.cpp
+        ${TEST_DIR}/NotSimpleTest.cpp
+        ${TEST_DIR}/TransformTest.cpp
 )
 
 add_executable(Sample
-    ${SRC_FILES}
-    ${SRC_DIR}/main.cpp
+        ${SRC_FILES}
+        ${SRC_DIR}/main.cpp
 )
 target_link_libraries(Sample
-    SDL2::SDL2main # IDK what happens if we don't link SDL2main
-    ${DEPENDENCY_LINK_LIBRARIES}
+        SDL2::SDL2main # IDK what happens if we don't link SDL2main
+        ${DEPENDENCY_LINK_LIBRARIES}
 )
 target_include_directories(Sample SYSTEM PRIVATE
-    ${DEPENDENCY_INCLUDE_DIRS}
+        ${DEPENDENCY_INCLUDE_DIRS}
 )
 target_include_directories(Sample PRIVATE
-    ${INCLUDE_DIR}
+        ${INCLUDE_DIR}
 )
 if (${PTSD_ENABLE_PCH})
     target_precompile_headers(Sample PRIVATE
-        include/pch.hpp
+            include/pch.hpp
     )
-endif()
+endif ()
 target_compile_options(Sample PRIVATE
-    ${TARGET_COMPILE_OPTIONS}
+        ${TARGET_COMPILE_OPTIONS}
 )
+
 
 enable_testing()
 
 add_executable(Tests
-    ${TEST_FILES}
-    ${SRC_FILES}
+        ${TEST_FILES}
+        ${SRC_FILES}
 )
 target_link_libraries(Tests
-    GTest::gtest_main
-    ${DEPENDENCY_LINK_LIBRARIES}
+        GTest::gtest_main
+        ${DEPENDENCY_LINK_LIBRARIES}
 )
 target_include_directories(Tests SYSTEM PRIVATE
-    ${DEPENDENCY_INCLUDE_DIRS}
-    lib/googletest/googletest/include
-    lib/googletest/googlemock/include
+        ${DEPENDENCY_INCLUDE_DIRS}
+        lib/googletest/googletest/include
+        lib/googletest/googlemock/include
 )
 target_include_directories(Tests PRIVATE
-    ${INCLUDE_DIR}
+        ${INCLUDE_DIR}
 )
 target_compile_options(Tests PRIVATE
-    ${TARGET_COMPILE_OPTIONS}
+        ${TARGET_COMPILE_OPTIONS}
 )
 
 add_executable(AudioTest
-    ${TEST_DIR}/Interactive/Audio.cpp
-    ${SRC_FILES}
+        ${TEST_DIR}/Interactive/Audio.cpp
+        ${SRC_FILES}
 )
 target_link_libraries(AudioTest
-    GTest::gtest_main
-    ${DEPENDENCY_LINK_LIBRARIES}
+        GTest::gtest_main
+        ${DEPENDENCY_LINK_LIBRARIES}
 )
 target_include_directories(AudioTest SYSTEM PRIVATE
-    ${DEPENDENCY_INCLUDE_DIRS}
-    lib/googletest/googletest/include
-    lib/googletest/googlemock/include
+        ${DEPENDENCY_INCLUDE_DIRS}
+        lib/googletest/googletest/include
+        lib/googletest/googlemock/include
 )
 target_include_directories(AudioTest PRIVATE
-    ${INCLUDE_DIR}
+        ${INCLUDE_DIR}
 )
 target_compile_options(AudioTest PRIVATE
-    ${TARGET_COMPILE_OPTIONS}
+        ${TARGET_COMPILE_OPTIONS}
 )
+
 
 include(GoogleTest)
 gtest_discover_tests(Tests)

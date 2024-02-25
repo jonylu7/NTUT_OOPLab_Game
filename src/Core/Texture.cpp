@@ -4,6 +4,7 @@
 
 #include "Util/Logger.hpp"
 
+
 namespace Core {
 Texture::Texture(GLint format, int width, int height, const void *data) {
     glGenTextures(1, &m_TextureId);

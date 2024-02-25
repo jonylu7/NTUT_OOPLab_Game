@@ -6,6 +6,10 @@ namespace Util {
 Core::Matrices ConvertToUniformBufferData(const Util::Transform &transform,
                                           const glm::vec2 &size,
                                           const float zIndex) {
+    /*
+     * it converts from the transform data, which has translation,
+     * rotation...etc. to Matrices.
+     */
     constexpr glm::mat4 eye(1.F);
 
     constexpr float nearClip = -100;

@@ -132,7 +132,7 @@ public:
             m_Children.end());
     }
 
-    void Draw();
+    virtual void Draw();
 
 protected:
     Util::Transform m_Transform; // IDK if this should be here.

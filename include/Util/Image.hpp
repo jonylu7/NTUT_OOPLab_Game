@@ -9,6 +9,7 @@
 #include "Core/Drawable.hpp"
 #include "Core/Texture.hpp"
 
+#include "Camera.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Transform.hpp"
 
@@ -29,6 +30,7 @@ public:
      * @param filepath The file path to the image.
      */
     explicit Image(const std::string &filepath);
+
 
     /**
      * @brief Retrieves the size of the image.
@@ -57,12 +59,38 @@ public:
      * @param transform The transform to apply to the image.
      * @param zIndex The z-index at which to draw the image.
      */
+
+    unsigned int getTextureID() { return m_Texture->GetTextureId(); }
+
     void Draw(const Util::Transform &transform, const float zIndex) override;
+    void DrawUsingCamera(Core::Matrices data) override {
+        s_UniformBuffer->SetData(0, data);
+
+        m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
+        s_Program->Bind();
+        s_Program->Validate();
+
+        s_VertexArray->Bind();
+        s_VertexArray->DrawTriangles();
+    }
+
+    //should be deleted
+    int getHeight() { return 0; };
+    int getWidth() { return 0; };
 
 private:
     void InitProgram();
     void InitVertexArray();
-    void InitUniformBuffer();
+
+    void InitUniformBuffer(const Util::Transform &transform = Util::Transform(),
+                           const float zIndex = -1);
+
+    // temp place here until batch
+    void InitUniformBuffer(CameraClass camera) {
+        Core::Matrices data = {
+            {}, camera.getProjectionMatrix() * camera.getViewMatrix()};
+        s_UniformBuffer->SetData(0, data);
+    };
 
     static constexpr int UNIFORM_SURFACE_LOCATION = 0;
 
