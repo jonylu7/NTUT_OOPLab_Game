@@ -96,45 +96,58 @@ void ImageArray::InitVertexArray() {
     // number warnings
 
     // Vertex
+
+    std::vector<float> positionVertex;
+    std::vector<float> uvVertex;
+    std::vector<unsigned int> indexBuffer;
+
+    std::vector<glm::vec2> offset={glm::vec2(0,0),glm::vec2(1,0),glm::vec2(1,1),glm::vec2(0,1)
+
+    };
+
+
+    for(int i=0;i<offset.size();i++){
+        positionVertex.push_back(-0.5F+offset[i].x);
+        positionVertex.push_back(0.5F+offset[i].y);
+
+        positionVertex.push_back(-0.5F+offset[i].x);
+        positionVertex.push_back(-0.5F+offset[i].y);
+        positionVertex.push_back(0.5F+offset[i].x);
+        positionVertex.push_back(-0.5F+offset[i].y);
+
+        positionVertex.push_back(0.5F+offset[i].x);
+        positionVertex.push_back(0.5F+offset[i].y);
+
+
+        std::vector<float> uv({ 0.0F, 0.0F, //
+                            0.0F, 1.0F, //
+                            1.0F, 1.0F, //
+                            1.0F, 0.0F});
+        uvVertex.insert(uvVertex.end(),uv.begin(),uv.end());
+
+        unsigned int iBufferStep=i*4;
+        std::vector<unsigned int> iBuffer({0+iBufferStep, 1+iBufferStep, 2+iBufferStep, //
+            0+iBufferStep, 2+iBufferStep, 3+iBufferStep});
+
+        indexBuffer.insert(indexBuffer.end(),iBuffer.begin(),iBuffer.end());
+
+    }
+
+
+
+
     s_VertexArray->AddVertexBuffer(std::make_unique<Core::VertexBuffer>(
-        std::vector<float>{
-            -0.5F, 0.5F,  //
-            -0.5F, -0.5F, //
-            0.5F, -0.5F,  //
-            0.5F, 0.5F,//
-
-            1.5F, 0.5F,  //
-            1.5F, -0.5F, //
-            2.5F, -0.5F,  //
-            2.5F, 0.5F
-
-
-        },
+positionVertex,
         2));
 
     // UV
     s_VertexArray->AddVertexBuffer(std::make_unique<Core::VertexBuffer>(
-        std::vector<float>{
-            0.0F, 0.0F, //
-            0.0F, 1.0F, //
-            1.0F, 1.0F, //
-            1.0F, 0.0F,
-
-            0.0F, 0.0F, //
-            0.0F, 1.0F, //
-            1.0F, 1.0F, //
-            1.0F, 0.0F//
-        },
+        uvVertex,
         2));
 
     // Index
     s_VertexArray->SetIndexBuffer(
-        std::make_unique<Core::IndexBuffer>(std::vector<unsigned int>{
-            0, 1, 2, //
-            0, 2, 3,
-            4, 5, 6, //
-            4, 6, 7, //
-        }));
+        std::make_unique<Core::IndexBuffer>(indexBuffer));
     // NOLINTEND
 
 

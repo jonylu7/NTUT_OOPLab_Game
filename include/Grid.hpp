@@ -24,8 +24,6 @@ public:
     void Update();
     void switchActivate() { m_Activate = !m_Activate; };
 
-    void setgridActivate() { m_Activate = true; };
-    void setgridDeactivate() { m_Activate = false; };
 
 private:
     std::vector<Line> m_lineVector;
