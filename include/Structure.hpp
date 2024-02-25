@@ -26,7 +26,8 @@ public:
             {},
             camera.getProjectionMatrix() * camera.getViewMatrix(),
         };
-        m_Drawable->DrawUsingCamera(data);
+
+
     }
     void Start() override{};
     updateMode GetCurrentUpdateMode() const { return m_CurrentState; };

@@ -36,7 +36,7 @@ public:
      * @brief Retrieves the size of the image.
      *
      * This function returns the size of the image.
-     *
+     * comment: wierd....
      * @return The size of the image as a vec2(x, y).
      */
     glm::vec2 GetSize() const override { return m_Size; };
@@ -63,16 +63,7 @@ public:
     unsigned int getTextureID() { return m_Texture->GetTextureId(); }
 
     void Draw(const Util::Transform &transform, const float zIndex) override;
-    void DrawUsingCamera(Core::Matrices data) override {
-        s_UniformBuffer->SetData(0, data);
-
-        m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
-        s_Program->Bind();
-        s_Program->Validate();
-
-        s_VertexArray->Bind();
-        s_VertexArray->DrawTriangles();
-    }
+    void DrawUsingCamera(const Util::Transform &transform, const float zIndex) override;
 
     //should be deleted
     int getHeight() { return 0; };
@@ -81,7 +72,7 @@ public:
 private:
     void InitProgram();
     void InitVertexArray();
-    //void InitUniformBuffer();
+    void InitUniformBuffer();
 
     // temp place here until batch
     void InitUniformBuffer(CameraClass camera) {

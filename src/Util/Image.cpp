@@ -18,6 +18,9 @@ Image::Image(const std::string &filepath)
     if (s_VertexArray == nullptr) {
         InitVertexArray();
     }
+    if (s_UniformBuffer == nullptr) {
+        InitUniformBuffer();
+    }
 
     auto surface =
         std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
@@ -53,6 +56,18 @@ void Image::SetImage(const std::string &filepath) {
 
 void Image::Draw(const Util::Transform &transform, const float zIndex) {
     auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
+    s_UniformBuffer->SetData(0, data);
+
+    m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
+    s_Program->Bind();
+    s_Program->Validate();
+
+    s_VertexArray->Bind();
+    s_VertexArray->DrawTriangles();
+}
+
+void Image::DrawUsingCamera(const Util::Transform &transform, const float zIndex){
+    auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(transform, m_Size, zIndex);
     s_UniformBuffer->SetData(0, data);
 
     m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
@@ -107,6 +122,13 @@ void Image::InitVertexArray() {
             0, 2, 3, //
         }));
     // NOLINTEND
+
+
+}
+
+void Image::InitUniformBuffer() {
+    s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
+        *s_Program, "Matrices", 0);
 }
 
 

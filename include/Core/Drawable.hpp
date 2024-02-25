@@ -26,7 +26,7 @@ public:
 
     virtual glm::vec2 GetSize() const = 0;
 
-    virtual void DrawUsingCamera(Core::Matrices){};
+    virtual void DrawUsingCamera(const Util::Transform &transform, const float zIndex){};
 };
 } // namespace Core
 

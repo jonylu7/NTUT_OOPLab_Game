@@ -1,6 +1,7 @@
 #include "Util/TransformUtils.hpp"
 
 #include "config.hpp"
+#include "Camera.hpp"
 
 namespace Util {
 Core::Matrices ConvertToUniformBufferData(const Util::Transform &transform,
@@ -33,5 +34,34 @@ Core::Matrices ConvertToUniformBufferData(const Util::Transform &transform,
 
     return data;
 }
+
+Core::Matrices ConvertToUniformBufferDataUsingCameraMatrix(const Util::Transform &transform,
+                                         const glm::vec2 &size,
+                                         const float zIndex) {
+    /*
+     * it converts from the transform data, which has translation,
+     * rotation...etc. to Matrices.
+     */
+    constexpr glm::mat4 eye(1.F);
+
+    constexpr float nearClip = -100;
+    constexpr float farClip = 100;
+
+    auto projection=CameraClass::getProjectionMatrix();
+    auto view = CameraClass::getViewMatrix();
+
+    // TODO: TRS comment
+    auto model = glm::translate(eye, {transform.translation, zIndex}) *
+                 glm::rotate(eye, transform.rotation, glm::vec3(0, 0, 1)) *
+                 glm::scale(eye, {transform.scale * size, 1});
+
+    Core::Matrices data = {
+        model,
+        projection * view,
+    };
+
+    return data;
+}
+
 
 } // namespace Util

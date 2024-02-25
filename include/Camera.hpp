@@ -8,18 +8,15 @@
 #include "Core/Context.hpp"
 #include "config.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "Core/Drawable.hpp"
+
 class CameraClass : public Component {
 public:
     CameraClass() {
-        m_ProjectionMatrix = glm::mat4x4();
-        m_ViewMatrix = glm::mat4x4();
-        adjustProjection();
+        setPosition(glm::vec2(0,0));
     }
     CameraClass(glm::vec2 position) {
         setPosition(position);
-        m_ProjectionMatrix = glm::mat4x4();
-        m_ViewMatrix = glm::mat4x4();
-        adjustProjection();
     }
     ~CameraClass() {}
 
@@ -32,25 +29,23 @@ public:
 
     void setPosition(glm::vec2 position) { m_Position = position; }
 
-    void adjustProjection() {
+    static glm::mat4x4 getProjectionMatrix() {
         /*
          * adjust projection matrix when window size is changing
          */
-        m_ProjectionMatrix = glm::ortho(0.0F, float(WINDOW_WIDTH / 2), 0.0F,
+         return glm::ortho(0.0F, float(WINDOW_WIDTH / 2), 0.0F,
                                         float(WINDOW_HEIGHT / 2), 0.F, 100.F);
     }
-    glm::mat4x4 getProjectionMatrix() { return m_ProjectionMatrix; }
 
-    glm::mat4x4 getViewMatrix() {
+    static glm::mat4x4 getViewMatrix() {
         /*
          * get camera position
          */
         glm::vec3 cameraFront(0.F, 0.F, -1.F);
         glm::vec3 cameraUp(0.F, 1.F, 0.F);
-        m_ViewMatrix = glm::lookAt(
-            glm::vec3(m_Position.x, m_Position.y, 50.F), // position
-            cameraFront + glm::vec3(m_Position.x, m_Position.y, 0.F), cameraUp);
-        return m_ViewMatrix;
+        return glm::lookAt(
+                glm::vec3(m_Position.x, m_Position.y, 50.F), // position
+                cameraFront + glm::vec3(m_Position.x, m_Position.y, 0.F), cameraUp);
     }
 
     float getMovingSpeed() { return m_MovingSpeed; }
@@ -63,10 +58,13 @@ public:
 
 private:
     float m_Zoom = 1.F;
-    glm::vec2 m_Position = {0.F, 0.F};
-    glm::mat4x4 m_ProjectionMatrix, m_ViewMatrix;
+    static glm::vec2 m_Position;
     float m_MovingSpeed = 0.5F;
     float m_ZoomingSpeed = 0.5F;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
+
+
+
+

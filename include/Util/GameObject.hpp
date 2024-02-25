@@ -6,6 +6,7 @@
 
 #include "Core/Drawable.hpp"
 #include "Util/Transform.hpp"
+#include "Camera.hpp"
 
 namespace Util {
 /**
@@ -31,15 +32,16 @@ public:
      * @param zIndex The z-index of the game object.
      * @param visible The visibility of the game object.
      * @param children The children of the game object.
+     * @param movingRelativeToCamera Whether the object can move relative to camera position
      */
     GameObject(std::unique_ptr<Core::Drawable> drawable, const float zIndex,
                const bool visible = true,
                const std::vector<std::shared_ptr<GameObject>> &children =
-                   std::vector<std::shared_ptr<GameObject>>())
+                   std::vector<std::shared_ptr<GameObject>>(),const bool movingRelativeToCamera=true)
         : m_Drawable(std::move(drawable)),
           m_Children(children),
           m_ZIndex(zIndex),
-          m_Visible(visible) {}
+          m_Visible(visible),m_MovingRelativeToCamera(movingRelativeToCamera) {}
 
     // Deleted copy constructor.
     GameObject(const GameObject &other) = delete;
@@ -113,6 +115,13 @@ public:
     void SetVisible(const bool visible) { m_Visible = visible; }
 
     /**
+     * @brief Set the object can move relative to camera position
+     *
+     * @param movingRelativeToCamera The new status of moving
+     */
+    void setMovingRelativeToCamera(const bool movingRelativeToCamera){m_MovingRelativeToCamera=movingRelativeToCamera;};
+
+    /**
      * @brief Add a child to the game object.
      *
      * @param child The new child of the game object.
@@ -132,6 +141,9 @@ public:
             m_Children.end());
     }
 
+
+
+
     virtual void Draw();
 
     //should be removed
@@ -147,6 +159,7 @@ protected:
 
     float m_ZIndex = 0;
     bool m_Visible = true;
+    bool m_MovingRelativeToCamera=true;
 };
 } // namespace Util
 #endif

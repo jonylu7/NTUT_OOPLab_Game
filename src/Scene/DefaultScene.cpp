@@ -50,8 +50,9 @@ void DefaultScene::Start() {
 
 void DefaultScene::Update() {
     testGrid.Update();
+
     // m_Structure->Update();
-    m_Structure->UpdateUsingCamera(m_SceneCamera);
+    //m_Structure->Update();
     // rect.Draw();
 
     if (Util::Input::IsKeyPressed(Util::Keycode::END)) {
@@ -72,9 +73,11 @@ void DefaultScene::Update() {
     m_Inf->Update();
     rect.Update();
 
+
     for (auto i : m_GameObjectList) {
         i->Update();
     }
+
 }
 
 void DefaultScene::imgui_ShowSelectionRect(ImVec2 *start_pos, ImVec2 *end_pos,

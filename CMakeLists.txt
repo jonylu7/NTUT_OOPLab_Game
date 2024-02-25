@@ -121,6 +121,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Rectangle.hpp
         ${INCLUDE_DIR}/Sprite.hpp
         ${INCLUDE_DIR}/Settings.hpp
+        ${INCLUDE_DIR}/Camera.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h
@@ -145,6 +146,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Core/Shader.hpp
         ${INCLUDE_DIR}/Core/Program.hpp
         ${INCLUDE_DIR}/Core/Texture.hpp
+
 
 )
 

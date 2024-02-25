@@ -4,6 +4,8 @@
 
 #include "Camera.hpp"
 
+glm::vec2 CameraClass::m_Position(glm::vec2(0,0));
+
 void CameraClass::Start() {}
 
 void CameraClass::Update() {
