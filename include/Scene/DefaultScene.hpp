@@ -10,7 +10,7 @@
 #include "Capybara.hpp"
 #include "Cell.hpp"
 #include "Core/Context.hpp"
-//#include "Giraffe.hpp"
+#include "Util/Root.hpp"
 #include "Grid.hpp"
 #include "Infantry.hpp"
 #include "Rectangle.hpp"
@@ -24,7 +24,6 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_sdl2.h"
-#include <ctime>
 
 class DefaultScene {
 public:
@@ -37,7 +36,7 @@ public:
 
     void imgui();
 
-    std::time_t How_long_has_passed() { return std::time(0) - initialTime; }
+    std::time_t How_long_has_passed() { return std::time(0); }
 
     void imgui_ShowSelectionRect(
         ImVec2 *start_pos, ImVec2 *end_pos,
@@ -52,11 +51,12 @@ private:
     std::shared_ptr<Structure> m_Structure = std::make_shared<Structure>();
     std::shared_ptr<Infantry> m_Inf = std::make_shared<Infantry>();
 
-    std::time_t initialTime = std::time(0);
     SpriteSheet m_SpriteSheet;
 
     CameraClass m_SceneCamera;
     Grid testGrid;
+
+    Util::Root m_Renderer;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

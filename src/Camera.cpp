@@ -5,6 +5,7 @@
 #include "Camera.hpp"
 
 glm::vec2 CameraClass::m_Position(glm::vec2(0,0));
+float CameraClass::m_Zoom=1.F;
 
 void CameraClass::Start() {}
 
@@ -47,7 +48,7 @@ void CameraClass::UpdateWhenCursorScroll() {
 
 void CameraClass::addCameraZoom(float add) {
 
-    if (m_Zoom + add < 3 && m_Zoom + add > 0) {
+    if (m_Zoom + add < 5 && m_Zoom + add > 0) {
         m_Zoom += add;
     }
 }

@@ -20,7 +20,7 @@ public:
     }
     ~CameraClass() {}
 
-    float getCameraZoom() { return m_Zoom; }
+    static float getCameraZoom() { return m_Zoom; }
     void setCameraZoom(float zoom) { m_Zoom = zoom; }
 
     void addCameraZoom(float add);
@@ -57,9 +57,9 @@ public:
     void UpdateWhenCursorScroll();
 
 private:
-    float m_Zoom = 1.F;
+    static float m_Zoom;
     static glm::vec2 m_Position;
-    float m_MovingSpeed = 0.5F;
+    float m_MovingSpeed = 2.5F;
     float m_ZoomingSpeed = 0.5F;
 };
 

@@ -53,7 +53,7 @@ Core::Matrices ConvertToUniformBufferDataUsingCameraMatrix(const Util::Transform
     // TODO: TRS comment
     auto model = glm::translate(eye, {transform.translation, zIndex}) *
                  glm::rotate(eye, transform.rotation, glm::vec3(0, 0, 1)) *
-                 glm::scale(eye, {transform.scale * size, 1});
+                 glm::scale(eye, {(transform.scale+CameraClass::getCameraZoom()) * size, 1});
 
     Core::Matrices data = {
         model,

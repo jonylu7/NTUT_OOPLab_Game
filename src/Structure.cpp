@@ -25,11 +25,9 @@ void Structure::Update([[maybe_unused]] const Util::Transform &transsform) {
         break;
     case (updateMode::Moveable):
         pos = Util::Input::GetCursorPosition();
-        m_Drawable->Draw(m_Transform, m_ZIndex);
         break;
     case (updateMode::Fixed):
         pos = ObjectLocation;
-        m_Drawable->Draw(m_Transform, m_ZIndex);
         break;
     }
 

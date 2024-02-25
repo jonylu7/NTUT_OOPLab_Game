@@ -46,13 +46,13 @@ void DefaultScene::Start() {
         i->Start();
     }
     testGrid.StartDrawingGridByWindowSize();
+    m_Renderer.AddChild(m_Structure);
 }
 
 void DefaultScene::Update() {
     testGrid.Update();
-
-    // m_Structure->Update();
-    //m_Structure->Update();
+    m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
+    m_Structure->Update();
     // rect.Draw();
 
     if (Util::Input::IsKeyPressed(Util::Keycode::END)) {
@@ -72,6 +72,7 @@ void DefaultScene::Update() {
 
     m_Inf->Update();
     rect.Update();
+    m_Renderer.Update();
 
 
     for (auto i : m_GameObjectList) {
