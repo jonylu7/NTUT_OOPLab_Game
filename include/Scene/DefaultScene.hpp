@@ -24,6 +24,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_sdl2.h"
+#include "Terrain.hpp"
 
 class DefaultScene {
 public:
@@ -55,6 +56,8 @@ private:
 
     CameraClass m_SceneCamera;
     Grid testGrid;
+
+    std::shared_ptr<Terrain> m_desert=std::make_shared<Terrain>();
 
     Util::Root m_Renderer;
 };

@@ -12,14 +12,6 @@ void DefaultScene::Start() {
         std::make_unique<Util::Image>("../assets/sprites/Raccoon3.jpg"));
     m_GameObjectList[0]->SetZIndex(10);
 
-    /**
-        auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 500,
-                                            "Giraffe");
-    gf->SetZIndex(m_GameObjectList[0]->GetZIndex() - 3);
-    gf->Start();
-    m_GameObjectList[0]->AppendChild(gf);
-     **/
-
     m_GameObjectList[1]->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
 
@@ -46,7 +38,9 @@ void DefaultScene::Start() {
         i->Start();
     }
     testGrid.StartDrawingGridByWindowSize();
+
     m_Renderer.AddChild(m_Structure);
+    m_Renderer.AddChild(m_desert);
 }
 
 void DefaultScene::Update() {
