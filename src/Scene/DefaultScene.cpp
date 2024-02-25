@@ -12,11 +12,13 @@ void DefaultScene::Start() {
         std::make_unique<Util::Image>("../assets/sprites/Raccoon3.jpg"));
     m_GameObjectList[0]->SetZIndex(10);
 
-    auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 500,
+    /**
+        auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 500,
                                             "Giraffe");
     gf->SetZIndex(m_GameObjectList[0]->GetZIndex() - 3);
     gf->Start();
     m_GameObjectList[0]->AppendChild(gf);
+     **/
 
     m_GameObjectList[1]->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
@@ -33,7 +35,7 @@ void DefaultScene::Start() {
         std::make_unique<Util::Image>("../assets/sprites/rac.png"));
     m_Inf->Start();
 
-    m_GameObjectList[2]->AppendChild(gf);
+    //`m_GameObjectList[2]->AppendChild(gf);
     // rect.Init();
     m_SpriteSheet.Start(std::make_shared<Util::Image>(
                             "../assets/sprites/Allied Strucutre/Allied "
@@ -52,7 +54,7 @@ void DefaultScene::Update() {
     m_Structure->UpdateUsingCamera(m_SceneCamera);
     // rect.Draw();
 
-    if (Util::Input::IsLButtonPressed()) {
+    if (Util::Input::IsKeyPressed(Util::Keycode::END)) {
         glm::vec2 ogLBlocation = Util::Input::GetCursorPosition();
 
         if (m_Structure->GetCurrentUpdateMode() ==
@@ -62,34 +64,7 @@ void DefaultScene::Update() {
             LOG_DEBUG("Fixed");
         }
     }
-    if (Util::Input::IsRButtonPressed()) {
-        LOG_DEBUG("RPressed");
-    }
 
-    if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE) ||
-        Util::Input::IfExit()) {
-    }
-
-    if (Util::Input::IsKeyPressed(Util::Keycode::A)) {
-        LOG_DEBUG("A");
-    }
-    if (Util::Input::IsKeyPressed(Util::Keycode::B)) {
-        LOG_DEBUG("B");
-        Util::Input::SetCursorPosition({0.0F, 0.0F});
-    }
-    if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
-        LOG_DEBUG("Left");
-    }
-
-    if (Util::Input::IsKeyPressed(Util::Keycode::UP)) {
-        LOG_DEBUG("UP");
-    }
-    if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
-        LOG_DEBUG("RIght");
-    }
-    if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
-        LOG_DEBUG("Down");
-    }
     m_SceneCamera.Update();
 
     m_SpriteSheet.Update();

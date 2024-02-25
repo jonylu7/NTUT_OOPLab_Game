@@ -1,7 +1,6 @@
 #ifndef PCH_HPP
 #define PCH_HPP
 
-<<<<<<< HEAD
 #include <algorithm>
 #include <array>
 #include <memory>

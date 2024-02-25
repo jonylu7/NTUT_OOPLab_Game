@@ -10,7 +10,7 @@ class Cat : public Util::GameObject {
 public:
     Cat();
 
-    void Update();
+    void Update() override;
 
 private:
     std::shared_ptr<Util::Animation> m_Animation;

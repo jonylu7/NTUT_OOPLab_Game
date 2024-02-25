@@ -18,9 +18,6 @@ Image::Image(const std::string &filepath)
     if (s_VertexArray == nullptr) {
         InitVertexArray();
     }
-    if (s_UniformBuffer == nullptr) {
-        InitUniformBuffer();
-    }
 
     auto surface =
         std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
@@ -112,10 +109,6 @@ void Image::InitVertexArray() {
     // NOLINTEND
 }
 
-void Image::InitUniformBuffer() {
-    s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
-        *s_Program, "Matrices", 0);
-}
 
 std::unique_ptr<Core::Program> Image::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> Image::s_VertexArray = nullptr;

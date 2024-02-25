@@ -103,8 +103,8 @@ public:
      * @brief Checks if the middle mouse Structure is currently pressed.
      * @return  true if the middle mouse Structure is currently pressed, false
      * otherwise.
->>>>>>> main
      */
+    static bool IsKeyDown(const Keycode &key);
     static bool IsKeyUp(const Keycode &key);
 
     /**

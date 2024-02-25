@@ -59,7 +59,7 @@ set(SRC_FILES
 
     ${SRC_DIR}/App.cpp
         ${SRC_DIR}/Triangle.cpp
-        ${SRC_DIR}/Giraffe.cpp
+        #${SRC_DIR}/Giraffe.cpp
         ${SRC_DIR}/Capybara.cpp
         ${SRC_DIR}/Barracks.cpp
         ${SRC_DIR}/Structure.cpp
@@ -69,6 +69,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
+        #${SRC_DIR}/Cat.cpp
 
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
@@ -106,9 +107,9 @@ set(INCLUDE_FILES
 
 
     ${INCLUDE_DIR}/App.hpp
-    ${INCLUDE_DIR}/Giraffe.hpp
-    ${INCLUDE_DIR}/GiraffeText.hpp
-    ${INCLUDE_DIR}/Cat.hpp
+    #${INCLUDE_DIR}/Giraffe.hpp
+    #${INCLUDE_DIR}/GiraffeText.hpp
+    #${INCLUDE_DIR}/Cat.hpp
     ${INCLUDE_DIR}/config.hpp
         ${INCLUDE_DIR}/Triangle.hpp
         ${INCLUDE_DIR}/config.hpp

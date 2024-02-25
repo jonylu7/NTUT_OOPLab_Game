@@ -81,9 +81,7 @@ public:
 private:
     void InitProgram();
     void InitVertexArray();
-
-    void InitUniformBuffer(const Util::Transform &transform = Util::Transform(),
-                           const float zIndex = -1);
+    //void InitUniformBuffer();
 
     // temp place here until batch
     void InitUniformBuffer(CameraClass camera) {

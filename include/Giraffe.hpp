@@ -10,9 +10,9 @@
 class Giraffe : public Util::GameObject {
 
 public:
-    void Update();
+    void Update() override;
 
-    void Start();
+    void Start() override;
 
 private:
     std::shared_ptr<GiraffeText> m_GiraffeText;

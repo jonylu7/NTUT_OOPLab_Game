@@ -10,7 +10,7 @@
 #include "Capybara.hpp"
 #include "Cell.hpp"
 #include "Core/Context.hpp"
-#include "Giraffe.hpp"
+//#include "Giraffe.hpp"
 #include "Grid.hpp"
 #include "Infantry.hpp"
 #include "Rectangle.hpp"
@@ -45,7 +45,7 @@ public:
 
 private:
     std::vector<std::shared_ptr<Util::GameObject>> m_GameObjectList = {
-        std::make_shared<Giraffe>(), std::make_shared<Capybara>(),
+        std::make_shared<Capybara>(), std::make_shared<Capybara>(),
         std::make_shared<Barracks>()};
 
     Rectangle rect;

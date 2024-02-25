@@ -134,6 +134,11 @@ public:
 
     virtual void Draw();
 
+    //should be removed
+    virtual void Start(){};
+    virtual void Update(){};
+    virtual void Update(const Util::Transform &transform){};
+
 protected:
     Util::Transform m_Transform; // IDK if this should be here.
 
