@@ -11,8 +11,8 @@ class Terrain:public Util::GameObject{
 public:
     Terrain(){
         SetDrawable(std::make_shared<Util::Image>("../assets/sprites/Desert.png"));
-        m_Transform.translation=glm::vec2(100,100);
-        m_Transform.scale=glm::vec2(0.0001F,0.0001F);
+        m_Transform.translation=glm::vec2(50,50);
+        m_Transform.scale=glm::vec2(0.2F,0.2F);
     };
     ~Terrain(){};
 

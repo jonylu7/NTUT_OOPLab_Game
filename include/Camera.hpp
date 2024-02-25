@@ -10,6 +10,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "Core/Drawable.hpp"
 
+
 class CameraClass : public Component {
 public:
     CameraClass() {
@@ -32,9 +33,10 @@ public:
     static glm::mat4x4 getProjectionMatrix() {
         /*
          * adjust projection matrix when window size is changing
-         */
          return glm::ortho(0.0F, float(WINDOW_WIDTH / 2), 0.0F,
                                         float(WINDOW_HEIGHT / 2), 0.F, 100.F);
+                                        */
+        return glm::perspective(glm::radians(m_Fov),float(WINDOW_WIDTH)/float(WINDOW_HEIGHT),0.1F,100.F);
     }
 
     static glm::mat4x4 getViewMatrix() {
@@ -50,6 +52,7 @@ public:
 
     float getMovingSpeed() { return m_MovingSpeed; }
     float getZoomingSpeed() { return m_ZoomingSpeed; }
+    void changeFOV(float offset);
 
     void Start() override;
     void Update() override;
@@ -59,8 +62,9 @@ public:
 private:
     static float m_Zoom;
     static glm::vec2 m_Position;
-    float m_MovingSpeed = 2.5F;
+    float m_MovingSpeed = 1.5F;
     float m_ZoomingSpeed = 0.5F;
+    static float m_Fov;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP

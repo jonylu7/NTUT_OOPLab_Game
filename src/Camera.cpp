@@ -6,6 +6,7 @@
 
 glm::vec2 CameraClass::m_Position(glm::vec2(0,0));
 float CameraClass::m_Zoom=1.F;
+float CameraClass::m_Fov=90.F;
 
 void CameraClass::Start() {}
 
@@ -41,7 +42,8 @@ void CameraClass::UpdateWhenCursorAtBoarder() {
 void CameraClass::UpdateWhenCursorScroll() {
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
-        addCameraZoom(delta.y * getZoomingSpeed());
+        changeFOV(delta.y * getZoomingSpeed());
+        //addCameraZoom(delta.y * getZoomingSpeed());
         // LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
     }
 }
@@ -51,4 +53,18 @@ void CameraClass::addCameraZoom(float add) {
     if (m_Zoom + add < 5 && m_Zoom + add > 0) {
         m_Zoom += add;
     }
+}
+
+
+void CameraClass::changeFOV(float offset){
+    m_Fov-=offset;
+
+if(m_Fov<1.F){
+        m_Fov=1.F;
+}
+if(m_Fov>90.F){
+        m_Fov=90.F;
+}
+
+
 }
