@@ -48,6 +48,8 @@ set(SRC_FILES
     ${SRC_DIR}/Util/Color.cpp
     ${SRC_DIR}/Util/Animation.cpp
 
+        ${SRC_DIR}/Util/ImageArray.cpp
+
         ${SRC_DIR}/imgui/imgui.cpp
         ${SRC_DIR}/imgui/imgui_demo.cpp
         ${SRC_DIR}/imgui/imgui_draw.cpp
@@ -70,6 +72,7 @@ set(SRC_FILES
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
         #${SRC_DIR}/Cat.cpp
+
 
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
@@ -104,6 +107,7 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Util/Root.hpp
     ${INCLUDE_DIR}/Util/Color.hpp
     ${INCLUDE_DIR}/Util/Animation.hpp
+        ${INCLUDE_DIR}/Util/ImageArray.hpp
 
 
     ${INCLUDE_DIR}/App.hpp

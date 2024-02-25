@@ -64,7 +64,7 @@ void VertexArray::DrawRectangles() const {
 
 void VertexArray::DrawLines(int count) const {
     /*
-     * draw lines using only vertex (without elemnt)
+     * draw lines using only vertex (without element)
      */
 
     glDrawArrays(GL_LINES, 0, count);

@@ -5,12 +5,12 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_TERRAIN_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_TERRAIN_HPP
 #include "Util/GameObject.hpp"
-#include "Util/Image.hpp"
+#include "Util/ImageArray.hpp"
 #include "Core/Drawable.hpp"
 class Terrain:public Util::GameObject{
 public:
     Terrain(){
-        SetDrawable(std::make_shared<Util::Image>("../assets/sprites/Desert.png"));
+        SetDrawable(std::make_shared<Util::ImageArray>("../assets/sprites/Desert.png"));
         m_Transform.translation=glm::vec2(50,50);
         m_Transform.scale=glm::vec2(0.2F,0.2F);
     };

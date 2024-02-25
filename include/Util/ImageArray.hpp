@@ -1,5 +1,5 @@
-#ifndef UTIL_IMAGE_HPP
-#define UTIL_IMAGE_HPP
+#ifndef UTIL_IMAGEARRAY_HPP
+#define UTIL_IMAGEARRAY_HPP
 
 #include "pch.hpp" // IWYU pragma: export
 
@@ -15,21 +15,21 @@
 
 namespace Util {
 /**
- * @class Image
+ * @class ImageArray
  * @brief A class representing an image.
  *
  * This class encapsulates the properties and behaviors of an image.
  * It includes properties such as texture and surface.
  * It also includes behaviors such as drawing the image.
  */
-class Image : public Core::Drawable {
+class ImageArray : public Core::Drawable {
 public:
     /**
      * @brief Constructor that takes a file path to the image.
      *
      * @param filepath The file path to the image.
      */
-    explicit Image(const std::string &filepath);
+    explicit ImageArray(const std::string &filepath);
 
 
     /**
