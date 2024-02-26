@@ -97,12 +97,14 @@ void ImageArray::InitVertexArray() {
 
     // Vertex
 
+    //init position,uv,index according to "offset"vector
+
     std::vector<float> positionVertex;
     std::vector<float> uvVertex;
     std::vector<unsigned int> indexBuffer;
 
     std::vector<glm::vec2> offset={glm::vec2(0,0),glm::vec2(1,0),glm::vec2(1,1),glm::vec2(0,1)
-
+                                                                                            ,glm::vec2(0,3)
     };
 
 
