@@ -22,6 +22,7 @@ float CalculateDisanceReturnFloat(glm::vec2 d) {
 float MoveToDestination(glm::vec2 Destination) {
     // moving destination
     // crash and find algorithm
+    return 0.F;
 }
 
 void Infantry::Update([[maybe_unused]] const Util::Transform &transform) {
