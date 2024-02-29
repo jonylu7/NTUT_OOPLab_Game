@@ -29,10 +29,8 @@ void DefaultScene::Start() {
 
     //`m_GameObjectList[2]->AppendChild(gf);
     // rect.Init();
-    m_SpriteSheet.Start(std::make_shared<Util::Image>(
-                            "../assets/sprites/Allied Strucutre/Allied "
-                            "Structure SpriteSheet.png"),
-                        48, 64, 24, 0);
+    m_SpriteSheet.Start("../assets/sprites/Allied Strucutre/Allied Structure SpriteSheet.png",
+                        64, 48, 24, 0);
 
     for (auto i : m_GameObjectList) {
         i->Start();

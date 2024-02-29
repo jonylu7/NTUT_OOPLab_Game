@@ -1,5 +1,5 @@
-#ifndef UTIL_IMAGE_HPP
-#define UTIL_IMAGE_HPP
+#ifndef UTIL_CUSTOMIZABLEIMAGE_HPP
+#define UTIL_CUSTOMIZABLEIMAGE_HPP
 
 #include "pch.hpp" // IWYU pragma: export
 
@@ -15,22 +15,38 @@
 
 namespace Util {
 /**
- * @class Image
+ * @class CustomizableImage
  * @brief A class representing an image.
  *
  * This class encapsulates the properties and behaviors of an image.
  * It includes properties such as texture and surface.
  * It also includes behaviors such as drawing the image.
  */
-class Image : public Core::Drawable {
+class CustomizableImage : public Core::Drawable {
 public:
     /**
      * @brief Constructor that takes a file path to the image.
      *
      * @param filepath The file path to the image.
-     */
-    explicit Image(const std::string &filepath);
 
+     */
+    explicit CustomizableImage(const std::string &filepath);
+
+    /**
+     * @brief extra requried step to run Customizable Image, please run this!
+     * @param positionvertex defines the position of the image (default: {-0.5F, 0.5F,  //
+     -0.5F, -0.5F, //
+     0.5F, -0.5F,  //
+     0.5F, 0.5F,})
+     * @param uv defines the inner coordinates of the image (default:{0.0F, 0.0F, //
+     0.0F, 1.F, //
+     1.F, 1.F, //
+     1.F, 0.0F, //})
+     * @param indexbuffer defines drawing sequences of the vertex (default:{0, 1, 2, //
+     0, 2, 3, //
+     })
+     */
+    void Init(std::vector<float> positionvertex,std::vector<float> uv,std::vector<unsigned int> indexbuffer);
 
     /**
      * @brief Retrieves the size of the image.
@@ -63,7 +79,6 @@ public:
     unsigned int getTextureID() { return m_Texture->GetTextureId(); }
 
     void Draw(const Util::Transform &transform, const float zIndex) override;
-    void DrawTest(const Util::Transform &transform, const float zIndex);
     void DrawUsingCamera(const Util::Transform &transform, const float zIndex) override;
 
 
@@ -84,6 +99,18 @@ private:
 
     std::string m_Path;
     glm::vec2 m_Size;
+
+    std::vector<float> m_Uv={0.0F, 0.0F, //
+                                0.0F, 1.F, //
+                                1.F, 1.F, //
+                                1.F, 0.0F, };
+    std::vector<float> m_PositionVertex={-0.5F, 0.5F,  //
+        -0.5F, -0.5F, //
+        0.5F, -0.5F,  //
+        0.5F, 0.5F};
+    std::vector<unsigned int> m_IndexBuffer={0, 1, 2, //
+        0, 2, 3, //
+};
 };
 } // namespace Util
 

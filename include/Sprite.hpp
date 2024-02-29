@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_SPRITE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_SPRITE_HPP
 #include "Util/Image.hpp"
+#include "pch.hpp" // IWYU pragma: export
 
 class Sprite {
 public:
@@ -28,7 +29,8 @@ public:
     };
     ~Sprite(){};
 
-    std::shared_ptr<Util::Image> getTexture() { return m_Texture; };
+    std::shared_ptr<Util::Image> getTexture() {
+        return m_Texture; };
 
     std::vector<glm::vec2> getTextureCoord() { return m_TextureCoord; }
 

@@ -40,6 +40,7 @@ public:
     void DrawTriangles() const;
     void DrawRectangles() const;
     void DrawLines(int count) const;
+    void DrawTest()const;
     template <class T>
     void modifyVertexBuffersByIndex(int index, int size, std::vector<T> data) {
         m_VertexBuffers[index]->ModifyBufferData(size, data);
