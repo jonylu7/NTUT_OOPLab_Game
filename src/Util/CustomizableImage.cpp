@@ -1,4 +1,4 @@
-#include "Util/Image.hpp"
+#include "Util/CustomizableImage.hpp"
 
 #include "pch.hpp"
 
@@ -7,21 +7,8 @@
 
 #include "Util/TransformUtils.hpp"
 
-#include "config.hpp"
-
 namespace Util {
-Image::Image(const std::string &filepath)
-    : m_Path(filepath) {
-    if (s_Program == nullptr) {
-        InitProgram();
-    }
-    if (s_VertexArray == nullptr) {
-        InitVertexArray();
-    }
-    if (s_UniformBuffer == nullptr) {
-        InitUniformBuffer();
-    }
-
+CustomizableImage::CustomizableImage(const std::string &filepath) {
     auto surface =
         std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
             IMG_Load(filepath.c_str()),
@@ -38,7 +25,7 @@ Image::Image(const std::string &filepath)
     m_Size = {surface->w, surface->h};
 }
 
-void Image::SetImage(const std::string &filepath) {
+void CustomizableImage::SetImage(const std::string &filepath) {
     auto surface =
         std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
             IMG_Load(filepath.c_str()),
@@ -54,7 +41,8 @@ void Image::SetImage(const std::string &filepath) {
     m_Size = {surface->w, surface->h};
 }
 
-void Image::Draw(const Util::Transform &transform, const float zIndex) {
+void CustomizableImage::DrawTest(int count, const Util::Transform &transform,
+                                 const float zIndex) {
     auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
     s_UniformBuffer->SetData(0, data);
 
@@ -66,8 +54,10 @@ void Image::Draw(const Util::Transform &transform, const float zIndex) {
     s_VertexArray->DrawTriangles();
 }
 
-void Image::DrawTest(const Util::Transform &transform, const float zIndex) {
-    auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
+void CustomizableImage::DrawUsingCamera(const Util::Transform &transform,
+                                        const float zIndex) {
+    auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(
+        transform, m_Size, zIndex);
     s_UniformBuffer->SetData(0, data);
 
     m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
@@ -78,19 +68,22 @@ void Image::DrawTest(const Util::Transform &transform, const float zIndex) {
     s_VertexArray->DrawTriangles();
 }
 
-void Image::DrawUsingCamera(const Util::Transform &transform, const float zIndex){
-    auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(transform, m_Size, zIndex);
-    s_UniformBuffer->SetData(0, data);
+void CustomizableImage::Init(std::vector<float> positionvertex,
+                             std::vector<float> uv,
+                             std::vector<unsigned int> indexbuffer) {
 
-    m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
-    s_Program->Bind();
-    s_Program->Validate();
+    m_PositionVertex = positionvertex;
+    m_Uv = uv;
+    m_IndexBuffer = indexbuffer;
 
-    s_VertexArray->Bind();
-    s_VertexArray->DrawTriangles();
+    InitProgram();
+
+    InitVertexArray();
+
+    InitUniformBuffer();
 }
 
-void Image::InitProgram() {
+void CustomizableImage::InitProgram() {
     // TODO: Create `BaseProgram` from `Program` and pass it into `Drawable`
     s_Program = std::make_unique<Core::Program>("../assets/shaders/Base.vert",
                                                 "../assets/shaders/Base.frag");
@@ -100,52 +93,30 @@ void Image::InitProgram() {
     glUniform1i(location, UNIFORM_SURFACE_LOCATION);
 }
 
-void Image::InitVertexArray() {
+void CustomizableImage::InitVertexArray() {
     s_VertexArray = std::make_unique<Core::VertexArray>();
-
-    // NOLINTBEGIN
-    // These are vertex data for the rectangle but clang-tidy has magic
-    // number warnings
-
-    // Vertex
-    s_VertexArray->AddVertexBuffer(std::make_unique<Core::VertexBuffer>(
-        std::vector<float>{
-            -0.5F, 0.5F,  //
-            -0.5F, -0.5F, //
-            0.5F, -0.5F,  //
-            0.5F, 0.5F,   //
-        },
-        2));
+    s_VertexArray->AddVertexBuffer(
+        std::make_unique<Core::VertexBuffer>(m_PositionVertex, 2));
 
     // UV
-    s_VertexArray->AddVertexBuffer(std::make_unique<Core::VertexBuffer>(
-        std::vector<float>{
-            0.0F, 0.0F, //
-            0.0F, 1.F, //
-            1.F, 1.F, //
-            1.F, 0.0F, //
-        },
-        2));
+
+    s_VertexArray->AddVertexBuffer(
+        std::make_unique<Core::VertexBuffer>(m_Uv, 2));
 
     // Index
     s_VertexArray->SetIndexBuffer(
-        std::make_unique<Core::IndexBuffer>(std::vector<unsigned int>{
-            0, 1, 2, //
-            0, 2, 3, //
-        }));
+        std::make_unique<Core::IndexBuffer>(m_IndexBuffer));
     // NOLINTEND
-
-
 }
 
-void Image::InitUniformBuffer() {
+void CustomizableImage::InitUniformBuffer() {
     s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
         *s_Program, "Matrices", 0);
 }
 
+std::unique_ptr<Core::Program> CustomizableImage::s_Program = nullptr;
+std::unique_ptr<Core::VertexArray> CustomizableImage::s_VertexArray = nullptr;
+std::unique_ptr<Core::UniformBuffer<Core::Matrices>>
+    CustomizableImage::s_UniformBuffer = nullptr;
 
-std::unique_ptr<Core::Program> Image::s_Program = nullptr;
-std::unique_ptr<Core::VertexArray> Image::s_VertexArray = nullptr;
-std::unique_ptr<Core::UniformBuffer<Core::Matrices>> Image::s_UniformBuffer =
-    nullptr;
 } // namespace Util

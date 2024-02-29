@@ -39,7 +39,14 @@ public:
 
     void DrawTriangles() const;
     void DrawRectangles() const;
+
+    /**
+     * @brief DrawArrays in line mode
+     * @params ??
+     * */
+
     void DrawLines(int count) const;
+    void DrawTest(int count)const;
     template <class T>
     void modifyVertexBuffersByIndex(int index, int size, std::vector<T> data) {
         m_VertexBuffers[index]->ModifyBufferData(size, data);
