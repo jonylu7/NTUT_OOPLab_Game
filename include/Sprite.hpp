@@ -45,6 +45,11 @@ public:
         m_Image->Draw(transform, zIndex);
     }
 
+    void Init(std::vector<float> textcoord, std::vector<float> uvcoord,
+              std::vector<unsigned int> index) {
+        m_Image->Init(m_TextureCoord, m_UvCoord, m_Index);
+    }
+
     void SetIndex(std::vector<unsigned int> index) { m_Image->SetIndex(index); }
     void DrawTest(int count, const Util::Transform &transform,
                   const float zIndex) {

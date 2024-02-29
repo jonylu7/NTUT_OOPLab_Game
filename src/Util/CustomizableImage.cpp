@@ -99,6 +99,7 @@ void CustomizableImage::InitVertexArray() {
         std::make_unique<Core::VertexBuffer>(m_PositionVertex, 2));
 
     // UV
+
     s_VertexArray->AddVertexBuffer(
         std::make_unique<Core::VertexBuffer>(m_Uv, 2));
 
