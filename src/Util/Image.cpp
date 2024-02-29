@@ -75,7 +75,7 @@ void Image::DrawTest(const Util::Transform &transform, const float zIndex) {
     s_Program->Validate();
 
     s_VertexArray->Bind();
-    s_VertexArray->DrawTest();
+    s_VertexArray->DrawTriangles();
 }
 
 void Image::DrawUsingCamera(const Util::Transform &transform, const float zIndex){

@@ -58,9 +58,8 @@ void VertexArray::DrawTriangles() const {
                    GL_UNSIGNED_INT, nullptr);
 }
 
-void VertexArray::DrawTest() const {
-    //for test temp test purpose
-    //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+void VertexArray::DrawTest(int count) const {
+    glDrawArrays(GL_TRIANGLES, 0, count);
 }
 
 void VertexArray::DrawRectangles() const {

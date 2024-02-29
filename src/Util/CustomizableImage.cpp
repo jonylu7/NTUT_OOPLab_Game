@@ -43,7 +43,7 @@ void CustomizableImage::SetImage(const std::string &filepath) {
     m_Size = {surface->w, surface->h};
 }
 
-void CustomizableImage::Draw(const Util::Transform &transform, const float zIndex) {
+void CustomizableImage::Draw(int count,const Util::Transform &transform, const float zIndex) {
     auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
     s_UniformBuffer->SetData(0, data);
 
@@ -52,8 +52,9 @@ void CustomizableImage::Draw(const Util::Transform &transform, const float zInde
     s_Program->Validate();
 
     s_VertexArray->Bind();
-    s_VertexArray->DrawTriangles();
+    //s_VertexArray->DrawLines(count);
 }
+
 
 void CustomizableImage::DrawUsingCamera(const Util::Transform &transform, const float zIndex){
     auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(transform, m_Size, zIndex);
@@ -96,7 +97,6 @@ void CustomizableImage::InitProgram() {
 }
 
 
-
 void CustomizableImage::InitVertexArray() {
     s_VertexArray = std::make_unique<Core::VertexArray>();
     s_VertexArray->AddVertexBuffer(std::make_unique<Core::VertexBuffer>(
@@ -125,4 +125,5 @@ std::unique_ptr<Core::Program> CustomizableImage::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> CustomizableImage::s_VertexArray = nullptr;
 std::unique_ptr<Core::UniformBuffer<Core::Matrices>> CustomizableImage::s_UniformBuffer =
     nullptr;
+
 } // namespace Util

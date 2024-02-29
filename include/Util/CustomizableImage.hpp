@@ -79,6 +79,7 @@ public:
     unsigned int getTextureID() { return m_Texture->GetTextureId(); }
 
     void Draw(const Util::Transform &transform, const float zIndex) override;
+    void Draw(int count,const Util::Transform &transform, const float zIndex);
     void DrawUsingCamera(const Util::Transform &transform, const float zIndex) override;
 
 
@@ -112,6 +113,6 @@ private:
         0, 2, 3, //
 };
 };
-} // namespace Util
+}
 
-#endif
+#endif// namespace Util

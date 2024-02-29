@@ -14,7 +14,15 @@ public:
         m_SpriteSheet_Image=std::make_shared<Util::CustomizableImage>(filepath);
         int currentX = 0;
         int currentY = m_SpriteSheet_Image->GetSize().y - spriteHeight;
-    /*
+
+        //textcoord
+        float coordHeight=spriteHeight/(float)m_SpriteSheet_Image->GetSize().y;
+        float coordWidth=spriteWidth/(float)m_SpriteSheet_Image->GetSize().x;
+        std::vector<float> coord({-(coordWidth/2), (coordHeight/2),  //
+                                  -(coordWidth/2), -(coordHeight/2), //
+                                  (coordWidth/2), -(coordHeight/2),  //
+                                  (coordWidth/2), (coordHeight/2)});
+
         for (int i = 0; i < numSpirtes; i++) {
             float topY = (currentY + spriteHeight) /
                          (float)m_SpriteSheet_Image->GetSize().y;
@@ -29,55 +37,40 @@ public:
                 currentY -= spriteHeight + spacing;
             }
 
-            //uv
-
-        }
-        */
-        currentX += spriteWidth + spacing;
-        float topY = (currentY + spriteHeight) /
-                     (float)m_SpriteSheet_Image->GetSize().y;
-        float rightX = (currentX + spriteWidth) /
-                       (float)m_SpriteSheet_Image->GetSize().x;
-        float leftX = currentX / (float)m_SpriteSheet_Image->GetSize().x;
-        float bottomY = currentY / (float)m_SpriteSheet_Image->GetSize().y;
-
-        std::vector<float> uv({ leftX, bottomY, //
-                               leftX, topY,//
-                               rightX, topY, //
-                rightX, bottomY
-        });
-
-        //coord
-        float coordHeight=spriteHeight/(float)m_SpriteSheet_Image->GetSize().y;
-        float coordWidth=spriteWidth/(float)m_SpriteSheet_Image->GetSize().x;
-        std::vector<float> coord({-(coordWidth/2), (coordHeight/2),  //
-                                  -(coordWidth/2), -(coordHeight/2), //
-                                  (coordWidth/2), -(coordHeight/2),  //
-                                  (coordWidth/2), (coordHeight/2)});
-
-            // index
-            std::vector<unsigned int> index({
-                0, 1, 2, //
-                0, 2, 3, //
+            //uvcoord
+            std::vector<float> uv({ leftX, bottomY, //
+                                   leftX, topY,//
+                                   rightX, topY, //
+                                   rightX, bottomY
             });
 
-m_SpriteSheet_Image->Init(coord,uv,index);
+            m_TextCoord.insert(m_TextCoord.end(),coord.begin(),coord.end());
+            m_Uv.insert(m_Uv.end(),m_Uv.begin(),m_Uv.end());
 
-
+        }
+        m_SpriteSheet.push_back(Sprite(filepath,m_TextCoord,m_Uv,m_index));
     }
     ~SpriteSheet() {}
-    Sprite getSpriteByIndex(int index) { return m_SpriteSheet[index]; }
+
 
     void Update() {
         Util::Transform trans;
-        m_SpriteSheet_Image->Draw(trans,0);
         //getSpriteByIndex(23).getTexture()->Draw(trans,0);
-
+        DrawSpriteByIndex(0,trans,0);
     }
+
+    void DrawSpriteByIndex(int index,Util::Transform trans,int zIndex){
+        m_SpriteSheet[0].Draw(int(m_SpriteSheet.size()*8*12),trans,zIndex);
+    }
+
+
 
 private:
     std::vector<Sprite> m_SpriteSheet;
     std::shared_ptr<Util::CustomizableImage> m_SpriteSheet_Image;
+    std::vector<float> m_TextCoord;
+    std::vector<float> m_Uv;
+    std::vector<unsigned int> m_index;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SPRITESHEET_HPP
