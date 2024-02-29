@@ -78,8 +78,10 @@ public:
 
     unsigned int getTextureID() { return m_Texture->GetTextureId(); }
 
-    void Draw(const Util::Transform &transform, const float zIndex) override;
-    void Draw(int count,const Util::Transform &transform, const float zIndex);
+    void Draw(const Util::Transform &transform, const float zIndex) override{
+
+    };
+    void DrawTest(int count,const Util::Transform &transform, const float zIndex);
     void DrawUsingCamera(const Util::Transform &transform, const float zIndex) override;
 
 

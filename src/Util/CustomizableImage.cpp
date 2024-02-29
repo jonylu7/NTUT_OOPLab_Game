@@ -7,7 +7,6 @@
 
 #include "Util/TransformUtils.hpp"
 
-#include "config.hpp"
 
 namespace Util {
 CustomizableImage::CustomizableImage(const std::string &filepath){
@@ -43,7 +42,7 @@ void CustomizableImage::SetImage(const std::string &filepath) {
     m_Size = {surface->w, surface->h};
 }
 
-void CustomizableImage::Draw(int count,const Util::Transform &transform, const float zIndex) {
+void CustomizableImage::DrawTest(int count,const Util::Transform &transform, const float zIndex) {
     auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
     s_UniformBuffer->SetData(0, data);
 

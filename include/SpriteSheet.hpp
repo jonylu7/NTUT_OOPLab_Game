@@ -60,7 +60,7 @@ public:
     }
 
     void DrawSpriteByIndex(int index,Util::Transform trans,int zIndex){
-        m_SpriteSheet[0].Draw(int(m_SpriteSheet.size()*8*12),trans,zIndex);
+        m_SpriteSheet[0].DrawTest(int(m_SpriteSheet.size()*8*12),trans,zIndex);
     }
 
 

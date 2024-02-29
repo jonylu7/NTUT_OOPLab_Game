@@ -21,8 +21,10 @@ public:
         //m_Image->Init(m_TextureCoord,m_UvCoord,m_Index);
         };
     ~Sprite(){};
-    void Draw(const Util::Transform &transform, const float zIndex)override{}
-    void Draw(int count,const Util::Transform &transform, const float zIndex){
+    void Draw(const Util::Transform &transform, const float zIndex)override{
+        m_Image->Draw(transform,zIndex);
+    }
+    void DrawTest(int count,const Util::Transform &transform, const float zIndex){
         //m_Image->Draw(count,transform,zIndex);
     }
 
