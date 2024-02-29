@@ -29,8 +29,9 @@ void DefaultScene::Start() {
 
     //`m_GameObjectList[2]->AppendChild(gf);
     // rect.Init();
-    m_SpriteSheet.Start("../assets/sprites/Allied Strucutre/Allied Structure SpriteSheet.png",
-                        64, 48, 24, 0);
+    m_SpriteSheet.Start(
+        "../assets/sprites/Allied Strucutre/Allied Structure SpriteSheet.png",
+        64, 48, 24, 0);
 
     for (auto i : m_GameObjectList) {
         i->Start();
@@ -60,17 +61,15 @@ void DefaultScene::Update() {
 
     m_SceneCamera.Update();
 
-    m_SpriteSheet.Update();
+    m_SpriteSheet.DrawSpriteByIndex(10, Util::Transform(), 0);
 
     m_Inf->Update();
     rect.Update();
     m_Renderer.Update();
 
-
     for (auto i : m_GameObjectList) {
         i->Update();
     }
-
 }
 
 void DefaultScene::imgui_ShowSelectionRect(ImVec2 *start_pos, ImVec2 *end_pos,
