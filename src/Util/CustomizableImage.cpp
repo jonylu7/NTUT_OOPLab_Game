@@ -51,7 +51,7 @@ void CustomizableImage::DrawTest(int count,const Util::Transform &transform, con
     s_Program->Validate();
 
     s_VertexArray->Bind();
-    //s_VertexArray->DrawLines(count);
+    s_VertexArray->DrawTest(count);
 }
 
 

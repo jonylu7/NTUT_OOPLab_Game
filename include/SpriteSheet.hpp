@@ -46,9 +46,9 @@ public:
 
             m_TextCoord.insert(m_TextCoord.end(),coord.begin(),coord.end());
             m_Uv.insert(m_Uv.end(),m_Uv.begin(),m_Uv.end());
-
+            m_SpriteSheet.push_back(std::make_unique<Sprite>(filepath,coord,uv));
         }
-        m_SpriteSheet.push_back(Sprite(filepath,m_TextCoord,m_Uv,m_index));
+
     }
     ~SpriteSheet() {}
 
@@ -56,17 +56,18 @@ public:
     void Update() {
         Util::Transform trans;
         //getSpriteByIndex(23).getTexture()->Draw(trans,0);
-        DrawSpriteByIndex(0,trans,0);
+        DrawSpriteByIndex(2,trans,0);
     }
 
     void DrawSpriteByIndex(int index,Util::Transform trans,int zIndex){
-        m_SpriteSheet[0].DrawTest(int(m_SpriteSheet.size()*8*12),trans,zIndex);
+        m_SpriteSheet[index]->Draw(trans,zIndex);
+        //m_SpriteSheet[0]->DrawTest(int(m_SpriteSheet.size()*8*12),trans,zIndex);
     }
 
 
 
 private:
-    std::vector<Sprite> m_SpriteSheet;
+    std::vector<std::unique_ptr<Sprite>> m_SpriteSheet;
     std::shared_ptr<Util::CustomizableImage> m_SpriteSheet_Image;
     std::vector<float> m_TextCoord;
     std::vector<float> m_Uv;

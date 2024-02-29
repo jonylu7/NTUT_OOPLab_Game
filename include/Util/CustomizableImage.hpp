@@ -12,6 +12,7 @@
 #include "Camera.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Transform.hpp"
+#include "Util/TransformUtils.hpp"
 
 namespace Util {
 /**
@@ -79,7 +80,15 @@ public:
     unsigned int getTextureID() { return m_Texture->GetTextureId(); }
 
     void Draw(const Util::Transform &transform, const float zIndex) override{
+        auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
+        s_UniformBuffer->SetData(0, data);
 
+        m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
+        s_Program->Bind();
+        s_Program->Validate();
+
+        s_VertexArray->Bind();
+        s_VertexArray->DrawTriangles();
     };
     void DrawTest(int count,const Util::Transform &transform, const float zIndex);
     void DrawUsingCamera(const Util::Transform &transform, const float zIndex) override;
