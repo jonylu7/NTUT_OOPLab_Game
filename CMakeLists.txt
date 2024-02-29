@@ -23,30 +23,30 @@ include(cmake/Dependencies.cmake)
 
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 set(SRC_FILES
-    ${SRC_DIR}/Core/Context.cpp
-    ${SRC_DIR}/Core/DebugMessageCallback.cpp
-    ${SRC_DIR}/Core/VertexArray.cpp
-    ${SRC_DIR}/Core/VertexBuffer.cpp
-    ${SRC_DIR}/Core/IndexBuffer.cpp
-    ${SRC_DIR}/Core/Shader.cpp
-    ${SRC_DIR}/Core/Program.cpp
-    ${SRC_DIR}/Core/Texture.cpp
-    ${SRC_DIR}/Core/TextureUtils.cpp
+        ${SRC_DIR}/Core/Context.cpp
+        ${SRC_DIR}/Core/DebugMessageCallback.cpp
+        ${SRC_DIR}/Core/VertexArray.cpp
+        ${SRC_DIR}/Core/VertexBuffer.cpp
+        ${SRC_DIR}/Core/IndexBuffer.cpp
+        ${SRC_DIR}/Core/Shader.cpp
+        ${SRC_DIR}/Core/Program.cpp
+        ${SRC_DIR}/Core/Texture.cpp
+        ${SRC_DIR}/Core/TextureUtils.cpp
 
 
-    ${SRC_DIR}/Util/LoadTextFile.cpp
-    ${SRC_DIR}/Util/Logger.cpp
-    ${SRC_DIR}/Util/Time.cpp
-    ${SRC_DIR}/Util/Input.cpp
-    ${SRC_DIR}/Util/SFX.cpp
-    ${SRC_DIR}/Util/BGM.cpp
-    ${SRC_DIR}/Util/Image.cpp
-    ${SRC_DIR}/Util/Text.cpp
-    ${SRC_DIR}/Util/TransformUtils.cpp
-    ${SRC_DIR}/Util/GameObject.cpp
-    ${SRC_DIR}/Util/Root.cpp
-    ${SRC_DIR}/Util/Color.cpp
-    ${SRC_DIR}/Util/Animation.cpp
+        ${SRC_DIR}/Util/LoadTextFile.cpp
+        ${SRC_DIR}/Util/Logger.cpp
+        ${SRC_DIR}/Util/Time.cpp
+        ${SRC_DIR}/Util/Input.cpp
+        ${SRC_DIR}/Util/SFX.cpp
+        ${SRC_DIR}/Util/BGM.cpp
+        ${SRC_DIR}/Util/Image.cpp
+        ${SRC_DIR}/Util/Text.cpp
+        ${SRC_DIR}/Util/TransformUtils.cpp
+        ${SRC_DIR}/Util/GameObject.cpp
+        ${SRC_DIR}/Util/Root.cpp
+        ${SRC_DIR}/Util/Color.cpp
+        ${SRC_DIR}/Util/Animation.cpp
 
         ${SRC_DIR}/Util/ImageArray.cpp
         ${SRC_DIR}/Util/CustomizableImage.cpp
@@ -60,7 +60,7 @@ set(SRC_FILES
         ${SRC_DIR}/imgui/imgui_impl_sdlrenderer2.cpp
         ${SRC_DIR}/imgui/imgui_impl_opengl3.cpp
 
-    ${SRC_DIR}/App.cpp
+        ${SRC_DIR}/App.cpp
         ${SRC_DIR}/Triangle.cpp
         #${SRC_DIR}/Giraffe.cpp
         ${SRC_DIR}/Capybara.cpp
@@ -78,45 +78,44 @@ set(SRC_FILES
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
-    ${INCLUDE_DIR}/Core/Context.hpp
-    ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp
-    ${INCLUDE_DIR}/Core/VertexArray.hpp
-    ${INCLUDE_DIR}/Core/VertexBuffer.hpp
-    ${INCLUDE_DIR}/Core/UniformBuffer.hpp
-    ${INCLUDE_DIR}/Core/UniformBuffer.inl
-    ${INCLUDE_DIR}/Core/IndexBuffer.hpp
-    ${INCLUDE_DIR}/Core/Shader.hpp
-    ${INCLUDE_DIR}/Core/Program.hpp
-    ${INCLUDE_DIR}/Core/Texture.hpp
-    ${INCLUDE_DIR}/Core/TextureUtils.hpp
-    ${INCLUDE_DIR}/Core/Drawable.hpp
+        ${INCLUDE_DIR}/Core/Context.hpp
+        ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp
+        ${INCLUDE_DIR}/Core/VertexArray.hpp
+        ${INCLUDE_DIR}/Core/VertexBuffer.hpp
+        ${INCLUDE_DIR}/Core/UniformBuffer.hpp
+        ${INCLUDE_DIR}/Core/UniformBuffer.inl
+        ${INCLUDE_DIR}/Core/IndexBuffer.hpp
+        ${INCLUDE_DIR}/Core/Shader.hpp
+        ${INCLUDE_DIR}/Core/Program.hpp
+        ${INCLUDE_DIR}/Core/Texture.hpp
+        ${INCLUDE_DIR}/Core/TextureUtils.hpp
+        ${INCLUDE_DIR}/Core/Drawable.hpp
 
 
-
-    ${INCLUDE_DIR}/Util/LoadTextFile.hpp
-    ${INCLUDE_DIR}/Util/Logger.hpp
-    ${INCLUDE_DIR}/Util/Time.hpp
-    ${INCLUDE_DIR}/Util/Input.hpp
-    ${INCLUDE_DIR}/Util/Keycode.hpp
-    ${INCLUDE_DIR}/Util/SFX.hpp
-    ${INCLUDE_DIR}/Util/BGM.hpp
-    ${INCLUDE_DIR}/Util/Image.hpp
-    ${INCLUDE_DIR}/Util/Text.hpp
-    ${INCLUDE_DIR}/Util/Transform.hpp
-    ${INCLUDE_DIR}/Util/TransformUtils.hpp
-    ${INCLUDE_DIR}/Util/GameObject.hpp
-    ${INCLUDE_DIR}/Util/Root.hpp
-    ${INCLUDE_DIR}/Util/Color.hpp
-    ${INCLUDE_DIR}/Util/Animation.hpp
+        ${INCLUDE_DIR}/Util/LoadTextFile.hpp
+        ${INCLUDE_DIR}/Util/Logger.hpp
+        ${INCLUDE_DIR}/Util/Time.hpp
+        ${INCLUDE_DIR}/Util/Input.hpp
+        ${INCLUDE_DIR}/Util/Keycode.hpp
+        ${INCLUDE_DIR}/Util/SFX.hpp
+        ${INCLUDE_DIR}/Util/BGM.hpp
+        ${INCLUDE_DIR}/Util/Image.hpp
+        ${INCLUDE_DIR}/Util/Text.hpp
+        ${INCLUDE_DIR}/Util/Transform.hpp
+        ${INCLUDE_DIR}/Util/TransformUtils.hpp
+        ${INCLUDE_DIR}/Util/GameObject.hpp
+        ${INCLUDE_DIR}/Util/Root.hpp
+        ${INCLUDE_DIR}/Util/Color.hpp
+        ${INCLUDE_DIR}/Util/Animation.hpp
         ${INCLUDE_DIR}/Util/ImageArray.hpp
         ${INCLUDE_DIR}/Util/CustomizableImage.hpp
 
 
-    ${INCLUDE_DIR}/App.hpp
-    #${INCLUDE_DIR}/Giraffe.hpp
-    #${INCLUDE_DIR}/GiraffeText.hpp
-    #${INCLUDE_DIR}/Cat.hpp
-    ${INCLUDE_DIR}/config.hpp
+        ${INCLUDE_DIR}/App.hpp
+        ${INCLUDE_DIR}/Tile.hpp
+        #${INCLUDE_DIR}/GiraffeText.hpp
+        #${INCLUDE_DIR}/Cat.hpp
+        ${INCLUDE_DIR}/config.hpp
         ${INCLUDE_DIR}/Triangle.hpp
         ${INCLUDE_DIR}/config.hpp
         ${INCLUDE_DIR}/Capybara.hpp
