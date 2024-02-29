@@ -35,19 +35,16 @@ public:
 
     /**
      * @brief extra requried step to run Customizable Image, please run this!
-     * @param positionvertex defines the position of the image (default: {-0.5F, 0.5F,  //
-     -0.5F, -0.5F, //
-     0.5F, -0.5F,  //
-     0.5F, 0.5F,})
-     * @param uv defines the inner coordinates of the image (default:{0.0F, 0.0F, //
-     0.0F, 1.F, //
-     1.F, 1.F, //
-     1.F, 0.0F, //})
-     * @param indexbuffer defines drawing sequences of the vertex (default:{0, 1, 2, //
-     0, 2, 3, //
+     * @param positionvertex defines the position of the image (default: {-0.5F,
+     0.5F,  // -0.5F, -0.5F, // 0.5F, -0.5F,  // 0.5F, 0.5F,})
+     * @param uv defines the inner coordinates of the image (default:{0.0F,
+     0.0F, // 0.0F, 1.F, // 1.F, 1.F, // 1.F, 0.0F, //})
+     * @param indexbuffer defines drawing sequences of the vertex (default:{0,
+     1, 2, // 0, 2, 3, //
      })
      */
-    void Init(std::vector<float> positionvertex,std::vector<float> uv,std::vector<unsigned int> indexbuffer);
+    void Init(std::vector<float> positionvertex, std::vector<float> uv,
+              std::vector<unsigned int> indexbuffer);
 
     /**
      * @brief Retrieves the size of the image.
@@ -79,7 +76,7 @@ public:
 
     unsigned int getTextureID() { return m_Texture->GetTextureId(); }
 
-    void Draw(const Util::Transform &transform, const float zIndex) override{
+    void Draw(const Util::Transform &transform, const float zIndex) override {
         auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
         s_UniformBuffer->SetData(0, data);
 
@@ -90,15 +87,21 @@ public:
         s_VertexArray->Bind();
         s_VertexArray->DrawTriangles();
     };
-    void DrawTest(int count,const Util::Transform &transform, const float zIndex);
-    void DrawUsingCamera(const Util::Transform &transform, const float zIndex) override;
 
+    void SetIndex(std::vector<unsigned int> index) {
+        s_VertexArray->SetIndexBuffer(
+            std::make_unique<Core::IndexBuffer>(index));
+    }
+
+    void DrawTest(int count, const Util::Transform &transform,
+                  const float zIndex);
+    void DrawUsingCamera(const Util::Transform &transform,
+                         const float zIndex) override;
 
 private:
     void InitProgram();
     void InitVertexArray();
     void InitUniformBuffer();
-
 
     static constexpr int UNIFORM_SURFACE_LOCATION = 0;
 
@@ -112,18 +115,10 @@ private:
     std::string m_Path;
     glm::vec2 m_Size;
 
-    std::vector<float> m_Uv={0.0F, 0.0F, //
-                                0.0F, 1.F, //
-                                1.F, 1.F, //
-                                1.F, 0.0F, };
-    std::vector<float> m_PositionVertex={-0.5F, 0.5F,  //
-        -0.5F, -0.5F, //
-        0.5F, -0.5F,  //
-        0.5F, 0.5F};
-    std::vector<unsigned int> m_IndexBuffer={0, 1, 2, //
-        0, 2, 3, //
+    std::vector<float> m_Uv;
+    std::vector<float> m_PositionVertex;
+    std::vector<unsigned int> m_IndexBuffer;
 };
-};
-}
+} // namespace Util
 
-#endif// namespace Util
+#endif // namespace Util

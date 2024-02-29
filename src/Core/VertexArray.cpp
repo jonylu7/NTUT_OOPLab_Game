@@ -59,7 +59,7 @@ void VertexArray::DrawTriangles() const {
 }
 
 void VertexArray::DrawTest(int count) const {
-    glDrawArrays(GL_TRIANGLES, 0, count);
+    // glDrawArrays(GL_TRIANGLE_STRIP, 2, 12);
 }
 
 void VertexArray::DrawRectangles() const {
