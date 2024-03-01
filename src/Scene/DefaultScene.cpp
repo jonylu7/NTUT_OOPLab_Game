@@ -16,9 +16,12 @@ void DefaultScene::Start() {
         std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
 
     m_Structure->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/barracks.gif"));
+        std::make_unique<Util::Image>("../assets/sprites/barracks.png"));
+    m_Structure->SetZIndex(0);
+    m_Structure->SetObjectLocation({0, 0});
     m_Structure->Start();
     m_Structure->SetCurrentUpdateMode(Structure::updateMode::Moveable);
+    m_Renderer.AddChild(m_Structure);
 
     m_Inf->Start();
 
@@ -33,7 +36,9 @@ void DefaultScene::Start() {
     }
     testGrid.StartDrawingGridByWindowSize();
 
+
     m_Renderer.AddChild(m_Structure);
+
 }
 
 void DefaultScene::Update() {
