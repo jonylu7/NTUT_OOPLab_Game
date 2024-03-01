@@ -8,18 +8,28 @@
 #include <map>
 class TileClass {
 public:
-    TileClass(const std::string name, bool buildable, bool walkable)
+    TileClass(const std::string name, bool buildable, bool walkable,
+              bool clickable, int spritesheetindex)
         : m_Name(name),
           m_Buildable(buildable),
-          m_Walkable(walkable) {}
+          m_Walkable(walkable),
+          m_Clickable(clickable),
+          m_SpriteSheetIndex(spritesheetindex) {}
     ~TileClass() {}
 
     bool getWalkable() { return m_Walkable; };
     bool getBuildable() { return m_Buildable; };
+    bool getClickable() { return m_Clickable; };
+    bool getSpriteSheetIndex() { return m_SpriteSheetIndex; };
 
-    bool setWalkable(bool value) { m_Walkable = value; };
-    bool setBuildable(bool value) { m_Buildable = value; };
+    void setWalkable(bool value) { m_Walkable = value; };
+    void setBuildable(bool value) { m_Buildable = value; };
+    void setClickable(bool value) { m_Clickable = value; };
 
+    void setSpriteSheetIndex(unsigned int spritesheetindex) {
+        m_SpriteSheetIndex = spritesheetindex;
+    };
+    /*
     bool operator==(const TileClass &tile) const {
         if (tile.m_Name == m_Name && m_Walkable == tile.m_Walkable &&
             m_Buildable == tile.m_Walkable) {
@@ -38,10 +48,13 @@ public:
         }
     }
     TileClass operator=(const TileClass &tile) const { return tile; }
+     */
 
 private:
     bool m_Walkable;
     bool m_Buildable;
+    bool m_Clickable;
+    unsigned int m_SpriteSheetIndex;
     std::string m_Name;
 };
 

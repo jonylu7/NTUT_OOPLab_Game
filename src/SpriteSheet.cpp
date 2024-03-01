@@ -6,6 +6,9 @@
 void SpriteSheet::Start(std::string filepath, int spriteWidth, int spriteHeight,
                         int numSpirtes, int spacing) {
 
+    m_SpriteWidth = spriteWidth;
+    m_SpriteHeight = spriteHeight;
+
     std::shared_ptr<Util::CustomizableImage> m_SpriteSheet_Image =
         std::make_shared<Util::CustomizableImage>(filepath);
 

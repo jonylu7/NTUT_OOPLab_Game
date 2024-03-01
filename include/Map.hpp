@@ -12,19 +12,28 @@
 typedef unsigned int CELL;
 
 class MapClass {
-    MapClass(std::vector<TileClass> tileclasses,
-             std::shared_ptr<SpriteSheet> spriteSheet,
-             std::vector<std::shared_ptr<TileClass>>)
-        : m_TileSet(std::make_shared<TileSet>(tileclasses, spriteSheet)) {}
+    MapClass() {}
+
+    void Init(std::vector<std::shared_ptr<TileClass>> map,
+              std::shared_ptr<SpriteSheet> spritesheet, CELL width,
+              CELL height) {
+        m_Map = map;
+        m_SpriteSheet = spritesheet;
+        m_MapWdith = width;
+        m_MapHeight = height;
+    }
 
     void Draw() {
         // TODO: new feature, draw tiles only within given range
-        Util::Transform trans;
-        int zIndex = 0;
-        for (int i = 0; i < m_MapHeight; i++) {
-            for (int j = 0; j < m_MapWdith; j++) {
-                m_TileSet->DrawTileSetByClass(*m_Map[i][j], trans, zIndex);
-            }
+        Util::Transform drawLocation = {glm::vec2(0, 0)};
+        for (int i = 0; i < m_Map.size(); i++) {
+            int row = int((i + 1) / m_MapWdith);
+            int col = i - row * m_MapWdith;
+            drawLocation.translation.x = m_SpriteSheet->getSpriteSize().x * col;
+            drawLocation.translation.y = m_SpriteSheet->getSpriteSize().y * row;
+
+            m_SpriteSheet->DrawSpriteByIndex(m_Map[i]->getSpriteSheetIndex(),
+                                             drawLocation, m_ZIndex);
         }
     }
 
@@ -43,8 +52,8 @@ class MapClass {
 private:
     CELL m_MapWdith;
     CELL m_MapHeight;
-    std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
-    std::shared_ptr<TileSet> m_TileSet;
+    std::vector<std::shared_ptr<TileClass>> m_Map;
+    std::shared_ptr<SpriteSheet> m_SpriteSheet;
+    int m_ZIndex = 0;
 };
-
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP
