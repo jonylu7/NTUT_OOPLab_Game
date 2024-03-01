@@ -12,43 +12,22 @@
 class Sprite : public Core::Drawable {
 public:
     Sprite(const std::string &filepath, std::vector<float> textcoord,
-           std::vector<float> uvcoord, std::vector<unsigned int> index)
+           std::vector<float> uvcoord,
+           std::vector<unsigned int> index = {0, 1, 2, 2, 3, 0})
         : m_Index(index),
           m_TextureCoord(textcoord),
           m_UvCoord(uvcoord) {
-        /*
-         * TextureCoord is the coordinate system of this sprite,
-         * by default its x and y range is within 0 and 1
-         * the textureCoord vector is defined counter clock wise, starting from
-         * the top right corner.
-         */
         m_Image = std::make_unique<Util::CustomizableImage>(filepath);
         m_Image->Init(textcoord, uvcoord, index);
     };
-    Sprite(std::string filepath, std::vector<float> textcoord,
-           std::vector<float> uvcoord)
-        : m_Image(std::make_unique<Util::CustomizableImage>(filepath)),
-          m_TextureCoord(textcoord),
-          m_UvCoord(uvcoord) {
-        /*
-         * TextureCoord is the coordinate system of this sprite,
-         * by default its x and y range is within 0 and 1
-         * the textureCoord vector is defined counter clock wise, starting from
-         * the top right corner.
-         */
-        m_Index = {0, 1, 2, 2, 3, 0};
-        m_Image->Init(m_TextureCoord, m_UvCoord, m_Index);
-    };
 
     ~Sprite(){};
+
     void Draw(const Util::Transform &transform, const float zIndex) override {
         m_Image->Draw(transform, zIndex);
     }
 
-    void Init(std::vector<float> textcoord, std::vector<float> uvcoord,
-              std::vector<unsigned int> index) {
-        m_Image->Init(m_TextureCoord, m_UvCoord, m_Index);
-    }
+    void Init() { m_Image->Init(m_TextureCoord, m_UvCoord, m_Index); }
 
     void SetIndex(std::vector<unsigned int> index) { m_Image->SetIndex(index); }
     void DrawTest(int count, const Util::Transform &transform,
