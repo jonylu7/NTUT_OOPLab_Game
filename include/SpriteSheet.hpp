@@ -9,10 +9,21 @@
 class SpriteSheet {
 public:
     SpriteSheet(){};
+
+    /**
+     * @brief SpriteSheet, use Start to define a spritesheet, reading sequence
+     * will be read in "row-first" order
+     * @param filepath like the defination of "Image"
+     * @param spriteWidth spriteWidth
+     * @param spriteHeight spriteHieght
+     * @param numSpirtes what's the total number of sprites in an image
+     * @param spacing spacing between sprites
+     *
+     */
     void Start(std::string filepath, int spriteWidth, int spriteHeight,
                int numSpirtes, int spacing) {
 
-        m_SpriteSheet_Image =
+        std::shared_ptr<Util::CustomizableImage> m_SpriteSheet_Image =
             std::make_shared<Util::CustomizableImage>(filepath);
 
         // indecis
@@ -32,7 +43,6 @@ public:
         int currentY = m_SpriteSheet_Image->GetSize().y - spriteHeight;
 
         // uvcoords
-        currentX += spriteWidth * 1 + spacing;
         for (int i = 0; i < numSpirtes; i++) {
             float topY = (currentY + spriteHeight) /
                          (float)m_SpriteSheet_Image->GetSize().y;
@@ -63,14 +73,12 @@ public:
     ~SpriteSheet() {}
 
     void DrawSpriteByIndex(int index, Util::Transform trans, int zIndex) {
-
         m_SpriteSheet[index]->Init(m_TextCoord, m_Uv[index], m_index);
         m_SpriteSheet[index]->Draw(trans, zIndex);
     }
 
 private:
     std::vector<std::unique_ptr<Sprite>> m_SpriteSheet;
-    std::shared_ptr<Util::CustomizableImage> m_SpriteSheet_Image;
     std::vector<float> m_TextCoord;
     std::vector<std::vector<float>> m_Uv;
     std::vector<unsigned int> m_index;

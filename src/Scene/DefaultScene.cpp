@@ -15,9 +15,6 @@ void DefaultScene::Start() {
     m_GameObjectList[1]->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
 
-    m_GameObjectList[2]->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/rac.png"));
-
     m_Structure->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/barracks.png"));
     m_Structure->SetZIndex(0);
@@ -26,23 +23,22 @@ void DefaultScene::Start() {
     m_Structure->SetCurrentUpdateMode(Structure::updateMode::Moveable);
     m_Renderer.AddChild(m_Structure);
 
-    m_Inf->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/rac.png"));
     m_Inf->Start();
 
     //`m_GameObjectList[2]->AppendChild(gf);
     // rect.Init();
     m_SpriteSheet.Start(
-        "../assets/sprites/Allied Strucutre/Allied Structure SpriteSheet.png",
-        64, 48, 24, 0);
+        "../assets/sprites/ICON_Allied Structure SpriteSheet.png", 64, 48, 24,
+        0);
 
     for (auto i : m_GameObjectList) {
         i->Start();
     }
     testGrid.StartDrawingGridByWindowSize();
 
-    
-    m_Renderer.AddChild(m_desert);
+
+    m_Renderer.AddChild(m_Structure);
+
 }
 
 void DefaultScene::Update() {
@@ -144,8 +140,7 @@ void DefaultScene::imgui() {
             ImGui::EndTabItem();
         }
         if (ImGui::BeginTabItem("Barracks")) {
-            Util::Image image("../assets/sprites/Service.png");
-            ImGui::Image((void *)image.getTextureID(), ImVec2(48, 64));
+            /* ImGui::Image(, ImVec2(48, 64));
 
             if (ImGui::Button("Infantry")) {
                 LOG_DEBUG("TEST");
@@ -153,6 +148,7 @@ void DefaultScene::imgui() {
                            "", (void *)(intptr_t)image.getTextureID(),
                            ImVec2(48, 64))) {
             }
+             */
             ImGui::EndTabItem();
         }
 

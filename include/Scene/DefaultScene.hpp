@@ -8,9 +8,7 @@
 #include "Barracks.hpp"
 #include "Camera.hpp"
 #include "Capybara.hpp"
-#include "Cell.hpp"
 #include "Core/Context.hpp"
-#include "Util/Root.hpp"
 #include "Grid.hpp"
 #include "Infantry.hpp"
 #include "Rectangle.hpp"
@@ -21,10 +19,10 @@
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
+#include "Util/Root.hpp"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_sdl2.h"
-#include "Terrain.hpp"
 
 class DefaultScene {
 public:
@@ -56,8 +54,6 @@ private:
 
     CameraClass m_SceneCamera;
     Grid testGrid;
-
-    std::shared_ptr<Terrain> m_desert=std::make_shared<Terrain>();
 
     Util::Root m_Renderer;
 };
