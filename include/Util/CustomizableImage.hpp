@@ -98,6 +98,8 @@ public:
     void DrawUsingCamera(const Util::Transform &transform,
                          const float zIndex) override;
 
+    GLuint getGLuint() { return m_Texture->GetTextureId(); }
+
 private:
     void InitProgram();
     void InitVertexArray();

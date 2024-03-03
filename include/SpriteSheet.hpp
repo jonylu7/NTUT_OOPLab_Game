@@ -9,6 +9,7 @@
 class SpriteSheet {
 public:
     SpriteSheet(){};
+    ~SpriteSheet() {}
 
     /**
      * @brief SpriteSheet, use Start to define a spritesheet, reading sequence
@@ -23,18 +24,35 @@ public:
     void Start(std::string filepath, int spriteWidth, int spriteHeight,
                int numSpirtes, int spacing);
 
-    ~SpriteSheet() {}
-
     void DrawSpriteByIndex(int index, Util::Transform trans, int zIndex) {
         m_SpriteSheet[index]->Init();
-        m_SpriteSheet[index]->Draw(trans, zIndex);
+        m_SpriteSheet[index]->DrawUsingCamera(trans, zIndex);
+    }
+
+    glm::vec2 getSpriteSize() {
+        return glm::vec2(m_SpriteWidth, m_SpriteHeight);
+    };
+
+    GLuint getGlunitByIndex(int index) {
+        m_SpriteSheet[index]->Init();
+        return m_SpriteSheet[index]->getGLunit();
+    }
+
+    std::vector<float> getUVbyIndex(int index) { return m_Uv[index]; }
+
+    static std::vector<glm::vec2> UVtoImGuiCoord(std::vector<float> UV) {
+        // 0,3 & 4,1
+        return std::vector<glm::vec2>{glm::vec2(UV[0], UV[1]),
+                                      glm::vec2(UV[4], UV[3])};
     }
 
 private:
     std::vector<std::unique_ptr<Sprite>> m_SpriteSheet;
     std::vector<float> m_TextCoord;
     std::vector<std::vector<float>> m_Uv;
-    std::vector<unsigned int> m_index;
+    std::vector<unsigned int> m_Index;
+    int m_SpriteWidth = 0;
+    int m_SpriteHeight = 0;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SPRITESHEET_HPP

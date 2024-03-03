@@ -73,6 +73,7 @@ set(SRC_FILES
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
         ${SRC_DIR}/SpriteSheet.cpp
+        ${SRC_DIR}/UI.cpp
 
 
 )
@@ -110,7 +111,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/ImageArray.hpp
         ${INCLUDE_DIR}/Util/CustomizableImage.hpp
 
-
+        ${INCLUDE_DIR}/UI.hpp
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp
         #${INCLUDE_DIR}/GiraffeText.hpp

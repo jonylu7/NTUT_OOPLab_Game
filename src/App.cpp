@@ -14,7 +14,6 @@ void App::Update() {
         m_CurrentState = State::END;
     }
     testScene.Update();
-    testScene.imgui();
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)
