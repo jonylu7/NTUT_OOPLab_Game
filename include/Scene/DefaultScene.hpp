@@ -16,14 +16,12 @@
 #include "SpriteSheet.hpp"
 #include "Structure.hpp"
 #include "Triangle.hpp"
+#include "UI.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Root.hpp"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_opengl3.h"
-#include "imgui/imgui_impl_sdl2.h"
 
 class DefaultScene {
 public:
@@ -33,12 +31,6 @@ public:
     void Start();
     void Update();
     void End(){};
-
-    void imgui();
-
-    void imgui_ShowSelectionRect(
-        ImVec2 *start_pos, ImVec2 *end_pos,
-        ImGuiMouseButton mouse_button = ImGuiMouseButton_Left);
 
 private:
     std::vector<std::shared_ptr<Util::GameObject>> m_GameObjectList = {
@@ -55,7 +47,7 @@ private:
     Grid testGrid;
 
     Util::Root m_Renderer;
-
+    UIClass m_UI;
     MapClass m_Map;
     std::map<int, TileClass> m_tileSets;
     std::vector<int> m_OgMap;
