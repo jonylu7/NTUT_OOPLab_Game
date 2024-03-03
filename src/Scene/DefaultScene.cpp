@@ -30,7 +30,7 @@ void DefaultScene::Start() {
 
     // init map
     m_TileSetSpriteSheet->Start("../assets/sprites/TILESET_Field.png", 64, 64,
-                                200, 0);
+                                20, 0);
 
     m_OgMap = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     m_OgMap = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
