@@ -77,7 +77,7 @@ void DefaultScene::Update() {
 
     m_SceneCamera.Update();
 
-    m_SpriteSheet.DrawSpriteByIndex(10, Util::Transform(), 0);
+    // m_SpriteSheet.DrawSpriteByIndex(10, Util::Transform(), 0);
 
     m_Inf->Update();
     rect.Update();
@@ -142,8 +142,20 @@ void DefaultScene::imgui() {
                 LOG_DEBUG("TEST");
                 m_Inf->SetCurrentUpdateMode(Infantry::updateMode::Standing);
             } else if (ImGui::ImageButton(
-                           (void *)(intptr_t)m_SpriteSheet.getGlunitByIndex(10),
-                           ImVec2(64, 48))) {
+                           (void *)(intptr_t)m_SpriteSheet.getGlunitByIndex(3),
+                           ImVec2(64, 48),
+                           ImVec2(SpriteSheet::UVtoImGuiCoord(
+                                      m_SpriteSheet.getUVbyIndex(3))[0]
+                                      .x,
+                                  SpriteSheet::UVtoImGuiCoord(
+                                      m_SpriteSheet.getUVbyIndex(3))[0]
+                                      .y),
+                           ImVec2(SpriteSheet::UVtoImGuiCoord(
+                                      m_SpriteSheet.getUVbyIndex(3))[1]
+                                      .x,
+                                  SpriteSheet::UVtoImGuiCoord(
+                                      m_SpriteSheet.getUVbyIndex(3))[1]
+                                      .y))) {
                 LOG_DEBUG("TEST");
             } else if (ImGui::Button("Radar Dome")) {
                 LOG_DEBUG("TEST");

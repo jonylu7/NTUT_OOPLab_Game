@@ -34,7 +34,16 @@ public:
     };
 
     GLuint getGlunitByIndex(int index) {
+        m_SpriteSheet[index]->Init();
         return m_SpriteSheet[index]->getGLunit();
+    }
+
+    std::vector<float> getUVbyIndex(int index) { return m_Uv[index]; }
+
+    static std::vector<glm::vec2> UVtoImGuiCoord(std::vector<float> UV) {
+        // 0,3 & 4,1
+        return std::vector<glm::vec2>{glm::vec2(UV[0], UV[1]),
+                                      glm::vec2(UV[4], UV[3])};
     }
 
 private:
