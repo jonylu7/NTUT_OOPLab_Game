@@ -75,6 +75,5 @@ void DefaultScene::Update() {
     for (auto i : m_GameObjectList) {
         i->Update();
     }
-
     m_UI.Update();
 }

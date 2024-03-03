@@ -15,9 +15,17 @@ void UIClass::Start() {
 }
 
 void UIClass::Update() {
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+
+    ImGui::NewFrame();
     ShowCursorSelectionRegion(&start_pos, &end_pos, ImGuiMouseButton_Left);
     ShowPlayerConstructionMenu();
+
     m_Grid.Update();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
@@ -39,9 +47,7 @@ void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
 }
 
 void UIClass::ShowPlayerConstructionMenu() {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
-    ImGui::NewFrame();
+
     // put the stuff in here
     ImGui::Begin("Structure Selection Menu");
     /*
@@ -60,61 +66,85 @@ void UIClass::ShowPlayerConstructionMenu() {
 
         if (ImGui::BeginTabItem("Buildings")) {
 
-            if (ImGui::Button("Power Plants")) {
+            if (getImageButtonBySpriteSheetIndex(7)) {
+                // power plants
                 LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Barracks")) {
+            } else if (getImageButtonBySpriteSheetIndex(22)) {
+                // barracks
                 LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Naval Yard")) {
+            } else if (getImageButtonBySpriteSheetIndex(8)) {
+                // ore
                 LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Ore Refinery")) {
+            } else if (getImageButtonBySpriteSheetIndex(20)) {
+                // war factory
                 LOG_DEBUG("TEST");
-            } else if (ImGui::ImageButton(
-                           (void *)(intptr_t)m_SpriteSheet.getGlunitByIndex(3),
-                           ImVec2(64, 48),
-                           ImVec2(SpriteSheet::UVtoImGuiCoord(
-                                      m_SpriteSheet.getUVbyIndex(3))[0]
-                                      .x,
-                                  SpriteSheet::UVtoImGuiCoord(
-                                      m_SpriteSheet.getUVbyIndex(3))[0]
-                                      .y),
-                           ImVec2(SpriteSheet::UVtoImGuiCoord(
-                                      m_SpriteSheet.getUVbyIndex(3))[1]
-                                      .x,
-                                  SpriteSheet::UVtoImGuiCoord(
-                                      m_SpriteSheet.getUVbyIndex(3))[1]
-                                      .y))) {
+            } else if (getImageButtonBySpriteSheetIndex(1)) {
+                // advance power
                 LOG_DEBUG("TEST");
             } else if (ImGui::Button("Radar Dome")) {
                 LOG_DEBUG("TEST");
             } else if (ImGui::Button("Service Depot")) {
-                LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Advance Power")) {
-                LOG_DEBUG("TEST");
-            } else if (ImGui::Button("HeliPad")) {
                 LOG_DEBUG("TEST");
             } else if (ImGui::Button("Tech Center")) {
                 LOG_DEBUG("TEST");
             }
             ImGui::EndTabItem();
         }
-        if (ImGui::BeginTabItem("Barracks")) {
-            /* ImGui::Image(, ImVec2(48, 64));
-
-            if (ImGui::Button("Infantry")) {
+        if (ImGui::BeginTabItem("Defense Structure")) {
+            if (getImageButtonBySpriteSheetIndex(18)) {
+                // sandbags
                 LOG_DEBUG("TEST");
-            } else if (ImGui::ImageButton(
-                           "", (void *)(intptr_t)image.getTextureID(),
-                           ImVec2(48, 64))) {
+            } else if (getImageButtonBySpriteSheetIndex(16)) {
+                // pillbox
+                LOG_DEBUG("TEST");
+            } else if (getImageButtonBySpriteSheetIndex(14)) {
+                // turret
+                LOG_DEBUG("TEST");
             }
-             */
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem("Troopers")) {
+            if (ImGui::Button("Infantry")) {
+                // inf
+                LOG_DEBUG("TEST");
+            }
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem("Vehicles")) {
+            if (ImGui::Button("Truck")) {
+                // truck
+                LOG_DEBUG("TEST");
+            }
             ImGui::EndTabItem();
         }
 
         ImGui::EndTabBar();
     }
     ImGui::End();
+}
 
-    // and above
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+std::vector<ImVec2> UIClass::getSpriteSheetCoordByIndex(int index) {
+    return std::vector<ImVec2>(
+        {ImVec2(
+             SpriteSheet::UVtoImGuiCoord(
+                 this->m_SpriteSheet.getUVbyIndex(index))[0]
+                 .x,
+             SpriteSheet::UVtoImGuiCoord(m_SpriteSheet.getUVbyIndex(index))[0]
+                 .y),
+         ImVec2(
+             SpriteSheet::UVtoImGuiCoord(m_SpriteSheet.getUVbyIndex(index))[1]
+                 .x,
+             SpriteSheet::UVtoImGuiCoord(m_SpriteSheet.getUVbyIndex(index))[1]
+                 .y)});
+}
+
+bool UIClass::getImageButtonBySpriteSheetIndex(int index) {
+    return ImGui::ImageButton(
+        (void *)(intptr_t)m_SpriteSheet.getGlunitByIndex(index),
+        ImVec2(m_SpriteSheet.getSpriteSize().x,
+               m_SpriteSheet.getSpriteSize().y),
+        this->getSpriteSheetCoordByIndex(index)[0],
+        this->getSpriteSheetCoordByIndex(index)[1]);
 }

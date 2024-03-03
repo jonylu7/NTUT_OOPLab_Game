@@ -21,6 +21,9 @@ private:
                                    ImGuiMouseButton mouse_button);
     void ShowPlayerConstructionMenu();
 
+    std::vector<ImVec2> getSpriteSheetCoordByIndex(int index);
+    bool getImageButtonBySpriteSheetIndex(int index);
+
 private:
     SpriteSheet m_SpriteSheet;
     Grid m_Grid;
