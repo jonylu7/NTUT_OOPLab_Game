@@ -11,6 +11,7 @@
 #include "Core/Context.hpp"
 #include "Grid.hpp"
 #include "Infantry.hpp"
+#include "Map.hpp"
 #include "Rectangle.hpp"
 #include "SpriteSheet.hpp"
 #include "Structure.hpp"
@@ -35,8 +36,6 @@ public:
 
     void imgui();
 
-    std::time_t How_long_has_passed() { return std::time(0); }
-
     void imgui_ShowSelectionRect(
         ImVec2 *start_pos, ImVec2 *end_pos,
         ImGuiMouseButton mouse_button = ImGuiMouseButton_Left);
@@ -56,6 +55,12 @@ private:
     Grid testGrid;
 
     Util::Root m_Renderer;
+
+    MapClass m_Map;
+    std::map<int, TileClass> m_tileSets;
+    std::vector<int> m_OgMap;
+    std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
+        std::make_shared<SpriteSheet>();
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

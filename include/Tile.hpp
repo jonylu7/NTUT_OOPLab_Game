@@ -15,6 +15,7 @@ public:
           m_Walkable(walkable),
           m_Clickable(clickable),
           m_SpriteSheetIndex(spritesheetindex) {}
+    TileClass() {}
     ~TileClass() {}
 
     bool getWalkable() { return m_Walkable; };
@@ -47,8 +48,15 @@ public:
             return false;
         }
     }
-    TileClass operator=(const TileClass &tile) const { return tile; }
      */
+    TileClass &operator=(const TileClass &tile) {
+        this->m_Walkable = tile.m_Walkable;
+        this->m_Clickable = tile.m_Clickable;
+        this->m_SpriteSheetIndex = tile.m_SpriteSheetIndex;
+        this->m_Buildable = tile.m_Buildable;
+        this->m_Name = tile.m_Name;
+        return *this;
+    }
 
 private:
     bool m_Walkable;
@@ -56,34 +64,6 @@ private:
     bool m_Clickable;
     unsigned int m_SpriteSheetIndex;
     std::string m_Name;
-};
-
-class TileSet {
-public:
-    /**
-     *@brief given an vector that declares all the tileclasses and the
-     *spritesheet value
-     *
-     */
-    TileSet(std::vector<TileClass> tileclasses,
-            std::shared_ptr<SpriteSheet> spriteSheet)
-        : m_tileSpriteSheet(spriteSheet) {
-        for (int i = 0; i < tileclasses.size(); i++) {
-            // wtf
-            m_TileTexture[tileclasses[i]] = i;
-        }
-    };
-    ~TileSet(){};
-
-    void DrawTileSetByClass(TileClass tileclass, Util::Transform trans,
-                            int zindex) {
-        auto findResult = m_TileTexture.find(tileclass);
-        m_tileSpriteSheet->DrawSpriteByIndex(findResult->second, trans, zindex);
-    }
-
-private:
-    std::map<TileClass, int> m_TileTexture;
-    std::shared_ptr<SpriteSheet> m_tileSpriteSheet;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP

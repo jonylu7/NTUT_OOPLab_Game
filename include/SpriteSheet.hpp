@@ -26,7 +26,7 @@ public:
 
     void DrawSpriteByIndex(int index, Util::Transform trans, int zIndex) {
         m_SpriteSheet[index]->Init();
-        m_SpriteSheet[index]->Draw(trans, zIndex);
+        m_SpriteSheet[index]->DrawUsingCamera(trans, zIndex);
     }
 
     glm::vec2 getSpriteSize() {
@@ -38,8 +38,8 @@ private:
     std::vector<float> m_TextCoord;
     std::vector<std::vector<float>> m_Uv;
     std::vector<unsigned int> m_Index;
-    int m_SpriteWidth;
-    int m_SpriteHeight;
+    int m_SpriteWidth = 0;
+    int m_SpriteHeight = 0;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SPRITESHEET_HPP

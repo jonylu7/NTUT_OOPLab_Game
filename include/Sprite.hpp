@@ -27,6 +27,11 @@ public:
         m_Image->Draw(transform, zIndex);
     }
 
+    void DrawUsingCamera(const Util::Transform &transform,
+                         const float zIndex) override {
+        m_Image->DrawUsingCamera(transform, zIndex);
+    }
+
     void Init() { m_Image->Init(m_TextureCoord, m_UvCoord, m_Index); }
 
     void SetIndex(std::vector<unsigned int> index) { m_Image->SetIndex(index); }

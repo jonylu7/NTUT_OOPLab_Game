@@ -36,16 +36,33 @@ void DefaultScene::Start() {
     }
     testGrid.StartDrawingGridByWindowSize();
 
-
     m_Renderer.AddChild(m_Structure);
 
+    // init map
+    m_TileSetSpriteSheet->Start("../assets/sprites/TILESET_Field.png", 64, 64,
+                                200, 0);
+
+    m_OgMap = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    m_OgMap = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    std::vector<std::shared_ptr<TileClass>> maps;
+    for (unsigned int i = 0; i < 10; i++) {
+        maps.push_back(std::make_shared<TileClass>("rock-" + std::to_string(i),
+                                                   false, false, true, i));
+    }
+    /* doing some weird stuff, fix is needed
+    std::vector<std::shared_ptr<TileClass>> maps =
+        m_Map.readMapAndTileSet(m_OgMap, m_tileSets);
+        */
+
+    m_Map.Init(maps, m_TileSetSpriteSheet, 5, 2);
 }
 
 void DefaultScene::Update() {
+
+    m_Map.Draw();
     testGrid.Update();
     m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
     m_Structure->Update();
-    // rect.Draw();
 
     if (Util::Input::IsKeyPressed(Util::Keycode::END)) {
         glm::vec2 ogLBlocation = Util::Input::GetCursorPosition();

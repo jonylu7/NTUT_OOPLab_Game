@@ -12,6 +12,7 @@
 typedef unsigned int CELL;
 
 class MapClass {
+public:
     MapClass() {}
 
     void Init(std::vector<std::shared_ptr<TileClass>> map,
@@ -46,8 +47,18 @@ class MapClass {
         return glm::vec2(x, y);
     }
 
-    // function: given map coord, return status of the dedicated tile, walkable?
-    // buildable?
+    // weird
+    static std::vector<std::shared_ptr<TileClass>>
+    readMapAndTileSet(std::vector<int> map, std::map<int, TileClass> tileset) {
+        std::vector<std::shared_ptr<TileClass>> maps;
+        for (int i = 0; i < map.size(); i++) {
+            maps.push_back(std::make_shared<TileClass>(tileset[map[i]]));
+        }
+        return maps;
+    }
+
+    // function: given map coord, return status of the dedicated tile,
+    // walkable? buildable?
 
 private:
     CELL m_MapWdith;
