@@ -141,7 +141,9 @@ void DefaultScene::imgui() {
             } else if (ImGui::Button("Ore Refinery")) {
                 LOG_DEBUG("TEST");
                 m_Inf->SetCurrentUpdateMode(Infantry::updateMode::Standing);
-            } else if (ImGui::Button("War Factory")) {
+            } else if (ImGui::ImageButton(
+                           (void *)(intptr_t)m_SpriteSheet.getGlunitByIndex(10),
+                           ImVec2(64, 48))) {
                 LOG_DEBUG("TEST");
             } else if (ImGui::Button("Radar Dome")) {
                 LOG_DEBUG("TEST");

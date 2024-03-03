@@ -40,6 +40,8 @@ public:
         // m_Image->Draw(count,transform,zIndex);
     }
 
+    GLuint getGLunit() { return m_Image->getTextureID(); }
+
 private:
     std::unique_ptr<Util::CustomizableImage> m_Image;
     std::vector<float> m_TextureCoord;

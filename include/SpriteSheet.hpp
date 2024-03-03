@@ -33,6 +33,10 @@ public:
         return glm::vec2(m_SpriteWidth, m_SpriteHeight);
     };
 
+    GLuint getGlunitByIndex(int index) {
+        return m_SpriteSheet[index]->getGLunit();
+    }
+
 private:
     std::vector<std::unique_ptr<Sprite>> m_SpriteSheet;
     std::vector<float> m_TextCoord;
