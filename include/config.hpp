@@ -22,4 +22,10 @@ constexpr Util::Logger::Level DEFAULT_LOG_LEVEL = Util::Logger::Level::DEBUG;
  */
 constexpr unsigned int FPS_CAP = 60;
 
+/**
+ * @brief Unit limit for player
+ */
+ 
+constexpr unsigned int CAP_LIMIT = 200;
+
 #endif

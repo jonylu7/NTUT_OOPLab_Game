@@ -9,8 +9,12 @@ public:
     Player() {}
     ~Player() {}
 
+    void setCurrency(int value) { m_totalCurrency += value; };
+
+    int getTotalPower() {}
+    int getTotalCurrency() { return m_totalCurrency; }
+
 private:
-    unsigned int money;
-    int power;
+    int m_totalCurrency = 0;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PLAYER_HPP

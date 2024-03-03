@@ -11,6 +11,28 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_sdl2.h"
 #include "pch.hpp"
+
+// not sure how does it work commented by Lu
+enum class ButtonClicked {
+    // buildings
+    POWER_PLANT,
+    BARRACKS,
+    ORE_REF,
+    WAR_FACT,
+    ADV_POWER_PLANT,
+
+    // defense
+    SANDBAGS,
+    PILLBOX,
+    TURRET,
+
+    // Troopers
+    INFANTRY,
+
+    // Vehicles
+    TRUCK
+};
+
 class UIClass {
 public:
     void Start();
