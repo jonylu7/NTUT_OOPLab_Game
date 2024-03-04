@@ -4,9 +4,9 @@
 
 #include "Camera.hpp"
 
-glm::vec2 CameraClass::m_Position(glm::vec2(0,0));
-float CameraClass::m_Zoom=1.F;
-float CameraClass::m_Fov=90.F;
+glm::vec2 CameraClass::m_Position(glm::vec2(0, 0));
+float CameraClass::m_Zoom = 1.F;
+float CameraClass::m_Fov = FOV_UPPER_LIMIT;
 
 void CameraClass::Start() {}
 
@@ -43,8 +43,8 @@ void CameraClass::UpdateWhenCursorScroll() {
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
         changeFOV(delta.y * getZoomingSpeed());
-        //addCameraZoom(delta.y * getZoomingSpeed());
-        // LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
+        // addCameraZoom(delta.y * getZoomingSpeed());
+        //  LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
     }
 }
 
@@ -55,16 +55,13 @@ void CameraClass::addCameraZoom(float add) {
     }
 }
 
+void CameraClass::changeFOV(float offset) {
+    m_Fov -= offset;
 
-void CameraClass::changeFOV(float offset){
-    m_Fov-=offset;
-
-if(m_Fov<1.F){
-        m_Fov=1.F;
-}
-if(m_Fov>90.F){
-        m_Fov=90.F;
-}
-
-
+    if (m_Fov < FOV_LOWER_LIMIT) {
+        m_Fov = FOV_LOWER_LIMIT;
+    }
+    if (m_Fov > FOV_UPPER_LIMIT) {
+        m_Fov = FOV_UPPER_LIMIT;
+    }
 }
