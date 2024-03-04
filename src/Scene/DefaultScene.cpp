@@ -29,8 +29,8 @@ void DefaultScene::Start() {
     m_Renderer.AddChild(m_Structure);
 
     // init map
-    m_TileSetSpriteSheet->Start("../assets/sprites/TILESET_Field.png", 64, 64,
-                                20, 0);
+    m_TileSetSpriteSheet->Start("../assets/sprites/TILESET_Field.png", 24, 24,
+                                200, 0);
 
     m_OgMap = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     m_OgMap = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -49,8 +49,15 @@ void DefaultScene::Start() {
 }
 
 void DefaultScene::Update() {
+    Util::Transform transform;
+    transform.translation = glm::vec2(0, 0);
+    float zindex = 200;
+    for (int i = 0; i < 200; i++) {
+        m_TileSetSpriteSheet->DrawSpriteByIndex(i, transform, 3);
+        transform.translation.x += 24;
+    }
 
-    m_Map.Draw();
+    // m_Map.Draw();
 
     m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
     m_Structure->Update();
@@ -69,7 +76,7 @@ void DefaultScene::Update() {
     m_SceneCamera.Update();
 
     m_Inf->Update();
-    rect.Update();
+    // rect.Update();
     m_Renderer.Update();
 
     for (auto i : m_GameObjectList) {

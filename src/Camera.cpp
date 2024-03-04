@@ -43,8 +43,6 @@ void CameraClass::UpdateWhenCursorScroll() {
     if (Util::Input::IfScroll()) {
         auto delta = Util::Input::GetScrollDistance();
         changeFOV(delta.y * getZoomingSpeed());
-        // addCameraZoom(delta.y * getZoomingSpeed());
-        //  LOG_DEBUG("Scrolling: x: {}, y: {}", delta.x, delta.y);
     }
 }
 
