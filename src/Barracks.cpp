@@ -1,6 +1,7 @@
 //
 // Created by 盧威任 on 1/28/24.
 //
+/*
 #include "Barracks.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
@@ -36,4 +37,4 @@ void Barracks::Update([[maybe_unused]] const Util::Transform &transform) {
     m_Drawable->Draw(m_Transform, m_ZIndex);
 
     // LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
-}
+}*/

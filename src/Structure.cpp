@@ -33,3 +33,26 @@ void Structure::Update([[maybe_unused]] const Util::Transform &transsform) {
 
     // LOG_DEBUG("GIRA: x: {}, y: {}", pos.x, pos.y);
 }
+/*void Structure::SetTransformation(glm::vec2 newTrans) {
+    this->m_Transform=newTrans;
+}*/
+void Structure::DecreaseHp(float Hp){
+    this->buildingHp-=Hp;
+}
+float Structure::GetElectricPower(){
+    return this->electricPower;
+}
+float Structure::GetBuildingTime(){
+    return this->buildingTime;
+}
+float Structure::GetBuildingCost(){
+    return this->buildingCost;
+}
+float Structure::GetBuildingHp(){
+    return this->buildingHp;
+}
+void Structure::SetObjectLocation(glm::vec2 location) {
+    ObjectLocation = location;
+    m_Transform.translation=ObjectLocation;
+}
+

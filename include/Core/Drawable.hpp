@@ -24,7 +24,7 @@ public:
     virtual ~Drawable() = default;
     virtual void Draw(const Util::Transform &transform, const float zIndex) = 0;
 
-    virtual glm::vec2 GetSize() const{};
+    virtual glm::vec2 GetSize() const { return {0, 0}; };
 
     virtual void DrawUsingCamera(const Util::Transform &transform, const float zIndex){};
 };
