@@ -6,19 +6,16 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
 #include "Component/Component.hpp"
 #include "Core/Context.hpp"
+#include "Core/Drawable.hpp"
 #include "config.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "Core/Drawable.hpp"
 
-
+constexpr float FOV_UPPER_LIMIT = 160.F;
+constexpr float FOV_LOWER_LIMIT = 1.F;
 class CameraClass : public Component {
 public:
-    CameraClass() {
-        setPosition(glm::vec2(0,0));
-    }
-    CameraClass(glm::vec2 position) {
-        setPosition(position);
-    }
+    CameraClass() { setPosition(glm::vec2(0, 0)); }
+    CameraClass(glm::vec2 position) { setPosition(position); }
     ~CameraClass() {}
 
     static float getCameraZoom() { return m_Zoom; }
@@ -36,7 +33,9 @@ public:
          return glm::ortho(0.0F, float(WINDOW_WIDTH / 2), 0.0F,
                                         float(WINDOW_HEIGHT / 2), 0.F, 100.F);
                                         */
-        return glm::perspective(glm::radians(m_Fov),float(WINDOW_WIDTH)/float(WINDOW_HEIGHT),0.1F,100.F);
+        return glm::perspective(glm::radians(m_Fov),
+                                float(WINDOW_WIDTH) / float(WINDOW_HEIGHT),
+                                0.1F, 100.F);
     }
 
     static glm::mat4x4 getViewMatrix() {
@@ -46,8 +45,8 @@ public:
         glm::vec3 cameraFront(0.F, 0.F, -1.F);
         glm::vec3 cameraUp(0.F, 1.F, 0.F);
         return glm::lookAt(
-                glm::vec3(m_Position.x, m_Position.y, 50.F), // position
-                cameraFront + glm::vec3(m_Position.x, m_Position.y, 0.F), cameraUp);
+            glm::vec3(m_Position.x, m_Position.y, 50.F), // position
+            cameraFront + glm::vec3(m_Position.x, m_Position.y, 0.F), cameraUp);
     }
 
     float getMovingSpeed() { return m_MovingSpeed; }
@@ -62,13 +61,9 @@ public:
 private:
     static float m_Zoom;
     static glm::vec2 m_Position;
-    float m_MovingSpeed = 1.5F;
-    float m_ZoomingSpeed = 0.5F;
+    float m_MovingSpeed = 20.F;
+    float m_ZoomingSpeed = 5.F;
     static float m_Fov;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
-
-
-
-

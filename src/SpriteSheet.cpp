@@ -25,17 +25,16 @@ void SpriteSheet::Start(std::string filepath, int spriteWidth, int spriteHeight,
 
     // uvcoords
     for (int i = 0; i < numSpirtes; i++) {
+        if (currentX >= m_SpriteSheet_Image->GetSize().x) {
+            currentX = 0;
+            currentY -= spriteHeight + spacing;
+        }
         float topY =
             (currentY + spriteHeight) / (float)m_SpriteSheet_Image->GetSize().y;
         float rightX =
             (currentX + spriteWidth) / (float)m_SpriteSheet_Image->GetSize().x;
         float leftX = currentX / (float)m_SpriteSheet_Image->GetSize().x;
         float bottomY = currentY / (float)m_SpriteSheet_Image->GetSize().y;
-
-        if (currentX >= m_SpriteSheet_Image->GetSize().x) {
-            currentX = 0;
-            currentY -= spriteHeight + spacing;
-        }
 
         m_Uv.push_back(std::vector<float>({leftX, bottomY, //
                                            leftX, topY,    //

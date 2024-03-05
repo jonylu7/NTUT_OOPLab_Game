@@ -9,8 +9,9 @@
 #include "Core/UniformBuffer.hpp"
 #include "Core/VertexArray.hpp"
 #include "Line.hpp"
+#include "Util/TransformUtils.hpp"
 
-class Grid {
+class Grid : public Core::Drawable {
     struct Matrices {
         glm::mat2 m_View;
         glm::mat2 m_Projection;
@@ -19,11 +20,13 @@ class Grid {
 public:
     Grid(){};
     ~Grid(){};
-    void StartDrawingGridByWindowSize();
+    void InitVertexAndColor();
     void Start();
-    void Update();
-    void switchActivate() { m_Activate = !m_Activate; };
+    void Draw(const Util::Transform &transform, const float zIndex) override;
+    void DrawUsingCamera(const Util::Transform &transform,
+                         const float zIndex) override;
 
+    void switchActivate() { m_Activate = !m_Activate; };
 
 private:
     std::vector<Line> m_lineVector;

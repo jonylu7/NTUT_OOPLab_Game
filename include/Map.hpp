@@ -57,9 +57,6 @@ public:
         return maps;
     }
 
-    // function: given map coord, return status of the dedicated tile,
-    // walkable? buildable?
-
 private:
     CELL m_MapWdith;
     CELL m_MapHeight;

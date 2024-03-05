@@ -11,7 +11,7 @@ void UIClass::Start() {
     m_SpriteSheet.Start(
         "../assets/sprites/ICON_Allied Structure SpriteSheet.png", 64, 48, 24,
         0);
-    m_Grid.StartDrawingGridByWindowSize();
+    m_Grid.Start();
 }
 
 void UIClass::Update() {
@@ -22,7 +22,9 @@ void UIClass::Update() {
     ShowCursorSelectionRegion(&start_pos, &end_pos, ImGuiMouseButton_Left);
     ShowPlayerConstructionMenu();
 
-    m_Grid.Update();
+    Util::Transform trans;
+    int zindex = 20;
+    m_Grid.Draw(trans, 20);
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -69,23 +71,30 @@ void UIClass::ShowPlayerConstructionMenu() {
             if (getImageButtonBySpriteSheetIndex(7)) {
                 // power plants
                 LOG_DEBUG("TEST");
-            } else if (getImageButtonBySpriteSheetIndex(22)) {
+            }
+            if (getImageButtonBySpriteSheetIndex(22)) {
                 // barracks
                 LOG_DEBUG("TEST");
-            } else if (getImageButtonBySpriteSheetIndex(8)) {
+            }
+            if (getImageButtonBySpriteSheetIndex(8)) {
                 // ore
                 LOG_DEBUG("TEST");
-            } else if (getImageButtonBySpriteSheetIndex(20)) {
+            }
+            if (getImageButtonBySpriteSheetIndex(20)) {
                 // war factory
                 LOG_DEBUG("TEST");
-            } else if (getImageButtonBySpriteSheetIndex(1)) {
+            }
+            if (getImageButtonBySpriteSheetIndex(1)) {
                 // advance power
                 LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Radar Dome")) {
+            }
+            if (ImGui::Button("Radar Dome")) {
                 LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Service Depot")) {
+            }
+            if (ImGui::Button("Service Depot")) {
                 LOG_DEBUG("TEST");
-            } else if (ImGui::Button("Tech Center")) {
+            }
+            if (ImGui::Button("Tech Center")) {
                 LOG_DEBUG("TEST");
             }
             ImGui::EndTabItem();
@@ -94,10 +103,12 @@ void UIClass::ShowPlayerConstructionMenu() {
             if (getImageButtonBySpriteSheetIndex(18)) {
                 // sandbags
                 LOG_DEBUG("TEST");
-            } else if (getImageButtonBySpriteSheetIndex(16)) {
+            }
+            if (getImageButtonBySpriteSheetIndex(16)) {
                 // pillbox
                 LOG_DEBUG("TEST");
-            } else if (getImageButtonBySpriteSheetIndex(14)) {
+            }
+            if (getImageButtonBySpriteSheetIndex(14)) {
                 // turret
                 LOG_DEBUG("TEST");
             }
