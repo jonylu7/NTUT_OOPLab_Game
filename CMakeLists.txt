@@ -70,6 +70,16 @@ set(SRC_FILES
         ${SRC_DIR}/Infantry.cpp
         ${SRC_DIR}/Grid.cpp
 
+        ${SRC_DIR}/WayPoint.cpp
+        ${SRC_DIR}/WayPointTool.cpp
+        ${SRC_DIR}/Structure/IWayPointStructure.cpp
+
+        # ${SRC_DIR}/Structure/Buildings.cpp
+        ${SRC_DIR}/Structure/Barracks.cpp
+        ${SRC_DIR}/Structure/OreRefinery.cpp
+        ${SRC_DIR}/Structure/PowerPlants.cpp
+        ${SRC_DIR}/Structure/WarFactory.cpp
+
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
         ${SRC_DIR}/SpriteSheet.cpp
@@ -128,6 +138,16 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Sprite.hpp
         ${INCLUDE_DIR}/Settings.hpp
         ${INCLUDE_DIR}/Camera.hpp
+
+        ${INCLUDE_DIR}/WayPoint.hpp
+        ${INCLUDE_DIR}/WayPointTool.h
+        ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
+
+        #${INCLUDE_DIR}/Structure/Buildings.hpp
+        ${INCLUDE_DIR}/Structure/Barracks.hpp
+        ${INCLUDE_DIR}/Structure/OreRefinery.hpp
+        ${INCLUDE_DIR}/Structure/PowerPlants.hpp
+        ${INCLUDE_DIR}/Structure/WarFactory.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h

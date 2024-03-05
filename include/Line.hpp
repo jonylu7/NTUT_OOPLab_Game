@@ -25,6 +25,9 @@ public:
     glm::vec2 getlineTo() { return lineTo; };
     glm::vec3 getColor() { return color; };
 
+    void setlineTo(glm::vec2 to){this->lineTo=to;};
+    void setlineFrom(glm::vec2 from){this->lineFrom=from;};
+
 private:
     glm::vec2 lineFrom;
     glm::vec2 lineTo;
