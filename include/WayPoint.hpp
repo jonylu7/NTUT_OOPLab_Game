@@ -7,6 +7,7 @@
 #include "Util/GameObject.hpp"
 #include "Util/TransformUtils.hpp"
 #include "Util/Image.hpp"
+#include "Grid.hpp"
 
 class WayPoint : public Util::GameObject{
 private:
@@ -15,7 +16,7 @@ public:
     WayPoint():Util::GameObject(){m_Transform.scale={0.2,0.2};};
     void Update(const Util::Transform &transform = Util::Transform()) override;
 
-    void Start() override{/*SetDrawable(std::make_unique<Util::Image>("../assets/sprites/flag.png"));*/};
+    void Start() override{/*SetDrawable();*/};
     void SetObjectLocation(glm::vec2 location) ;
     glm::vec2 GetObjectLocation(){return this->ObjectLocation; }
 };

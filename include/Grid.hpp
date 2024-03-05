@@ -36,6 +36,10 @@ private:
     std::unique_ptr<Core::UniformBuffer<Matrices>> m_Matrices =
         std::make_unique<Core::UniformBuffer<Matrices>>(m_Program, "Rectangle",
                                                         0);
+
+    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_NewMatrices =
+        std::make_unique<Core::UniformBuffer<Core::Matrices>>(m_Program, "Grid",
+                                                        0);
     float m_lineWidth = 1.0F;
 
     std::unique_ptr<Core::VertexArray> m_VertexArray =

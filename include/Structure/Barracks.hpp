@@ -1,7 +1,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_BARRACKS_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_BARRACKS_HPP
 
-#include "Structure\IWayPointStructure.hpp"
+#include "Structure/IWayPointStructure.hpp"
 #include "Structure.hpp"
 #define DEFAULT_POWER -20.F
 #define DEFAULT_TIME 15.F
