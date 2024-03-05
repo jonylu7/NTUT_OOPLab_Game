@@ -23,7 +23,7 @@ public:
 
     void addCameraZoom(float add);
 
-    glm::vec2 getPosition() { return m_Position; }
+    static glm::vec2 getPosition() { return m_Position; }
 
     void setPosition(glm::vec2 position) { m_Position = position; }
 

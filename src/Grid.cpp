@@ -4,6 +4,7 @@
 
 #include "Grid.hpp"
 #include "Core/Drawable.hpp"
+#include <iostream>
 
 void Grid::Start() {
 
@@ -92,15 +93,31 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
 
     auto cp=CameraClass::getProjectionMatrix();
     auto cv = CameraClass::getViewMatrix();
-    auto r=cv*cp;
-    auto m=glm::mat2(r[0][0],r[0][1],
+    /*
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+            std::cout<<cv[i][j]<<"---";
+        }
+    }
+    std::cout<<"\n"<<std::endl;
+
+
+*/
+    auto r=cp;
+    auto dp=glm::mat2(r[0][0],r[0][1],
               r[1][0],r[1][1]);
+
+    //23 up/down
+
+     auto m=glm::mat2(cv[3][1],cv[3][2],
+                  cv[3][2],cv[3][1]);
+
 
     auto p=glm::mat2({
         1.0F / width, 0.0F, //
         0.0F, 1.0F / height //
     });
-    auto mp=p*m;
+    auto mp=p*m*dp;
 
     auto v=glm::mat2(
         1.F, 0.F, //
@@ -111,11 +128,60 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
         v,
         mp,
     };
-
     m_Matrices->SetData(0, data);
     m_VertexArray->Bind();
 
     m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
+
+/*
+    if (m_Activate == false) {
+        return;
+    }
+    glLineWidth(m_lineWidth);
+    const float width = WINDOW_WIDTH / 2.0F;
+    const float height = WINDOW_HEIGHT / 2.0F;
+
+    m_Program.Bind();
+    m_Program.Validate();
+    m_VertexArray->Bind();
+
+    auto cp=CameraClass::getProjectionMatrix();
+    auto cv = CameraClass::getViewMatrix();
+    auto r=cv*cp;
+    auto m=glm::mat2(r[0][0],r[0][1],
+                       r[1][0],r[1][1]);
+
+    auto p=glm::mat2({
+        1.0F / width, 0.0F, //
+        0.0F, 1.0F / height //
+    });
+    auto mp=p*m;
+
+    auto v=glm::mat4(
+        1.F, 0.F, 0.F,0.F,//
+        0.F, 1.F, 0.F,0.F,
+        0.F, 0.F, 1.F,0.F,
+        0.F, 0.F, 0.F,1.F
+        );
+
+    auto screen=glm::mat4(
+        1.F/width, 1.F, 1.F,1.F,//
+        1.F, 1.F/height, 1.F,1.F,
+        1.F, 1.F, 1.F/width,1.F,
+        1.F, 1.F, 1.F,1.F/height
+    );
+
+    auto tranlate=transform.translation;
+    Core::Matrices data = {
+        glm::mat4(1.F),
+        r,
+    };
+
+    m_NewMatrices->SetData(0, data);
+    m_VertexArray->Bind();
+
+    m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
+    */
 }
 
 void Grid::InitVertexAndColor() {
