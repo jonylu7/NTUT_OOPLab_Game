@@ -30,19 +30,26 @@ void Grid::Start() {
     // map grid
     float cellWidth = 48.F;
     float cellHeight = 48.F;
-
+    int q=0;
     for (int i = (WINDOW_WIDTH / 2); i > int(-(WINDOW_WIDTH / 2));
          i -= cellHeight) {
         // vertical
         m_lineVector.push_back(Line(glm::vec2(i, int(-(WINDOW_HEIGHT / 2))),
                                     glm::vec2(i, int(WINDOW_HEIGHT / 2))));
+        q++;
+        if(q==5)
+            break;
     }
-
+q=0;
     for (int i = (WINDOW_HEIGHT / 2); i > int(-(WINDOW_HEIGHT / 2));
          i -= cellWidth) {
         // horz
         m_lineVector.push_back(Line(glm::vec2(int(-(WINDOW_WIDTH / 2)), i),
                                     glm::vec2(int(WINDOW_WIDTH / 2), i)));
+        q++;
+        if(q==5)
+                break;
+
     }
 
     InitVertexAndColor();
@@ -128,6 +135,17 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
         v,
         mp,
     };
+    //0寬 1 右腳x 2右角y 3高
+     data = {
+        {
+            0.3F, 0.1F, //
+            0.1F, 0.3F  //
+        },
+        {
+            2.F / width,  -0.3F/ width, //
+            -0.1F/ height, 2.F / height //
+        },
+    };
     m_Matrices->SetData(0, data);
     m_VertexArray->Bind();
 
@@ -200,6 +218,7 @@ void Grid::InitVertexAndColor() {
         color.push_back(line.getColor().x);
         color.push_back(line.getColor().y);
         color.push_back(line.getColor().z);
+
     }
     m_VertexArray->AddVertexBuffer(
         std::make_unique<Core::VertexBuffer>(vertex, 2));

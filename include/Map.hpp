@@ -38,12 +38,10 @@ public:
         }
     }
 
-    static glm::vec2 ScreenToMapCoord(glm::vec2 screenCoord) {
-        // get camera location
-        // caculate the "camera center location to map coord (which cell)"
-        // caculate screen coord to map coord
-        CELL x;
-        CELL y;
+    static glm::vec2 ScreenToGlobalCoord(glm::vec2 screenCoord) {
+        glm::vec2 cameraPost=CameraClass::getPosition();
+        float x=cameraPost.x+screenCoord.x;
+        float y=cameraPost.y+screenCoord.y;
         return glm::vec2(x, y);
     }
 
@@ -60,6 +58,7 @@ public:
 private:
     CELL m_MapWdith;
     CELL m_MapHeight;
+    glm::vec2 m_MapPosition={0,0};
     std::vector<std::shared_ptr<TileClass>> m_Map;
     std::shared_ptr<SpriteSheet> m_SpriteSheet;
     int m_ZIndex = 0;

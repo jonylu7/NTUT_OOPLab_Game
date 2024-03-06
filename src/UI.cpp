@@ -3,6 +3,7 @@
 //
 
 #include "UI.hpp"
+#include "Map.hpp"
 
 ImVec2 start_pos;
 ImVec2 end_pos;
@@ -53,15 +54,16 @@ void UIClass::ShowPlayerConstructionMenu() {
 
     // put the stuff in here
     ImGui::Begin("Structure Selection Menu");
-    /*
+
+    glm::vec2 CursorGlobalPosition=MapClass::ScreenToGlobalCoord(glm::vec2(Util::Input::GetCursorPosition()));
     ImGui::Text(
-        std::string("X: " + std::to_string(m_SceneCamera.getPosition().x) +
-                    "  Y: " + std::to_string(m_SceneCamera.getPosition().y))
+        std::string("X: " + std::to_string(  CursorGlobalPosition.x) +
+                    "  Y: " + std::to_string(CursorGlobalPosition.y))
             .c_str());
-    ImGui::Text(fmt::format("Zoom: {}", m_SceneCamera.getCameraZoom()).c_str());
+    //ImGui::Text(fmt::format("Zoom: {}", m_SceneCamera.getCameraZoom()).c_str());
     ImGui::Text(fmt::format("$ {}", 1000).c_str());
     ImGui::Text(fmt::format("Power {}", 50).c_str());
-     */
+
     if (ImGui::Button("Grid")) {
         m_Grid.switchActivate();
     }
