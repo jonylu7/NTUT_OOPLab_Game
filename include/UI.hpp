@@ -65,8 +65,14 @@ private:
         }
 
         */
-        for (int i=-1000;i<1000;i+=64.F){
-            lineV.push_back(Line(glm::vec2(64.F*-3,i),glm::vec2(64.F*3,i)));
+
+        auto width=m_GridSize.y*cellWidth;
+        auto height=m_GridSize.x*cellHeight;
+        for (int i=0;i<m_GridSize.x;i++){
+            lineV.push_back(Line(glm::vec2(-(width/2),i*cellHeight),glm::vec2(width/2,i*cellWidth)));
+        }
+        for(int j=0;j<m_GridSize.y;j++){
+            lineV.push_back(Line(glm::vec2(j*cellWidth,-(height/2)),glm::vec2(j*cellWidth,(height/2))));
         }
 
         //lineV.push_back(Line(glm::vec2(-120.F,-117.F),glm::vec2(3.F,6.F)));
@@ -80,6 +86,7 @@ private:
 private:
     SpriteSheet m_SpriteSheet;
     Grid m_Grid;
+    glm::vec2 m_GridSize={100,100};
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP

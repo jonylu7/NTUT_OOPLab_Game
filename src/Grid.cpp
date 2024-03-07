@@ -37,7 +37,7 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     constexpr glm::mat4 eye(1.F);
 
     //size of the cell
-    glm::vec2 size={1.F/126.F,1.F/126.F};
+    glm::vec2 size={1.F,1.F};
 
 
    auto data=Util::ConvertToUniformBufferDataUsingCameraMatrix(transform,size,zIndex);

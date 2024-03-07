@@ -9,8 +9,8 @@
 #include "Core/Drawable.hpp"
 #include "config.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-
-constexpr float FOV_UPPER_LIMIT = 160.F;
+//164.F perfect for
+constexpr float FOV_UPPER_LIMIT = 164.F;
 constexpr float FOV_LOWER_LIMIT = 1.F;
 class CameraClass : public Component {
 public:
@@ -29,13 +29,17 @@ public:
 
     static glm::mat4x4 getProjectionMatrix() {
         /*
+         * return glm::perspective(glm::radians(m_Fov),
+float(WINDOW_WIDTH) / (float(WINDOW_HEIGHT)),
+0.1F, 100.F);
          * adjust projection matrix when window size is changing
-         return glm::ortho(0.0F, float(WINDOW_WIDTH / 2), 0.0F,
-                                        float(WINDOW_HEIGHT / 2), 0.F, 100.F);
                                         */
-        return glm::perspective(glm::radians(m_Fov),
-                                float(WINDOW_WIDTH) / float(WINDOW_HEIGHT),
-                                0.1F, 100.F);
+
+        return glm::ortho(0.0F, float(WINDOW_WIDTH), 0.0F,
+                          float(WINDOW_HEIGHT), 0.F, 100.F);
+
+
+
     }
 
     static glm::mat4x4 getViewMatrix() {
