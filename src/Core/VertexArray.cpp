@@ -74,5 +74,10 @@ void VertexArray::DrawLines(int count) const {
     glDrawArrays(GL_LINES, 0, count);
 }
 
+void VertexArray::DrawLinesIndices() const {
+    glDrawElements(GL_LINES, static_cast<GLint>(m_IndexBuffer->GetCount()),
+                   GL_UNSIGNED_INT, nullptr);
+}
+
 
 } // namespace Core

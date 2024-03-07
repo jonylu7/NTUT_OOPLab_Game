@@ -47,6 +47,7 @@ public:
 
     void DrawLines(int count) const;
     void DrawTest(int count)const;
+    void DrawLinesIndices() const;
     template <class T>
     void modifyVertexBuffersByIndex(int index, int size, std::vector<T> data) {
         m_VertexBuffers[index]->ModifyBufferData(size, data);
