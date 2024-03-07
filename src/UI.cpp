@@ -62,6 +62,11 @@ void UIClass::ShowPlayerConstructionMenu() {
         std::string("X: " + std::to_string(  CursorGlobalPosition.x) +
                     "  Y: " + std::to_string(CursorGlobalPosition.y))
             .c_str());
+    auto cellLocation=MapClass::GlobaleCoordToCellCoord(CursorGlobalPosition);
+    ImGui::Text(
+        std::string("Cell X: " + std::to_string(  int(cellLocation.x)) +
+                    "  Cell Y: " + std::to_string(int(cellLocation.y)))
+            .c_str());
     //ImGui::Text(fmt::format("Zoom: {}", m_SceneCamera.getCameraZoom()).c_str());
     ImGui::Text(fmt::format("$ {}", 1000).c_str());
     ImGui::Text(fmt::format("Power {}", 50).c_str());

@@ -42,12 +42,18 @@ public:
     static glm::vec2 ScreenToGlobalCoord(glm::vec2 screenCoord) {
         auto proj=CameraClass::getProjectionMatrix();
         auto view=CameraClass::getViewMatrix();
-
-        glm::vec4 vec4ScreenCoord({screenCoord[0],screenCoord[1],0.F,1.F});
-
-        glm::vec4 global(proj*view*vec4ScreenCoord);
+        glm::vec2 offset={640,360};
+        glm::vec4 vec4ScreenCoord({screenCoord[0]+CameraClass::getPosition().x+offset.x,screenCoord[1]+CameraClass::getPosition().y+offset.y,0.F,1.F});
+        glm::vec4 global(vec4ScreenCoord);
 
         return glm::vec2(global[0], global[1]);
+    }
+
+    static glm::vec2 GlobaleCoordToCellCoord(glm::vec2 globalCoord){
+        float cellHeight=48.F;
+        float cellWidth=48.F;
+        return glm::vec2(int(globalCoord[0]/cellHeight),int(globalCoord[1]/cellWidth));
+
     }
 
     // weird
