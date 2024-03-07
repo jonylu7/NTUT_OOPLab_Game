@@ -9,7 +9,7 @@
 void Grid::Start() {
 
     //debug grid:
-    /*
+
     float cellWidth = 48.F;
     float cellHeight = 48.F;
 
@@ -26,13 +26,13 @@ void Grid::Start() {
         m_lineVector.push_back(Line(glm::vec2(int(-(WINDOW_WIDTH / 2)), i),
                                     glm::vec2(int(WINDOW_WIDTH / 2), i)));
     }
-     */
+
     // map grid
 
-
+    /*
     m_lineVector.push_back(Line(glm::vec2(-640,0),glm::vec2(640,0)));
     m_lineVector.push_back(Line(glm::vec2(-50,3),glm::vec2(50,3)));
-
+*/
     InitVertexAndColor();
 }
 
@@ -61,8 +61,6 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     //if (m_Activate == false) {
       //  return;
     //}
-
-
     glLineWidth(m_lineWidth);
 
     m_Program.Bind();
@@ -73,14 +71,6 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     auto cv = CameraClass::getViewMatrix();
 
     constexpr glm::mat4 eye(1.F);
-    auto model = glm::translate(eye, {glm::vec2(0,0), zIndex}) *
-                 glm::rotate(eye, transform.rotation, glm::vec3(0, 0, 1)) *
-                 glm::scale(eye, {glm::vec2{1.F,1.F}, 1});
-
-    auto tranlate=transform.translation;
-
-
-
 
 
     auto view =
@@ -91,9 +81,9 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     auto projection=CameraClass::getProjectionMatrix();
 
     // TODO: TRS comment
-     model = glm::translate(eye, {transform.translation, zIndex}) *
+    auto model = glm::translate(eye, {transform.translation, zIndex}) *
                  glm::rotate(eye, transform.rotation, glm::vec3(0, 0, 1)) *
-                 glm::scale(eye, {transform.scale * glm::vec2{1.F,1.F}, 1});
+                 glm::scale(eye, {transform.scale * glm::vec2{20.F,10.F}, 1});
 
      DrawLines data = {
         model,
@@ -104,7 +94,6 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     m_NewMatrices->SetData(0, data);
     m_VertexArray->Bind();
 
-    //m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
     m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
 
 }
