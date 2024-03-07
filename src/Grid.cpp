@@ -13,14 +13,14 @@ void Grid::Start() {
     float cellWidth = 48.F;
     float cellHeight = 48.F;
 
-    for (int i = (WINDOW_WIDTH / 2); i > int(-(WINDOW_WIDTH / 2));
+    for (int i = (WINDOW_WIDTH / 2); i >= int(-(WINDOW_WIDTH / 2));
          i -= cellHeight) {
         // vertical
         m_lineVector.push_back(Line(glm::vec2(i, int(-(WINDOW_HEIGHT / 2))),
                                     glm::vec2(i, int(WINDOW_HEIGHT / 2))));
     }
 
-    for (int i = (WINDOW_HEIGHT / 2); i > int(-(WINDOW_HEIGHT / 2));
+    for (int i = (WINDOW_HEIGHT / 2); i >= int(-(WINDOW_HEIGHT / 2));
          i -= cellWidth) {
         // horz
         m_lineVector.push_back(Line(glm::vec2(int(-(WINDOW_WIDTH / 2)), i),
@@ -37,30 +37,16 @@ void Grid::Start() {
 }
 
 void Grid::Draw(const Util::Transform &transform, const float zindex) {
-    if (m_Activate == false) {
-        return;
-    }
-    glLineWidth(m_lineWidth);
-    const float width = WINDOW_WIDTH / 2.0F;
-    const float height = WINDOW_HEIGHT / 2.0F;
-
-    m_Program.Bind();
-    m_Program.Validate();
-    m_VertexArray->Bind();
-
-
-    m_VertexArray->Bind();
-    m_VertexArray->DrawLinesIndices();
-    //m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
+    //nothing
 }
 
 void Grid::DrawUsingCamera(const Util::Transform &transform,
                            const float zIndex) {
 
 
-    //if (m_Activate == false) {
+    if (m_Activate == false) {
       //  return;
-    //}
+    }
     glLineWidth(m_lineWidth);
 
     m_Program.Bind();
@@ -116,15 +102,10 @@ void Grid::InitVertexAndColor() {
         color.push_back(line.getColor().y);
         color.push_back(line.getColor().z);
 
-        index.push_back(i);
-        index.push_back(++i);
-        i++;
 
     }
     m_VertexArray->AddVertexBuffer(
         std::make_unique<Core::VertexBuffer>(vertex, 2));
     m_VertexArray->AddVertexBuffer(
         std::make_unique<Core::VertexBuffer>(color, 3));
-
-    //wtf
 }
