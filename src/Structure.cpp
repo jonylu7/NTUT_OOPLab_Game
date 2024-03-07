@@ -12,14 +12,8 @@ void Structure::Update([[maybe_unused]] const Util::Transform &transsform) {
 
     auto &pos = m_Transform.translation;
 
-    if (pos.y > WINDOW_HEIGHT || pos.y + WINDOW_HEIGHT < 0) {
-        dir.y *= -1;
-    }
-    if (pos.x > WINDOW_WIDTH || pos.x + WINDOW_WIDTH < 0) {
-        dir.x *= -1;
-    }
 
-    m_Transform.scale = {0.5, 0.5};
+    m_Transform.scale = {1.F, 1.F};
     switch (m_CurrentState) {
     case (updateMode::Invisidable):
         break;

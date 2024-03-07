@@ -26,7 +26,7 @@ void UIClass::Update() {
 
     Util::Transform trans;
     trans.translation={0.F,0.F};
-    trans.scale={1,1};
+    trans.scale={1.F,1.F};
     int zindex = 2;
     m_Grid.DrawUsingCamera(trans, zindex);
 

@@ -13,7 +13,6 @@
 
 class Grid : public Core::Drawable {
 
-
 public:
     Grid(){};
     ~Grid(){};

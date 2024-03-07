@@ -56,13 +56,20 @@ private:
                                         glm::vec2(float(WINDOW_WIDTH/2)/cellWidth, float((WINDOW_HEIGHT / 2))/ cellHeight) ));
         }
          */
-
-        for (float i =float(WINDOW_HEIGHT / 2); i >= -float(WINDOW_HEIGHT);i -= cellWidth) {
+        /*
+        for (float i =float(WINDOW_HEIGHT / 2); i >= -float(WINDOW_HEIGHT);i -= cellWidth/3) {
             // horz
             int c;
-            lineV.push_back(Line(glm::vec2(-1.F, i/ (3*WINDOW_HEIGHT)),
-                                        glm::vec2(1.F, i /(3*WINDOW_HEIGHT))));
+            lineV.push_back(Line(glm::vec2(-1.02F, float(i/ float(WINDOW_HEIGHT/0.3F))),
+                                        glm::vec2(0.05F, float(i /float(WINDOW_HEIGHT/0.3F)))));
         }
+
+        */
+        for (int i=-1000;i<1000;i+=64.F){
+            lineV.push_back(Line(glm::vec2(64.F*-3,i),glm::vec2(64.F*3,i)));
+        }
+
+        //lineV.push_back(Line(glm::vec2(-120.F,-117.F),glm::vec2(3.F,6.F)));
 
         m_Grid.Start(lineV);
     }

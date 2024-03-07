@@ -93,8 +93,9 @@ void DefaultScene::Update() {
     }
 
      */
-
-    m_Map.Draw(Util::Transform(),0);
+    Util::Transform trans;
+    trans.scale={1,1};
+    m_Map.Draw(trans,0);
     /*
     m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
     m_Structure->Update();
