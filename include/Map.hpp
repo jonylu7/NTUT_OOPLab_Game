@@ -49,7 +49,7 @@ public:
         return glm::vec2(global[0], global[1]);
     }
 
-    static glm::vec2 GlobaleCoordToCellCoord(glm::vec2 globalCoord){
+    static glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord){
         float cellHeight=48.F;
         float cellWidth=48.F;
         return glm::vec2(int(globalCoord[0]/cellHeight),int(globalCoord[1]/cellWidth));

@@ -62,7 +62,7 @@ void UIClass::ShowPlayerConstructionMenu() {
         std::string("X: " + std::to_string(  CursorGlobalPosition.x) +
                     "  Y: " + std::to_string(CursorGlobalPosition.y))
             .c_str());
-    auto cellLocation=MapClass::GlobaleCoordToCellCoord(CursorGlobalPosition);
+    auto cellLocation=MapClass::GlobalCoordToCellCoord(CursorGlobalPosition);
     ImGui::Text(
         std::string("Cell X: " + std::to_string(  int(cellLocation.x)) +
                     "  Cell Y: " + std::to_string(int(cellLocation.y)))
