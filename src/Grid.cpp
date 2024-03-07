@@ -30,8 +30,8 @@ void Grid::Start() {
     // map grid
 
 
-    m_lineVector.push_back(Line(glm::vec2(-0.5F,-0.5F),glm::vec2(50.F,50.F)));
-    m_lineVector.push_back(Line(glm::vec2(-50.F,1.F),glm::vec2(-50.F,20)));
+    m_lineVector.push_back(Line(glm::vec2(-50,0),glm::vec2(50,0)));
+    m_lineVector.push_back(Line(glm::vec2(-50,3),glm::vec2(50,3)));
 
     InitVertexAndColor();
 }
@@ -72,23 +72,39 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     auto cp=CameraClass::getProjectionMatrix();
     auto cv = CameraClass::getViewMatrix();
 
-
     constexpr glm::mat4 eye(1.F);
+    auto model = glm::translate(eye, {glm::vec2(0,0), zIndex}) *
+                 glm::rotate(eye, transform.rotation, glm::vec3(0, 0, 1)) *
+                 glm::scale(eye, {glm::vec2{1.F,1.F}, 1});
+
+    auto tranlate=transform.translation;
+    DrawLines data = {
+        model,
+        cv*cp,
+    };
+
+
+
+    constexpr float nearClip = 0.1F;
+    constexpr float farClip = 10;
 
     auto projection =
-        glm::ortho<float>(0.0F, 1.0F, 0.0F, 1.0F, -100.F, 100.F);
+        glm::ortho<float>(0.0F, 1.0F, 0.0F, 1.0F, nearClip, farClip);
+    auto view =
+        glm::scale(eye, {1.F / WINDOW_WIDTH, 1.F / WINDOW_HEIGHT, 1.F}) *
+        glm::translate(eye, {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 0});
 
-
+    view*=CameraClass::getViewMatrix();
     //projection*=CameraClass::getProjectionMatrix();
 
     // TODO: TRS comment
-     auto model = glm::translate(eye, {transform.translation, zIndex}) *
+     model = glm::translate(eye, {transform.translation, zIndex}) *
                  glm::rotate(eye, transform.rotation, glm::vec3(0, 0, 1)) *
                  glm::scale(eye, {transform.scale * glm::vec2{1.F,1.F}, 1});
 
- DrawLines data = {
+ data = {
         model,
-        cp*projection,
+        projection * view,
     };
 
 
