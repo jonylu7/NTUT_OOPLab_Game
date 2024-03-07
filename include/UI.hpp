@@ -51,8 +51,8 @@ private:
         for (int i = (WINDOW_WIDTH / 2); i >= int(-(WINDOW_WIDTH / 2));
              i -= cellHeight) {
             // vertical
-            lineV.push_back(Line(glm::vec2(i/(WINDOW_WIDTH / 2), float(-(WINDOW_HEIGHT / 2)/(WINDOW_HEIGHT/2))),
-                                        glm::vec2(i/(WINDOW_WIDTH / 2), float((WINDOW_HEIGHT / 2)/(WINDOW_HEIGHT/2)))));
+            lineV.push_back(Line(glm::vec2(i, int(-(WINDOW_HEIGHT / 2))),
+                                        glm::vec2(i, int(WINDOW_HEIGHT / 2))));
         }
 
         for (int i = (WINDOW_HEIGHT / 2); i >= int(-(WINDOW_HEIGHT / 2));
