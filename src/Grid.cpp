@@ -6,33 +6,11 @@
 #include "Core/Drawable.hpp"
 #include <iostream>
 
-void Grid::Start() {
+void Grid::Start(std::vector<Line> lineVector) {
 
     //debug grid:
+    m_lineVector=lineVector;
 
-    float cellWidth = 48.F;
-    float cellHeight = 48.F;
-
-    for (int i = (WINDOW_WIDTH / 2); i >= int(-(WINDOW_WIDTH / 2));
-         i -= cellHeight) {
-        // vertical
-        m_lineVector.push_back(Line(glm::vec2(i, int(-(WINDOW_HEIGHT / 2))),
-                                    glm::vec2(i, int(WINDOW_HEIGHT / 2))));
-    }
-
-    for (int i = (WINDOW_HEIGHT / 2); i >= int(-(WINDOW_HEIGHT / 2));
-         i -= cellWidth) {
-        // horz
-        m_lineVector.push_back(Line(glm::vec2(int(-(WINDOW_WIDTH / 2)), i),
-                                    glm::vec2(int(WINDOW_WIDTH / 2), i)));
-    }
-
-    // map grid
-
-    /*
-    m_lineVector.push_back(Line(glm::vec2(-640,0),glm::vec2(640,0)));
-    m_lineVector.push_back(Line(glm::vec2(-50,3),glm::vec2(50,3)));
-*/
     InitVertexAndColor();
 }
 
@@ -43,7 +21,7 @@ void Grid::Draw(const Util::Transform &transform, const float zindex) {
 void Grid::DrawUsingCamera(const Util::Transform &transform,
                            const float zIndex) {
 
-
+    //TODO:awaiting to be debugged
     if (m_Activate == false) {
       //  return;
     }
@@ -69,7 +47,7 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     // TODO: TRS comment
     auto model = glm::translate(eye, {transform.translation, zIndex}) *
                  glm::rotate(eye, transform.rotation, glm::vec3(0, 0, 1)) *
-                 glm::scale(eye, {transform.scale * glm::vec2{20.F,10.F}, 1});
+                 glm::scale(eye, {transform.scale * glm::vec2{40.F,20.F}, 1});
 
      DrawLines data = {
         model,
@@ -85,7 +63,6 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
 }
 
 void Grid::InitVertexAndColor() {
-    int i=0;
     std::vector<float> vertex = {};
     std::vector<float> color = {};
     std::vector<unsigned int> index = {};

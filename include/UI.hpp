@@ -43,6 +43,27 @@ private:
                                    ImGuiMouseButton mouse_button);
     void ShowPlayerConstructionMenu();
 
+    void InitGrid(){
+        std::vector<Line> lineV;
+        float cellWidth = 48.F;
+        float cellHeight = 48.F;
+
+        for (int i = (WINDOW_WIDTH / 2); i >= int(-(WINDOW_WIDTH / 2));
+             i -= cellHeight) {
+            // vertical
+            lineV.push_back(Line(glm::vec2(i, int(-(WINDOW_HEIGHT / 2))),
+                                        glm::vec2(i, int(WINDOW_HEIGHT / 2))));
+        }
+
+        for (int i = (WINDOW_HEIGHT / 2); i >= int(-(WINDOW_HEIGHT / 2));
+             i -= cellWidth) {
+            // horz
+            lineV.push_back(Line(glm::vec2(int(-(WINDOW_WIDTH / 2)), i),
+                                        glm::vec2(int(WINDOW_WIDTH / 2), i)));
+        }
+        m_Grid.Start(lineV);
+    }
+
     std::vector<ImVec2> getSpriteSheetCoordByIndex(int index);
     bool getImageButtonBySpriteSheetIndex(int index);
 

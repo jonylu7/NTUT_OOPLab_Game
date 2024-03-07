@@ -21,7 +21,7 @@ public:
     Grid(){};
     ~Grid(){};
     void InitVertexAndColor();
-    void Start();
+    void Start(std::vector<Line> lineVector);
     void Draw(const Util::Transform &transform, const float zIndex) override;
     void DrawUsingCamera(const Util::Transform &transform,
                          const float zIndex) override;

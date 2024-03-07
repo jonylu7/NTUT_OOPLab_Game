@@ -9,9 +9,10 @@
 #include "glm/vec2.hpp"
 #include "pch.hpp"
 
+
 typedef unsigned int CELL;
 
-class MapClass {
+class MapClass: public Core::Drawable{
 public:
     MapClass() {}
 
@@ -24,7 +25,7 @@ public:
         m_MapHeight = height;
     }
 
-    void Draw() {
+    void Draw(const Util::Transform &trans,const float zindex) override{
         // TODO: new feature, draw tiles only within given range
         Util::Transform drawLocation = {glm::vec2(0, 0)};
         for (int i = 0; i < m_Map.size(); i++) {
@@ -39,10 +40,14 @@ public:
     }
 
     static glm::vec2 ScreenToGlobalCoord(glm::vec2 screenCoord) {
-        glm::vec2 cameraPost=CameraClass::getPosition();
-        float x=cameraPost.x+screenCoord.x;
-        float y=cameraPost.y+screenCoord.y;
-        return glm::vec2(x, y);
+        auto proj=CameraClass::getProjectionMatrix();
+        auto view=CameraClass::getViewMatrix();
+
+        glm::vec4 vec4ScreenCoord({screenCoord[0],screenCoord[1],0.F,1.F});
+
+        glm::vec4 global(proj*view*vec4ScreenCoord);
+
+        return glm::vec2(global[0], global[1]);
     }
 
     // weird

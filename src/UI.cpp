@@ -12,7 +12,8 @@ void UIClass::Start() {
     m_SpriteSheet.Start(
         "../assets/sprites/ICON_Allied Structure SpriteSheet.png", 64, 48, 24,
         0);
-    m_Grid.Start();
+    InitGrid();
+
 }
 
 void UIClass::Update() {
