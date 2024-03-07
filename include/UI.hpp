@@ -47,7 +47,7 @@ private:
         std::vector<Line> lineV;
         float cellWidth = 48.F;
         float cellHeight = 48.F;
-        /*
+
         for (int i = (WINDOW_WIDTH / 2); i >= int(-(WINDOW_WIDTH / 2));
              i -= cellHeight) {
             // vertical
@@ -58,11 +58,9 @@ private:
         for (int i = (WINDOW_HEIGHT / 2); i >= int(-(WINDOW_HEIGHT / 2));
              i -= cellWidth) {
             // horz
-            lineV.push_back(Line(glm::vec2(int(-(WINDOW_WIDTH / 2)), i),
-                                        glm::vec2(int(WINDOW_WIDTH / 2), i)));
+            lineV.push_back(Line(glm::vec2(float(int(-(WINDOW_WIDTH / 2)/(WINDOW_WIDTH / 2))), i/(WINDOW_HEIGHT / 2)),
+                                        glm::vec2(float(int(WINDOW_WIDTH / 2)/(WINDOW_WIDTH / 2)), i/(WINDOW_HEIGHT / 2))));
         }
-         */
-        lineV.push_back(Line(glm::vec2(-0.5,-0.5),glm::vec2(0.5,0.5)));
         m_Grid.Start(lineV);
     }
 
