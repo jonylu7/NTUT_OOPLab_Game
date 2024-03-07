@@ -25,7 +25,9 @@ void UIClass::Update() {
     ShowPlayerConstructionMenu();
 
     Util::Transform trans;
-    int zindex = 20;
+    trans.translation={-1250.F,0};
+    trans.scale={2.F,2.F};
+    int zindex = 2;
     m_Grid.DrawUsingCamera(trans, zindex);
 
     ImGui::Render();
