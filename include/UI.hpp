@@ -48,17 +48,20 @@ private:
         float cellWidth = 48.F;
         float cellHeight = 48.F;
 
-        for (float i = (WINDOW_WIDTH / 2); i >= -float(WINDOW_WIDTH / 2);
+        /*
+        for (float i = float(WINDOW_WIDTH / 2); i >= -float(WINDOW_WIDTH / 2);
              i -= cellHeight) {
             // vertical
-            lineV.push_back(Line(glm::vec2(float(i/(WINDOW_WIDTH / 2)), float(-(WINDOW_HEIGHT / 2)/(WINDOW_HEIGHT / 2)) ),
-                                        glm::vec2(float(i/(WINDOW_WIDTH / 2)), float((WINDOW_HEIGHT / 2)/(WINDOW_HEIGHT / 2))) ));
+            lineV.push_back(Line(glm::vec2(float(WINDOW_WIDTH/2)/cellWidth, float(-(WINDOW_HEIGHT / 2))/ cellHeight ),
+                                        glm::vec2(float(WINDOW_WIDTH/2)/cellWidth, float((WINDOW_HEIGHT / 2))/ cellHeight) ));
         }
+         */
 
-        for (float i = (WINDOW_HEIGHT / 2); i >= -float(WINDOW_HEIGHT / 2);i -= cellWidth) {
+        for (float i =float(WINDOW_HEIGHT / 2); i >= -float(WINDOW_HEIGHT);i -= cellWidth) {
             // horz
-            lineV.push_back(Line(glm::vec2(-float(WINDOW_WIDTH / 2), i/(WINDOW_HEIGHT / 2)),
-                                        glm::vec2(float(WINDOW_WIDTH / 2), i/(WINDOW_HEIGHT / 2))));
+            int c;
+            lineV.push_back(Line(glm::vec2(-1.F, i/ (3*WINDOW_HEIGHT)),
+                                        glm::vec2(1.F, i /(3*WINDOW_HEIGHT))));
         }
 
         m_Grid.Start(lineV);

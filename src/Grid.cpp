@@ -35,22 +35,10 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     auto cv = CameraClass::getViewMatrix();
 
     constexpr glm::mat4 eye(1.F);
+    glm::vec2 size={WINDOW_WIDTH/3,WINDOW_HEIGHT/3};
 
 
-    auto view =
-        glm::scale(eye, {1.F / (WINDOW_WIDTH), 1.F / (WINDOW_HEIGHT), 1.F}) ;
-
-    view*=CameraClass::getViewMatrix();
-    auto projection=CameraClass::getProjectionMatrix();
-
-    // TODO: TRS comment
-    auto model = glm::translate(eye, {transform.translation, zIndex}) *
-                 glm::scale(eye, {transform.scale * glm::vec2{WINDOW_WIDTH,WINDOW_HEIGHT}, 1});
-
-     DrawLines data = {
-        model,
-        projection * view,
-    };
+   auto data=Util::ConvertToUniformBufferDataUsingCameraMatrix(transform,size,zIndex);
 
 
     m_NewMatrices->SetData(0, data);

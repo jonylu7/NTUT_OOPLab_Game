@@ -12,10 +12,7 @@
 #include "Util/TransformUtils.hpp"
 
 class Grid : public Core::Drawable {
-    struct DrawLines {
-        glm::mat4 m_View;
-        glm::mat4 m_Projection;
-    };
+
 
 public:
     Grid(){};
@@ -33,12 +30,9 @@ private:
 
     Core::Program m_Program = Core::Program("../assets/shaders/DrawLines.vert",
                                             "../assets/shaders/DrawLines.frag");
-    std::unique_ptr<Core::UniformBuffer<DrawLines>> m_Matrices =
-        std::make_unique<Core::UniformBuffer<DrawLines>>(m_Program, "Grid",
-                                                        0);
 
-    std::unique_ptr<Core::UniformBuffer<DrawLines>> m_NewMatrices =
-        std::make_unique<Core::UniformBuffer<DrawLines>>(m_Program, "Grid",
+    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_NewMatrices =
+        std::make_unique<Core::UniformBuffer<Core::Matrices>>(m_Program, "Grid",
                                                         0);
 
 
