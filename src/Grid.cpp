@@ -86,7 +86,7 @@ void Grid::Draw(const Util::Transform &transform, const float zindex) {
 
 void Grid::DrawUsingCamera(const Util::Transform &transform,
                            const float zIndex) {
-
+    /*
     if (m_Activate == false) {
         return;
     }
@@ -100,7 +100,6 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
 
     auto cp=CameraClass::getProjectionMatrix();
     auto cv = CameraClass::getViewMatrix();
-    /*
     for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
             std::cout<<cv[i][j]<<"---";
@@ -109,7 +108,7 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     std::cout<<"\n"<<std::endl;
 
 
-*/
+
     auto r=cp;
     auto dp=glm::mat2(r[0][0],r[0][1],
               r[1][0],r[1][1]);
@@ -150,8 +149,8 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     m_VertexArray->Bind();
 
     m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
+    */
 
-/*
     if (m_Activate == false) {
         return;
     }
@@ -165,15 +164,7 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
 
     auto cp=CameraClass::getProjectionMatrix();
     auto cv = CameraClass::getViewMatrix();
-    auto r=cv*cp;
-    auto m=glm::mat2(r[0][0],r[0][1],
-                       r[1][0],r[1][1]);
 
-    auto p=glm::mat2({
-        1.0F / width, 0.0F, //
-        0.0F, 1.0F / height //
-    });
-    auto mp=p*m;
 
     auto v=glm::mat4(
         1.F, 0.F, 0.F,0.F,//
@@ -188,18 +179,22 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
         1.F, 1.F, 1.F/width,1.F,
         1.F, 1.F, 1.F,1.F/height
     );
+    constexpr glm::mat4 eye(1.F);
+    auto model = glm::translate(eye, {transform.translation, zIndex}) *
+                 glm::rotate(eye, transform.rotation, glm::vec3(0, 0, 1)) *
+                 glm::scale(eye, {(transform.scale) * glm::vec2{0.1F,0.5F}, 1});
 
     auto tranlate=transform.translation;
     Core::Matrices data = {
-        glm::mat4(1.F),
-        r,
+        model,
+        cv*cp,
     };
 
     m_NewMatrices->SetData(0, data);
     m_VertexArray->Bind();
 
     m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
-    */
+
 }
 
 void Grid::InitVertexAndColor() {
