@@ -49,4 +49,5 @@ void Shader::CheckStatus(const std::string &filepath) const {
         LOG_ERROR("{}", filepath, message.data());
     }
 }
+
 } // namespace Core

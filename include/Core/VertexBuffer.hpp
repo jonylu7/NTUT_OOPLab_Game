@@ -9,8 +9,9 @@ namespace Core {
  */
 class VertexBuffer {
 public:
+    enum DrawingType { STATIC, DYNAMIC, STREAM };
     VertexBuffer(const std::vector<float> &vertices,
-                 unsigned int componentCount);
+                 unsigned int componentCount, DrawingType type = STATIC);
     VertexBuffer(const VertexBuffer &) = delete;
     VertexBuffer(VertexBuffer &&other);
 
@@ -24,10 +25,12 @@ public:
 
     void Bind() const;
     void Unbind() const;
+    
+    template <class T>
+    void ModifyBufferData(int size, std::vector<T> data);
 
 private:
     GLuint m_BufferId;
-
     unsigned int m_ComponentCount;
     GLenum m_Type = GL_FLOAT;
 };

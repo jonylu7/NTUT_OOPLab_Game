@@ -6,6 +6,7 @@
 #include <memory>
 #include <set>
 #include <stdexcept>
+
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -17,6 +18,9 @@
 #include <SDL_ttf.h>
 
 #include <GL/glew.h>
+
+//suppose to be "GL/glut", yet GLUT/glut on mac
+//#include <GLUT/glut.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtx/matrix_transform_2d.hpp>

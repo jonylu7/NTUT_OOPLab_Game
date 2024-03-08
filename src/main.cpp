@@ -1,17 +1,17 @@
 #include "App.hpp"
-
 #include "Core/Context.hpp"
 
 int main(int, char **) {
+
     auto context = Core::Context::GetInstance();
     App app;
 
     while (!context->GetExit()) {
+        context->Update();
         switch (app.GetCurrentState()) {
         case App::State::START:
             app.Start();
             break;
-
         case App::State::UPDATE:
             app.Update();
             break;
@@ -21,7 +21,6 @@ int main(int, char **) {
             context->SetExit(true);
             break;
         }
-        context->Update();
     }
     return 0;
 }

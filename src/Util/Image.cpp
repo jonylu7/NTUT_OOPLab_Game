@@ -69,6 +69,20 @@ void Image::Draw(const Util::Transform &transform, const float zIndex) {
     s_VertexArray->DrawTriangles();
 }
 
+void Image::DrawUsingCamera(const Util::Transform &transform,
+                            const float zIndex) {
+    auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(
+        transform, m_Size, zIndex);
+    s_UniformBuffer->SetData(0, data);
+
+    m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
+    s_Program->Bind();
+    s_Program->Validate();
+
+    s_VertexArray->Bind();
+    s_VertexArray->DrawTriangles();
+}
+
 void Image::InitProgram() {
     // TODO: Create `BaseProgram` from `Program` and pass it into `Drawable`
     s_Program = std::make_unique<Core::Program>("../assets/shaders/Base.vert",
@@ -100,9 +114,9 @@ void Image::InitVertexArray() {
     s_VertexArray->AddVertexBuffer(std::make_unique<Core::VertexBuffer>(
         std::vector<float>{
             0.0F, 0.0F, //
-            0.0F, 1.0F, //
-            1.0F, 1.0F, //
-            1.0F, 0.0F, //
+            0.0F, 1.F,  //
+            1.F, 1.F,   //
+            1.F, 0.0F,  //
         },
         2));
 
