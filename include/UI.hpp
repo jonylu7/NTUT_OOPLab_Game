@@ -6,11 +6,11 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #include "Camera.hpp"
 #include "SpriteSheet.hpp"
+#include "UIScriptProcess.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_sdl2.h"
 #include "pch.hpp"
-#include "UIScriptProcess.h"
 
 // not sure how does it work commented by Lu
 enum class ButtonClicked {
@@ -43,7 +43,6 @@ private:
                                    ImGuiMouseButton mouse_button);
     void ShowPlayerConstructionMenu();
 
-
     std::vector<ImVec2> getSpriteSheetCoordByIndex(int index);
     bool getImageButtonBySpriteSheetIndex(int index);
 
@@ -51,14 +50,14 @@ private:
     SpriteSheet m_SpriteSheet;
 
     Grid m_Grid;
-    glm::vec2 m_GridSize={100,100};
+    glm::vec2 m_GridSize = {100, 100};
     UIScriptProcess ButtonScript;
     std::shared_ptr<Structure> barracks = std::make_shared<Barracks>();
     std::shared_ptr<Structure> oreRefinery = std::make_shared<OreRefinery>();
     std::shared_ptr<Structure> powerPlant = std::make_shared<PowerPlants>();
     std::shared_ptr<Structure> warFactory = std::make_shared<WarFactory>();
-    std::shared_ptr<Structure> advPowerPlant = std::make_shared<ADVPowerPlants>();
-
+    std::shared_ptr<Structure> advPowerPlant =
+        std::make_shared<ADVPowerPlants>();
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
