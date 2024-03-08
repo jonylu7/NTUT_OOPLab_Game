@@ -1,7 +1,6 @@
 #include "App.hpp"
 #include "Util/Logger.hpp"
 
-#include "GiraffeText.hpp"
 
 void App::Start() {
     testScene.Start();

@@ -24,6 +24,10 @@ public:
 
     void switchActivate() { m_Activate = !m_Activate; };
 
+    void setLine(glm::vec2 from, glm::vec2 to);
+    void SetActivate(bool _b){m_Activate=_b;};
+
+
     void setLineWidth(float linewidth){m_lineWidth=linewidth;}
     float getLineWidth(){return m_lineWidth;}
 
@@ -44,6 +48,7 @@ private:
         std::make_unique<Core::VertexArray>();
 
     bool m_Activate = false;
+
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GRID_HPP

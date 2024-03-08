@@ -7,7 +7,7 @@
 #include "glm/glm.hpp"
 class Line {
 public:
-    Line(){};
+    Line(){this->color = glm::vec3(1, 1, 1);};
     ~Line(){};
     Line(glm::vec2 lineFrom, glm::vec2 lineTo, glm::vec3 color) {
         this->lineFrom = lineFrom;

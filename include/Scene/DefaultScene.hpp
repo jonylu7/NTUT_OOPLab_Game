@@ -5,16 +5,12 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
 
-#include "Barracks.hpp"
 #include "Camera.hpp"
-#include "Capybara.hpp"
 #include "Core/Context.hpp"
 #include "Grid.hpp"
-#include "Infantry.hpp"
 #include "Map.hpp"
 #include "Rectangle.hpp"
 #include "SpriteSheet.hpp"
-#include "Structure.hpp"
 #include "Triangle.hpp"
 #include "UI.hpp"
 #include "Util/Image.hpp"
@@ -28,8 +24,9 @@
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
-#include "WayPoint.hpp"
-#include "WayPointTool.h"
+#include "Structure/WayPoint.hpp"
+#include "Structure/WayPointTool.h"
+#include "Structure/AdvencePowerPlants.hpp"
 
 class DefaultScene {
 public:
@@ -48,7 +45,6 @@ private:
     */
     Rectangle rect;
     /*
-    std::shared_ptr<Structure> m_Structure = std::make_shared<Structure>();
     std::shared_ptr<Infantry> m_Inf = std::make_shared<Infantry>();
     */
     SpriteSheet m_SpriteSheet;
@@ -66,18 +62,16 @@ private:
 
     //Way Point Test Start---------------
     WayPointTool  m_waypointTool;
-    Line m_Line;
-    bool clickCheck= false;
     std::shared_ptr<Barracks> m_Barracks = std::make_shared<Barracks>();
     std::shared_ptr<OreRefinery> m_OreRefinery = std::make_shared<OreRefinery>();
     std::shared_ptr<PowerPlants> m_PowerPlants = std::make_shared<PowerPlants>();
     std::shared_ptr<WarFactory> m_WarFactory = std::make_shared<WarFactory>();
+    std::shared_ptr<ADVPowerPlants> m_ADVPowerPlants = std::make_shared<ADVPowerPlants>();
 
     std::vector<std::shared_ptr<IWayPointStructure>> m_IWayPointStructureList = {
         m_Barracks,m_OreRefinery,m_WarFactory
     };
 
-    std::shared_ptr<WayPoint> m_WayPoint = std::make_shared<WayPoint>();
     //Way Point Test End---------------
 };
 
