@@ -24,13 +24,16 @@ public:
 
     void switchActivate() { m_Activate = !m_Activate; };
 
+    void setLineWidth(float linewidth){m_lineWidth=linewidth;}
+    float getLineWidth(){return m_lineWidth;}
+
 private:
     std::vector<Line> m_lineVector;
 
     Core::Program m_Program = Core::Program("../assets/shaders/DrawLines.vert",
                                             "../assets/shaders/DrawLines.frag");
 
-    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_NewMatrices =
+    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_Matrices =
         std::make_unique<Core::UniformBuffer<Core::Matrices>>(m_Program, "Grid",
                                                         0);
 

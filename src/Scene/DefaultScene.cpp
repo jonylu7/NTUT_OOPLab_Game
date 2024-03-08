@@ -45,7 +45,7 @@ void DefaultScene::Start() {
         m_Map.readMapAndTileSet(m_OgMap, m_tileSets);
         */
 
-    m_Map.Init(maps, m_TileSetSpriteSheet, 5, 2);
+    m_Map.Init(maps, m_TileSetSpriteSheet, 10, 10);
     m_UI.Start();
 
     //Way Point Test Start---------------

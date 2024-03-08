@@ -12,7 +12,7 @@ void UIClass::Start() {
     m_SpriteSheet.Start(
         "../assets/sprites/ICON_Allied Structure SpriteSheet.png", 64, 48, 24,
         0);
-    InitGrid();
+
 
 }
 
@@ -24,11 +24,6 @@ void UIClass::Update() {
     ShowCursorSelectionRegion(&start_pos, &end_pos, ImGuiMouseButton_Left);
     ShowPlayerConstructionMenu();
 
-    Util::Transform trans;
-    trans.translation={0.F,0.F};
-    trans.scale={1.F,1.F};
-    int zindex = 2;
-    m_Grid.DrawUsingCamera(trans, zindex);
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -72,7 +67,6 @@ void UIClass::ShowPlayerConstructionMenu() {
     ImGui::Text(fmt::format("Power {}", 50).c_str());
 
     if (ImGui::Button("Grid")) {
-        m_Grid.switchActivate();
     }
     if (ImGui::BeginTabBar("", ImGuiTabBarFlags_None)) {
 

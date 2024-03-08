@@ -38,8 +38,6 @@ float(WINDOW_WIDTH) / (float(WINDOW_HEIGHT)),
         return glm::ortho(0.0F, float(WINDOW_WIDTH), 0.0F,
                           float(WINDOW_HEIGHT), 0.F, 100.F);
 
-
-
     }
 
     static glm::mat4x4 getViewMatrix() {
@@ -66,7 +64,7 @@ private:
     static float m_Zoom;
     static glm::vec2 m_Position;
     float m_MovingSpeed = 20.F;
-    float m_ZoomingSpeed = 5.F;
+    float m_ZoomingSpeed = 0.1F;
     static float m_Fov;
 };
 
