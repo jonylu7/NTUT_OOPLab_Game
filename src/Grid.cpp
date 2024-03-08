@@ -43,7 +43,7 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
    auto data=Util::ConvertToUniformBufferDataUsingCameraMatrix(transform,size,zIndex);
 
 
-    m_NewMatrices->SetData(0, data);
+    m_Matrices->SetData(0, data);
     m_VertexArray->Bind();
 
     m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
@@ -66,7 +66,6 @@ void Grid::InitVertexAndColor() {
         color.push_back(line.getColor().x);
         color.push_back(line.getColor().y);
         color.push_back(line.getColor().z);
-
 
     }
     m_VertexArray->AddVertexBuffer(

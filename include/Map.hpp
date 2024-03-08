@@ -8,12 +8,14 @@
 #include "Tile.hpp"
 #include "glm/vec2.hpp"
 #include "pch.hpp"
-
+#include "Grid.hpp"
 
 typedef unsigned int CELL;
 
+
 class MapClass: public Core::Drawable{
 public:
+
     MapClass() {}
 
     void Init(std::vector<std::shared_ptr<TileClass>> map,
@@ -23,9 +25,20 @@ public:
         m_SpriteSheet = spritesheet;
         m_MapWdith = width;
         m_MapHeight = height;
+
+        InitGrid();
+
     }
 
+
+
     void Draw(const Util::Transform &trans,const float zindex) override{
+
+        Util::Transform mapTrans;
+        mapTrans.translation=m_MapPosition;
+        m_Grid.DrawUsingCamera(mapTrans,1);
+
+        /*
         // TODO: new feature, draw tiles only within given range
         Util::Transform drawLocation = {glm::vec2(0, 0)};
         for (int i = 0; i < m_Map.size(); i++) {
@@ -37,12 +50,14 @@ public:
             m_SpriteSheet->DrawSpriteByIndex(m_Map[i]->getSpriteSheetIndex(),
                                              drawLocation, m_ZIndex);
         }
+         */
+
     }
 
     static glm::vec2 ScreenToGlobalCoord(glm::vec2 screenCoord) {
         auto proj=CameraClass::getProjectionMatrix();
         auto view=CameraClass::getViewMatrix();
-        glm::vec2 offset={640,360};
+        glm::vec2 offset={WINDOW_HEIGHT/2,WINDOW_WIDTH/2};
         glm::vec4 vec4ScreenCoord({screenCoord[0]+CameraClass::getPosition().x+offset.x,screenCoord[1]+CameraClass::getPosition().y+offset.y,0.F,1.F});
         glm::vec4 global(vec4ScreenCoord);
 
@@ -50,10 +65,7 @@ public:
     }
 
     static glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord){
-        float cellHeight=48.F;
-        float cellWidth=48.F;
-        return glm::vec2(int(globalCoord[0]/cellHeight),int(globalCoord[1]/cellWidth));
-
+        return glm::vec2(int(globalCoord[0]/CELL_SIZE.x),int(globalCoord[1]/CELL_SIZE.y));
     }
 
     // weird
@@ -66,6 +78,26 @@ public:
         return maps;
     }
 
+
+
+protected:
+    void InitGrid(){
+        std::vector<Line> lineV;
+
+
+        auto width=CELL_SIZE.x*m_MapWdith;
+        auto height=CELL_SIZE.y*m_MapHeight;
+        for (int i=0;i<m_MapWdith+1;i++){
+            lineV.push_back(Line(glm::vec2(0,i*CELL_SIZE.y),glm::vec2(width,i*CELL_SIZE.y)));
+        }
+        for(int j=0;j<m_MapHeight+1;j++){
+            lineV.push_back(Line(glm::vec2(j*CELL_SIZE.x,0),glm::vec2(j*CELL_SIZE.x,height)));
+        }
+
+        m_Grid.Start(lineV);
+    }
+
+
 private:
     CELL m_MapWdith;
     CELL m_MapHeight;
@@ -73,5 +105,8 @@ private:
     std::vector<std::shared_ptr<TileClass>> m_Map;
     std::shared_ptr<SpriteSheet> m_SpriteSheet;
     int m_ZIndex = 0;
+    Grid m_Grid;
 };
+
+
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP

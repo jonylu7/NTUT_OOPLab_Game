@@ -23,15 +23,21 @@ public:
                          const float zIndex) override;
 
     void switchActivate() { m_Activate = !m_Activate; };
+
     void setLine(glm::vec2 from, glm::vec2 to);
     void SetActivate(bool _b){m_Activate=_b;};
+
+
+    void setLineWidth(float linewidth){m_lineWidth=linewidth;}
+    float getLineWidth(){return m_lineWidth;}
+
 private:
     std::vector<Line> m_lineVector;
 
     Core::Program m_Program = Core::Program("../assets/shaders/DrawLines.vert",
                                             "../assets/shaders/DrawLines.frag");
 
-    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_NewMatrices =
+    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_Matrices =
         std::make_unique<Core::UniformBuffer<Core::Matrices>>(m_Program, "Grid",
                                                         0);
 
