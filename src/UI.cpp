@@ -32,6 +32,9 @@ void UIClass::Update() {
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    ButtonScript.Update();
+
 }
 
 void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
@@ -80,22 +83,27 @@ void UIClass::ShowPlayerConstructionMenu() {
 
             if (getImageButtonBySpriteSheetIndex(7)) {
                 // power plants
+                ButtonScript.buttonEvent(powerPlant);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(22)) {
                 // barracks
+                ButtonScript.buttonEvent(barracks);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(8)) {
                 // ore
+                ButtonScript.buttonEvent(oreRefinery);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(20)) {
                 // war factory
+                ButtonScript.buttonEvent(warFactory);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(1)) {
                 // advance power
+                ButtonScript.buttonEvent(advPowerPlant);
                 LOG_DEBUG("TEST");
             }
             if (ImGui::Button("Radar Dome")) {

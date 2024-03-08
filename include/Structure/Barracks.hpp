@@ -1,19 +1,35 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_BARRACKS_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_BARRACKS_HPP
 
-#include "Structure/IWayPointStructure.hpp"
-#include "Structure.hpp"
-#define DEFAULT_POWER -20.F
-#define DEFAULT_TIME 15.F
-#define DEFAULT_COST 300.F
-#define DEFAULT_HP 800.F
+#include "Structure\IWayPointStructure.hpp"
+#include "Structure\Structure.hpp"
+#include "Util/Image.hpp"
+#include "Util/Keycode.hpp"
+#include "Util/Input.hpp"
+#include "WayPoint.hpp"
+#include "HighLight.h"
+#include "Line.hpp"
+#include "Grid.hpp"
 
 class Barracks : public Structure,public IWayPointStructure{
+private:
+    std::shared_ptr<WayPoint> m_wayPoint = std::make_shared<WayPoint>();
+    HighLight m_HighLight;
+    bool b_select= true;
+    Grid m_Grid;
+    Line m_Line;
+    std::vector<Line> m_lineVector;
 public:
-    Barracks(float electricPower=DEFAULT_POWER,float buildingTime=DEFAULT_POWER,
-             float buildingCost=DEFAULT_POWER,float buildingHp=DEFAULT_POWER): Structure(electricPower, buildingTime, buildingCost, buildingHp){};
-    virtual glm::vec2 GetStructureLocation()override{return this->GetObjectLocation();};
-    void Start() override{this->SetWayPointLocation({this->GetObjectLocation().x+20,this->GetObjectLocation().y+20});};
+    Barracks(float electricPower=-20.F,float buildingTime= 15.F,
+             float buildingCost=300.F,float buildingHp=800.F):
+          Structure(electricPower, buildingTime, buildingCost, buildingHp){};
+    void Start()override;
+
+    virtual void onSelected(bool selected)override;
+    virtual void SetAttachVisible(bool visible)override;
+
+    virtual void updateFixed()override;
+    virtual void updateMoveable()override;
 };
 
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_CAPYBARA_HPP
+#endif

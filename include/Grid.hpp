@@ -23,7 +23,8 @@ public:
                          const float zIndex) override;
 
     void switchActivate() { m_Activate = !m_Activate; };
-
+    void setLine(glm::vec2 from, glm::vec2 to);
+    void SetActivate(bool _b){m_Activate=_b;};
 private:
     std::vector<Line> m_lineVector;
 
@@ -41,6 +42,7 @@ private:
         std::make_unique<Core::VertexArray>();
 
     bool m_Activate = false;
+
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GRID_HPP

@@ -62,23 +62,22 @@ set(SRC_FILES
 
         ${SRC_DIR}/App.cpp
         ${SRC_DIR}/Triangle.cpp
-        #${SRC_DIR}/Giraffe.cpp
-        ${SRC_DIR}/Capybara.cpp
-        ${SRC_DIR}/Barracks.cpp
-        ${SRC_DIR}/Structure.cpp
         ${SRC_DIR}/Rectangle.cpp
-        ${SRC_DIR}/Infantry.cpp
         ${SRC_DIR}/Grid.cpp
 
-        ${SRC_DIR}/WayPoint.cpp
-        ${SRC_DIR}/WayPointTool.cpp
+        ${SRC_DIR}/Structure/Structure.cpp
+        ${SRC_DIR}/Structure/WayPoint.cpp
+        ${SRC_DIR}/Structure/WayPointTool.cpp
         ${SRC_DIR}/Structure/IWayPointStructure.cpp
+        ${SRC_DIR}/Structure/HighLight.cpp
+        ${SRC_DIR}/UIScriptProcess.cpp
 
         # ${SRC_DIR}/Structure/Buildings.cpp
         ${SRC_DIR}/Structure/Barracks.cpp
         ${SRC_DIR}/Structure/OreRefinery.cpp
         ${SRC_DIR}/Structure/PowerPlants.cpp
         ${SRC_DIR}/Structure/WarFactory.cpp
+        #${SRC_DIR}/Structure/ADVPowerPlants.cpp
 
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
@@ -124,30 +123,28 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/UI.hpp
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp
-        #${INCLUDE_DIR}/GiraffeText.hpp
-        #${INCLUDE_DIR}/Cat.hpp
         ${INCLUDE_DIR}/config.hpp
         ${INCLUDE_DIR}/Triangle.hpp
         ${INCLUDE_DIR}/config.hpp
-        ${INCLUDE_DIR}/Capybara.hpp
-        ${INCLUDE_DIR}/Barracks.hpp
-        ${INCLUDE_DIR}/Structure.hpp
-        ${INCLUDE_DIR}/Infantry.hpp
         ${INCLUDE_DIR}/Cell.hpp
         ${INCLUDE_DIR}/Rectangle.hpp
         ${INCLUDE_DIR}/Sprite.hpp
         ${INCLUDE_DIR}/Settings.hpp
         ${INCLUDE_DIR}/Camera.hpp
 
-        ${INCLUDE_DIR}/WayPoint.hpp
-        ${INCLUDE_DIR}/WayPointTool.h
+        ${INCLUDE_DIR}/Structure/Structure.hpp
+        ${INCLUDE_DIR}/Structure/WayPoint.hpp
+        ${INCLUDE_DIR}/Structure/WayPointTool.h
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
+        ${INCLUDE_DIR}/HighLight.h
+        ${INCLUDE_DIR}/UIScriptProcess.h
 
         #${INCLUDE_DIR}/Structure/Buildings.hpp
         ${INCLUDE_DIR}/Structure/Barracks.hpp
         ${INCLUDE_DIR}/Structure/OreRefinery.hpp
         ${INCLUDE_DIR}/Structure/PowerPlants.hpp
         ${INCLUDE_DIR}/Structure/WarFactory.hpp
+        ${INCLUDE_DIR}/Structure/ADVPowerPlants.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h

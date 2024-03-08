@@ -49,37 +49,15 @@ void DefaultScene::Start() {
     m_UI.Start();
 
     //Way Point Test Start---------------
-    m_Barracks->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/barracks.png"));
-    m_Barracks->SetObjectLocation({-80,-60});
-    m_Barracks->Start();
-    m_Barracks->SetVisible(true);
-    m_Renderer.AddChild(m_Barracks);
+    m_Barracks->SetObjectLocation({100,100});
 
-
-    m_OreRefinery->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/OreRefinery.png"));
     m_OreRefinery->SetObjectLocation({-60,-60});
-    m_OreRefinery->Start();
-    m_OreRefinery->SetVisible(true);
-    m_Renderer.AddChild(m_OreRefinery);
 
+    m_PowerPlants->SetObjectLocation({0,0});
 
-    m_PowerPlants->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/PowerPlants.png"));
-    m_PowerPlants->SetObjectLocation({-80,-80});
-    m_PowerPlants->Start();
-    m_PowerPlants->SetVisible(true);
-    m_Renderer.AddChild(m_PowerPlants);
+    m_WarFactory->SetObjectLocation({50,50});
 
-    m_WarFactory->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/WarFactory.png"));
-    m_WarFactory->SetObjectLocation({-60,-80});
-    m_WarFactory->Start();
-    m_WarFactory->SetVisible(true);
-    m_Renderer.AddChild(m_WarFactory);
-
-
-    m_WayPoint->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/flagB.png"));
-    m_WayPoint->SetObjectLocation({-70,-70});
-    m_WayPoint->SetVisible(false);
-    m_Renderer.AddChild(m_WayPoint);
+    m_Barracks->Start();
     //Way Point Test End---------------
 }
 
@@ -127,43 +105,24 @@ void DefaultScene::Update() {
     //Way Point Test Start-----------------------------------------------------
     /*
     if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
-        for(auto i :m_IWayPointStructureList){
-            if(m_waypointTool.checkMous(i->GetStructureLocation(),Util::Input::GetCursorPosition())){
-                m_WayPoint->SetObjectLocation(i->GetWayPointLocation());
-                m_WayPoint->SetVisible(true);
-                clickCheck= false;
-                break;
-            }
+    clickCheck= false;
+    for(auto i :m_IWayPointStructureList){
+        if(m_waypointTool.checkMous(i->GetStructureLocation(),Util::Input::GetCursorPosition())){
+            m_WayPoint->SetObjectLocation(i->GetWayPointLocation());
+            m_WayPoint->SetVisible(true);
+            clickCheck= false;
+            break;
         }
-    }*/
-    if (Util::Input::IsKeyDown(Util::Keycode::P)) {
-        clickCheck=!clickCheck;
     }
+}*/
 
-    if(clickCheck){
-        if (Util::Input::IsKeyDown(Util::Keycode::NUM_1)) {
-            m_WayPoint->SetObjectLocation(m_IWayPointStructureList[0]->GetWayPointLocation());
-            m_Line.setlineFrom(m_IWayPointStructureList[0]->GetStructureLocation());
-            m_Line.setlineTo(m_IWayPointStructureList[0]->GetWayPointLocation());
-            m_WayPoint->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/flagB.png"));
-            m_WayPoint->SetVisible(true);
-        }else
-            if (Util::Input::IsKeyDown(Util::Keycode::NUM_2)) {
-            m_WayPoint->SetObjectLocation(m_IWayPointStructureList[1]->GetWayPointLocation());
-            m_Line.setlineFrom(m_IWayPointStructureList[1]->GetStructureLocation());
-            m_Line.setlineTo(m_IWayPointStructureList[1]->GetWayPointLocation());
-            m_WayPoint->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/flagO.png"));
-            m_WayPoint->SetVisible(true);
-        }else
-            if (Util::Input::IsKeyDown(Util::Keycode::NUM_3)) {
-            m_WayPoint->SetObjectLocation(m_IWayPointStructureList[2]->GetWayPointLocation());
-            m_Line.setlineFrom(m_IWayPointStructureList[2]->GetStructureLocation());
-            m_Line.setlineTo(m_IWayPointStructureList[2]->GetWayPointLocation());
-            m_WayPoint->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/flagW.png"));
-            m_WayPoint->SetVisible(true);
-        }
-    }else{
-        m_WayPoint->SetVisible(false);
-    }
     //Way Point Test End-------------------------------------------------------
+
+    // Test 0306---------------------------------
+    m_Barracks->Update();
+    m_PowerPlants->Update();
+    m_WarFactory->Update();
+    m_OreRefinery->Update();
+    m_ADVPowerPlants->Update();
+    // Test 0306 End---------------------------------
 }

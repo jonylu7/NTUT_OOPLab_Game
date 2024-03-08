@@ -6,16 +6,15 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_IWAYPOINTSTRUCTURE_HPP
 #include "Structure.hpp"
 #include "Line.hpp"
-
+#define CELL 48.F
 class IWayPointStructure{
 private:
-    glm::vec2 waypointLocation;
+    glm::vec2 waypointLocation={0,0};
 public:
     virtual glm::vec2 GetWayPointLocation(){return this->waypointLocation;};
     void SetWayPointLocation(glm::vec2 newLocation){
-        this->waypointLocation=newLocation;
+        this->waypointLocation={newLocation.x+0.5*CELL,newLocation.y+0.5*CELL};
     };
-    virtual glm::vec2 GetStructureLocation()=0;
 };
 
 
