@@ -30,7 +30,7 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
     m_Program.Bind();
     m_Program.Validate();
     m_VertexArray->Bind();
-    
+
     auto cp = CameraClass::getProjectionMatrix();
     auto cv = CameraClass::getViewMatrix();
 
@@ -71,6 +71,7 @@ void Grid::InitVertexAndColor() {
         std::make_unique<Core::VertexBuffer>(color, 3));
 }
 void Grid::setLine(glm::vec2 from, glm::vec2 to) {
+    m_VertexArray = std::make_unique<Core::VertexArray>();
     m_lineVector.clear(); // 清空原有的線段
     m_lineVector.push_back(Line(from, to));
     InitVertexAndColor(); // 重新初始化頂點和顏色
