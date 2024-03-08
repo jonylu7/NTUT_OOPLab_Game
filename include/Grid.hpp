@@ -22,14 +22,11 @@ public:
     void DrawUsingCamera(const Util::Transform &transform,
                          const float zIndex) override;
 
-    void switchActivate() { m_Activate = !m_Activate; };
-
     void setLine(glm::vec2 from, glm::vec2 to);
-    void SetActivate(bool _b){m_Activate=_b;};
+    void SetActivate(bool active) { m_Activate = active; };
 
-
-    void setLineWidth(float linewidth){m_lineWidth=linewidth;}
-    float getLineWidth(){return m_lineWidth;}
+    void setLineWidth(float linewidth) { m_lineWidth = linewidth; }
+    float getLineWidth() { return m_lineWidth; }
 
 private:
     std::vector<Line> m_lineVector;
@@ -39,8 +36,7 @@ private:
 
     std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_Matrices =
         std::make_unique<Core::UniformBuffer<Core::Matrices>>(m_Program, "Grid",
-                                                        0);
-
+                                                              0);
 
     float m_lineWidth = 1.0F;
 
@@ -48,7 +44,6 @@ private:
         std::make_unique<Core::VertexArray>();
 
     bool m_Activate = false;
-
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GRID_HPP

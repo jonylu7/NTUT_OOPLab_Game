@@ -11,7 +11,6 @@
 #include "Map.hpp"
 #include "Rectangle.hpp"
 #include "SpriteSheet.hpp"
-#include "Triangle.hpp"
 #include "UI.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
@@ -19,6 +18,7 @@
 #include "Util/Logger.hpp"
 #include "Util/Root.hpp"
 
+#include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/IWayPointStructure.hpp"
 #include "Structure/OreRefinery.hpp"
@@ -26,7 +26,6 @@
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
 #include "Structure/WayPointTool.h"
-#include "Structure/AdvencePowerPlants.hpp"
 
 class DefaultScene {
 public:
@@ -60,19 +59,21 @@ private:
     std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
         std::make_shared<SpriteSheet>();
 
-    //Way Point Test Start---------------
-    WayPointTool  m_waypointTool;
+    // Way Point Test Start---------------
+    WayPointTool m_waypointTool;
     std::shared_ptr<Barracks> m_Barracks = std::make_shared<Barracks>();
-    std::shared_ptr<OreRefinery> m_OreRefinery = std::make_shared<OreRefinery>();
-    std::shared_ptr<PowerPlants> m_PowerPlants = std::make_shared<PowerPlants>();
+    std::shared_ptr<OreRefinery> m_OreRefinery =
+        std::make_shared<OreRefinery>();
+    std::shared_ptr<PowerPlants> m_PowerPlants =
+        std::make_shared<PowerPlants>();
     std::shared_ptr<WarFactory> m_WarFactory = std::make_shared<WarFactory>();
-    std::shared_ptr<ADVPowerPlants> m_ADVPowerPlants = std::make_shared<ADVPowerPlants>();
+    std::shared_ptr<ADVPowerPlants> m_ADVPowerPlants =
+        std::make_shared<ADVPowerPlants>();
 
-    std::vector<std::shared_ptr<IWayPointStructure>> m_IWayPointStructureList = {
-        m_Barracks,m_OreRefinery,m_WarFactory
-    };
+    std::vector<std::shared_ptr<IWayPointStructure>> m_IWayPointStructureList =
+        {m_Barracks, m_OreRefinery, m_WarFactory};
 
-    //Way Point Test End---------------
+    // Way Point Test End---------------
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

@@ -1,8 +1,8 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_WarFactory_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_WarFactory_HPP
 
-#include "Structure\IWayPointStructure.hpp"
-#include "Structure\Structure.hpp"
+#include "Structure/IWayPointStructure.hpp"
+#include "Structure/Structure.hpp"
 #include "Util/Image.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Input.hpp"

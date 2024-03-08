@@ -61,7 +61,6 @@ set(SRC_FILES
         ${SRC_DIR}/imgui/imgui_impl_opengl3.cpp
 
         ${SRC_DIR}/App.cpp
-        ${SRC_DIR}/Triangle.cpp
         ${SRC_DIR}/Rectangle.cpp
         ${SRC_DIR}/Grid.cpp
 
@@ -124,10 +123,10 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp
         ${INCLUDE_DIR}/config.hpp
-        ${INCLUDE_DIR}/Triangle.hpp
+
         ${INCLUDE_DIR}/config.hpp
-        ${INCLUDE_DIR}/Cell.hpp
-        ${INCLUDE_DIR}/Rectangle.hpp
+
+
         ${INCLUDE_DIR}/Sprite.hpp
         ${INCLUDE_DIR}/Settings.hpp
         ${INCLUDE_DIR}/Camera.hpp
