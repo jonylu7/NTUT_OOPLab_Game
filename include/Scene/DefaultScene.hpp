@@ -9,14 +9,13 @@
 #include "Core/Context.hpp"
 #include "Grid.hpp"
 #include "Map.hpp"
-#include "Rectangle.hpp"
 #include "SpriteSheet.hpp"
 #include "UI.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
-#include "Util/Root.hpp"
+#include "Util/Renderer.hpp"
 
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
@@ -42,7 +41,6 @@ private:
         std::make_shared<Capybara>(), std::make_shared<Capybara>(),
         std::make_shared<Barracks>()};
     */
-    Rectangle rect;
     /*
     std::shared_ptr<Infantry> m_Inf = std::make_shared<Infantry>();
     */
@@ -51,7 +49,7 @@ private:
     CameraClass m_SceneCamera;
     Grid testGrid;
 
-    Util::Root m_Renderer;
+    Util::Renderer m_Renderer;
     UIClass m_UI;
     MapClass m_Map;
     std::map<int, TileClass> m_tileSets;

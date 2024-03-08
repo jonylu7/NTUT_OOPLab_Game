@@ -67,7 +67,6 @@ public:
      */
     static bool IsKeyPressed(const Keycode &key);
 
-
     /**
 
      * \brief Checks if the left mouse Structure is currently pressed.

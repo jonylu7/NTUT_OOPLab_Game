@@ -4,9 +4,9 @@
 #include <memory>
 #include <vector>
 
+#include "Camera.hpp"
 #include "Core/Drawable.hpp"
 #include "Util/Transform.hpp"
-#include "Camera.hpp"
 
 namespace Util {
 /**
@@ -20,6 +20,9 @@ namespace Util {
  */
 class GameObject {
 public:
+    Util::Transform m_Transform; // IDC if this should be here.
+
+public:
     /**
      * @brief Default constructor.
      */
@@ -32,22 +35,33 @@ public:
      * @param zIndex The z-index of the game object.
      * @param visible The visibility of the game object.
      * @param children The children of the game object.
-     * @param movingRelativeToCamera Whether the object can move relative to camera position
+     * @param movingRelativeToCamera Whether the object can move relative to
+     * camera position
      */
-    GameObject(std::unique_ptr<Core::Drawable> drawable, const float zIndex,
-               const bool visible = true,
+    GameObject(const std::shared_ptr<Core::Drawable> &drawable,
+               const float zIndex, const bool visible = true,
                const std::vector<std::shared_ptr<GameObject>> &children =
-                   std::vector<std::shared_ptr<GameObject>>(),const bool movingRelativeToCamera=true)
+                   std::vector<std::shared_ptr<GameObject>>(),
+               const bool movingRelativeToCamera = true)
         : m_Drawable(std::move(drawable)),
           m_Children(children),
           m_ZIndex(zIndex),
-          m_Visible(visible),m_MovingRelativeToCamera(movingRelativeToCamera) {}
+          m_Visible(visible),
+          m_MovingRelativeToCamera(movingRelativeToCamera) {}
 
-    // Deleted copy constructor.
-    GameObject(const GameObject &other) = delete;
+    /**
+     * @brief Copy constructor.
+     * @param other
+     *
+     * @note This is a shallow copy constructor, meaning the m_Drawable points
+     * to the same reference as same as `other`'s does.
+     */
+    GameObject(const GameObject &other) = default;
 
-    // Deleted move constructor.
-    GameObject(GameObject &&other) = delete;
+    /**
+     * @brief Default move constructor..
+     */
+    GameObject(GameObject &&other) = default;
 
     /**
      * @brief Default destructor.
@@ -119,7 +133,9 @@ public:
      *
      * @param movingRelativeToCamera The new status of moving
      */
-    void setMovingRelativeToCamera(const bool movingRelativeToCamera){m_MovingRelativeToCamera=movingRelativeToCamera;};
+    void setMovingRelativeToCamera(const bool movingRelativeToCamera) {
+        m_MovingRelativeToCamera = movingRelativeToCamera;
+    };
 
     /**
      * @brief Add a child to the game object.
@@ -141,25 +157,20 @@ public:
             m_Children.end());
     }
 
-
-
-
     virtual void Draw();
 
-    //should be removed
+    // should be removed
     virtual void Start(){};
     virtual void Update(){};
     virtual void Update(const Util::Transform &transform){};
 
 protected:
-    Util::Transform m_Transform; // IDK if this should be here.
-
     std::shared_ptr<Core::Drawable> m_Drawable = nullptr;
     std::vector<std::shared_ptr<GameObject>> m_Children;
 
     float m_ZIndex = 0;
     bool m_Visible = true;
-    bool m_MovingRelativeToCamera=true;
+    bool m_MovingRelativeToCamera = true;
 };
 } // namespace Util
 #endif

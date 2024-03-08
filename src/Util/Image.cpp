@@ -5,6 +5,7 @@
 #include "Core/Texture.hpp"
 #include "Core/TextureUtils.hpp"
 
+#include "Util/MissingTexture.hpp"
 #include "Util/TransformUtils.hpp"
 
 #include "config.hpp"
@@ -27,7 +28,9 @@ Image::Image(const std::string &filepath)
             IMG_Load(filepath.c_str()),
             SDL_FreeSurface,
         };
+
     if (surface == nullptr) {
+        surface = {GetMissingTextureSDLSurface(), SDL_FreeSurface};
         LOG_ERROR("Failed to load image: '{}'", filepath);
         LOG_ERROR("{}", IMG_GetError());
     }
@@ -66,20 +69,10 @@ void Image::Draw(const Util::Transform &transform, const float zIndex) {
     s_VertexArray->DrawTriangles();
 }
 
-void Image::DrawTest(const Util::Transform &transform, const float zIndex) {
-    auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
-    s_UniformBuffer->SetData(0, data);
-
-    m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
-    s_Program->Bind();
-    s_Program->Validate();
-
-    s_VertexArray->Bind();
-    s_VertexArray->DrawTriangles();
-}
-
-void Image::DrawUsingCamera(const Util::Transform &transform, const float zIndex){
-    auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(transform, m_Size, zIndex);
+void Image::DrawUsingCamera(const Util::Transform &transform,
+                            const float zIndex) {
+    auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(
+        transform, m_Size, zIndex);
     s_UniformBuffer->SetData(0, data);
 
     m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
@@ -121,9 +114,9 @@ void Image::InitVertexArray() {
     s_VertexArray->AddVertexBuffer(std::make_unique<Core::VertexBuffer>(
         std::vector<float>{
             0.0F, 0.0F, //
-            0.0F, 1.F, //
-            1.F, 1.F, //
-            1.F, 0.0F, //
+            0.0F, 1.F,  //
+            1.F, 1.F,   //
+            1.F, 0.0F,  //
         },
         2));
 
@@ -134,15 +127,12 @@ void Image::InitVertexArray() {
             0, 2, 3, //
         }));
     // NOLINTEND
-
-
 }
 
 void Image::InitUniformBuffer() {
     s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
         *s_Program, "Matrices", 0);
 }
-
 
 std::unique_ptr<Core::Program> Image::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> Image::s_VertexArray = nullptr;

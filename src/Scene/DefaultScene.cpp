@@ -48,17 +48,17 @@ void DefaultScene::Start() {
     m_Map.Init(maps, m_TileSetSpriteSheet, 10, 10);
     m_UI.Start();
 
-    //Way Point Test Start---------------
-    m_Barracks->SetObjectLocation({100,100});
+    // Way Point Test Start---------------
+    m_Barracks->SetObjectLocation({100, 100});
 
-    m_OreRefinery->SetObjectLocation({-60,-60});
+    m_OreRefinery->SetObjectLocation({-60, -60});
 
-    m_PowerPlants->SetObjectLocation({0,0});
+    m_PowerPlants->SetObjectLocation({0, 0});
 
-    m_WarFactory->SetObjectLocation({50,50});
+    m_WarFactory->SetObjectLocation({50, 50});
 
     m_Barracks->Start();
-    //Way Point Test End---------------
+    // Way Point Test End---------------
 }
 
 void DefaultScene::Update() {
@@ -72,8 +72,8 @@ void DefaultScene::Update() {
 
      */
     Util::Transform trans;
-    trans.scale={1,1};
-    m_Map.Draw(trans,0);
+    trans.scale = {1, 1};
+    m_Map.Draw(trans, 0);
     /*
     m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
     m_Structure->Update();
@@ -91,9 +91,7 @@ void DefaultScene::Update() {
 
     m_SceneCamera.Update();
 
-
-    //m_Inf->Update();
-    rect.Update();
+    // m_Inf->Update();
 
     m_Renderer.Update();
     /*
@@ -102,7 +100,7 @@ void DefaultScene::Update() {
     }*/
     m_UI.Update();
 
-    //Way Point Test Start-----------------------------------------------------
+    // Way Point Test Start-----------------------------------------------------
     /*
     if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
     clickCheck= false;
@@ -116,7 +114,7 @@ void DefaultScene::Update() {
     }
 }*/
 
-    //Way Point Test End-------------------------------------------------------
+    // Way Point Test End-------------------------------------------------------
 
     // Test 0306---------------------------------
     m_Barracks->Update();

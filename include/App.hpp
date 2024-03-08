@@ -4,10 +4,7 @@
 #include "Scene/DefaultScene.hpp"
 #include "pch.hpp" // IWYU pragma: export
 
-
-#include "Util/Root.hpp"
-
-
+#include "Util/Renderer.hpp"
 
 class App {
 public:
@@ -24,11 +21,7 @@ public:
 private:
     State m_CurrentState = State::START;
 
-
-    Util::Root m_Root;
-
     DefaultScene testScene;
-
 };
 
 #endif

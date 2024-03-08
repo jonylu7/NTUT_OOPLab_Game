@@ -31,7 +31,6 @@ public:
      */
     explicit Image(const std::string &filepath);
 
-
     /**
      * @brief Retrieves the size of the image.
      *
@@ -63,15 +62,13 @@ public:
     unsigned int getTextureID() { return m_Texture->GetTextureId(); }
 
     void Draw(const Util::Transform &transform, const float zIndex) override;
-    void DrawTest(const Util::Transform &transform, const float zIndex);
-    void DrawUsingCamera(const Util::Transform &transform, const float zIndex) override;
-
+    void DrawUsingCamera(const Util::Transform &transform,
+                         const float zIndex) override;
 
 private:
     void InitProgram();
     void InitVertexArray();
     void InitUniformBuffer();
-
 
     static constexpr int UNIFORM_SURFACE_LOCATION = 0;
 

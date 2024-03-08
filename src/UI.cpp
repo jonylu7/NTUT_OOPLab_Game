@@ -12,8 +12,6 @@ void UIClass::Start() {
     m_SpriteSheet.Start(
         "../assets/sprites/ICON_Allied Structure SpriteSheet.png", 64, 48, 24,
         0);
-
-
 }
 
 void UIClass::Update() {
@@ -24,12 +22,10 @@ void UIClass::Update() {
     ShowCursorSelectionRegion(&start_pos, &end_pos, ImGuiMouseButton_Left);
     ShowPlayerConstructionMenu();
 
-
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     ButtonScript.Update();
-
 }
 
 void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
@@ -55,17 +51,17 @@ void UIClass::ShowPlayerConstructionMenu() {
     // put the stuff in here
     ImGui::Begin("Structure Selection Menu");
 
-    glm::vec2 CursorGlobalPosition=MapClass::ScreenToGlobalCoord(glm::vec2(Util::Input::GetCursorPosition()));
-    ImGui::Text(
-        std::string("X: " + std::to_string(  CursorGlobalPosition.x) +
-                    "  Y: " + std::to_string(CursorGlobalPosition.y))
-            .c_str());
-    auto cellLocation=MapClass::GlobalCoordToCellCoord(CursorGlobalPosition);
-    ImGui::Text(
-        std::string("Cell X: " + std::to_string(  int(cellLocation.x)) +
-                    "  Cell Y: " + std::to_string(int(cellLocation.y)))
-            .c_str());
-    //ImGui::Text(fmt::format("Zoom: {}", m_SceneCamera.getCameraZoom()).c_str());
+    glm::vec2 CursorGlobalPosition = MapClass::ScreenToGlobalCoord(
+        glm::vec2(Util::Input::GetCursorPosition()));
+    ImGui::Text(std::string("X: " + std::to_string(CursorGlobalPosition.x) +
+                            "  Y: " + std::to_string(CursorGlobalPosition.y))
+                    .c_str());
+    auto cellLocation = MapClass::GlobalCoordToCellCoord(CursorGlobalPosition);
+    ImGui::Text(std::string("Cell X: " + std::to_string(int(cellLocation.x)) +
+                            "  Cell Y: " + std::to_string(int(cellLocation.y)))
+                    .c_str());
+    // ImGui::Text(fmt::format("Zoom: {}",
+    // m_SceneCamera.getCameraZoom()).c_str());
     ImGui::Text(fmt::format("$ {}", 1000).c_str());
     ImGui::Text(fmt::format("Power {}", 50).c_str());
 
@@ -127,7 +123,7 @@ void UIClass::ShowPlayerConstructionMenu() {
             ImGui::EndTabItem();
         }
 
-        if (ImGui::BeginTabItem("Troopers")) {
+        if (ImGui::BeginTabItem("Infantry")) {
             if (ImGui::Button("Infantry")) {
                 // inf
                 LOG_DEBUG("TEST");

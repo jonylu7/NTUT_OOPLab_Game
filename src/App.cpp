@@ -1,7 +1,6 @@
 #include "App.hpp"
 #include "Util/Logger.hpp"
 
-
 void App::Start() {
     testScene.Start();
     m_CurrentState = App::State::UPDATE;
