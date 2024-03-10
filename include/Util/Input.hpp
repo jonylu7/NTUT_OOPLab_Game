@@ -68,37 +68,6 @@ public:
     static bool IsKeyPressed(const Keycode &key);
 
     /**
-
-     * \brief Checks if the left mouse Structure is currently pressed.
-     *
-     * \return true if the left mouse Structure is currently pressed, false
-     * otherwise.r
-     *
-     * @param key The keycode of the key to check.
-     *
-     * @return true if `key` is currently pressed, false otherwise.
-     *
-     * @see Util::Keycode
-     */
-
-    static bool IsLButtonPressed();
-
-    /**
-     * @brief Checks if the right mouse Structure is currently pressed.
-     * @return  true if the right mouse Structure is currently pressed, false
-     * otherwise.
-     */
-
-    static bool IsLButtonUp();
-    /**
-     * @brief Checks if the left mouse Structure is pressing currently.
-     * @return  true if the middle mouse Structure is still pressing, false
-     * otherwise.
-     */
-
-    static bool IsRButtonPressed();
-
-    /**
      * @brief Checks if the middle mouse Structure is currently pressed.
      * @return  true if the middle mouse Structure is currently pressed, false
      * otherwise.
