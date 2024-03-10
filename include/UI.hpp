@@ -46,6 +46,8 @@ private:
     std::vector<ImVec2> getSpriteSheetCoordByIndex(int index);
     bool getImageButtonBySpriteSheetIndex(int index);
 
+    void objUpdate();
+
 private:
     SpriteSheet m_SpriteSheet;
 
@@ -56,8 +58,14 @@ private:
     std::shared_ptr<Structure> oreRefinery = std::make_shared<OreRefinery>();
     std::shared_ptr<Structure> powerPlant = std::make_shared<PowerPlants>();
     std::shared_ptr<Structure> warFactory = std::make_shared<WarFactory>();
-    std::shared_ptr<Structure> advPowerPlant =
-        std::make_shared<ADVPowerPlants>();
+    std::shared_ptr<Structure> advPowerPlant = std::make_shared<ADVPowerPlants>();
+    std::vector<std::shared_ptr<Structure>> StructureArray={
+        barracks,
+        oreRefinery,
+        powerPlant,
+        warFactory,
+        advPowerPlant,
+        };
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP

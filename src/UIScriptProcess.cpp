@@ -42,7 +42,7 @@ void UIScriptProcess::SetCoolDown(float time){
     TargetTime=time*60;
 }
 
-void UIScriptProcess::buttonEvent(std::shared_ptr<Structure>(m_Structure)){
+void UIScriptProcess::buttonEvent(std::shared_ptr<Structure> m_Structure){
     if(GetIfFinished(m_Structure)){
         m_Structure->Start();
         return;
@@ -58,20 +58,5 @@ void UIScriptProcess::Update(){
         b_STALL=true;
         SetCoolDown(currentStructure->GetBuildingTime());
     }
-    if(!buildQueue.empty()){
-        m_debug.SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Debug/InQueue.png"));
-        m_debug.SetVisible(true);
-        m_debug.Draw();
-    }else{
-        m_debug.SetVisible(false);
-    }
     CountDown();
-
-    if(!b_STALL){
-        m_debug1.SetDrawable(std::make_unique<Util::Image>("../assets/sprites/Debug/Finished.png"));
-        m_debug1.SetVisible(true);
-        m_debug1.Draw();
-    }else{
-        m_debug1.SetVisible(false);
-    }
 }

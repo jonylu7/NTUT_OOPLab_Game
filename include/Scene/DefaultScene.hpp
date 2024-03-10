@@ -26,6 +26,7 @@
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
 
+
 class DefaultScene {
 public:
     DefaultScene(){};

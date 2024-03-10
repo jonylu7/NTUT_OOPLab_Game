@@ -9,7 +9,7 @@
 void Structure::Start() {
     m_HighLight.SetDrawable(std::make_unique<Util::Image>("../assets/sprites/HighLightB.png"));
     m_HighLight.SetHLScale(this->GetTranScale());
-    m_HighLight.SetZIndex(DEFAULT_ZINDEX);
+    m_HighLight.SetZIndex(DEFAULT_ZINDEX-1);
     SetZIndex(DEFAULT_ZINDEX);
     this->SetAttachVisible(false);
     m_CurrentState=updateMode::Moveable;
