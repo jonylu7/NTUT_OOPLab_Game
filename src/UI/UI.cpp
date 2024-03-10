@@ -2,7 +2,7 @@
 // Created by 盧威任 on 3/3/24.
 //
 
-#include "UI.hpp"
+#include "UI/UI.hpp"
 #include "Map.hpp"
 
 ImVec2 start_pos;
@@ -169,7 +169,7 @@ bool UIClass::getImageButtonBySpriteSheetIndex(int index) {
         this->getSpriteSheetCoordByIndex(index)[1]);
 }
 void UIClass::objUpdate() {
-    for (auto i :StructureArray) {
-        i->Update();
+    for (auto i : StructureArray) {
+        // i->Update();
     }
 }

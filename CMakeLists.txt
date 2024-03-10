@@ -74,7 +74,7 @@ set(SRC_FILES
         ${SRC_DIR}/Structure/MousOverlapTool.cpp
         ${SRC_DIR}/Structure/IWayPointStructure.cpp
         ${SRC_DIR}/Structure/HighLight.cpp
-        ${SRC_DIR}/UIScriptProcess.cpp
+        ${SRC_DIR}/UI/UIScriptProcess.cpp
 
         # ${SRC_DIR}/Structure/Buildings.cpp
         ${SRC_DIR}/Structure/Barracks.cpp
@@ -86,7 +86,7 @@ set(SRC_FILES
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
         ${SRC_DIR}/SpriteSheet.cpp
-        ${SRC_DIR}/UI.cpp
+        ${SRC_DIR}/UI/UI.cpp
 
 
 )
@@ -127,7 +127,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/CustomizableImage.hpp
 
 
-        ${INCLUDE_DIR}/UI.hpp
+        ${INCLUDE_DIR}/UI/UI.hpp
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp
         ${INCLUDE_DIR}/config.hpp
@@ -144,7 +144,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/MousOverlapTool.h
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
-        ${INCLUDE_DIR}/UIScriptProcess.h
+        ${INCLUDE_DIR}/UI/UIScriptProcess.h
         ${INCLUDE_DIR}/DrawOverlays.hpp
 
         #${INCLUDE_DIR}/Structure/Buildings.hpp

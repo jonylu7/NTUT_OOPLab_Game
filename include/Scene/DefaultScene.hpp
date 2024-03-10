@@ -10,7 +10,7 @@
 #include "Grid.hpp"
 #include "Map.hpp"
 #include "SpriteSheet.hpp"
-#include "UI.hpp"
+#include "UI/UI.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -25,7 +25,6 @@
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
-
 
 class DefaultScene {
 public:
