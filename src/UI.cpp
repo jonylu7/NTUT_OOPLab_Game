@@ -26,6 +26,7 @@ void UIClass::Update() {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     ButtonScript.Update();
+    objUpdate();
 }
 
 void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
@@ -166,4 +167,9 @@ bool UIClass::getImageButtonBySpriteSheetIndex(int index) {
                m_SpriteSheet.getSpriteSize().y),
         this->getSpriteSheetCoordByIndex(index)[0],
         this->getSpriteSheetCoordByIndex(index)[1]);
+}
+void UIClass::objUpdate() {
+    for (auto i :StructureArray) {
+        i->Update();
+    }
 }

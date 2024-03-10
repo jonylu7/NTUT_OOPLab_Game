@@ -15,6 +15,7 @@
 #include <chrono>
 #include "Util/GameObject.hpp"
 
+
 class UIScriptProcess{
 private:
     bool b_Baracks,b_OreRefinery,b_PowerPlants,b_WarFactory,b_ADVPowerPlant= false;
@@ -22,8 +23,6 @@ private:
     bool b_STALL=false;
     std::queue<std::shared_ptr<Structure>> buildQueue;
     std::shared_ptr<Structure> temp_PTR;
-    Util::GameObject m_debug;
-    Util::GameObject m_debug1;
 public:
     UIScriptProcess(){};
     //

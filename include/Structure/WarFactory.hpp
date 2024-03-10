@@ -12,25 +12,23 @@
 #include "WayPoint.hpp"
 
 class WarFactory : public Structure, public IWayPointStructure {
+private:
+    std::shared_ptr<WayPoint> m_wayPoint = std::make_shared<WayPoint>();
+    HighLight m_HighLight;
+    Grid m_Grid;
+    Line m_Line;
+    std::vector<Line> m_lineVector;
 public:
     WarFactory(float electricPower = -30.F, float buildingTime = 100.F,
                float buildingCost = 2000.F, float buildingHp = 1000.F)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp){};
     void Start() override;
 
-    virtual void onSelected(bool selected) override;
-    virtual void SetAttachVisible(bool visible) override;
+    virtual void onSelected(bool selected)override;
+    virtual void SetAttachVisible(bool visible)override;
 
-    virtual void updateFixed() override;
-    virtual void updateMoveable() override;
-
-private:
-    std::shared_ptr<WayPoint> m_wayPoint = std::make_shared<WayPoint>();
-    HighLight m_HighLight;
-    bool b_select = true;
-    Grid m_Grid;
-    Line m_Line;
-    std::vector<Line> m_lineVector;
+    virtual void updateMoveable()override;
+    virtual void attachmentUpdate()override;
 };
 
 #endif

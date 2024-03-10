@@ -14,7 +14,7 @@ private:
 public:
     WayPoint()
         : Util::GameObject() {
-        m_Transform.scale = {0.2, 0.2};
+        m_Transform.scale = {1, 1};
     };
     void Update(const Util::Transform &transform = Util::Transform()) override;
 

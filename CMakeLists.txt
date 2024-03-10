@@ -71,7 +71,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/Structure/Structure.cpp
         ${SRC_DIR}/Structure/WayPoint.cpp
-        ${SRC_DIR}/Structure/WayPointTool.cpp
+        ${SRC_DIR}/Structure/MousOverlapTool.cpp
         ${SRC_DIR}/Structure/IWayPointStructure.cpp
         ${SRC_DIR}/Structure/HighLight.cpp
         ${SRC_DIR}/UIScriptProcess.cpp
@@ -141,7 +141,7 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/Structure/Structure.hpp
         ${INCLUDE_DIR}/Structure/WayPoint.hpp
-        ${INCLUDE_DIR}/Structure/WayPointTool.h
+        ${INCLUDE_DIR}/Structure/MousOverlapTool.h
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
         ${INCLUDE_DIR}/UIScriptProcess.h
