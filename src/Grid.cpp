@@ -70,6 +70,7 @@ void Grid::InitVertexAndColor() {
         std::make_unique<Core::VertexBuffer>(color, 3));
 }
 void Grid::setLine(glm::vec2 from, glm::vec2 to) {
+
     m_VertexArray = std::make_unique<Core::VertexArray>();
     m_lineVector.clear(); // 清空原有的線段
     m_lineVector.push_back(Line(from, to));

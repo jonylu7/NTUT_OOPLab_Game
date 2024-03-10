@@ -31,6 +31,7 @@ public:
 
         Util::Transform mapTrans;
         mapTrans.translation = m_MapPosition;
+        setGridActive(true);
         m_Grid.DrawUsingCamera(mapTrans, 1);
 
         /*
@@ -89,6 +90,8 @@ public:
         }
         m_Map[position.x][position.y] = tile;
     }
+
+    void setGridActive(bool value) { m_Grid.SetActivate(value); }
 
     // weird
     static std::vector<std::shared_ptr<TileClass>>

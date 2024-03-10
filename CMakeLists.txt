@@ -145,6 +145,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
         ${INCLUDE_DIR}/UIScriptProcess.h
+        ${INCLUDE_DIR}/DrawOverlays.hpp
 
         #${INCLUDE_DIR}/Structure/Buildings.hpp
         ${INCLUDE_DIR}/Structure/Barracks.hpp

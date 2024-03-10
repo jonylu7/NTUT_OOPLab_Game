@@ -45,7 +45,8 @@ void DefaultScene::Start() {
         m_Map.readMapAndTileSet(m_OgMap, m_tileSets);
         */
 
-    m_Map.Init(maps, m_TileSetSpriteSheet, 255, 255);
+    m_Map.Init(std::vector<std::vector<std::shared_ptr<TileClass>>>(),
+               m_TileSetSpriteSheet, 255, 255);
     m_UI.Start();
 
     // Way Point Test Start---------------
@@ -72,7 +73,7 @@ void DefaultScene::Update() {
 
      */
     Util::Transform trans;
-    trans.scale = {1, 1};
+    // trans.scale = {1, 1};
     m_Map.Draw(trans, 0);
     /*
     m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
