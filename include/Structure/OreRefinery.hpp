@@ -28,7 +28,7 @@ public:
     virtual void onSelected(bool selected)override;
     virtual void SetAttachVisible(bool visible)override;
 
-    virtual void updateFixed()override;
     virtual void updateMoveable()override;
+    virtual void attachmentUpdate()override;
 };
 #endif

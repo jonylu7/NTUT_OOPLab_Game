@@ -11,7 +11,6 @@ void Structure::Start() {
     m_HighLight.SetHLScale(this->GetTranScale());
     m_HighLight.SetZIndex(DEFAULT_ZINDEX);
     SetZIndex(DEFAULT_ZINDEX);
-    m_HighLight.SetObjectLocation(this->GetObjectLocation());
     this->SetAttachVisible(false);
     m_CurrentState=updateMode::Moveable;
 }
@@ -32,15 +31,21 @@ void Structure::Update() {
     }
 }
 void Structure::updateFixed(){
-    m_HighLight.SetObjectLocation({ObjectLocation.x+0.5*CELL,ObjectLocation.y+0.5*CELL});
-    Draw();
-    if(Util::Input::IsKeyDown(Util::Keycode::T)){//Need to change
-        b_select=!b_select;
+    // Attachment and self readjust location and draw---------------
+    attachmentUpdate();
+    this->Draw();
+    // Script when select--------------------
+    if(Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)&&!b_selectingNewWayPoint){
+        if(MousOverlapTool::checkMous(GetObjectLocation()/*,GetScaledSize()*/)){
+            b_selected= true;
+        }else{
+            b_selected= false;
+        }
     }
-    if(b_select){
-        this->onSelected(true);
+    if(b_selected){
+        onSelected(true);
     }else{
-        this->onSelected(false);
+        onSelected(false);
     }
 }
 void Structure::updateMoveable(){
@@ -74,20 +79,25 @@ float Structure::GetBuildingHp(){
     return this->buildingHp;
 }
 glm::vec2 Structure::ChangeToCell(glm::vec2 location) {
-    int _x=location.x/CELL;
-    int _y=location.y/CELL;
-    return {_x*CELL,_y*CELL};
+    int _x=location.x/CELL_SIZE.x;
+    int _y=location.y/CELL_SIZE.y;
+    return {_x*CELL_SIZE.x,_y*CELL_SIZE.y};
 }
 void Structure::SetObjectLocation(glm::vec2 location) {
     location=ChangeToCell(location);
     ObjectLocation = location;
-    m_Transform.translation = {location.x+0.5*CELL,location.y+0.5*CELL};
+    DrawLocation = {location.x+0.5*CELL,location.y+0.5*CELL};
+    m_Transform.translation = DrawLocation;
 }
 void Structure::onSelected(bool selected){
-    m_HighLight.SetObjectLocation(this->GetObjectLocation());
     this->SetAttachVisible(selected);
-    m_HighLight.Draw();
 };
+
 void Structure::SetAttachVisible(bool visible) {
+    m_HighLight.SetObjectLocation(this->DrawLocation);
     m_HighLight.SetVisible(visible);
+}
+void Structure::attachmentUpdate(){
+    m_HighLight.SetObjectLocation(this->GetDrawLocation());
+    m_HighLight.Draw();
 }

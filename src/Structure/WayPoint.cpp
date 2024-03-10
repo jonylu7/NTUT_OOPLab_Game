@@ -13,8 +13,7 @@ void WayPoint::Update([[maybe_unused]] const Util::Transform &transsform) {
 void WayPoint::SetObjectLocation(glm::vec2 location) {
     ChangeToCell(location);
     ObjectLocation = location;
-    m_Transform.translation = {location.x + 0.5 * CELL_SIZE.x,
-                               location.y + 0.5 * CELL_SIZE.y};
+    m_Transform.translation = location;
 }
 glm::vec2 WayPoint::ChangeToCell(glm::vec2 location) {
     int _x = location.x / CELL_SIZE.x;

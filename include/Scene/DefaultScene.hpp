@@ -20,11 +20,11 @@
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/IWayPointStructure.hpp"
+#include "Structure/MousOverlapTool.h"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
-#include "Structure/WayPointTool.h"
 
 class DefaultScene {
 public:
@@ -58,7 +58,7 @@ private:
         std::make_shared<SpriteSheet>();
 
     // Way Point Test Start---------------
-    WayPointTool m_waypointTool;
+    MousOverlapTool m_waypointTool;
     std::shared_ptr<Barracks> m_Barracks = std::make_shared<Barracks>();
     std::shared_ptr<OreRefinery> m_OreRefinery =
         std::make_shared<OreRefinery>();

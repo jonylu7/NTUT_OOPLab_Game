@@ -99,6 +99,7 @@ protected:
         }
 
         m_Grid.Start(lineV);
+        m_Grid.SetActivate(true);
     }
 
 private:

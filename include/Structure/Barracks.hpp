@@ -2,6 +2,7 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_BARRACKS_HPP
 
 #include "Structure/IWayPointStructure.hpp"
+#include "Structure/MousOverlapTool.h"
 #include "Structure/Structure.hpp"
 #include "Util/Image.hpp"
 #include "Util/Keycode.hpp"
@@ -15,7 +16,6 @@ class Barracks : public Structure,public IWayPointStructure{
 private:
     std::shared_ptr<WayPoint> m_wayPoint = std::make_shared<WayPoint>();
     HighLight m_HighLight;
-    bool b_select= true;
     Grid m_Grid;
     Line m_Line;
     std::vector<Line> m_lineVector;
@@ -28,8 +28,8 @@ public:
     virtual void onSelected(bool selected)override;
     virtual void SetAttachVisible(bool visible)override;
 
-    virtual void updateFixed()override;
     virtual void updateMoveable()override;
+    virtual void attachmentUpdate()override;
 };
 
 #endif

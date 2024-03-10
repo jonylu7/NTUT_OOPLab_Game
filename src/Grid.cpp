@@ -23,7 +23,7 @@ void Grid::DrawUsingCamera(const Util::Transform &transform,
 
     // TODO:awaiting to be debugged
     if (m_Activate == false) {
-        //  return;
+        return;
     }
     glLineWidth(m_lineWidth);
 
