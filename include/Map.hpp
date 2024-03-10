@@ -16,7 +16,7 @@ class MapClass : public Core::Drawable {
 public:
     MapClass() {}
 
-    void Init(std::vector<std::shared_ptr<TileClass>> map,
+    void Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
               std::shared_ptr<SpriteSheet> spritesheet, CELL width,
               CELL height) {
         m_Map = map;
@@ -71,6 +71,15 @@ public:
                          int(cellCoord[1] * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
     }
 
+    std::shared_ptr<TileClass> getTileByCellPosition(glm::vec2 position) {
+        if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
+            position.x < 0 || position.y < 0) {
+            LOG_DEBUG("False Position Getting");
+            return nullptr;
+        }
+        return m_Map[position.x][position.y];
+    }
+
     // weird
     static std::vector<std::shared_ptr<TileClass>>
     readMapAndTileSet(std::vector<int> map, std::map<int, TileClass> tileset) {
@@ -105,7 +114,7 @@ private:
     CELL m_MapWdith;
     CELL m_MapHeight;
     glm::vec2 m_MapPosition = {0, 0};
-    std::vector<std::shared_ptr<TileClass>> m_Map;
+    std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
     std::shared_ptr<SpriteSheet> m_SpriteSheet;
     int m_ZIndex = 0;
     Grid m_Grid;

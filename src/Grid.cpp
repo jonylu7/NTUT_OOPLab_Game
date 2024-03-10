@@ -21,9 +21,8 @@ void Grid::Draw(const Util::Transform &transform, const float zindex) {
 void Grid::DrawUsingCamera(const Util::Transform &transform,
                            const float zIndex) {
 
-    // TODO:awaiting to be debugged
     if (m_Activate == false) {
-        //  return;
+        return;
     }
     glLineWidth(m_lineWidth);
 
