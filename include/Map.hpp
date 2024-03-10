@@ -80,6 +80,16 @@ public:
         return m_Map[position.x][position.y];
     }
 
+    void setTileByCellPosition(glm::vec2 position,
+                               std::shared_ptr<TileClass> tile) {
+        if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
+            position.x < 0 || position.y < 0) {
+            LOG_DEBUG("False Position Getting");
+            return;
+        }
+        m_Map[position.x][position.y] = tile;
+    }
+
     // weird
     static std::vector<std::shared_ptr<TileClass>>
     readMapAndTileSet(std::vector<int> map, std::map<int, TileClass> tileset) {
