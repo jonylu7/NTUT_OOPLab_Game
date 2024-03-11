@@ -60,60 +60,17 @@ void DefaultScene::Start() {
 
     m_Barracks->Start();
     // Way Point Test End---------------
+
+    m_GameObjectManager.Start();
 }
 
 void DefaultScene::Update() {
-    Util::Transform transform;
-    transform.translation = glm::vec2(0, 0);
-    /*
-    for (int i = 0; i < 200; i++) {
-        m_TileSetSpriteSheet->DrawSpriteByIndex(i, transform, 3);
-        transform.translation.x += 24;
-    }
-
-     */
     Util::Transform trans;
-    // trans.scale = {1, 1};
     m_Map.Draw(trans, 0);
-    /*
-    m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
-    m_Structure->Update();
-    */
-    if (Util::Input::IsKeyPressed(Util::Keycode::END)) {
-        glm::vec2 ogLBlocation = Util::Input::GetCursorPosition();
-        /*
-        if (m_Structure->GetCurrentUpdateMode() ==
-            Structure::updateMode::Moveable) {
-            m_Structure->SetObjectLocation(ogLBlocation);
-            m_Structure->SetCurrentUpdateMode(Structure::updateMode::Fixed);
-            LOG_DEBUG("Fixed");
-        }*/
-    }
-
     m_SceneCamera.Update();
-
-    // m_Inf->Update();
-
     m_Renderer.Update();
-    /*
-    for (auto i : m_GameObjectList) {
-        i->Update();
-    }*/
     m_UI.Update();
-
-    // Way Point Test Start-----------------------------------------------------
-    /*
-    if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
-    clickCheck= false;
-    for(auto i :m_IWayPointStructureList){
-        if(m_waypointTool.checkMous(i->GetStructureLocation(),Util::Input::GetCursorPosition())){
-            m_WayPoint->SetObjectLocation(i->GetWayPointLocation());
-            m_WayPoint->SetVisible(true);
-            clickCheck= false;
-            break;
-        }
-    }
-}*/
+    m_GameObjectManager.Update();
 
     // Way Point Test End-------------------------------------------------------
 

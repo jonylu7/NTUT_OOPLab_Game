@@ -12,27 +12,6 @@
 #include "imgui/imgui_impl_sdl2.h"
 #include "pch.hpp"
 
-// not sure how does it work commented by Lu
-enum class ButtonClicked {
-    // buildings
-    POWER_PLANT,
-    BARRACKS,
-    ORE_REF,
-    WAR_FACT,
-    ADV_POWER_PLANT,
-
-    // defense
-    SANDBAGS,
-    PILLBOX,
-    TURRET,
-
-    // Troopers
-    INFANTRY,
-
-    // Vehicles
-    TRUCK
-};
-
 class UIClass {
 public:
     void Start();
@@ -49,23 +28,21 @@ private:
     void objUpdate();
 
 private:
-    SpriteSheet m_SpriteSheet;
+    SpriteSheet m_IconSpriteSheet;
 
     Grid m_Grid;
     glm::vec2 m_GridSize = {100, 100};
     UIScriptProcess ButtonScript;
+
     std::shared_ptr<Structure> barracks = std::make_shared<Barracks>();
     std::shared_ptr<Structure> oreRefinery = std::make_shared<OreRefinery>();
     std::shared_ptr<Structure> powerPlant = std::make_shared<PowerPlants>();
     std::shared_ptr<Structure> warFactory = std::make_shared<WarFactory>();
-    std::shared_ptr<Structure> advPowerPlant = std::make_shared<ADVPowerPlants>();
-    std::vector<std::shared_ptr<Structure>> StructureArray={
-        barracks,
-        oreRefinery,
-        powerPlant,
-        warFactory,
-        advPowerPlant,
-        };
+    std::shared_ptr<Structure> advPowerPlant =
+        std::make_shared<ADVPowerPlants>();
+    std::vector<std::shared_ptr<Structure>> StructureArray = {
+        barracks, oreRefinery, powerPlant, warFactory, advPowerPlant,
+    };
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP

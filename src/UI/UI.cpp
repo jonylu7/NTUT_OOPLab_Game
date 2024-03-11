@@ -9,7 +9,7 @@ ImVec2 start_pos;
 ImVec2 end_pos;
 
 void UIClass::Start() {
-    m_SpriteSheet.Start(
+    m_IconSpriteSheet.Start(
         "../assets/sprites/ICON_Allied Structure SpriteSheet.png", 64, 48, 24,
         0);
 }
@@ -26,7 +26,6 @@ void UIClass::Update() {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     ButtonScript.Update();
-    objUpdate();
 }
 
 void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
@@ -147,29 +146,25 @@ void UIClass::ShowPlayerConstructionMenu() {
 
 std::vector<ImVec2> UIClass::getSpriteSheetCoordByIndex(int index) {
     return std::vector<ImVec2>(
-        {ImVec2(
-             SpriteSheet::UVtoImGuiCoord(
-                 this->m_SpriteSheet.getUVbyIndex(index))[0]
-                 .x,
-             SpriteSheet::UVtoImGuiCoord(m_SpriteSheet.getUVbyIndex(index))[0]
-                 .y),
-         ImVec2(
-             SpriteSheet::UVtoImGuiCoord(m_SpriteSheet.getUVbyIndex(index))[1]
-                 .x,
-             SpriteSheet::UVtoImGuiCoord(m_SpriteSheet.getUVbyIndex(index))[1]
-                 .y)});
+        {ImVec2(SpriteSheet::UVtoImGuiCoord(
+                    this->m_IconSpriteSheet.getUVbyIndex(index))[0]
+                    .x,
+                SpriteSheet::UVtoImGuiCoord(
+                    m_IconSpriteSheet.getUVbyIndex(index))[0]
+                    .y),
+         ImVec2(SpriteSheet::UVtoImGuiCoord(
+                    m_IconSpriteSheet.getUVbyIndex(index))[1]
+                    .x,
+                SpriteSheet::UVtoImGuiCoord(
+                    m_IconSpriteSheet.getUVbyIndex(index))[1]
+                    .y)});
 }
 
 bool UIClass::getImageButtonBySpriteSheetIndex(int index) {
     return ImGui::ImageButton(
-        (void *)(intptr_t)m_SpriteSheet.getGlunitByIndex(index),
-        ImVec2(m_SpriteSheet.getSpriteSize().x,
-               m_SpriteSheet.getSpriteSize().y),
+        (void *)(intptr_t)m_IconSpriteSheet.getGlunitByIndex(index),
+        ImVec2(m_IconSpriteSheet.getSpriteSize().x,
+               m_IconSpriteSheet.getSpriteSize().y),
         this->getSpriteSheetCoordByIndex(index)[0],
         this->getSpriteSheetCoordByIndex(index)[1]);
-}
-void UIClass::objUpdate() {
-    for (auto i : StructureArray) {
-        // i->Update();
-    }
 }

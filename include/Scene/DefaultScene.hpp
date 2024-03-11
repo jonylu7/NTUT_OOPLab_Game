@@ -7,16 +7,11 @@
 
 #include "Camera.hpp"
 #include "Core/Context.hpp"
+#include "GameObjectManager.hpp"
+
 #include "Grid.hpp"
 #include "Map.hpp"
 #include "SpriteSheet.hpp"
-#include "UI/UI.hpp"
-#include "Util/Image.hpp"
-#include "Util/Input.hpp"
-#include "Util/Keycode.hpp"
-#include "Util/Logger.hpp"
-#include "Util/Renderer.hpp"
-
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/IWayPointStructure.hpp"
@@ -25,6 +20,12 @@
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
+#include "UI/UI.hpp"
+#include "Util/Image.hpp"
+#include "Util/Input.hpp"
+#include "Util/Keycode.hpp"
+#include "Util/Logger.hpp"
+#include "Util/Renderer.hpp"
 
 class DefaultScene {
 public:
@@ -36,19 +37,11 @@ public:
     void End(){};
 
 private:
-    /*
-    std::vector<std::shared_ptr<Util::GameObject>> m_GameObjectList = {
-        std::make_shared<Capybara>(), std::make_shared<Capybara>(),
-        std::make_shared<Barracks>()};
-    */
-    /*
-    std::shared_ptr<Infantry> m_Inf = std::make_shared<Infantry>();
-    */
     SpriteSheet m_SpriteSheet;
 
     CameraClass m_SceneCamera;
     Grid testGrid;
-
+    GameObjectManager m_GameObjectManager;
     Util::Renderer m_Renderer;
     UIClass m_UI;
     MapClass m_Map;

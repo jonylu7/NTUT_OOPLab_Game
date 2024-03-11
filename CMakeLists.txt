@@ -129,6 +129,8 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/UI/UI.hpp
         ${INCLUDE_DIR}/App.hpp
+        ${INCLUDE_DIR}/GameObjectManager.hpp
+        ${INCLUDE_DIR}/GameObjectID.hpp
         ${INCLUDE_DIR}/Tile.hpp
         ${INCLUDE_DIR}/config.hpp
 
