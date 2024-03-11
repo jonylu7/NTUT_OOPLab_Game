@@ -5,19 +5,27 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #include "Camera.hpp"
+#include "GameObjectID.hpp"
 #include "SpriteSheet.hpp"
 #include "UIScriptProcess.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_sdl2.h"
 #include "pch.hpp"
+#include <unordered_map>
 
 class UIClass {
 public:
     void Start();
     void Update();
 
+    static int getUnitCount(unitType type) { return s_unitQueue[type]; }
+    static void setUnitCount(unitType type, int value) {
+        s_unitQueue[type] = value;
+    }
+
 private:
+    void InitUnitQueue();
     void ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
                                    ImGuiMouseButton mouse_button);
     void ShowPlayerConstructionMenu();
@@ -29,7 +37,7 @@ private:
 
 private:
     SpriteSheet m_IconSpriteSheet;
-
+    static std::unordered_map<unitType, unsigned int> s_unitQueue;
     Grid m_Grid;
     glm::vec2 m_GridSize = {100, 100};
     UIScriptProcess ButtonScript;

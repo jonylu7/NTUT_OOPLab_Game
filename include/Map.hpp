@@ -17,10 +17,8 @@ public:
     MapClass() {}
 
     void Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
-              std::shared_ptr<SpriteSheet> spritesheet, CELL width,
-              CELL height) {
+              CELL width, CELL height) {
         m_Map = map;
-        m_SpriteSheet = spritesheet;
         m_MapWdith = width;
         m_MapHeight = height;
 
@@ -31,7 +29,6 @@ public:
 
         Util::Transform mapTrans;
         mapTrans.translation = m_MapPosition;
-        setGridActive(true);
         m_Grid.DrawUsingCamera(mapTrans, 1);
 
         /*
@@ -85,7 +82,7 @@ public:
                                std::shared_ptr<TileClass> tile) {
         if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
             position.x < 0 || position.y < 0) {
-            LOG_DEBUG("False Position Getting");
+            LOG_DEBUG("False Position Setting");
             return;
         }
         m_Map[position.x][position.y] = tile;
@@ -129,7 +126,6 @@ private:
     CELL m_MapHeight;
     glm::vec2 m_MapPosition = {0, 0};
     std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
-    std::shared_ptr<SpriteSheet> m_SpriteSheet;
     int m_ZIndex = 0;
     Grid m_Grid;
 };

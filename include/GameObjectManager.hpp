@@ -13,6 +13,7 @@
 #include "Structure/WarFactory.hpp"
 class GameObjectManager {
 public:
+    /*
     GameObjectManager() {}
     ~GameObjectManager() {}
     void Start() {
@@ -29,12 +30,13 @@ public:
     void Append(std::shared_ptr<Structure> newstruct) {}
 
     void RemoveStructByID(const GameObjectID id) {
-        auto it = m_StrcutMap.find(id);
+        // auto it = m_StrcutMap.find(id);
     }
 
 private:
     std::unordered_map<GameObjectID, std::shared_ptr<Structure>> m_StrcutMap;
     // std::vector<std::shared_ptr<Unit>> m_UnitArray;
+    */
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP

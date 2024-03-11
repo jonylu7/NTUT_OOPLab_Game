@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DRAWOVERLAYS_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DRAWOVERLAYS_HPP
 #include "Core/Drawable.hpp"
+#include "Util/TransformUtils.hpp"
 #include "pch.hpp"
 class DrawOverlays : public Core::Drawable {
 
@@ -20,7 +21,34 @@ class DrawOverlays : public Core::Drawable {
 public:
     DrawOverlays(){};
     ~DrawOverlays(){};
-    void Start(std::vector<int> cellcoords, OverlayShapes shapes) {}
+    void Start(std::vector<int> cellcoords, OverlayShapes shapes) {
+        m_drawShapes = shapes;
+        if (shapes == OverlayShapes::BOXES) {
+            std::vector<float> vertex = {0, 0, //
+                                         0, 1, //
+                                         1, 1, //
+                                         1, 0};
+            std::vector<float> color =
+                {
+                    (0, 0, 1),
+                    (0, 0, 1),
+                    (0, 0, 1),
+                    (0, 0, 1),
+                }
+
+            ;
+            std::vector<unsigned int> indices = {
+                0, 1, 3, //
+                2, 1, 0  //
+            };
+            m_VertexArray->AddVertexBuffer(
+                std::make_unique<Core::VertexBuffer>(vertex, 2));
+            m_VertexArray->AddVertexBuffer(
+                std::make_unique<Core::VertexBuffer>(color, 3));
+            m_VertexArray->SetIndexBuffer(
+                std::make_unique<Core::IndexBuffer>(indices));
+        }
+    }
 
     void InitVertexAndColor() {
         /*
@@ -76,6 +104,27 @@ public:
 
         m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
          */
+        if (m_drawShapes == OverlayShapes::BOXES) {
+
+            m_Program.Bind();
+            m_Program.Validate();
+            m_VertexArray->Bind();
+
+            auto cp = CameraClass::getProjectionMatrix();
+            auto cv = CameraClass::getViewMatrix();
+
+            constexpr glm::mat4 eye(1.F);
+
+            glm::vec2 size = {1.F, 1.F};
+
+            auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(
+                trans, size, zindex);
+
+            m_Matrices->SetData(0, data);
+            m_VertexArray->Bind();
+
+            m_VertexArray->DrawRectangles();
+        }
     }
 
 private:
@@ -85,9 +134,9 @@ private:
     std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_Matrices =
         std::make_unique<Core::UniformBuffer<Core::Matrices>>(m_Program, "Grid",
                                                               0);
-
-    float m_shapelineWidth = 1.0F;
-    glm::vec2 shapelinecolor;
+    OverlayShapes m_drawShapes;
+    float m_shapeLineWidth = 1.0F;
+    glm::vec2 shapeLinecolor;
 
     std::unique_ptr<Core::VertexArray> m_VertexArray =
         std::make_unique<Core::VertexArray>();

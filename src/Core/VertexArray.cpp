@@ -63,7 +63,8 @@ void VertexArray::DrawTest(int count) const {
 }
 
 void VertexArray::DrawRectangles() const {
-    glDrawElements(GL_LINE_LOOP, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_LINE_LOOP, static_cast<GLint>(m_IndexBuffer->GetCount()),
+                   GL_UNSIGNED_INT, nullptr);
 }
 
 void VertexArray::DrawLines(int count) const {
@@ -78,6 +79,5 @@ void VertexArray::DrawLinesIndices() const {
     glDrawElements(GL_LINES, static_cast<GLint>(m_IndexBuffer->GetCount()),
                    GL_UNSIGNED_INT, nullptr);
 }
-
 
 } // namespace Core

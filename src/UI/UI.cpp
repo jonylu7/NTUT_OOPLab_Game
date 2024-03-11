@@ -7,8 +7,10 @@
 
 ImVec2 start_pos;
 ImVec2 end_pos;
+std::unordered_map<unitType, unsigned int> UIClass::s_unitQueue;
 
 void UIClass::Start() {
+    InitUnitQueue();
     m_IconSpriteSheet.Start(
         "../assets/sprites/ICON_Allied Structure SpriteSheet.png", 64, 48, 24,
         0);
@@ -73,26 +75,31 @@ void UIClass::ShowPlayerConstructionMenu() {
 
             if (getImageButtonBySpriteSheetIndex(7)) {
                 // power plants
+                setUnitCount(unitType::POWER_PLANT, 1);
                 ButtonScript.buttonEvent(powerPlant);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(22)) {
                 // barracks
+                setUnitCount(unitType::BARRACKS, 1);
                 ButtonScript.buttonEvent(barracks);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(8)) {
                 // ore
+                setUnitCount(unitType::ORE_REF, 1);
                 ButtonScript.buttonEvent(oreRefinery);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(20)) {
                 // war factory
+                setUnitCount(unitType::WAR_FACT, 1);
                 ButtonScript.buttonEvent(warFactory);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(1)) {
                 // advance power
+                setUnitCount(unitType::ADV_POWER_PLANT, 1);
                 ButtonScript.buttonEvent(advPowerPlant);
                 LOG_DEBUG("TEST");
             }
@@ -110,14 +117,17 @@ void UIClass::ShowPlayerConstructionMenu() {
         if (ImGui::BeginTabItem("Defense Structure")) {
             if (getImageButtonBySpriteSheetIndex(18)) {
                 // sandbags
+                setUnitCount(unitType::SANDBAGS, 1);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(16)) {
                 // pillbox
+                setUnitCount(unitType::PILLBOX, 1);
                 LOG_DEBUG("TEST");
             }
             if (getImageButtonBySpriteSheetIndex(14)) {
                 // turret
+                setUnitCount(unitType::TURRET, 1);
                 LOG_DEBUG("TEST");
             }
             ImGui::EndTabItem();
@@ -126,6 +136,7 @@ void UIClass::ShowPlayerConstructionMenu() {
         if (ImGui::BeginTabItem("Infantry")) {
             if (ImGui::Button("Infantry")) {
                 // inf
+                setUnitCount(unitType::INFANTRY, 1);
                 LOG_DEBUG("TEST");
             }
             ImGui::EndTabItem();
@@ -134,6 +145,7 @@ void UIClass::ShowPlayerConstructionMenu() {
         if (ImGui::BeginTabItem("Vehicles")) {
             if (ImGui::Button("Truck")) {
                 // truck
+                setUnitCount(unitType::TRUCK, 1);
                 LOG_DEBUG("TEST");
             }
             ImGui::EndTabItem();
@@ -167,4 +179,16 @@ bool UIClass::getImageButtonBySpriteSheetIndex(int index) {
                m_IconSpriteSheet.getSpriteSize().y),
         this->getSpriteSheetCoordByIndex(index)[0],
         this->getSpriteSheetCoordByIndex(index)[1]);
+}
+void UIClass::InitUnitQueue() {
+    UIClass::s_unitQueue[unitType::POWER_PLANT] = 0;
+    UIClass::s_unitQueue[unitType::BARRACKS] = 0;
+    UIClass::s_unitQueue[unitType::ORE_REF] = 0;
+    UIClass::s_unitQueue[unitType::WAR_FACT] = 0;
+    UIClass::s_unitQueue[unitType::ADV_POWER_PLANT] = 0;
+    UIClass::s_unitQueue[unitType::SANDBAGS] = 0;
+    UIClass::s_unitQueue[unitType::PILLBOX] = 0;
+    UIClass::s_unitQueue[unitType::TURRET] = 0;
+    UIClass::s_unitQueue[unitType::INFANTRY] = 0;
+    UIClass::s_unitQueue[unitType::TRUCK] = 0;
 }

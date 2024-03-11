@@ -88,7 +88,6 @@ set(SRC_FILES
         ${SRC_DIR}/SpriteSheet.cpp
         ${SRC_DIR}/UI/UI.cpp
 
-
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
@@ -127,12 +126,12 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/CustomizableImage.hpp
 
 
-        ${INCLUDE_DIR}/UI/UI.hpp
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/GameObjectManager.hpp
         ${INCLUDE_DIR}/GameObjectID.hpp
         ${INCLUDE_DIR}/Tile.hpp
         ${INCLUDE_DIR}/config.hpp
+        ${INCLUDE_DIR}/DrawOverlays.hpp
 
         ${INCLUDE_DIR}/config.hpp
 
@@ -148,6 +147,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/HighLight.h
         ${INCLUDE_DIR}/UI/UIScriptProcess.h
         ${INCLUDE_DIR}/DrawOverlays.hpp
+        ${INCLUDE_DIR}/UI/UI.hpp
 
         #${INCLUDE_DIR}/Structure/Buildings.hpp
         ${INCLUDE_DIR}/Structure/Barracks.hpp

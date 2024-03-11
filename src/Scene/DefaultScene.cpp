@@ -45,23 +45,11 @@ void DefaultScene::Start() {
         m_Map.readMapAndTileSet(m_OgMap, m_tileSets);
         */
 
-    m_Map.Init(std::vector<std::vector<std::shared_ptr<TileClass>>>(),
-               m_TileSetSpriteSheet, 255, 255);
+    m_Map.Init(std::vector<std::vector<std::shared_ptr<TileClass>>>(), 255,
+               255);
     m_UI.Start();
 
-    // Way Point Test Start---------------
-    m_Barracks->SetObjectLocation({100, 100});
-
-    m_OreRefinery->SetObjectLocation({-60, -60});
-
-    m_PowerPlants->SetObjectLocation({0, 0});
-
-    m_WarFactory->SetObjectLocation({50, 50});
-
-    m_Barracks->Start();
-    // Way Point Test End---------------
-
-    m_GameObjectManager.Start();
+    // m_GameObjectManager.Start();
 }
 
 void DefaultScene::Update() {
@@ -70,15 +58,5 @@ void DefaultScene::Update() {
     m_SceneCamera.Update();
     m_Renderer.Update();
     m_UI.Update();
-    m_GameObjectManager.Update();
-
-    // Way Point Test End-------------------------------------------------------
-
-    // Test 0306---------------------------------
-    m_Barracks->Update();
-    m_PowerPlants->Update();
-    m_WarFactory->Update();
-    m_OreRefinery->Update();
-    m_ADVPowerPlants->Update();
-    // Test 0306 End---------------------------------
+    // m_GameObjectManager.Update();
 }
