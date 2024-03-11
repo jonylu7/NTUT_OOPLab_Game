@@ -32,13 +32,21 @@ private:
                                    ImGuiMouseButton mouse_button);
     void ShowPlayerConstructionMenu();
 
-    std::vector<ImVec2> getSpriteSheetCoordByIndex(int index);
-    bool getImageButtonBySpriteSheetIndex(int index);
-
-    void objUpdate();
+    std::vector<ImVec2>
+    getSpriteSheetCoordByIndex(std::shared_ptr<SpriteSheet> spritesheet,
+                               int index);
+    bool
+    getImageButtonBySpriteSheetIndex(std::shared_ptr<SpriteSheet> spritesheet,
+                                     int index);
 
 private:
-    SpriteSheet m_IconSpriteSheet;
+    std::shared_ptr<SpriteSheet> m_StructureIconSpriteSheet =
+        std::make_shared<SpriteSheet>();
+    std::shared_ptr<SpriteSheet> m_InfantryIconSpriteSheet =
+        std::make_shared<SpriteSheet>();
+    std::shared_ptr<SpriteSheet> m_VehiclesIconSpriteSheet =
+        std::make_shared<SpriteSheet>();
+
     static std::unordered_map<unitType, unsigned int> s_unitConstructCount;
     Grid m_Grid;
     glm::vec2 m_GridSize = {100, 100};

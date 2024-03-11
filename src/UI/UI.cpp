@@ -11,9 +11,12 @@ std::unordered_map<unitType, unsigned int> UIClass::s_unitConstructCount;
 
 void UIClass::Start() {
     InitUnitQueue();
-    m_IconSpriteSheet.Start(
-        "../assets/sprites/ICON_Allied Structure SpriteSheet.png", 64, 48, 24,
-        0);
+    m_StructureIconSpriteSheet->Start(
+        "../assets/sprites/ICON_Allied_Structure.png", 64, 48, 24, 0);
+    m_InfantryIconSpriteSheet->Start(
+        "../assets/sprites/ICON_Allied_Infantry.png", 64, 48, 8, 0);
+    m_VehiclesIconSpriteSheet->Start(
+        "../assets/sprites/ICON_Allied_Vehicles.png", 64, 48, 12, 0);
 }
 
 void UIClass::Update() {
@@ -77,32 +80,37 @@ void UIClass::ShowPlayerConstructionMenu() {
 
         if (ImGui::BeginTabItem("Buildings")) {
 
-            if (getImageButtonBySpriteSheetIndex(7)) {
+            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
+                                                 7)) {
                 // power plants
 
                 setUnitConstructCount(unitType::POWER_PLANT, 1);
                 ButtonScript.buttonEvent(powerPlant);
                 LOG_DEBUG("TEST");
             }
-            if (getImageButtonBySpriteSheetIndex(22)) {
+            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
+                                                 22)) {
                 // barracks
                 setUnitConstructCount(unitType::BARRACKS, 1);
                 ButtonScript.buttonEvent(barracks);
                 LOG_DEBUG("TEST");
             }
-            if (getImageButtonBySpriteSheetIndex(8)) {
+            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
+                                                 8)) {
                 // ore
                 setUnitConstructCount(unitType::ORE_REF, 1);
                 ButtonScript.buttonEvent(oreRefinery);
                 LOG_DEBUG("TEST");
             }
-            if (getImageButtonBySpriteSheetIndex(20)) {
+            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
+                                                 20)) {
                 // war factory
                 setUnitConstructCount(unitType::WAR_FACT, 1);
                 ButtonScript.buttonEvent(warFactory);
                 LOG_DEBUG("TEST");
             }
-            if (getImageButtonBySpriteSheetIndex(1)) {
+            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
+                                                 1)) {
                 // advance power
                 setUnitConstructCount(unitType::ADV_POWER_PLANT, 1);
                 ButtonScript.buttonEvent(advPowerPlant);
@@ -120,17 +128,20 @@ void UIClass::ShowPlayerConstructionMenu() {
             ImGui::EndTabItem();
         }
         if (ImGui::BeginTabItem("Defense Structure")) {
-            if (getImageButtonBySpriteSheetIndex(18)) {
+            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
+                                                 18)) {
                 // sandbags
                 setUnitConstructCount(unitType::SANDBAGS, 1);
                 LOG_DEBUG("TEST");
             }
-            if (getImageButtonBySpriteSheetIndex(16)) {
+            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
+                                                 16)) {
                 // pillbox
                 setUnitConstructCount(unitType::PILLBOX, 1);
                 LOG_DEBUG("TEST");
             }
-            if (getImageButtonBySpriteSheetIndex(14)) {
+            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
+                                                 14)) {
                 // turret
                 setUnitConstructCount(unitType::TURRET, 1);
                 LOG_DEBUG("TEST");
@@ -139,15 +150,88 @@ void UIClass::ShowPlayerConstructionMenu() {
         }
 
         if (ImGui::BeginTabItem("Infantry")) {
-            if (ImGui::Button("Infantry")) {
-                // inf
+            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
+                                                 0)) {
+                // rifle
                 setUnitConstructCount(unitType::INFANTRY, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
+                                                 1)) {
+                // rocket
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
+                                                 2)) {
+                // engineer
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
+                                                 3)) {
+                // medic
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
+                                                 6)) {
+                // tanya
+                // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
             ImGui::EndTabItem();
         }
 
         if (ImGui::BeginTabItem("Vehicles")) {
+            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
+                                                 0)) {
+                // lightTank
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
+                                                 1)) {
+                // mediumTank
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
+                                                 4)) {
+                // Art
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
+                                                 4)) {
+                // Art
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
+                                                 8)) {
+                // OreTruck
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
+                                                 4)) {
+                // Art
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
+                                                 9)) {
+                // MCV
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
+            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
+                                                 11)) {
+                // DemoTruck
+                // setUnitConstructCount(unitType::, 1);
+                LOG_DEBUG("TEST");
+            }
             if (ImGui::Button("Truck")) {
                 // truck
                 setUnitConstructCount(unitType::TRUCK, 1);
@@ -161,33 +245,32 @@ void UIClass::ShowPlayerConstructionMenu() {
     ImGui::End();
 }
 
-std::vector<ImVec2> UIClass::getSpriteSheetCoordByIndex(int index) {
+std::vector<ImVec2>
+UIClass::getSpriteSheetCoordByIndex(std::shared_ptr<SpriteSheet> spritesheet,
+                                    int index) {
+    return std::vector<ImVec2>(
+        {ImVec2(
+             SpriteSheet::UVtoImGuiCoord(spritesheet->getUVbyIndex(index))[0].x,
+             SpriteSheet::UVtoImGuiCoord(spritesheet->getUVbyIndex(index))[0]
+                 .y),
+         ImVec2(
+             SpriteSheet::UVtoImGuiCoord(spritesheet->getUVbyIndex(index))[1].x,
+             SpriteSheet::UVtoImGuiCoord(spritesheet->getUVbyIndex(index))[1]
+                 .y)});
+}
+
+bool UIClass::getImageButtonBySpriteSheetIndex(
+    std::shared_ptr<SpriteSheet> spritesheet, int index) {
     std::string Text = "test";
     ImDrawList *dl = ImGui::GetWindowDrawList();
     dl->AddText(ImVec2(100.f, 100.f), IM_COL32(255, 255, 255, 100), "TEST");
-    return std::vector<ImVec2>(
-        {ImVec2(SpriteSheet::UVtoImGuiCoord(
-                    this->m_IconSpriteSheet.getUVbyIndex(index))[0]
-                    .x,
-                SpriteSheet::UVtoImGuiCoord(
-                    m_IconSpriteSheet.getUVbyIndex(index))[0]
-                    .y),
-         ImVec2(SpriteSheet::UVtoImGuiCoord(
-                    m_IconSpriteSheet.getUVbyIndex(index))[1]
-                    .x,
-                SpriteSheet::UVtoImGuiCoord(
-                    m_IconSpriteSheet.getUVbyIndex(index))[1]
-                    .y)});
+    auto uvcoord = getSpriteSheetCoordByIndex(spritesheet, index);
+    return ImGui::ImageButton(
+        (void *)(intptr_t)spritesheet->getGlunitByIndex(index),
+        ImVec2(spritesheet->getSpriteSize().x, spritesheet->getSpriteSize().y),
+        uvcoord[0], uvcoord[1]);
 }
 
-bool UIClass::getImageButtonBySpriteSheetIndex(int index) {
-    return ImGui::ImageButton(
-        (void *)(intptr_t)m_IconSpriteSheet.getGlunitByIndex(index),
-        ImVec2(m_IconSpriteSheet.getSpriteSize().x,
-               m_IconSpriteSheet.getSpriteSize().y),
-        this->getSpriteSheetCoordByIndex(index)[0],
-        this->getSpriteSheetCoordByIndex(index)[1]);
-}
 void UIClass::InitUnitQueue() {
     UIClass::s_unitConstructCount[unitType::POWER_PLANT] = 0;
     UIClass::s_unitConstructCount[unitType::BARRACKS] = 0;
