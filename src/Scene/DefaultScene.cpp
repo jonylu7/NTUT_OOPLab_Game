@@ -2,6 +2,7 @@
 // Created by 盧威任 on 2/15/24.
 //
 #include "Scene/DefaultScene.hpp"
+#include <iostream>
 void DefaultScene::Start() {
 
     LOG_TRACE("Start");
@@ -53,6 +54,8 @@ void DefaultScene::Start() {
 }
 
 void DefaultScene::Update() {
+    std::cout << UIClass::getUnitConstructCount(unitType::POWER_PLANT)
+              << std::endl;
     Util::Transform trans;
     m_Map.Draw(trans, 0);
     m_SceneCamera.Update();

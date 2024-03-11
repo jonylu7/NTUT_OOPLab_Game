@@ -19,11 +19,11 @@ public:
     void Start();
     void Update();
 
-    static int getUnitConstructCount(unitType type) {
+    static unsigned int getUnitConstructCount(unitType type) {
         return s_unitConstructCount[type];
     }
     static void setUnitConstructCount(unitType type, int value) {
-        s_unitConstructCount[type] = value;
+        s_unitConstructCount[type] += value;
     }
 
 private:
