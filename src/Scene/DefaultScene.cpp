@@ -54,8 +54,6 @@ void DefaultScene::Start() {
 }
 
 void DefaultScene::Update() {
-    std::cout << UIClass::getUnitConstructCount(unitType::POWER_PLANT)
-              << std::endl;
     Util::Transform trans;
     m_Map.Draw(trans, 0);
     m_SceneCamera.Update();

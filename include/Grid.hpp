@@ -22,7 +22,7 @@ public:
     void DrawUsingCamera(const Util::Transform &transform,
                          const float zIndex) override;
 
-    void setLine(glm::vec2 from, glm::vec2 to);
+    void setLine(glm::vec2 from, glm::vec2 to, glm::vec3 color = {1, 1, 1});
     void SetActivate(bool active) { m_Activate = active; };
 
     void setLineWidth(float linewidth) { m_lineWidth = linewidth; }

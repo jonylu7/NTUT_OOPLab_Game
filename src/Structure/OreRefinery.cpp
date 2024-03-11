@@ -1,6 +1,6 @@
 #include "Structure/OreRefinery.hpp"
 
-void OreRefinery::Start(){
+void OreRefinery::Start() {
     // Set Texture----------------------------------------
     this->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/barracks.png"));
@@ -11,7 +11,7 @@ void OreRefinery::Start(){
     // Set ZIndex
     this->SetZIndex(DEFAULT_ZINDEX);
     m_wayPoint->SetZIndex(DEFAULT_ZINDEX);
-    m_HighLight.SetZIndex(DEFAULT_ZINDEX-1);
+    m_HighLight.SetZIndex(DEFAULT_ZINDEX - 1);
     // Set Attachment Scale &
     // Visibility----------------------------------------
     m_HighLight.SetHLScale(this->GetTranScale());
@@ -20,7 +20,7 @@ void OreRefinery::Start(){
     SetCurrentUpdateMode(Structure::updateMode::Moveable);
 }
 
-void OreRefinery::updateMoveable(){
+void OreRefinery::updateMoveable() {
     glm::vec2 location = Util::Input::GetCursorPosition();
     location = MapClass::ScreenToGlobalCoord(location);
     location = MapClass::GlobalCoordToCellCoord(location);
@@ -30,21 +30,23 @@ void OreRefinery::updateMoveable(){
     this->Draw();
     if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
         this->SetObjectLocation(location);
-        this->SetWayPointLocation({GetDrawLocation().x+CELL_SIZE.x,GetDrawLocation().y+CELL_SIZE.y});
+        this->SetWayPointLocation({GetDrawLocation().x + CELL_SIZE.x,
+                                   GetDrawLocation().y + CELL_SIZE.y});
         onSelected(false);
         this->SetCurrentUpdateMode(updateMode::Fixed);
     }
 }
 void OreRefinery::onSelected(bool selected) {
-    if(b_selectingNewWayPoint){
-        this->SetWayPointLocation(MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
-        b_selectingNewWayPoint= false;
+    if (b_selectingNewWayPoint) {
+        this->SetWayPointLocation(
+            MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
+        b_selectingNewWayPoint = false;
     }
     attachmentUpdate();
     this->SetAttachVisible(selected);
     if (selected) {
-        if (Util::Input::IsKeyPressed(Util::Keycode::V)){
-            b_selectingNewWayPoint= true;
+        if (Util::Input::IsKeyPressed(Util::Keycode::V)) {
+            b_selectingNewWayPoint = true;
         }
     }
 }
@@ -53,10 +55,11 @@ void OreRefinery::SetAttachVisible(bool visible) {
     m_HighLight.SetVisible(visible);
     m_Grid.SetActivate(visible);
 }
-void OreRefinery::attachmentUpdate(){
+void OreRefinery::attachmentUpdate() {
     m_HighLight.SetObjectLocation(this->GetDrawLocation());
     m_wayPoint->SetObjectLocation(this->GetWayPointLocation());
-    m_Grid.setLine(GetDrawLocation(), GetWayPointLocation());
+    m_Grid.setLine(GetDrawLocation(), GetWayPointLocation(),
+                   glm::vec3(0, 0, 1));
     m_wayPoint->Draw();
     m_HighLight.Draw();
     Util::Transform Trans;

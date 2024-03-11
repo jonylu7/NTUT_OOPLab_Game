@@ -49,9 +49,12 @@ void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
 }
 
 void UIClass::ShowPlayerConstructionMenu() {
+    auto windowSettings = ImGuiWindowFlags_NoMove |
+                          ImGuiWindowFlags_NoScrollbar |
+                          ImGuiWindowFlags_NoResize;
 
     // put the stuff in here
-    ImGui::Begin("Structure Selection Menu");
+    ImGui::Begin("Structure Selection Menu", nullptr, windowSettings);
 
     glm::vec2 CursorGlobalPosition = MapClass::ScreenToGlobalCoord(
         glm::vec2(Util::Input::GetCursorPosition()));
@@ -66,7 +69,8 @@ void UIClass::ShowPlayerConstructionMenu() {
     // m_SceneCamera.getCameraZoom()).c_str());
     ImGui::Text(fmt::format("$ {}", 1000).c_str());
     ImGui::Text(fmt::format("Power {}", 50).c_str());
-
+    ImGui::SetWindowSize(ImVec2(240, 576));
+    ImGui::SetWindowPos(ImVec2(992, 48));
     if (ImGui::Button("Grid")) {
     }
     if (ImGui::BeginTabBar("", ImGuiTabBarFlags_None)) {
@@ -75,6 +79,7 @@ void UIClass::ShowPlayerConstructionMenu() {
 
             if (getImageButtonBySpriteSheetIndex(7)) {
                 // power plants
+
                 setUnitConstructCount(unitType::POWER_PLANT, 1);
                 ButtonScript.buttonEvent(powerPlant);
                 LOG_DEBUG("TEST");
@@ -157,6 +162,9 @@ void UIClass::ShowPlayerConstructionMenu() {
 }
 
 std::vector<ImVec2> UIClass::getSpriteSheetCoordByIndex(int index) {
+    std::string Text = "test";
+    ImDrawList *dl = ImGui::GetWindowDrawList();
+    dl->AddText(ImVec2(100.f, 100.f), IM_COL32(255, 255, 255, 100), "TEST");
     return std::vector<ImVec2>(
         {ImVec2(SpriteSheet::UVtoImGuiCoord(
                     this->m_IconSpriteSheet.getUVbyIndex(index))[0]
