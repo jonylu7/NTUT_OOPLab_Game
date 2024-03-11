@@ -19,9 +19,11 @@ public:
     void Start();
     void Update();
 
-    static int getUnitCount(unitType type) { return s_unitQueue[type]; }
-    static void setUnitCount(unitType type, int value) {
-        s_unitQueue[type] = value;
+    static int getUnitConstructCount(unitType type) {
+        return s_unitConstructCount[type];
+    }
+    static void setUnitConstructCount(unitType type, int value) {
+        s_unitConstructCount[type] = value;
     }
 
 private:
@@ -37,7 +39,7 @@ private:
 
 private:
     SpriteSheet m_IconSpriteSheet;
-    static std::unordered_map<unitType, unsigned int> s_unitQueue;
+    static std::unordered_map<unitType, unsigned int> s_unitConstructCount;
     Grid m_Grid;
     glm::vec2 m_GridSize = {100, 100};
     UIScriptProcess ButtonScript;
