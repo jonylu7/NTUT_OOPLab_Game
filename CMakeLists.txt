@@ -87,6 +87,7 @@ set(SRC_FILES
         ${SRC_DIR}/Camera.cpp
         ${SRC_DIR}/SpriteSheet.cpp
         ${SRC_DIR}/UI/UI.cpp
+        ${SRC_DIR}/GameObjectID.cpp
 
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)

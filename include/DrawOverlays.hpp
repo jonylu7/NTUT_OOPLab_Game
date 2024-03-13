@@ -16,78 +16,85 @@ class DrawOverlays : public Core::Drawable {
      *radius(cell) circle-dash: defines only the center(cell coord) & the
      *radius(cell)
      */
-    enum class OverlayShapes { BOXES, CROSS, SELECTED, CIRCLE };
 
 public:
+    enum class OverlayShapes {
+        BOXES,
+        CROSS,
+        CROSSWBOX,
+        SELECTED,
+        CIRCLE,
+        CIRCLE_DASHED
+    };
     DrawOverlays(){};
     ~DrawOverlays(){};
     void Start(std::vector<int> cellcoords, OverlayShapes shapes) {
         m_drawShapes = shapes;
         if (shapes == OverlayShapes::BOXES) {
-            std::vector<float> vertex = {0, 0, //
-                                         0, 1, //
-                                         1, 1, //
-                                         1, 0};
-            std::vector<float> color =
-                {
-                    (0, 0, 1),
-                    (0, 0, 1),
-                    (0, 0, 1),
-                    (0, 0, 1),
-                }
-
-            ;
-            std::vector<unsigned int> indices = {
-                0, 1, 3, //
-                2, 1, 0  //
-            };
-            m_VertexArray->AddVertexBuffer(
-                std::make_unique<Core::VertexBuffer>(vertex, 2));
-            m_VertexArray->AddVertexBuffer(
-                std::make_unique<Core::VertexBuffer>(color, 3));
-            m_VertexArray->SetIndexBuffer(
-                std::make_unique<Core::IndexBuffer>(indices));
+            InitBOXES();
+        } else if (shapes == OverlayShapes::CROSS) {
         }
     }
 
-    void InitVertexAndColor() {
-        /*
-        std::vector<float> vertex = {};
-        std::vector<float> color = {};
-        std::vector<unsigned int> index = {};
-        for (auto line : m_lineVector) {
-            vertex.push_back(line.getlineFrom().x);
-            vertex.push_back(line.getlineFrom().y);
-            color.push_back(line.getColor().x);
-            color.push_back(line.getColor().y);
-            color.push_back(line.getColor().z);
-
-            vertex.push_back(line.getlineTo().x);
-            vertex.push_back(line.getlineTo().y);
-            color.push_back(line.getColor().x);
-            color.push_back(line.getColor().y);
-            color.push_back(line.getColor().z);
-        }
+    void InitCrosses() {
+        std::vector<float> vertex = {
+            CELL_SIZE.x - 2,
+            CELL_SIZE.y - 2, // top right
+            CELL_SIZE.x - 2,
+            1.F, // bottom right
+            1.F,
+            1.F, // bottom left
+            1.F,
+            CELL_SIZE.y - 2,
+        };                                            //
+        std::vector<float> color = {0.3F, 0.3F, 0.9F, //
+                                    0.3F, 0.3F, .9F,  //
+                                    0.3F, 0.3F, .9F,  //
+                                    0.3F, 0.3F, .9F};
+        std::vector<unsigned int> indices = {
+            0, 1, 2, //
+            1, 2, 3  //
+        };
         m_VertexArray->AddVertexBuffer(
             std::make_unique<Core::VertexBuffer>(vertex, 2));
         m_VertexArray->AddVertexBuffer(
             std::make_unique<Core::VertexBuffer>(color, 3));
-            */
+        m_VertexArray->SetIndexBuffer(
+            std::make_unique<Core::IndexBuffer>(indices));
+    }
+    void InitBOXES() {
+        std::vector<float> vertex = {
+            CELL_SIZE.x - 2,
+            CELL_SIZE.y - 2, // top right
+            CELL_SIZE.x - 2,
+            1.F, // bottom right
+            1.F,
+            1.F, // bottom left
+            1.F,
+            CELL_SIZE.y - 2,
+        };                                            //
+        std::vector<float> color = {0.3F, 0.3F, 0.9F, //
+                                    0.3F, 0.3F, .9F,  //
+                                    0.3F, 0.3F, .9F,  //
+                                    0.3F, 0.3F, .9F};
+        std::vector<unsigned int> indices = {
+            0, 1, 2, //
+            1, 2, 3  //
+        };
+        m_VertexArray->AddVertexBuffer(
+            std::make_unique<Core::VertexBuffer>(vertex, 2));
+        m_VertexArray->AddVertexBuffer(
+            std::make_unique<Core::VertexBuffer>(color, 3));
+        m_VertexArray->SetIndexBuffer(
+            std::make_unique<Core::IndexBuffer>(indices));
     }
 
     void Draw(const Util::Transform &trans, const float zindex) override {}
 
     void DrawUsingCamera(const Util::Transform &trans,
                          const float zindex) override {
-        /*
-        if (m_Activate == false) {
-            return;
-        }
-        glLineWidth(m_shapelineWidth);
-
         m_Program.Bind();
         m_Program.Validate();
-        m_VertexArray->Bind();
 
         auto cp = CameraClass::getProjectionMatrix();
         auto cv = CameraClass::getViewMatrix();
@@ -97,33 +104,16 @@ public:
         glm::vec2 size = {1.F, 1.F};
 
         auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(
-            transform, size, zIndex);
+            trans, size, zindex);
 
         m_Matrices->SetData(0, data);
         m_VertexArray->Bind();
+        glLineWidth(1.F);
 
-        m_VertexArray->DrawLines(m_lineVector.size() * 5 * 2);
-         */
         if (m_drawShapes == OverlayShapes::BOXES) {
-
-            m_Program.Bind();
-            m_Program.Validate();
-            m_VertexArray->Bind();
-
-            auto cp = CameraClass::getProjectionMatrix();
-            auto cv = CameraClass::getViewMatrix();
-
-            constexpr glm::mat4 eye(1.F);
-
-            glm::vec2 size = {1.F, 1.F};
-
-            auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(
-                trans, size, zindex);
-
-            m_Matrices->SetData(0, data);
-            m_VertexArray->Bind();
-
             m_VertexArray->DrawRectangles();
+        } else if (m_drawShapes == OverlayShapes::CROSS) {
+            m_VertexArray->DrawRectangles()
         }
     }
 

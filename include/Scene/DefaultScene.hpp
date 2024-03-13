@@ -9,6 +9,7 @@
 #include "Core/Context.hpp"
 #include "GameObjectManager.hpp"
 
+#include "DrawOverlays.hpp"
 #include "Grid.hpp"
 #include "Map.hpp"
 #include "SpriteSheet.hpp"
@@ -38,7 +39,7 @@ public:
 
 private:
     SpriteSheet m_SpriteSheet;
-
+    DrawOverlays m_testdraw;
     CameraClass m_SceneCamera;
     Grid testGrid;
     GameObjectManager m_GameObjectManager;

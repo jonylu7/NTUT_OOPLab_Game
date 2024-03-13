@@ -6,11 +6,11 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #include "HighLight.h"
 #include "Map.hpp"
+#include "Structure/MousOverlapTool.h"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/TransformUtils.hpp"
-#include "Structure/MousOverlapTool.h"
 #include "glm/glm.hpp"
 #define CELL 48.F
 #define DEFAULT_ZINDEX 15
@@ -50,12 +50,12 @@ public:
     glm::vec2 GetObjectLocation() { return this->ObjectLocation; }
     glm::vec2 GetTranScale() { return m_Transform.scale; };
     virtual void SetAttachVisible(bool visible);
-    glm::vec2 GetDrawLocation(){return DrawLocation;};
+    glm::vec2 GetDrawLocation() { return DrawLocation; };
 
-    glm::vec2 ChangeToCell(glm::vec2 location);
+    static glm::vec2 ChangeToCell(glm::vec2 location);
     virtual void onSelected(bool selected);
-    virtual void attachmentUpdate();    // this function now will update attachment's location and draw as well
-
+    virtual void attachmentUpdate(); // this function now will update
+                                     // attachment's location and draw as well
 
     /*
     void SetElectricPower(float electricPower);
@@ -77,15 +77,17 @@ public:
 private:
     updateMode m_CurrentState = updateMode::Invisidable;
     glm::vec2 ObjectLocation = {100, 100};
-    glm::vec2 DrawLocation = {ObjectLocation.x+CELL_SIZE.x,ObjectLocation.y+CELL_SIZE.y};
+    glm::vec2 DrawLocation = {ObjectLocation.x + CELL_SIZE.x,
+                              ObjectLocation.y + CELL_SIZE.y};
     float electricPower;
     float buildingTime;
     float buildingCost;
     float buildingHp;
     HighLight m_HighLight;
+
 protected:
-    bool b_selected= false;
-    bool b_selectingNewWayPoint=false;
+    bool b_selected = false;
+    bool b_selectingNewWayPoint = false;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP

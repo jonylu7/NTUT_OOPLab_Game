@@ -29,7 +29,7 @@ public:
 
         Util::Transform mapTrans;
         mapTrans.translation = m_MapPosition;
-        m_Grid.DrawUsingCamera(mapTrans, 1);
+        m_Grid.DrawUsingCamera(mapTrans, 0.1);
 
         /*
         // TODO: new feature, draw tiles only within given range

@@ -31,8 +31,9 @@ private:
     static std::unordered_map<unitType, int> m_OccupiedID;
 
 public:
-    static int getNewestID(unitType type) {}
-    static void removeID(unitType type, int id) {}
+    static int getNewestID(unitType type);
+    static void removeID(unitType type, int id){};
+    static void InitID();
 };
 
 class GameObjectID {

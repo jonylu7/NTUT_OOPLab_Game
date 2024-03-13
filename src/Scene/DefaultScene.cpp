@@ -2,6 +2,7 @@
 // Created by 盧威任 on 2/15/24.
 //
 #include "Scene/DefaultScene.hpp"
+#include "DrawOverlays.hpp"
 #include <iostream>
 void DefaultScene::Start() {
 
@@ -49,7 +50,7 @@ void DefaultScene::Start() {
     m_Map.Init(std::vector<std::vector<std::shared_ptr<TileClass>>>(), 255,
                255);
     m_UI.Start();
-
+    m_testdraw.Start({0, 0}, DrawOverlays::OverlayShapes::BOXES);
     // m_GameObjectManager.Start();
 }
 
@@ -59,5 +60,9 @@ void DefaultScene::Update() {
     m_SceneCamera.Update();
     m_Renderer.Update();
     m_UI.Update();
+    Util::Transform trans2;
+    trans2.translation = Structure::ChangeToCell(
+        MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
+    m_testdraw.DrawUsingCamera(trans2, 1);
     // m_GameObjectManager.Update();
 }
