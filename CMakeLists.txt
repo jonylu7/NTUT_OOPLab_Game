@@ -139,6 +139,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Sprite.hpp
         ${INCLUDE_DIR}/Settings.hpp
         ${INCLUDE_DIR}/Camera.hpp
+        ${INCLUDE_DIR}/DrawOverlays.hpp
 
         ${INCLUDE_DIR}/Structure/Structure.hpp
         ${INCLUDE_DIR}/Structure/WayPoint.hpp

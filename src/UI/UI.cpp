@@ -72,14 +72,13 @@ void UIClass::ShowPlayerConstructionMenu() {
     // m_SceneCamera.getCameraZoom()).c_str());
     ImGui::Text(fmt::format("$ {}", 1000).c_str());
     ImGui::Text(fmt::format("Power {}", 50).c_str());
-    ImGui::SetWindowSize(ImVec2(240, 576));
+    ImGui::SetWindowSize(ImVec2(250, 580));
     ImGui::SetWindowPos(ImVec2(992, 48));
     if (ImGui::Button("Grid")) {
     }
     if (ImGui::BeginTabBar("", ImGuiTabBarFlags_None)) {
 
         if (ImGui::BeginTabItem("Buildings")) {
-
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  7)) {
                 // power plants
@@ -88,6 +87,7 @@ void UIClass::ShowPlayerConstructionMenu() {
                 ButtonScript.buttonEvent(powerPlant);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  22)) {
                 // barracks
@@ -95,6 +95,7 @@ void UIClass::ShowPlayerConstructionMenu() {
                 ButtonScript.buttonEvent(barracks);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  8)) {
                 // ore
@@ -102,6 +103,8 @@ void UIClass::ShowPlayerConstructionMenu() {
                 ButtonScript.buttonEvent(oreRefinery);
                 LOG_DEBUG("TEST");
             }
+
+            ImGui::NewLine();
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  20)) {
                 // war factory
@@ -109,6 +112,7 @@ void UIClass::ShowPlayerConstructionMenu() {
                 ButtonScript.buttonEvent(warFactory);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  1)) {
                 // advance power
@@ -134,12 +138,14 @@ void UIClass::ShowPlayerConstructionMenu() {
                 setUnitConstructCount(unitType::SANDBAGS, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  16)) {
                 // pillbox
                 setUnitConstructCount(unitType::PILLBOX, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  14)) {
                 // turret
@@ -156,24 +162,28 @@ void UIClass::ShowPlayerConstructionMenu() {
                 setUnitConstructCount(unitType::INFANTRY, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
                                                  1)) {
                 // rocket
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
                                                  2)) {
                 // engineer
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::NewLine();
             if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
                                                  3)) {
                 // medic
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
                                                  6)) {
                 // tanya
@@ -190,48 +200,56 @@ void UIClass::ShowPlayerConstructionMenu() {
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
                                                  1)) {
                 // mediumTank
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
                                                  4)) {
                 // Art
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::NewLine();
             if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
                                                  4)) {
                 // Art
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
                                                  8)) {
                 // OreTruck
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
                                                  4)) {
                 // Art
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::NewLine();
             if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
                                                  9)) {
                 // MCV
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
                                                  11)) {
                 // DemoTruck
                 // setUnitConstructCount(unitType::, 1);
                 LOG_DEBUG("TEST");
             }
+            ImGui::SameLine();
             if (ImGui::Button("Truck")) {
                 // truck
                 setUnitConstructCount(unitType::TRUCK, 1);
