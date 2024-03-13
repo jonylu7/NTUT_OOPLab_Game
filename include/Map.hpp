@@ -15,13 +15,23 @@ typedef unsigned int CELL;
 class MapClass : public Core::Drawable {
 public:
     MapClass() {}
-
+    void Init(CELL width, CELL height) {
+        m_MapWdith = width;
+        m_MapHeight = height;
+        for (int i = 0; i < m_MapHeight; i++) {
+            std::vector<std::shared_ptr<TileClass>> row;
+            for (int j = 0; j < m_MapWdith; j++) {
+                row.push_back(std::make_shared<TileClass>());
+            }
+            m_Map.push_back(row);
+        }
+        InitGrid();
+    }
     void Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
               CELL width, CELL height) {
         m_Map = map;
         m_MapWdith = width;
         m_MapHeight = height;
-
         InitGrid();
     }
 
@@ -73,7 +83,7 @@ public:
         if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
             position.x < 0 || position.y < 0) {
             LOG_DEBUG("False Position Getting");
-            return nullptr;
+            return std::make_shared<TileClass>("null", 0, 0, 0, 0);
         }
         return m_Map[position.x][position.y];
     }

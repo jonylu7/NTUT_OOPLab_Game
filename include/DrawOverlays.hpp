@@ -19,8 +19,12 @@ class DrawOverlays : public Core::Drawable {
 
 public:
     enum class OverlayShapes {
-        BOXES,
-        CROSS,
+        B_BOXES,
+        R_BOXES,
+        R_CROSS,
+        B_SLATED,
+        R_SLATED,
+        B_CROSS,
         CROSSWBOX,
         SELECTED,
         CIRCLE,
@@ -28,108 +32,74 @@ public:
     };
     DrawOverlays(){};
     ~DrawOverlays(){};
-    void Start(std::vector<int> cellcoords, OverlayShapes shapes) {
-        m_drawShapes = shapes;
-        if (shapes == OverlayShapes::BOXES) {
-            InitBOXES();
-        } else if (shapes == OverlayShapes::CROSS) {
+    void Start(std::vector<glm::vec2> cellcoords, OverlayShapes shapes) {
+        m_DrawShapes = shapes;
+        m_DrawCellLocation = cellcoords;
+        if (m_DrawShapes == OverlayShapes::B_BOXES) {
+            m_Image = std::make_shared<Util::Image>(
+                std::string("../assets/sprites/Shapes/B_Box.png"));
+        } else if (m_DrawShapes == OverlayShapes::R_CROSS) {
+            m_Image = std::make_shared<Util::Image>(
+                std::string("../assets/sprites/Shapes/R_Cross.png"));
+        } else if (m_DrawShapes == OverlayShapes::B_SLATED) {
+            m_Image = std::make_shared<Util::Image>(
+                std::string("../assets/sprites/Shapes/B_Slated.png"));
+        } else if (m_DrawShapes == OverlayShapes::R_SLATED) {
+            m_Image = std::make_shared<Util::Image>(
+                std::string("../assets/sprites/Shapes/R_Slated.png"));
         }
     }
-
-    void InitCrosses() {
-        std::vector<float> vertex = {
-            CELL_SIZE.x - 2,
-            CELL_SIZE.y - 2, // top right
-            CELL_SIZE.x - 2,
-            1.F, // bottom right
-            1.F,
-            1.F, // bottom left
-            1.F,
-            CELL_SIZE.y - 2,
-        };                                            //
-        std::vector<float> color = {0.3F, 0.3F, 0.9F, //
-                                    0.3F, 0.3F, .9F,  //
-                                    0.3F, 0.3F, .9F,  //
-                                    0.3F, 0.3F, .9F};
-        std::vector<unsigned int> indices = {
-            0, 1, 2, //
-            1, 2, 3  //
-        };
-        m_VertexArray->AddVertexBuffer(
-            std::make_unique<Core::VertexBuffer>(vertex, 2));
-        m_VertexArray->AddVertexBuffer(
-            std::make_unique<Core::VertexBuffer>(color, 3));
-        m_VertexArray->SetIndexBuffer(
-            std::make_unique<Core::IndexBuffer>(indices));
+    void setDrawMode(OverlayShapes shapes) {
+        m_DrawShapes = shapes;
+        if (m_DrawShapes == OverlayShapes::B_BOXES) {
+            m_Image->SetImage(
+                std::string("../assets/sprites/Shapes/B_Box.png"));
+        } else if (m_DrawShapes == OverlayShapes::R_CROSS) {
+            m_Image->SetImage(
+                std::string("../assets/sprites/Shapes/R_Cross.png"));
+        } else if (m_DrawShapes == OverlayShapes::B_SLATED) {
+            m_Image->SetImage(
+                std::string("../assets/sprites/Shapes/B_Slated.png"));
+        } else if (m_DrawShapes == OverlayShapes::R_SLATED) {
+            m_Image->SetImage(
+                std::string("../assets/sprites/Shapes/R_Slated.png"));
+        }
     }
-    void InitBOXES() {
-        std::vector<float> vertex = {
-            CELL_SIZE.x - 2,
-            CELL_SIZE.y - 2, // top right
-            CELL_SIZE.x - 2,
-            1.F, // bottom right
-            1.F,
-            1.F, // bottom left
-            1.F,
-            CELL_SIZE.y - 2,
-        };                                            //
-        std::vector<float> color = {0.3F, 0.3F, 0.9F, //
-                                    0.3F, 0.3F, .9F,  //
-                                    0.3F, 0.3F, .9F,  //
-                                    0.3F, 0.3F, .9F};
-        std::vector<unsigned int> indices = {
-            0, 1, 2, //
-            1, 2, 3  //
-        };
-        m_VertexArray->AddVertexBuffer(
-            std::make_unique<Core::VertexBuffer>(vertex, 2));
-        m_VertexArray->AddVertexBuffer(
-            std::make_unique<Core::VertexBuffer>(color, 3));
-        m_VertexArray->SetIndexBuffer(
-            std::make_unique<Core::IndexBuffer>(indices));
+    void setDrawCellLocation(std::vector<glm::vec2> cellcoords) {
+        m_DrawCellLocation = cellcoords;
     }
-
     void Draw(const Util::Transform &trans, const float zindex) override {}
 
     void DrawUsingCamera(const Util::Transform &trans,
                          const float zindex) override {
-        m_Program.Bind();
-        m_Program.Validate();
 
-        auto cp = CameraClass::getProjectionMatrix();
-        auto cv = CameraClass::getViewMatrix();
+        Util::Transform trans2 = trans;
+        if (m_DrawShapes == OverlayShapes::B_BOXES ||
+            m_DrawShapes == OverlayShapes::R_CROSS) {
+            if (trans2.translation.x < 0) {
+                trans2.translation =
+                    glm::vec2(trans.translation.x - m_Image->GetSize().x / 2,
+                              trans.translation.y + m_Image->GetSize().y / 2);
+            } else {
+                trans2.translation =
+                    glm::vec2(trans.translation.x + m_Image->GetSize().x / 2,
+                              trans.translation.y + m_Image->GetSize().y / 2);
+            }
 
-        constexpr glm::mat4 eye(1.F);
-
-        glm::vec2 size = {1.F, 1.F};
-
-        auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(
-            trans, size, zindex);
-
-        m_Matrices->SetData(0, data);
-        m_VertexArray->Bind();
-        glLineWidth(1.F);
-
-        if (m_drawShapes == OverlayShapes::BOXES) {
-            m_VertexArray->DrawRectangles();
-        } else if (m_drawShapes == OverlayShapes::CROSS) {
-            m_VertexArray->DrawRectangles()
+            m_Image->DrawUsingCamera(trans2, zindex);
+        } else if (m_DrawShapes == OverlayShapes::B_SLATED ||
+                   m_DrawShapes == OverlayShapes::R_SLATED) {
+            trans2.translation = {0, 0};
+            for (auto i : m_DrawCellLocation) {
+                m_Image->DrawUsingCamera(trans2, zindex);
+            }
         }
     }
 
 private:
-    Core::Program m_Program = Core::Program("../assets/shaders/DrawLines.vert",
-                                            "../assets/shaders/DrawLines.frag");
-
-    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_Matrices =
-        std::make_unique<Core::UniformBuffer<Core::Matrices>>(m_Program, "Grid",
-                                                              0);
-    OverlayShapes m_drawShapes;
-    float m_shapeLineWidth = 1.0F;
-    glm::vec2 shapeLinecolor;
-
-    std::unique_ptr<Core::VertexArray> m_VertexArray =
-        std::make_unique<Core::VertexArray>();
+    std::vector<glm::vec2> m_DrawCellLocation;
+    std::shared_ptr<Util::Image> m_Image;
+    OverlayShapes m_DrawShapes;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DRAWOVERLAYS_HPP

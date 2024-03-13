@@ -15,7 +15,12 @@ public:
           m_Walkable(walkable),
           m_Clickable(clickable),
           m_SpriteSheetIndex(spritesheetindex) {}
-    TileClass() {}
+    TileClass()
+        : m_Name(""),
+          m_Buildable(false),
+          m_Walkable(false),
+          m_Clickable(true),
+          m_SpriteSheetIndex(0) {}
     ~TileClass() {}
 
     bool getWalkable() { return m_Walkable; };

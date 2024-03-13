@@ -5,7 +5,8 @@
 #include "DrawOverlays.hpp"
 #include <iostream>
 void DefaultScene::Start() {
-
+    // image.SetImage("../assets/sprites/Shapes/B_Box.png");
+    OccupiedID::InitID();
     LOG_TRACE("Start");
     /*
     m_GameObjectList[0]->SetDrawable(
@@ -47,10 +48,10 @@ void DefaultScene::Start() {
         m_Map.readMapAndTileSet(m_OgMap, m_tileSets);
         */
 
-    m_Map.Init(std::vector<std::vector<std::shared_ptr<TileClass>>>(), 255,
-               255);
+    m_Map.Init(255, 255);
     m_UI.Start();
-    m_testdraw.Start({0, 0}, DrawOverlays::OverlayShapes::BOXES);
+    m_testdraw.Start(std::vector({glm::vec2(0.F, 0.F)}),
+                     DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
 }
 
@@ -60,9 +61,20 @@ void DefaultScene::Update() {
     m_SceneCamera.Update();
     m_Renderer.Update();
     m_UI.Update();
+
     Util::Transform trans2;
     trans2.translation = Structure::ChangeToCell(
         MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
+
+    auto tile = m_Map.getTileByCellPosition(MapClass::GlobalCoordToCellCoord(
+        MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition())));
+
+    if (tile->getClickable()) {
+        m_testdraw.setDrawMode(DrawOverlays::OverlayShapes::B_BOXES);
+    } else {
+        m_testdraw.setDrawMode(DrawOverlays::OverlayShapes::R_CROSS);
+    }
+
     m_testdraw.DrawUsingCamera(trans2, 1);
-    // m_GameObjectManager.Update();
+    //  m_GameObjectManager.Update();
 }

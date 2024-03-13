@@ -22,6 +22,5 @@ public:
         /*SetDrawable(std::make_unique<Util::Image>("../assets/sprites/flag.png"));*/};
     void SetObjectLocation(glm::vec2 location);
     glm::vec2 GetObjectLocation() { return this->ObjectLocation; }
-    glm::vec2 ChangeToCell(glm::vec2 location);
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_WAYPOINT_HPP
