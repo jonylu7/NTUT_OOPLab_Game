@@ -41,6 +41,9 @@ public:
     GameObjectID()
         : m_unitType(unitType::null),
           number(0) {}
+    GameObjectID(unitType type)
+        : m_unitType(type),
+          number(OccupiedID::getNewestID(type)) {}
     ~GameObjectID() {}
 
     void generateID(unitType type) { m_unitType = type; }

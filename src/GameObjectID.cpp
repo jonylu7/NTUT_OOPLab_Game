@@ -3,6 +3,7 @@
 //
 #include "GameObjectID.hpp"
 std::unordered_map<unitType, unsigned int> OccupiedID::m_OccupiedID;
+
 void OccupiedID::InitID() {
     OccupiedID::m_OccupiedID[unitType::INFANTRY] = 0;
     OccupiedID::m_OccupiedID[unitType::POWER_PLANT] = 0;
@@ -23,6 +24,5 @@ void OccupiedID::InitID() {
 }
 
 int OccupiedID::getNewestID(unitType type) {
-    OccupiedID::m_OccupiedID[type] += 1;
-    return OccupiedID::m_OccupiedID[type];
+    return OccupiedID::m_OccupiedID[type]++;
 }

@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
+#include "GameObjectID.hpp"
 #include "HighLight.h"
 #include "Map.hpp"
 #include "Structure/MousOverlapTool.h"
@@ -28,11 +29,12 @@ public:
     };
 
     Structure(float electricPower, float buildingTime, float buildingCost,
-              float buildingHp)
+              float buildingHp, GameObjectID id)
         : electricPower(electricPower),
           buildingTime(buildingTime),
           buildingCost(buildingCost),
-          buildingHp(buildingHp) {
+          buildingHp(buildingHp),
+          m_ID(id) {
         m_Transform.scale = {1, 1};
         // this->SetZIndex(DEFAULT_ZINDEX);
     };
@@ -84,6 +86,7 @@ private:
     float buildingCost;
     float buildingHp;
     HighLight m_HighLight;
+    GameObjectID m_ID;
 
 protected:
     bool b_selected = false;
