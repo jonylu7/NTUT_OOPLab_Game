@@ -8,30 +8,7 @@ void DefaultScene::Start() {
     // image.SetImage("../assets/sprites/Shapes/B_Box.png");
     OccupiedID::InitID();
     LOG_TRACE("Start");
-    /*
-    m_GameObjectList[0]->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/Raccoon3.jpg"));
-    m_GameObjectList[0]->SetZIndex(10);
 
-    m_GameObjectList[1]->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
-
-    m_Structure->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/barracks.png"));
-    m_Structure->SetZIndex(0);
-    m_Structure->SetObjectLocation({0, 0});
-    m_Structure->Start();
-    m_Structure->SetCurrentUpdateMode(Structure::updateMode::Moveable);
-    m_Renderer.AddChild(m_Structure);
-
-    m_Inf->Start();
-
-    for (auto i : m_GameObjectList) {
-        i->Start();
-    }
-
-    m_Renderer.AddChild(m_Structure);
-    */
     // init map
     m_TileSetSpriteSheet->Start("../assets/sprites/TILESET_Field.png", 24, 24,
                                 20, 0);
@@ -53,6 +30,8 @@ void DefaultScene::Start() {
     m_testdraw.Start(std::vector({glm::vec2(0.F, 0.F)}),
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
+
+
 }
 
 void DefaultScene::Update() {
@@ -77,4 +56,29 @@ void DefaultScene::Update() {
 
     m_testdraw.DrawUsingCamera(trans2, 1);
     //  m_GameObjectManager.Update();
+
+    if(UIClass::getUnitConstructCount(unitType::BARRACKS)>0){
+        m_BuiltStructure.push_back(std::make_unique<Barracks>());
+        m_BuiltStructure.back()->Start();
+    }
+    if(UIClass::getUnitConstructCount(unitType::POWER_PLANT) > 0) {
+        m_BuiltStructure.push_back(std::make_unique<PowerPlants>());
+        m_BuiltStructure.back()->Start();
+    }
+
+    if(UIClass::getUnitConstructCount(unitType::ORE_REF) > 0) {
+        m_BuiltStructure.push_back(std::make_unique<OreRefinery>());
+        m_BuiltStructure.back()->Start();
+    }
+
+    if(UIClass::getUnitConstructCount(unitType::WAR_FACT) > 0) {
+        m_BuiltStructure.push_back(std::make_unique<WarFactory>());
+        m_BuiltStructure.back()->Start();
+    }
+
+    if(UIClass::getUnitConstructCount(unitType::ADV_POWER_PLANT) > 0) {
+        m_BuiltStructure.push_back(std::make_unique<ADVPowerPlants>());
+        m_BuiltStructure.back()->Start();
+    }
+
 }

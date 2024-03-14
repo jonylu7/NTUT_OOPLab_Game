@@ -82,25 +82,34 @@ void UIClass::ShowPlayerConstructionMenu() {
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  7)) {
                 // power plants
+                if(ButtonScript.GetIfFinished(unitType::POWER_PLANT)){
+                    setUnitConstructCount(unitType::POWER_PLANT, 1);
+                }else{
+                    ButtonScript.buttonEvent(powerPlant);
+                }
 
-                setUnitConstructCount(unitType::POWER_PLANT, 1);
-                ButtonScript.buttonEvent(powerPlant);
                 LOG_DEBUG("TEST");
             }
             ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  22)) {
                 // barracks
-                setUnitConstructCount(unitType::BARRACKS, 1);
-                ButtonScript.buttonEvent(barracks);
+                if(ButtonScript.GetIfFinished(unitType::BARRACKS)) {
+                    setUnitConstructCount(unitType::BARRACKS, 1);
+                }else {
+                    ButtonScript.buttonEvent(barracks);
+                }
                 LOG_DEBUG("TEST");
             }
             ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  8)) {
                 // ore
-                setUnitConstructCount(unitType::ORE_REF, 1);
-                ButtonScript.buttonEvent(oreRefinery);
+                if(ButtonScript.GetIfFinished(unitType::ORE_REF)) {
+                    setUnitConstructCount(unitType::ORE_REF, 1);
+                }else {
+                    ButtonScript.buttonEvent(oreRefinery);
+                }
                 LOG_DEBUG("TEST");
             }
 
@@ -108,16 +117,22 @@ void UIClass::ShowPlayerConstructionMenu() {
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  20)) {
                 // war factory
-                setUnitConstructCount(unitType::WAR_FACT, 1);
-                ButtonScript.buttonEvent(warFactory);
+                if(ButtonScript.GetIfFinished(unitType::WAR_FACT)) {
+                    setUnitConstructCount(unitType::WAR_FACT, 1);
+                }else {
+                    ButtonScript.buttonEvent(warFactory);
+                }
                 LOG_DEBUG("TEST");
             }
             ImGui::SameLine();
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  1)) {
                 // advance power
-                setUnitConstructCount(unitType::ADV_POWER_PLANT, 1);
-                ButtonScript.buttonEvent(advPowerPlant);
+                if(ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT)) {
+                    setUnitConstructCount(unitType::ADV_POWER_PLANT, 1);
+                }else {
+                    ButtonScript.buttonEvent(advPowerPlant);
+                }
                 LOG_DEBUG("TEST");
             }
             if (ImGui::Button("Radar Dome")) {

@@ -25,6 +25,9 @@ public:
     static void setUnitConstructCount(unitType type, int value) {
         s_unitConstructCount[type] += value;
     }
+    static void resetUnitConstructCount(unitType type) {
+        s_unitConstructCount[type] =0;
+    }
 
 private:
     void InitUnitQueue();
