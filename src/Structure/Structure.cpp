@@ -60,6 +60,7 @@ void Structure::updateMoveable() {
     if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
         this->SetObjectLocation(location);
         this->SetCurrentUpdateMode(updateMode::Fixed);
+        //在這裡增加設置Tile屬性
     }
 }
 void Structure::updateInvinsible() {

@@ -76,12 +76,13 @@ set(SRC_FILES
         ${SRC_DIR}/Structure/HighLight.cpp
         ${SRC_DIR}/UI/UIScriptProcess.cpp
 
-        # ${SRC_DIR}/Structure/Buildings.cpp
         ${SRC_DIR}/Structure/Barracks.cpp
         ${SRC_DIR}/Structure/OreRefinery.cpp
         ${SRC_DIR}/Structure/PowerPlants.cpp
         ${SRC_DIR}/Structure/WarFactory.cpp
         #${SRC_DIR}/Structure/ADVPowerPlants.cpp
+
+        #${SRC_DIR}/Unit/PathfindingUnit.cpp
 
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
@@ -147,16 +148,17 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/MousOverlapTool.h
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
-        ${INCLUDE_DIR}/UI/UIScriptProcess.h
+        ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
         ${INCLUDE_DIR}/DrawOverlays.hpp
         ${INCLUDE_DIR}/UI/UI.hpp
 
-        #${INCLUDE_DIR}/Structure/Buildings.hpp
         ${INCLUDE_DIR}/Structure/Barracks.hpp
         ${INCLUDE_DIR}/Structure/OreRefinery.hpp
         ${INCLUDE_DIR}/Structure/PowerPlants.hpp
         ${INCLUDE_DIR}/Structure/WarFactory.hpp
         ${INCLUDE_DIR}/Structure/ADVPowerPlants.hpp
+
+        ${INCLUDE_DIR}/Unit/PathfindingUnit.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h

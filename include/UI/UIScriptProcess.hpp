@@ -2,14 +2,15 @@
 // Created by nudle on 2024/3/8.
 //
 
-#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_H
-#define PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_H
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
 #include "Structure/Structure.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
+#include "GameObjectID.hpp"
 #include <queue>
 #include <future>
 #include <chrono>
@@ -23,10 +24,13 @@ private:
     bool b_STALL=false;
     std::queue<std::shared_ptr<Structure>> buildQueue;
     std::shared_ptr<Structure> temp_PTR;
+    std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTime;
 public:
     UIScriptProcess(){};
+    ~UIScriptProcess(){};
     //
     bool GetIfFinished(std::shared_ptr<Structure> structure);
+    bool GetIfFinished(unitType type);
     void SetFinished(std::shared_ptr<Structure> structure);
     //Event
     void buttonEvent(std::shared_ptr<Structure>(m_Structure));
@@ -36,14 +40,5 @@ public:
     //CountDown
     void SetCoolDown(float time);
     void CountDown();
-    //Delay??
-    std::future<void> asyncUpdate() {
-        return std::async(std::launch::async, [this] {
-            while (b_STALL) {
-                Counter+=0.1F;
-                std::this_thread::sleep_for(std::chrono::milliseconds(100)); // 模拟每秒调用一次update
-            }
-        });
-    }
 };
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_H
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP

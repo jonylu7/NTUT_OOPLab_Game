@@ -28,6 +28,7 @@ public:
         m_CurrentState = updateMode::Invisidable;
     };
 
+
     Structure(float electricPower, float buildingTime, float buildingCost,
               float buildingHp, GameObjectID id)
         : electricPower(electricPower),
@@ -38,6 +39,7 @@ public:
         m_Transform.scale = {1, 1};
         // this->SetZIndex(DEFAULT_ZINDEX);
     };
+
     ~Structure(){};
 
     void Update() override;
@@ -58,7 +60,7 @@ public:
     virtual void onSelected(bool selected);
     virtual void attachmentUpdate(); // this function now will update
                                      // attachment's location and draw as well
-
+    bool getBuilt(){ if(m_CurrentState==updateMode::Fixed){return true;}else{return false;}}
     /*
     void SetElectricPower(float electricPower);
     void SetBuildingTime(float buildingTime);

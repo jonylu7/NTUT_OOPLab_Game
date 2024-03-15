@@ -1,7 +1,7 @@
 //
 // Created by nudle on 2024/3/8.
 //
-#include "UI/UIScriptProcess.h"
+#include "UI/UIScriptProcess.hpp"
 
 bool UIScriptProcess::GetIfFinished(std::shared_ptr<Structure> structure) {
     if (std::dynamic_pointer_cast<Barracks>(structure)) {
@@ -13,6 +13,20 @@ bool UIScriptProcess::GetIfFinished(std::shared_ptr<Structure> structure) {
     } else if (std::dynamic_pointer_cast<WarFactory>(structure)) {
         return b_WarFactory;
     } else if (std::dynamic_pointer_cast<ADVPowerPlants>(structure)) {
+        return b_ADVPowerPlant;
+    }
+}
+
+bool UIScriptProcess::GetIfFinished(unitType type) {
+    if (type==unitType::BARRACKS) {
+        return b_Baracks;
+    } else if (type==unitType::ORE_REF) {
+        return b_OreRefinery;
+    } else if (type==unitType::POWER_PLANT) {
+        return b_PowerPlants;
+    } else if (type==unitType::WAR_FACT) {
+        return b_WarFactory;
+    } else if (type==unitType::ADV_POWER_PLANT) {
         return b_ADVPowerPlant;
     }
 }
@@ -30,7 +44,9 @@ void UIScriptProcess::SetFinished(std::shared_ptr<Structure> structure) {
     }
 }
 void UIScriptProcess::CountDown() {
-    if (true /*Counter>=TargetTime*/) {
+    auto current = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = current - m_StartTime;
+    if (elapsed.count()>=TargetTime) {
         SetFinished(temp_PTR);
         b_STALL = false;
         return;
@@ -39,12 +55,12 @@ void UIScriptProcess::CountDown() {
 }
 void UIScriptProcess::SetCoolDown(float time) {
     Counter = 0.F;
-    TargetTime = time * 60;
+    TargetTime = time;
+    m_StartTime = std::chrono::high_resolution_clock::now();
 }
 
 void UIScriptProcess::buttonEvent(std::shared_ptr<Structure> m_Structure) {
     if (GetIfFinished(m_Structure)) {
-        m_Structure->Start();
         return;
     }
     buildQueue.push(m_Structure);
@@ -60,3 +76,4 @@ void UIScriptProcess::Update() {
     }
     CountDown();
 }
+

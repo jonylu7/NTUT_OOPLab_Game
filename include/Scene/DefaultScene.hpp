@@ -50,6 +50,7 @@ private:
     std::vector<int> m_OgMap;
     std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
         std::make_shared<SpriteSheet>();
+    std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

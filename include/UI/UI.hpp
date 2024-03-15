@@ -7,7 +7,7 @@
 #include "Camera.hpp"
 #include "GameObjectID.hpp"
 #include "SpriteSheet.hpp"
-#include "UIScriptProcess.h"
+#include "UI/UIScriptProcess.hpp"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_sdl2.h"
@@ -25,8 +25,12 @@ public:
     static void setUnitConstructCount(unitType type, int value) {
         s_unitConstructCount[type] += value;
     }
+    static void resetUnitConstructCount(unitType type) {
+        s_unitConstructCount[type] =0;
+    }
 
 private:
+    UIScriptProcess ButtonScript;
     void InitUnitQueue();
     void ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
                                    ImGuiMouseButton mouse_button);
@@ -39,7 +43,6 @@ private:
     getImageButtonBySpriteSheetIndex(std::shared_ptr<SpriteSheet> spritesheet,
                                      int index);
 
-private:
     std::shared_ptr<SpriteSheet> m_StructureIconSpriteSheet =
         std::make_shared<SpriteSheet>();
     std::shared_ptr<SpriteSheet> m_InfantryIconSpriteSheet =
@@ -50,7 +53,7 @@ private:
     static std::unordered_map<unitType, unsigned int> s_unitConstructCount;
     Grid m_Grid;
     glm::vec2 m_GridSize = {100, 100};
-    UIScriptProcess ButtonScript;
+
 
     std::shared_ptr<Structure> barracks = std::make_shared<Barracks>();
     std::shared_ptr<Structure> oreRefinery = std::make_shared<OreRefinery>();
