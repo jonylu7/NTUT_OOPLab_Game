@@ -58,27 +58,35 @@ void DefaultScene::Update() {
     //  m_GameObjectManager.Update();
 
     if(UIClass::getUnitConstructCount(unitType::BARRACKS)>0){
+        UIClass::setUnitConstructCount(unitType::BARRACKS,-1);
         m_BuiltStructure.push_back(std::make_unique<Barracks>());
         m_BuiltStructure.back()->Start();
     }
     if(UIClass::getUnitConstructCount(unitType::POWER_PLANT) > 0) {
+        UIClass::setUnitConstructCount(unitType::POWER_PLANT,-1);
         m_BuiltStructure.push_back(std::make_unique<PowerPlants>());
         m_BuiltStructure.back()->Start();
     }
 
     if(UIClass::getUnitConstructCount(unitType::ORE_REF) > 0) {
+        UIClass::setUnitConstructCount(unitType::ORE_REF,-1);
         m_BuiltStructure.push_back(std::make_unique<OreRefinery>());
         m_BuiltStructure.back()->Start();
     }
 
     if(UIClass::getUnitConstructCount(unitType::WAR_FACT) > 0) {
+        UIClass::setUnitConstructCount(unitType::WAR_FACT,-1);
         m_BuiltStructure.push_back(std::make_unique<WarFactory>());
         m_BuiltStructure.back()->Start();
     }
 
     if(UIClass::getUnitConstructCount(unitType::ADV_POWER_PLANT) > 0) {
+        UIClass::setUnitConstructCount(unitType::ADV_POWER_PLANT,-1);
         m_BuiltStructure.push_back(std::make_unique<ADVPowerPlants>());
         m_BuiltStructure.back()->Start();
+    }
+    for(auto i :m_BuiltStructure){
+        i->Update();
     }
 
 }
