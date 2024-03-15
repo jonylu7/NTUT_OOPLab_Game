@@ -2,15 +2,14 @@
 // Created by nudle on 2024/3/8.
 //
 
-#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_H
-#define PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_H
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
 #include "Structure/Structure.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
-#include "UI.hpp"
 #include "GameObjectID.hpp"
 #include <queue>
 #include <future>
@@ -28,6 +27,7 @@ private:
     std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTime;
 public:
     UIScriptProcess(){};
+    ~UIScriptProcess(){};
     //
     bool GetIfFinished(std::shared_ptr<Structure> structure);
     bool GetIfFinished(unitType type);
@@ -41,4 +41,4 @@ public:
     void SetCoolDown(float time);
     void CountDown();
 };
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_H
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP

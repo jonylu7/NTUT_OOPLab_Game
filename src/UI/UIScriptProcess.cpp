@@ -1,7 +1,7 @@
 //
 // Created by nudle on 2024/3/8.
 //
-#include "UI/UIScriptProcess.h"
+#include "UI/UIScriptProcess.hpp"
 
 bool UIScriptProcess::GetIfFinished(std::shared_ptr<Structure> structure) {
     if (std::dynamic_pointer_cast<Barracks>(structure)) {

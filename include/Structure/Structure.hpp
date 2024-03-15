@@ -60,7 +60,7 @@ public:
     virtual void onSelected(bool selected);
     virtual void attachmentUpdate(); // this function now will update
                                      // attachment's location and draw as well
-    bool getStarted(){ if(m_CurrentState==updateMode::Fixed){return true;}else{return false;}}
+    bool getBuilt(){ if(m_CurrentState==updateMode::Fixed){return true;}else{return false;}}
     /*
     void SetElectricPower(float electricPower);
     void SetBuildingTime(float buildingTime);
