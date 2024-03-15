@@ -78,7 +78,7 @@ void UIClass::ShowPlayerConstructionMenu() {
     }
     if (ImGui::BeginTabBar("", ImGuiTabBarFlags_None)) {
 
-        if (ImGui::BeginTabItem("Buildings")) {
+        if (ImGui::BeginTabItem("Build")) {
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  7)) {
                 // power plants
@@ -131,7 +131,7 @@ void UIClass::ShowPlayerConstructionMenu() {
             }
             ImGui::EndTabItem();
         }
-        if (ImGui::BeginTabItem("Defense Structure")) {
+        if (ImGui::BeginTabItem("Def")) {
             if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
                                                  18)) {
                 // sandbags
@@ -155,7 +155,7 @@ void UIClass::ShowPlayerConstructionMenu() {
             ImGui::EndTabItem();
         }
 
-        if (ImGui::BeginTabItem("Infantry")) {
+        if (ImGui::BeginTabItem("Inf")) {
             if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
                                                  0)) {
                 // rifle
@@ -193,7 +193,7 @@ void UIClass::ShowPlayerConstructionMenu() {
             ImGui::EndTabItem();
         }
 
-        if (ImGui::BeginTabItem("Vehicles")) {
+        if (ImGui::BeginTabItem("Veh")) {
             if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
                                                  0)) {
                 // lightTank
