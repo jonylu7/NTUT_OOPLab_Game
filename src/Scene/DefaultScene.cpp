@@ -32,9 +32,17 @@ void DefaultScene::Start() {
     // m_GameObjectManager.Start();
 
 
+    m_dummy.Start();
+
 }
 
 void DefaultScene::Update() {
+    m_dummy.Update();
+
+    for(auto i :m_BuiltStructure){
+        i->Update();
+    }
+
     Util::Transform trans;
     m_Map.Draw(trans, 0);
     m_SceneCamera.Update();
@@ -56,6 +64,8 @@ void DefaultScene::Update() {
 
     m_testdraw.DrawUsingCamera(trans2, 1);
     //  m_GameObjectManager.Update();
+
+
 
     if(UIClass::getUnitConstructCount(unitType::BARRACKS)>0){
         UIClass::setUnitConstructCount(unitType::BARRACKS,-1);
@@ -85,8 +95,6 @@ void DefaultScene::Update() {
         m_BuiltStructure.push_back(std::make_unique<ADVPowerPlants>());
         m_BuiltStructure.back()->Start();
     }
-    for(auto i :m_BuiltStructure){
-        i->Update();
-    }
+
 
 }

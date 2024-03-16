@@ -71,7 +71,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/Structure/Structure.cpp
         ${SRC_DIR}/Structure/WayPoint.cpp
-        ${SRC_DIR}/Structure/MousOverlapTool.cpp
+        ${SRC_DIR}/Structure/MouseOverlapTool.cpp
         ${SRC_DIR}/Structure/IWayPointStructure.cpp
         ${SRC_DIR}/Structure/HighLight.cpp
         ${SRC_DIR}/UI/UIScriptProcess.cpp
@@ -82,7 +82,7 @@ set(SRC_FILES
         ${SRC_DIR}/Structure/WarFactory.cpp
         #${SRC_DIR}/Structure/ADVPowerPlants.cpp
 
-        #${SRC_DIR}/Unit/PathfindingUnit.cpp
+        ${SRC_DIR}/Unit/PathfindingUnit.cpp
 
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
@@ -145,7 +145,7 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/Structure/Structure.hpp
         ${INCLUDE_DIR}/Structure/WayPoint.hpp
-        ${INCLUDE_DIR}/Structure/MousOverlapTool.h
+        ${INCLUDE_DIR}/Structure/MouseOverlapTool.h
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
         ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
@@ -159,6 +159,8 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/ADVPowerPlants.hpp
 
         ${INCLUDE_DIR}/Unit/PathfindingUnit.hpp
+        ${INCLUDE_DIR}/Unit/Dummy.hpp
+        ${INCLUDE_DIR}/Unit/WayPointUnit.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h
