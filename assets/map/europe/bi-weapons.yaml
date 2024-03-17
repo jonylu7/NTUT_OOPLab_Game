@@ -1,0 +1,4 @@
+ParaBomb:
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Wood: 50

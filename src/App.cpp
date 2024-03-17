@@ -2,7 +2,7 @@
 #include "Util/Logger.hpp"
 
 void App::Start() {
-    testScene.Start();
+    mapScene.Start();
     m_CurrentState = App::State::UPDATE;
 }
 
@@ -11,7 +11,7 @@ void App::Update() {
         Util::Input::IfExit()) {
         m_CurrentState = State::END;
     }
-    testScene.Update();
+    mapScene.Update();
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)

@@ -2,12 +2,13 @@
 // Created by 盧威任 on 2/15/24.
 //
 
-#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
-#define PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
-
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MAPSCENE_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_MAPSCENE_HPP
 #include "Camera.hpp"
 #include "Core/Context.hpp"
 #include "GameObjectManager.hpp"
+#include "Map/MapbinReader.hpp"
+#include "Map/YAMLReader.hpp"
 
 #include "DrawOverlays.hpp"
 #include "Grid.hpp"
@@ -38,6 +39,9 @@ public:
     void End(){};
 
 private:
+    YAMLReader yreader;
+    MapbinReader reading;
+
     SpriteSheet m_SpriteSheet;
     DrawOverlays m_testdraw;
     CameraClass m_SceneCamera;
@@ -52,4 +56,4 @@ private:
         std::make_shared<SpriteSheet>();
 };
 
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP

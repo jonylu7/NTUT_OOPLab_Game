@@ -1,0 +1,28 @@
+pips:
+	Defaults:
+		Filename: pips.shp
+	pip-skull:
+		Filename: pip-skull.shp
+		Offset: -2, 0
+
+iron:
+	Defaults:
+		Filename: iron.shp
+	idle:
+		Offset: 0,-4
+	active:
+		Offset: 0,-4
+	damaged-idle:
+		Offset: 0,-4
+	damaged-active:
+		Offset: 0,-4
+	make:
+		Filename: ironmake.shp
+		Offset: 0,-4
+	bib:
+		Filename: mbIRON.shp
+		Offset: 0,-2
+
+icon:
+	gpsactive:
+		Filename: gpssactiveicon.shp

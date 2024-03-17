@@ -5,10 +5,15 @@
 #include "DrawOverlays.hpp"
 #include <iostream>
 void MapScene::Start() {
+    // yreader.readYAML();
+
+    reading.readBin();
+
     // image.SetImage("../assets/sprites/Shapes/B_Box.png");
+    /*
     OccupiedID::InitID();
     LOG_TRACE("Start");
-    /*
+
     m_GameObjectList[0]->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/Raccoon3.jpg"));
     m_GameObjectList[0]->SetZIndex(10);
@@ -31,7 +36,7 @@ void MapScene::Start() {
     }
 
     m_Renderer.AddChild(m_Structure);
-    */
+
     // init map
     m_TileSetSpriteSheet->Start("../assets/sprites/TILESET_Field.png", 24, 24,
                                 20, 0);
@@ -43,19 +48,21 @@ void MapScene::Start() {
         maps.push_back(std::make_shared<TileClass>("rock-" + std::to_string(i),
                                                    false, false, true, i));
     }
-    /* doing some weird stuff, fix is needed
+ doing some weird stuff, fix is needed
     std::vector<std::shared_ptr<TileClass>> maps =
         m_Map.readMapAndTileSet(m_OgMap, m_tileSets);
-        */
+
 
     m_Map.Init(255, 255);
     m_UI.Start();
     m_testdraw.Start(std::vector({glm::vec2(0.F, 0.F)}),
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
+    */
 }
 
 void MapScene::Update() {
+    /*
     Util::Transform trans;
     m_Map.Draw(trans, 0);
     m_SceneCamera.Update();
@@ -77,4 +84,5 @@ void MapScene::Update() {
 
     m_testdraw.DrawUsingCamera(trans2, 1);
     //  m_GameObjectManager.Update();
+     */
 }
