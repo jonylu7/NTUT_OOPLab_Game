@@ -28,12 +28,19 @@ void Barracks::updateMoveable() {
     this->SetObjectLocation(location);
     this->SetVisible(true);
     this->Draw();
-    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
+    glm::vec2 cellPos = MapClass::GlobalCoordToCellCoord(location);
+    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)/*&&MapClass::getTileByCellPosition(cellPos)->getBuildable()*/) {
         this->SetObjectLocation(location);
         this->SetWayPointLocation({GetDrawLocation().x + CELL_SIZE.x,
                                    GetDrawLocation().y + CELL_SIZE.y});
         onSelected(false);
         this->SetCurrentUpdateMode(updateMode::Fixed);
+        //在這裡增加設置Tile屬性
+/*
+        std::shared_ptr<TileClass>tile = MapClass::getTileByCellPosition(cellPos);
+        tile->setWalkable(false);
+        tile->setBuildable(false);
+        MapClass::setTileByCellPosition(cellPos,tile);*/
     }
 }
 

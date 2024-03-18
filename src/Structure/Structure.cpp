@@ -38,7 +38,7 @@ void Structure::updateFixed() {
     // Script when select--------------------
     if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB) &&
         !b_selectingNewWayPoint) {
-        if (MousOverlapTool::checkMous(
+        if (MouseOverlapTool::ifObjectClicked(
                 GetObjectLocation() /*,GetScaledSize()*/)) {
             b_selected = true;
         } else {
@@ -52,15 +52,24 @@ void Structure::updateFixed() {
     }
 }
 void Structure::updateMoveable() {
+    //debug
+    printf("debug message : Structure movable\n");
+    //
     glm::vec2 location = Util::Input::GetCursorPosition();
     location = MapClass::ScreenToGlobalCoord(location);
     this->SetObjectLocation(location);
     this->SetVisible(true);
     this->Draw();
-    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
+    glm::vec2 cellPos = MapClass::GlobalCoordToCellCoord(location);
+    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)/*&&MapClass::getTileByCellPosition(cellPos)->getBuildable()*/) {
         this->SetObjectLocation(location);
         this->SetCurrentUpdateMode(updateMode::Fixed);
         //在這裡增加設置Tile屬性
+/*
+        std::shared_ptr<TileClass>tile = MapClass::getTileByCellPosition(cellPos);
+        tile->setWalkable(false);
+        tile->setBuildable(false);
+        MapClass::setTileByCellPosition(cellPos,tile);*/
     }
 }
 void Structure::updateInvinsible() {

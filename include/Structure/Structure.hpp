@@ -7,7 +7,7 @@
 #include "GameObjectID.hpp"
 #include "HighLight.h"
 #include "Map.hpp"
-#include "Structure/MousOverlapTool.h"
+#include "Structure/MouseOverlapTool.h"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
@@ -89,6 +89,7 @@ private:
     float buildingHp;
     HighLight m_HighLight;
     GameObjectID m_ID;
+
 
 protected:
     bool b_selected = false;

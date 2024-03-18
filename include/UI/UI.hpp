@@ -29,6 +29,9 @@ public:
         s_unitConstructCount[type] =0;
     }
 
+    std::unique_ptr<Structure> getSelectedBuilding();
+    bool getIfAnythingCanSelectToBuild();//避免Scene收到空的getSelectedBuilding
+
 private:
     UIScriptProcess ButtonScript;
     void InitUnitQueue();
@@ -55,15 +58,17 @@ private:
     glm::vec2 m_GridSize = {100, 100};
 
 
-    std::shared_ptr<Structure> barracks = std::make_shared<Barracks>();
-    std::shared_ptr<Structure> oreRefinery = std::make_shared<OreRefinery>();
-    std::shared_ptr<Structure> powerPlant = std::make_shared<PowerPlants>();
-    std::shared_ptr<Structure> warFactory = std::make_shared<WarFactory>();
-    std::shared_ptr<Structure> advPowerPlant =
-        std::make_shared<ADVPowerPlants>();
-    std::vector<std::shared_ptr<Structure>> StructureArray = {
-        barracks, oreRefinery, powerPlant, warFactory, advPowerPlant,
-    };
+    //0318
+    bool getIfSelectToBuild(unitType type);
+    void setSelectToBuild(unitType type);
+    bool selectLock();
+
+    bool b_Baracks = false;
+    bool b_OreRefinery = false;
+    bool b_PowerPlants = false;
+    bool b_WarFactory = false;
+    bool b_ADVPowerPlant = false;
+    bool b_SelectToBuild = false;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP

@@ -16,7 +16,7 @@
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/IWayPointStructure.hpp"
-#include "Structure/MousOverlapTool.h"
+#include "Structure/MouseOverlapTool.h"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
@@ -27,6 +27,9 @@
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Renderer.hpp"
+#include "Unit/Dummy.hpp"
+#include "Unit/PathfindingUnit.hpp"
+#include "Unit/WayPointUnit.hpp"
 
 class DefaultScene {
 public:
@@ -51,6 +54,8 @@ private:
     std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
         std::make_shared<SpriteSheet>();
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
+    Dummy m_dummy;
+    WayPointUnit m_waypointUnit;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

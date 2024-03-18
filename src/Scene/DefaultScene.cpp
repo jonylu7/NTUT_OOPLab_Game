@@ -32,9 +32,22 @@ void DefaultScene::Start() {
     // m_GameObjectManager.Start();
 
 
+    //m_dummy.Start();
+    m_waypointUnit.setCurrentCell({glm::vec2(0,0)});
+    m_waypointUnit.setNextCell({glm::vec2(0,0)});
+    m_waypointUnit.findPath(15,10);
+
 }
 
 void DefaultScene::Update() {
+    //m_dummy.Update();
+
+    m_waypointUnit.Update();
+
+    for(auto i :m_BuiltStructure){
+        i->Update();
+    }
+
     Util::Transform trans;
     m_Map.Draw(trans, 0);
     m_SceneCamera.Update();
@@ -57,36 +70,10 @@ void DefaultScene::Update() {
     m_testdraw.DrawUsingCamera(trans2, 1);
     //  m_GameObjectManager.Update();
 
-    if(UIClass::getUnitConstructCount(unitType::BARRACKS)>0){
-        UIClass::setUnitConstructCount(unitType::BARRACKS,-1);
-        m_BuiltStructure.push_back(std::make_unique<Barracks>());
-        m_BuiltStructure.back()->Start();
-    }
-    if(UIClass::getUnitConstructCount(unitType::POWER_PLANT) > 0) {
-        UIClass::setUnitConstructCount(unitType::POWER_PLANT,-1);
-        m_BuiltStructure.push_back(std::make_unique<PowerPlants>());
-        m_BuiltStructure.back()->Start();
-    }
 
-    if(UIClass::getUnitConstructCount(unitType::ORE_REF) > 0) {
-        UIClass::setUnitConstructCount(unitType::ORE_REF,-1);
-        m_BuiltStructure.push_back(std::make_unique<OreRefinery>());
+    if(m_UI.getIfAnythingCanSelectToBuild()){
+        m_BuiltStructure.push_back(m_UI.getSelectedBuilding());
         m_BuiltStructure.back()->Start();
+        printf("(Scene) Structure Started\n");
     }
-
-    if(UIClass::getUnitConstructCount(unitType::WAR_FACT) > 0) {
-        UIClass::setUnitConstructCount(unitType::WAR_FACT,-1);
-        m_BuiltStructure.push_back(std::make_unique<WarFactory>());
-        m_BuiltStructure.back()->Start();
-    }
-
-    if(UIClass::getUnitConstructCount(unitType::ADV_POWER_PLANT) > 0) {
-        UIClass::setUnitConstructCount(unitType::ADV_POWER_PLANT,-1);
-        m_BuiltStructure.push_back(std::make_unique<ADVPowerPlants>());
-        m_BuiltStructure.back()->Start();
-    }
-    for(auto i :m_BuiltStructure){
-        i->Update();
-    }
-
 }
