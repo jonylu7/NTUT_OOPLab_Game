@@ -6,12 +6,12 @@
 #include <iostream>
 void MapScene::Start() {
 
-    reading.readBin("../assets/map/255/map.bin");
+    reading.readBin("../assets/map/europe/map.bin");
     YAMLReader::Init("../assets/map/temperat.yaml");
     auto images = reading.getTileImages();
     m_Images = images;
-    OccupiedID::InitID();
-    // image.SetImage("../assets/sprites/Shapes/B_Box.png");
+    // OccupiedID::InitID();
+    //  image.SetImage("../assets/sprites/Shapes/B_Box.png");
     /*
 
     LOG_TRACE("Start");
@@ -64,6 +64,7 @@ void MapScene::Start() {
 }
 
 void MapScene::Update() {
+
     Util::Transform trans;
     trans.scale = {10, 10};
     trans.translation = {0, 0};
