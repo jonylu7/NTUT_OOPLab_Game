@@ -31,6 +31,6 @@ constexpr unsigned int CAP_LIMIT = 200;
 /**
  * @brief CELL_SIZE
  */
-constexpr glm::vec2 CELL_SIZE={48.F,48.F};
+constexpr glm::vec2 CELL_SIZE = {48.F, 48.F};
 
 #endif

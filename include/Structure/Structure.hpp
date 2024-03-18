@@ -6,7 +6,7 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #include "GameObjectID.hpp"
 #include "HighLight.h"
-#include "Map.hpp"
+#include "Map/Map.hpp"
 #include "Structure/MousOverlapTool.h"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"

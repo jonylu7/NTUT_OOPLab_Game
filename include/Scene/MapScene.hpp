@@ -12,7 +12,7 @@
 
 #include "DrawOverlays.hpp"
 #include "Grid.hpp"
-#include "Map.hpp"
+#include "Map/Map.hpp"
 #include "SpriteSheet.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
@@ -39,7 +39,8 @@ public:
     void End(){};
 
 private:
-    YAMLReader yreader;
+    std::vector<std::shared_ptr<Util::Image>> m_Images =
+        std::vector<std::shared_ptr<Util::Image>>({});
     MapbinReader reading;
 
     SpriteSheet m_SpriteSheet;
@@ -49,9 +50,9 @@ private:
     GameObjectManager m_GameObjectManager;
     Util::Renderer m_Renderer;
     UIClass m_UI;
-    MapClass m_Map;
-    std::map<int, TileClass> m_tileSets;
-    std::vector<int> m_OgMap;
+    // MapClass m_Map;
+    // std::map<int, TileClass> m_tileSets;
+    // std::vector<int> m_OgMap;
     std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
         std::make_shared<SpriteSheet>();
 };

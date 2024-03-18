@@ -11,7 +11,7 @@
 
 #include "DrawOverlays.hpp"
 #include "Grid.hpp"
-#include "Map.hpp"
+#include "Map/Map.hpp"
 #include "SpriteSheet.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
@@ -29,6 +29,7 @@
 #include "Util/Renderer.hpp"
 
 class DefaultScene {
+    /*
 public:
     DefaultScene(){};
     ~DefaultScene(){};
@@ -50,6 +51,6 @@ private:
     std::vector<int> m_OgMap;
     std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
         std::make_shared<SpriteSheet>();
+        */
 };
-
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

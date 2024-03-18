@@ -3,7 +3,7 @@
 //
 
 #include "UI/UI.hpp"
-#include "Map.hpp"
+#include "Map/Map.hpp"
 
 ImVec2 start_pos;
 ImVec2 end_pos;

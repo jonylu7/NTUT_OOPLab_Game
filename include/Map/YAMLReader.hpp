@@ -5,25 +5,18 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_YAMLREADER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_YAMLREADER_HPP
 
+#include "Util/Image.hpp"
+#include <fstream>
 #include <iostream>
 #include <yaml-cpp/yaml.h>
 class YAMLReader {
 public:
-    int readYAML() {
-        std::vector<std::string> allFiles;
-        // Parse the YAML file
-        YAML::Node config = YAML::LoadFile("../assets/map/temperat.yaml");
-        if (config.IsNull()) {
-            std::cerr << "Error parsing YAML file!" << std::endl;
-            return 1;
-        }
-        for (auto i : config["Templates"]) {
-            std::cout << i.second["Id"] << std::endl;
-            // temperat[(std::to_string(i.first)] = i.second;
-        }
+    static void Init(const std::string mapfilepath);
+    static std::shared_ptr<Util::Image> convertYAMLTileToImage(int id,
+                                                               int index);
 
-        return 0;
-    }
+private:
+    static std::string m_mapTileFilePath;
+    static std::shared_ptr<YAML::Node> m_mapTile;
 };
-
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_YAMLREADER_HPP

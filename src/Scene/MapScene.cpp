@@ -5,13 +5,15 @@
 #include "DrawOverlays.hpp"
 #include <iostream>
 void MapScene::Start() {
-    // yreader.readYAML();
 
-    reading.readBin();
-
+    reading.readBin("../assets/map/255/map.bin");
+    YAMLReader::Init("../assets/map/temperat.yaml");
+    auto images = reading.getTileImages();
+    m_Images = images;
+    OccupiedID::InitID();
     // image.SetImage("../assets/sprites/Shapes/B_Box.png");
     /*
-    OccupiedID::InitID();
+
     LOG_TRACE("Start");
 
     m_GameObjectList[0]->SetDrawable(
@@ -62,27 +64,11 @@ void MapScene::Start() {
 }
 
 void MapScene::Update() {
-    /*
     Util::Transform trans;
-    m_Map.Draw(trans, 0);
-    m_SceneCamera.Update();
-    m_Renderer.Update();
-    m_UI.Update();
-
-    Util::Transform trans2;
-    trans2.translation = Structure::ChangeToCell(
-        MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
-
-    auto tile = m_Map.getTileByCellPosition(MapClass::GlobalCoordToCellCoord(
-        MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition())));
-
-    if (tile->getClickable()) {
-        m_testdraw.setDrawMode(DrawOverlays::OverlayShapes::B_BOXES);
-    } else {
-        m_testdraw.setDrawMode(DrawOverlays::OverlayShapes::R_CROSS);
+    trans.scale = {10, 10};
+    trans.translation = {0, 0};
+    for (auto i : m_Images) {
+        i->DrawUsingCamera(trans, 3);
+        trans.translation.x += 24;
     }
-
-    m_testdraw.DrawUsingCamera(trans2, 1);
-    //  m_GameObjectManager.Update();
-     */
 }

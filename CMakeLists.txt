@@ -106,10 +106,13 @@ set(SRC_FILES
         ${SRC_DIR}/SpriteSheet.cpp
         ${SRC_DIR}/UI/UI.cpp
         ${SRC_DIR}/GameObjectID.cpp
+        ${SRC_DIR}/Map/YAMLReader.cpp
 
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
+        ${INCLUDE_DIR}/Map/MapbinReader.hpp
+        ${INCLUDE_DIR}/Map/YAMLReader.hpp
         ${INCLUDE_DIR}/Core/Context.hpp
         ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp
         ${INCLUDE_DIR}/Core/VertexArray.hpp
@@ -143,7 +146,6 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/Util/ImageArray.hpp
         ${INCLUDE_DIR}/Util/CustomizableImage.hpp
-
         ${INCLUDE_DIR}/Scene/MapScene.hpp
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/GameObjectManager.hpp

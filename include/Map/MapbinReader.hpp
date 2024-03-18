@@ -4,87 +4,72 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MAPBINREADER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MAPBINREADER_HPP
+#include "YAMLReader.hpp"
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <yaml-cpp/yaml.h>
 
 //../assets/map/CIFSTE/map.bin
+//"../assets/map/ore/map.bin"
 class MapbinReader {
 private:
+    std::vector<std::shared_ptr<Util::Image>> m_mapTileImage =
+        std::vector<std::shared_ptr<Util::Image>>({});
+
 public:
     MapbinReader() {}
     ~MapbinReader() {}
-    int readBin() {
 
+    static std::ifstream readBinFiles(const std::string filepath) {
+        std::ifstream file(filepath, std::ios::binary);
         // Open the binary file
-        // std::ifstream file("../assets/map/d09.jun", std::ios::binary);
-        std::ifstream file("../assets/map/test/map.bin", std::ios::binary);
-
         // Check if the file is opened successfully
         if (!file.is_open()) {
-            std::cerr << "Error opening file!" << std::endl;
-            return 1;
+            LOG_DEBUG("Error opening bin file!");
         }
+        return file;
+    }
+    int readBin(const std::string filepath) {
+        auto file = readBinFiles(filepath);
 
-        // Read the file byte by byte
-        unsigned char byte;
-        // Example byte with 8 bits
-        unsigned char eightBits; // Example byte: 10101010
+        unsigned char data;
 
-        // Truncate the two least significant bits to get 6 bits
-
-        // Process the byte (you need to know the file structure)
-        // For example, you might print each byte to the console
-        // read hex
         int i = 0;
-        std::string wordList =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
         int k = 0;
-        while (file.read(reinterpret_cast<char *>(&eightBits), 1)) {
-            unsigned char sixBits =
-                eightBits >> 2; // Right shift to drop 2 leastsignificant bits
-            // std::cout << std::bitset<6>(eightBits) << " ";
+        int imageId = 0;
+        int imageIndex = 0;
+        while (file.read(reinterpret_cast<char *>(&data), 1)) {
             if (i >= 17) {
-                std::cout << static_cast<int>(eightBits) << " ";
-
+                std::cout << static_cast<int>(data) << " ";
                 switch (k) {
                 case 0:
+                    imageId = static_cast<int>(data);
                     break;
                 case 1:
+                    imageIndex = static_cast<int>(data);
                     break;
                 case 2:
-                    k = 0;
+                    m_mapTileImage.push_back(YAMLReader::convertYAMLTileToImage(
+                        imageId, imageIndex));
+                    imageId = 0;
+                    k = -1;
+                    imageIndex = 0;
                     break;
                 }
+                k++;
             }
-
             i++;
         }
 
-        // 12+12*8=108
-        /*
-        unsigned char byte;
-        int max = 16;
-        unsigned int i = 0;
-        while (file.read(reinterpret_cast<char *>(&byte), sizeof(byte))) {
-
-            std::cout << std::hex << std::setw(2) << std::setfill('0')
-                      << static_cast<int>(byte) << " ";
-            if ((i - 17) % 5 == 0) {
-                std::cout << "\n";
-            }
-
-            i++;
-        }
-
-
-        std::cout << "\n" << std::to_string(i) << std::endl;
-        */
         // Close the file
         file.close();
 
         return 0;
+    }
+
+    std::vector<std::shared_ptr<Util::Image>> getTileImages() {
+        return this->m_mapTileImage;
     }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAPBINREADER_HPP
