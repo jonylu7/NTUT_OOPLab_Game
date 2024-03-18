@@ -6,8 +6,7 @@
 #include <iostream>
 void MapScene::Start() {
 
-    reading.readBin("../assets/map/europe/map.bin");
-    YAMLReader::Init("../assets/map/temperat.yaml");
+    reading.readBin("../assets/map/europe/map.bin", 204 * 161);
     auto images = reading.getTileImages();
     m_Images = images;
     // OccupiedID::InitID();
@@ -64,9 +63,9 @@ void MapScene::Start() {
 }
 
 void MapScene::Update() {
-
+    m_SceneCamera.Update();
     Util::Transform trans;
-    trans.scale = {10, 10};
+    trans.scale = {1, 1};
     trans.translation = {0, 0};
     for (auto i : m_Images) {
         i->DrawUsingCamera(trans, 3);

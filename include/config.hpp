@@ -33,4 +33,6 @@ constexpr unsigned int CAP_LIMIT = 200;
  */
 constexpr glm::vec2 CELL_SIZE = {48.F, 48.F};
 
+const std::string PATH_TO_TEMPERAT_TILESET_YAML = "../assets/map/temperat.yaml";
+
 #endif

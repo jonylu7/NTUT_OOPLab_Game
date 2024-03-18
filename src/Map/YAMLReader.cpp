@@ -3,17 +3,6 @@
 //
 #include "Map/YAMLReader.hpp"
 
-void YAMLReader::Init(const std::string mapfilepath) {
-    YAMLReader::m_mapTileFilePath = mapfilepath;
-    // Parse the YAML file
-    YAMLReader::m_mapTile =
-        std::make_shared<YAML::Node>(YAML::LoadFile(mapfilepath));
-
-    if (YAMLReader::m_mapTile->IsNull()) {
-        LOG_DEBUG("Error reading YAML file!");
-    }
-}
-
 std::shared_ptr<Util::Image> YAMLReader::convertYAMLTileToImage(int id,
                                                                 int index) {
     std::string str = std::to_string(index); // Example string
@@ -44,8 +33,6 @@ std::shared_ptr<Util::Image> YAMLReader::convertYAMLTileToImage(int id,
                                          convertedImageFileName);
 }
 
-std::string YAMLReader::m_mapTileFilePath;
-// Definition of static member
 // variable
 std::shared_ptr<YAML::Node> YAMLReader::m_mapTile =
-    std::make_shared<YAML::Node>(YAML::LoadFile("../assets/map/temperat.yaml"));
+    std::make_shared<YAML::Node>(YAML::LoadFile(PATH_TO_TEMPERAT_TILESET_YAML));

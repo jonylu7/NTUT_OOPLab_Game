@@ -11,12 +11,10 @@
 #include <yaml-cpp/yaml.h>
 class YAMLReader {
 public:
-    static void Init(const std::string mapfilepath);
     static std::shared_ptr<Util::Image> convertYAMLTileToImage(int id,
                                                                int index);
 
 private:
-    static std::string m_mapTileFilePath;
     static std::shared_ptr<YAML::Node> m_mapTile;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_YAMLREADER_HPP

@@ -30,7 +30,7 @@ public:
         }
         return file;
     }
-    int readBin(const std::string filepath) {
+    int readBin(const std::string filepath, int mapsize) {
         auto file = readBinFiles(filepath);
 
         unsigned char data;
@@ -40,7 +40,7 @@ public:
         int imageId = 0;
         int imageIndex = 0;
         while (file.read(reinterpret_cast<char *>(&data), 1)) {
-            if (i > 10000) {
+            if (i > mapsize) {
                 break;
             }
             if (i >= 17) {
