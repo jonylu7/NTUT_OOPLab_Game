@@ -83,7 +83,7 @@ public:
         if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
             position.x < 0 || position.y < 0) {
             LOG_DEBUG("False Position Getting");
-            return std::make_shared<TileClass>("null", 0, 0, 0,
+            return std::make_shared<TileClass>(unitType::TILE, 0, 0, 0,
                                                std::shared_ptr<Util::Image>());
         }
         return m_Map[position.x][position.y];
@@ -100,16 +100,6 @@ public:
     }
 
     void setGridActive(bool value) { m_Grid.SetActivate(value); }
-
-    // weird
-    static std::vector<std::shared_ptr<TileClass>>
-    readMapAndTileSet(std::vector<int> map, std::map<int, TileClass> tileset) {
-        std::vector<std::shared_ptr<TileClass>> maps;
-        for (int i = 0; i < map.size(); i++) {
-            maps.push_back(std::make_shared<TileClass>(tileset[map[i]]));
-        }
-        return maps;
-    }
 
 protected:
     void InitGrid() {

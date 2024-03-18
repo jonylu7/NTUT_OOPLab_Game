@@ -4,23 +4,30 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP
+#include "GameObjectID.hpp"
 #include "SpriteSheet.hpp"
-#include <map>
+
 class TileClass {
 public:
-    TileClass(const std::string name, bool buildable, bool walkable,
+    TileClass(const unitType unittype, bool buildable, bool walkable,
               bool clickable, std::shared_ptr<Core::Drawable> tileimage)
-        : m_Name(name),
+        : m_Id(GameObjectID(unittype)),
           m_Buildable(buildable),
           m_Walkable(walkable),
           m_Clickable(clickable),
           m_TileImage(tileimage) {}
+    
+    TileClass(const unitType unittype, bool buildable, bool walkable,
+              bool clickable)
+        : m_Id(GameObjectID(unittype)),
+          m_Buildable(buildable),
+          m_Walkable(walkable),
+          m_Clickable(clickable) {}
     TileClass()
-        : m_Name(""),
+        : m_Id(GameObjectID(unitType::null)),
           m_Buildable(false),
           m_Walkable(false),
-          m_Clickable(true),
-          m_TileImage() {}
+          m_Clickable(true) {}
     ~TileClass() {}
 
     bool getWalkable() { return m_Walkable; };
@@ -59,7 +66,7 @@ public:
         this->m_Clickable = tile.m_Clickable;
         this->m_TileImage = tile.m_TileImage;
         this->m_Buildable = tile.m_Buildable;
-        this->m_Name = tile.m_Name;
+        this->m_Id = tile.m_Id;
         return *this;
     }
 
@@ -68,7 +75,7 @@ private:
     bool m_Buildable;
     bool m_Clickable;
     std::shared_ptr<Core::Drawable> m_TileImage;
-    std::string m_Name;
+    GameObjectID m_Id;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP

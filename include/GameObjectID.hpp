@@ -23,7 +23,10 @@ enum class unitType {
     // Vehicles
     TRUCK,
     // null
-    null
+    null,
+
+    // tile
+    TILE
 };
 
 class OccupiedID {
@@ -32,7 +35,6 @@ private:
 
 public:
     static int getNewestID(unitType type);
-    static void removeID(unitType type, int id){};
     static void InitID();
 };
 

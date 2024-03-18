@@ -50,11 +50,6 @@ private:
     GameObjectManager m_GameObjectManager;
     Util::Renderer m_Renderer;
     UIClass m_UI;
-    // MapClass m_Map;
-    // std::map<int, TileClass> m_tileSets;
-    // std::vector<int> m_OgMap;
-    std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
-        std::make_shared<SpriteSheet>();
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP

@@ -13,10 +13,6 @@
 //../assets/map/CIFSTE/map.bin
 //"../assets/map/ore/map.bin"
 class MapbinReader {
-private:
-    std::vector<std::shared_ptr<Util::Image>> m_mapTileImage =
-        std::vector<std::shared_ptr<Util::Image>>({});
-
 public:
     MapbinReader() {}
     ~MapbinReader() {}
@@ -30,7 +26,11 @@ public:
         }
         return file;
     }
-    int readBin(const std::string filepath, int mapsize) {
+    std::vector<std::vector<std::shared_ptr<TileClass>>>
+    readBin(const std::string filepath, int width, int hieght) {
+
+        std::vector<std::vector<std::shared_ptr<TileClass>>> fullmap;
+        std::vector<std::shared_ptr<TileClass>> maprow;
         auto file = readBinFiles(filepath);
 
         unsigned char data;
@@ -40,7 +40,7 @@ public:
         int imageId = 0;
         int imageIndex = 0;
         while (file.read(reinterpret_cast<char *>(&data), 1)) {
-            if (i > mapsize) {
+            if (i > width * hieght) {
                 break;
             }
             if (i >= 17) {
@@ -53,8 +53,10 @@ public:
                     break;
                 case 2:
                     imageIndex = static_cast<int>(data);
-                    m_mapTileImage.push_back(YAMLReader::convertYAMLTileToImage(
-                        imageId, imageIndex));
+                    auto tileimage =
+                        YAMLReader::convertYAMLTileToImage(imageId, imageIndex);
+                    YAMLReader::convertYAMLTileToTileClass maprow.push_back(
+                        std::make_shared<TileClass>());
 
                     imageId = 0;
                     k = -1;
@@ -64,6 +66,7 @@ public:
                 }
                 k++;
             }
+
             i++;
         }
 
@@ -71,10 +74,6 @@ public:
         file.close();
 
         return 0;
-    }
-
-    std::vector<std::shared_ptr<Util::Image>> getTileImages() {
-        return this->m_mapTileImage;
     }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAPBINREADER_HPP
