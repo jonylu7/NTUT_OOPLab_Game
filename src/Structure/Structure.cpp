@@ -52,6 +52,9 @@ void Structure::updateFixed() {
     }
 }
 void Structure::updateMoveable() {
+    //debug
+    printf("debug message : Structure movable\n");
+    //
     glm::vec2 location = Util::Input::GetCursorPosition();
     location = MapClass::ScreenToGlobalCoord(location);
     this->SetObjectLocation(location);

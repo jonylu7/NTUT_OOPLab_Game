@@ -16,17 +16,17 @@ public:
         this->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
         m_Transform.scale={0.2,0.2};
         setCurrentCell({5,5});
-        setCurrentLocation(MapClass::CellCoordToGlobal(getCurrentCell()));
+        //setCurrentLocation(MapClass::CellCoordToGlobal(getCurrentCell()));
         SetVisible(true);
         m_grid.SetActivate(true);
 
-        m_wayPointUnit.setCurrentLocation(getCurrentLocation());
+        //m_wayPointUnit.setCurrentLocation(getCurrentLocation());
         m_wayPointUnit.setCurrentCell(getCurrentCell());
         m_wayPointUnit.SetVisible(true);
 
-        setTargetCell({20,20});
-        m_wayPointUnit.setTargetCell(getTargetCell());
-        m_wayPointUnit.findPath();
+        //setTargetCell({20,20});
+        //m_wayPointUnit.setTargetCell(getTargetCell());
+        //m_wayPointUnit.findPath(getTargetCell());
     }
     virtual void Update()override{
         Walk();

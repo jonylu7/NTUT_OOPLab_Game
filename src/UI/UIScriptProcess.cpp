@@ -3,20 +3,6 @@
 //
 #include "UI/UIScriptProcess.hpp"
 
-bool UIScriptProcess::GetIfFinished(std::shared_ptr<Structure> structure) {
-    if (std::dynamic_pointer_cast<Barracks>(structure)) {
-        return b_Baracks;
-    } else if (std::dynamic_pointer_cast<OreRefinery>(structure)) {
-        return b_OreRefinery;
-    } else if (std::dynamic_pointer_cast<PowerPlants>(structure)) {
-        return b_PowerPlants;
-    } else if (std::dynamic_pointer_cast<WarFactory>(structure)) {
-        return b_WarFactory;
-    } else if (std::dynamic_pointer_cast<ADVPowerPlants>(structure)) {
-        return b_ADVPowerPlant;
-    }
-}
-
 bool UIScriptProcess::GetIfFinished(unitType type) {
     if (type==unitType::BARRACKS) {
         return b_Baracks;
@@ -30,50 +16,84 @@ bool UIScriptProcess::GetIfFinished(unitType type) {
         return b_ADVPowerPlant;
     }
 }
-void UIScriptProcess::SetFinished(std::shared_ptr<Structure> structure) {
-    if (std::dynamic_pointer_cast<Barracks>(structure)) {
+void UIScriptProcess::SetFinished(unitType type) {
+    if (type==unitType::BARRACKS) {
         b_Baracks = true;
-    } else if (std::dynamic_pointer_cast<OreRefinery>(structure)) {
+    } else if (type==unitType::ORE_REF) {
         b_OreRefinery = true;
-    } else if (std::dynamic_pointer_cast<PowerPlants>(structure)) {
+    } else if (type==unitType::POWER_PLANT) {
         b_PowerPlants = true;
-    } else if (std::dynamic_pointer_cast<WarFactory>(structure)) {
+    } else if (type==unitType::WAR_FACT) {
         b_WarFactory = true;
-    } else if (std::dynamic_pointer_cast<ADVPowerPlants>(structure)) {
+    } else if (type==unitType::ADV_POWER_PLANT) {
         b_ADVPowerPlant = true;
     }
 }
+
+
 void UIScriptProcess::CountDown() {
     auto current = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = current - m_StartTime;
-    if (elapsed.count()>=TargetTime) {
-        SetFinished(temp_PTR);
+    if(b_STALL){
+        m_CDLeft=elapsed.count();
+        printf("(Button) %.0f CD: %.2f,%s\n",TargetTime,elapsed.count(),elapsed.count()>=TargetTime?"True":"False");
+    }
+    if (elapsed.count()>=TargetTime&&b_STALL) {
+        printf("(Button) Construction Finished\n");
+        SetFinished(m_currentStructure);
         b_STALL = false;
         return;
     }
-    Counter++;
 }
 void UIScriptProcess::SetCoolDown(float time) {
-    Counter = 0.F;
     TargetTime = time;
     m_StartTime = std::chrono::high_resolution_clock::now();
 }
 
-void UIScriptProcess::buttonEvent(std::shared_ptr<Structure> m_Structure) {
-    if (GetIfFinished(m_Structure)) {
+void UIScriptProcess::buttonEvent(unitType type) {
+    if (GetIfFinished(type)) {
         return;
     }
-    buildQueue.push(m_Structure);
+    buildQueue.push_back(type);
     return;
 }
 void UIScriptProcess::Update() {
     if (!buildQueue.empty() && !b_STALL) {
-        auto currentStructure = buildQueue.front();
-        buildQueue.pop();
-        temp_PTR = currentStructure;
+        m_currentStructure = buildQueue.front();
+        buildQueue.pop_front();
         b_STALL = true;
-        SetCoolDown(currentStructure->GetBuildingTime());
+        SetCoolDown(GetStructureTime(m_currentStructure));
     }
     CountDown();
 }
 
+float UIScriptProcess::GetStructureTime(unitType type){
+    if(type==unitType::POWER_PLANT){
+        return powerPlant->GetBuildingTime();
+    }
+    if(type==unitType::BARRACKS){
+        return barracks->GetBuildingTime();
+    }
+    if(type==unitType::ORE_REF){
+        return oreRefinery->GetBuildingTime();
+    }
+    if(type==unitType::WAR_FACT){
+        return warFactory->GetBuildingTime();
+    }
+    if(type==unitType::ADV_POWER_PLANT){
+        return advPowerPlant->GetBuildingTime();
+    }
+}
+void UIScriptProcess::SetUsed(unitType type){
+    if (type==unitType::BARRACKS) {
+        b_Baracks = false;
+    } else if (type==unitType::ORE_REF) {
+        b_OreRefinery = false;
+    } else if (type==unitType::POWER_PLANT) {
+        b_PowerPlants = false;
+    } else if (type==unitType::WAR_FACT) {
+        b_WarFactory = false;
+    } else if (type==unitType::ADV_POWER_PLANT) {
+        b_ADVPowerPlant = false;
+    }
+}

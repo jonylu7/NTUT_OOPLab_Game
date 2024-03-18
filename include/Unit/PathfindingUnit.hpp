@@ -9,6 +9,7 @@
 #include "Map.hpp"
 #include "Line.hpp"
 #include "Grid.hpp"
+#include "glm/glm.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
 
@@ -26,8 +27,6 @@ protected:
     std::vector<Line> m_lineVector;
     float defaultZIndex=15;
 private:
-
-
     glm::vec2 m_targetCell;
     glm::vec2 m_nextCell;
     glm::vec2 m_currentCell;
@@ -39,6 +38,8 @@ private:
     float m_Hp=100.F;
     float m_MovementSpeed=1.F;
     float m_Armor=5.f;
+
+    int moveDistance = 0;
 public:
     PathfindingUnit(){
         m_Transform.scale={1,1};
@@ -46,17 +47,25 @@ public:
     };
     virtual ~PathfindingUnit(){};
 
-    void setTargetCell(glm::vec2 target){this->m_targetCell=target;}
+    void setTargetCell(int x,int y){
+        this->m_targetCell={glm::vec2(x,y)};
+        }
     glm::vec2 getTargetCell(){return m_targetCell;}
 
-    void setCurrentCell(glm::vec2 target){this->m_currentCell=target;}
+    void setCurrentCell(glm::vec2 cell){
+        this->m_currentCell=glm::vec2(cell);
+        glm::vec2 temp =MapClass::CellCoordToGlobal(m_currentCell);
+        m_currentLocation={temp.x+CELL_SIZE.x/2,temp.y+CELL_SIZE.y/2};
+    }
     glm::vec2 getCurrentCell(){return m_currentCell;}
 
-    void setNextCell(glm::vec2 target){this->m_nextCell=target;}
+    void setNextCell(glm::vec2 cell){this->m_nextCell=glm::vec2(cell);}
     glm::vec2 getNextCell(){return m_nextCell;}
 
     glm::vec2 getCurrentLocation(){return m_currentLocation;}
-    void setCurrentLocation(glm::vec2 location){this->m_currentLocation=location;}
+
+    void setMovementSpeed(int speed){this->m_MovementSpeed=speed;}
+
 
     void findNextCellDir();
     void UpdateNextCell();
@@ -76,8 +85,9 @@ public:
     }
     virtual void Walk(){
         walkTowardNextCell();
-        if(getCurrentLocation()==MapClass::CellCoordToGlobal(getNextCell())){
+        if(moveDistance>=48){
             NextCell();
+            moveDistance = 0;
         }
     }
 

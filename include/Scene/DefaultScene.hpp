@@ -29,6 +29,7 @@
 #include "Util/Renderer.hpp"
 #include "Unit/Dummy.hpp"
 #include "Unit/PathfindingUnit.hpp"
+#include "Unit/WayPointUnit.hpp"
 
 class DefaultScene {
 public:
@@ -54,6 +55,7 @@ private:
         std::make_shared<SpriteSheet>();
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
     Dummy m_dummy;
+    WayPointUnit m_waypointUnit;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

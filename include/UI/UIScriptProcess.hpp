@@ -19,26 +19,43 @@
 
 class UIScriptProcess{
 private:
-    bool b_Baracks,b_OreRefinery,b_PowerPlants,b_WarFactory,b_ADVPowerPlant= false;
-    float Counter=0.F,TargetTime=0.F;
+    bool b_Baracks = false;
+    bool b_OreRefinery = false;
+    bool b_PowerPlants = false;
+    bool b_WarFactory = false;
+    bool b_ADVPowerPlant = false;
+    float TargetTime=0.F;
+    float m_CDLeft=0.f;
+    unitType m_currentStructure;
     bool b_STALL=false;
-    std::queue<std::shared_ptr<Structure>> buildQueue;
-    std::shared_ptr<Structure> temp_PTR;
+    std::deque<unitType> buildQueue;
     std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTime;
 public:
     UIScriptProcess(){};
     ~UIScriptProcess(){};
     //
-    bool GetIfFinished(std::shared_ptr<Structure> structure);
     bool GetIfFinished(unitType type);
-    void SetFinished(std::shared_ptr<Structure> structure);
+    void SetFinished(unitType type);
+    void SetUsed(unitType type);
+    float GetCDLeft(){ return m_CDLeft;}
     //Event
-    void buttonEvent(std::shared_ptr<Structure>(m_Structure));
-
+    void buttonEvent(unitType type);
     void Update();
 
     //CountDown
     void SetCoolDown(float time);
     void CountDown();
+    //transform to ptr
+    float GetStructureTime(unitType type);
+private:
+    std::shared_ptr<Structure> barracks = std::make_shared<Barracks>();
+    std::shared_ptr<Structure> oreRefinery = std::make_shared<OreRefinery>();
+    std::shared_ptr<Structure> powerPlant = std::make_shared<PowerPlants>();
+    std::shared_ptr<Structure> warFactory = std::make_shared<WarFactory>();
+    std::shared_ptr<Structure> advPowerPlant =
+        std::make_shared<ADVPowerPlants>();
+    std::vector<std::shared_ptr<Structure>> StructureArray = {
+        barracks, oreRefinery, powerPlant, warFactory, advPowerPlant,
+    };
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
