@@ -26,11 +26,12 @@ public:
         s_unitConstructCount[type] += value;
     }
     static void resetUnitConstructCount(unitType type) {
-        s_unitConstructCount[type] =0;
+        s_unitConstructCount[type] = 0;
     }
 
     std::unique_ptr<Structure> getSelectedBuilding();
-    bool getIfAnythingCanSelectToBuild();//避免Scene收到空的getSelectedBuilding
+    bool
+    getIfAnythingCanSelectToBuild(); // 避免Scene收到空的getSelectedBuilding
 
 private:
     UIScriptProcess ButtonScript;
@@ -38,10 +39,18 @@ private:
     void ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
                                    ImGuiMouseButton mouse_button);
     void ShowPlayerConstructionMenu();
+    void ShowHeaderSection();
+    void ShowBuildingTab();
+    void ShowInfantryTab();
+    void ShowDefTab();
+    void ShowVehTab();
 
     std::vector<ImVec2>
     getSpriteSheetCoordByIndex(std::shared_ptr<SpriteSheet> spritesheet,
                                int index);
+
+    std::shared_ptr<Util::CustomizableImage> m_image =
+        std::make_shared<Util::CustomizableImage>("../assets/sprites/p05.png");
     bool
     getImageButtonBySpriteSheetIndex(std::shared_ptr<SpriteSheet> spritesheet,
                                      int index);
@@ -57,11 +66,19 @@ private:
     Grid m_Grid;
     glm::vec2 m_GridSize = {100, 100};
 
-
-    //0318
+    // 0318
     bool getIfSelectToBuild(unitType type);
     void setSelectToBuild(unitType type);
     bool selectLock();
+
+    ImGuiIO &io = ImGui::GetIO();
+
+    ImFont *sacker_med = io.Fonts->AddFontFromFileTTF(
+        "../assets/fonts/sackersgothicstd-medium.otf", 100);
+    ImFont *sacker_heav = io.Fonts->AddFontFromFileTTF(
+        "../assets/fonts/sackersgothicstd-heavy.otf", 100);
+    ImFont *sacker_light = io.Fonts->AddFontFromFileTTF(
+        "../assets/fonts/sackersgothicstd-light.otf", 100);
 
     bool b_Baracks = false;
     bool b_OreRefinery = false;

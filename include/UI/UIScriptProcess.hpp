@@ -4,32 +4,33 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
-#include "Structure/Structure.hpp"
+#include "GameObjectID.hpp"
+#include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
+#include "Structure/Structure.hpp"
 #include "Structure/WarFactory.hpp"
-#include "Structure/AdvencePowerPlants.hpp"
-#include "GameObjectID.hpp"
-#include <queue>
-#include <future>
-#include <chrono>
 #include "Util/GameObject.hpp"
+#include <chrono>
+#include <future>
+#include <queue>
 
-
-class UIScriptProcess{
+class UIScriptProcess {
 private:
     bool b_Baracks = false;
     bool b_OreRefinery = false;
     bool b_PowerPlants = false;
     bool b_WarFactory = false;
     bool b_ADVPowerPlant = false;
-    float TargetTime=0.F;
-    float m_CDLeft=0.f;
+    float TargetTime = 0.F;
     unitType m_currentStructure;
-    bool b_STALL=false;
+    bool b_STALL = false;
     std::deque<unitType> buildQueue;
     std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTime;
+    std::chrono::time_point<std::chrono::high_resolution_clock>
+        m_CountDownCurrentTime;
+
 public:
     UIScriptProcess(){};
     ~UIScriptProcess(){};
@@ -37,16 +38,18 @@ public:
     bool GetIfFinished(unitType type);
     void SetFinished(unitType type);
     void SetUsed(unitType type);
-    float GetCDLeft(){ return m_CDLeft;}
-    //Event
+    float GetCDLeft();
+    std::string GetFormattedCD();
+    // Event
     void buttonEvent(unitType type);
     void Update();
 
-    //CountDown
+    // CountDown
     void SetCoolDown(float time);
     void CountDown();
-    //transform to ptr
+    // transform to ptr
     float GetStructureTime(unitType type);
+
 private:
     std::shared_ptr<Structure> barracks = std::make_shared<Barracks>();
     std::shared_ptr<Structure> oreRefinery = std::make_shared<OreRefinery>();

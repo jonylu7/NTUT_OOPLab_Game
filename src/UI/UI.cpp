@@ -17,6 +17,8 @@ void UIClass::Start() {
         "../assets/sprites/ICON_Allied_Infantry.png", 64, 48, 8, 0);
     m_VehiclesIconSpriteSheet->Start(
         "../assets/sprites/ICON_Allied_Vehicles.png", 64, 48, 12, 0);
+
+    io.FontGlobalScale *= 0.115f; // Adjust as needed
 }
 
 void UIClass::Update() {
@@ -31,7 +33,8 @@ void UIClass::Update() {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     ButtonScript.Update();
-    printf("(UI)Button Lock : %s,%s\n",selectLock()?"Unlock":"Lock",b_SelectToBuild?"True":"False");
+    // printf("(UI)Button Lock :
+    // %s,%s\n",selectLock()?"Unlock":"Lock",b_SelectToBuild?"True":"False");
 }
 
 void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
@@ -52,13 +55,7 @@ void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
     }
 }
 
-void UIClass::ShowPlayerConstructionMenu() {
-    auto windowSettings = ImGuiWindowFlags_NoMove |
-                          ImGuiWindowFlags_NoScrollbar |
-                          ImGuiWindowFlags_NoResize;
-
-    // put the stuff in here
-    ImGui::Begin("Structure Selection Menu", nullptr, windowSettings);
+void UIClass::ShowHeaderSection() {
 
     glm::vec2 CursorGlobalPosition = MapClass::ScreenToGlobalCoord(
         glm::vec2(Util::Input::GetCursorPosition()));
@@ -73,206 +70,30 @@ void UIClass::ShowPlayerConstructionMenu() {
     // m_SceneCamera.getCameraZoom()).c_str());
     ImGui::Text(fmt::format("$ {}", 1000).c_str());
     ImGui::Text(fmt::format("Power {}", 50).c_str());
-    ImGui::SetWindowSize(ImVec2(250, 580));
-    ImGui::SetWindowPos(ImVec2(992, 48));
+    ImGui::PushFont(sacker_med);
     if (ImGui::Button("Grid")) {
     }
+    ImGui::PopFont();
+}
+void UIClass::ShowPlayerConstructionMenu() {
+    auto windowSettings = ImGuiWindowFlags_NoMove |
+                          ImGuiWindowFlags_NoScrollbar |
+                          ImGuiWindowFlags_NoResize;
+
+    // put the stuff in here
+    ImGui::Begin("Structure Selection Menu", nullptr, windowSettings);
+    ShowHeaderSection();
+    ImGui::SetWindowSize(ImVec2(250, 580));
+    ImGui::SetWindowPos(ImVec2(992, 48));
+
+    // Adjust font texture size if necessary
+    // Larger font texture size may improve text clarity on high DPI displays
+
     if (ImGui::BeginTabBar("", ImGuiTabBarFlags_None)) {
-
-        if (ImGui::BeginTabItem("Build")) {
-            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
-                                                 7)) {
-                // power plants
-                if(selectLock()&&ButtonScript.GetIfFinished(unitType::POWER_PLANT)){
-                    setSelectToBuild(unitType::POWER_PLANT);
-                }else{
-                    ButtonScript.buttonEvent(unitType::POWER_PLANT);
-                }
-
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
-                                                 22)) {
-                // barracks
-                if(selectLock()&&ButtonScript.GetIfFinished(unitType::BARRACKS)) {
-                    setSelectToBuild(unitType::BARRACKS);
-                }else {
-                    ButtonScript.buttonEvent(unitType::BARRACKS);
-                }
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
-                                                 8)) {
-                // ore
-                if(selectLock()&&ButtonScript.GetIfFinished(unitType::ORE_REF)) {
-                    setSelectToBuild(unitType::ORE_REF);
-                }else {
-                    ButtonScript.buttonEvent(unitType::ORE_REF);
-                }
-                LOG_DEBUG("TEST");
-            }
-
-            ImGui::NewLine();
-            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
-                                                 20)) {
-                // war factory
-                if(selectLock()&&ButtonScript.GetIfFinished(unitType::WAR_FACT)) {
-                    setSelectToBuild(unitType::WAR_FACT);
-                }else {
-                    ButtonScript.buttonEvent(unitType::WAR_FACT);
-                }
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
-                                                 1)) {
-                // advance power
-                if(selectLock()&&ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT)) {
-                    setSelectToBuild(unitType::ADV_POWER_PLANT);
-                }else {
-                    ButtonScript.buttonEvent(unitType::ADV_POWER_PLANT);
-                }
-                LOG_DEBUG("TEST");
-            }
-            if (ImGui::Button("Radar Dome")) {
-                LOG_DEBUG("TEST");
-            }
-            if (ImGui::Button("Service Depot")) {
-                LOG_DEBUG("TEST");
-            }
-            if (ImGui::Button("Tech Center")) {
-                LOG_DEBUG("TEST");
-            }
-            ImGui::EndTabItem();
-        }
-        if (ImGui::BeginTabItem("Def")) {
-            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
-                                                 18)) {
-                // sandbags
-                setUnitConstructCount(unitType::SANDBAGS, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
-                                                 16)) {
-                // pillbox
-                setUnitConstructCount(unitType::PILLBOX, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet,
-                                                 14)) {
-                // turret
-                setUnitConstructCount(unitType::TURRET, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::EndTabItem();
-        }
-
-        if (ImGui::BeginTabItem("Inf")) {
-            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
-                                                 0)) {
-                // rifle
-                setUnitConstructCount(unitType::INFANTRY, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
-                                                 1)) {
-                // rocket
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
-                                                 2)) {
-                // engineer
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::NewLine();
-            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
-                                                 3)) {
-                // medic
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet,
-                                                 6)) {
-                // tanya
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::EndTabItem();
-        }
-
-        if (ImGui::BeginTabItem("Veh")) {
-            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
-                                                 0)) {
-                // lightTank
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
-                                                 1)) {
-                // mediumTank
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
-                                                 4)) {
-                // Art
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::NewLine();
-            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
-                                                 4)) {
-                // Art
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
-                                                 8)) {
-                // OreTruck
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
-                                                 4)) {
-                // Art
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::NewLine();
-            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
-                                                 9)) {
-                // MCV
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet,
-                                                 11)) {
-                // DemoTruck
-                // setUnitConstructCount(unitType::, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("Truck")) {
-                // truck
-                setUnitConstructCount(unitType::TRUCK, 1);
-                LOG_DEBUG("TEST");
-            }
-            ImGui::EndTabItem();
-        }
+        ShowBuildingTab();
+        ShowDefTab();
+        ShowInfantryTab();
+        ShowVehTab();
 
         ImGui::EndTabBar();
     }
@@ -293,11 +114,216 @@ UIClass::getSpriteSheetCoordByIndex(std::shared_ptr<SpriteSheet> spritesheet,
                  .y)});
 }
 
+void UIClass::ShowBuildingTab() {
+    if (ImGui::BeginTabItem("Build")) {
+        if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 7)) {
+            // power plants
+            if (selectLock() &&
+                ButtonScript.GetIfFinished(unitType::POWER_PLANT)) {
+                setSelectToBuild(unitType::POWER_PLANT);
+            } else {
+                ButtonScript.buttonEvent(unitType::POWER_PLANT);
+            }
+        }
+
+        ImDrawList *dl = ImGui::GetWindowDrawList();
+        ImVec2 p = ImGui::GetCursorScreenPos();
+        p.x += 5.F;
+        p.y -= 38.F;
+        ImGui::PushFont(sacker_heav);
+
+        std::string s =
+            std::string(fmt::format("00:{:.0f}", ButtonScript.GetCDLeft()));
+        dl->AddText(p, IM_COL32(2, 255, 2, 255), s.c_str());
+
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 22)) {
+            // barracks
+            if (selectLock() &&
+                ButtonScript.GetIfFinished(unitType::BARRACKS)) {
+                setSelectToBuild(unitType::BARRACKS);
+            } else {
+                ButtonScript.buttonEvent(unitType::BARRACKS);
+            }
+        }
+        p.x += 80.F;
+        dl->AddText(p, IM_COL32(2, 255, 2, 255), "sometext");
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 8)) {
+            // ore
+            if (selectLock() && ButtonScript.GetIfFinished(unitType::ORE_REF)) {
+                setSelectToBuild(unitType::ORE_REF);
+            } else {
+                ButtonScript.buttonEvent(unitType::ORE_REF);
+            }
+        }
+        p.x += 80.F;
+        dl->AddText(p, IM_COL32(2, 255, 2, 255), "sometext");
+        ImGui::NewLine();
+        if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 20)) {
+
+            // war factory
+            if (selectLock() &&
+                ButtonScript.GetIfFinished(unitType::WAR_FACT)) {
+                setSelectToBuild(unitType::WAR_FACT);
+            } else {
+                ButtonScript.buttonEvent(unitType::WAR_FACT);
+            }
+        }
+        dl = ImGui::GetWindowDrawList();
+        p = ImGui::GetCursorScreenPos();
+        p.x += 5.F;
+        p.y -= 38.F;
+        dl->AddText(p, IM_COL32(2, 255, 2, 255), "sometext");
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 1)) {
+            // advance power
+            if (selectLock() &&
+                ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT)) {
+                setSelectToBuild(unitType::ADV_POWER_PLANT);
+            } else {
+                ButtonScript.buttonEvent(unitType::ADV_POWER_PLANT);
+            }
+            LOG_DEBUG("TEST");
+        }
+        p.x += 80.F;
+        dl->AddText(p, IM_COL32(2, 255, 2, 255), "sometext");
+
+        ImGui::NewLine();
+        if (ImGui::Button("Radar Dome")) {
+            LOG_DEBUG("TEST");
+        }
+        if (ImGui::Button("Service Depot")) {
+            LOG_DEBUG("TEST");
+        }
+        if (ImGui::Button("Tech Center")) {
+            LOG_DEBUG("TEST");
+        }
+        ImGui::PopFont();
+        ImGui::EndTabItem();
+    }
+};
+
+void UIClass::ShowInfantryTab() {
+    if (ImGui::BeginTabItem("Inf")) {
+        if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 0)) {
+            // rifle
+            setUnitConstructCount(unitType::INFANTRY, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 1)) {
+            // rocket
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 2)) {
+            // engineer
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::NewLine();
+        if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 3)) {
+            // medic
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 6)) {
+            // tanya
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::EndTabItem();
+    }
+};
+void UIClass::ShowDefTab() {
+    if (ImGui::BeginTabItem("Def")) {
+        if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 18)) {
+            // sandbags
+            setUnitConstructCount(unitType::SANDBAGS, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 16)) {
+            // pillbox
+            setUnitConstructCount(unitType::PILLBOX, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 14)) {
+            // turret
+            setUnitConstructCount(unitType::TURRET, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::EndTabItem();
+    }
+};
+void UIClass::ShowVehTab() {
+    if (ImGui::BeginTabItem("Veh")) {
+        if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 0)) {
+            // lightTank
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 1)) {
+            // mediumTank
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 4)) {
+            // Art
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::NewLine();
+        if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 4)) {
+            // Art
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 8)) {
+
+            // OreTruck
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 4)) {
+            // Art
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::NewLine();
+        if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 9)) {
+            // MCV
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 11)) {
+            // DemoTruck
+            // setUnitConstructCount(unitType::, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Truck")) {
+            // truck
+            setUnitConstructCount(unitType::TRUCK, 1);
+            LOG_DEBUG("TEST");
+        }
+        ImGui::EndTabItem();
+    }
+};
+
 bool UIClass::getImageButtonBySpriteSheetIndex(
     std::shared_ptr<SpriteSheet> spritesheet, int index) {
     std::string Text = "test";
-    ImDrawList *dl = ImGui::GetWindowDrawList();
-    dl->AddText(ImVec2(100.f, 100.f), IM_COL32(255, 255, 255, 100), "TEST");
+
     auto uvcoord = getSpriteSheetCoordByIndex(spritesheet, index);
     return ImGui::ImageButton(
         (void *)(intptr_t)spritesheet->getGlunitByIndex(index),
@@ -317,69 +343,75 @@ void UIClass::InitUnitQueue() {
     UIClass::s_unitConstructCount[unitType::INFANTRY] = 0;
     UIClass::s_unitConstructCount[unitType::TRUCK] = 0;
 }
-std::unique_ptr<Structure> UIClass::getSelectedBuilding(){
-    b_SelectToBuild  = false;
-    if(getIfSelectToBuild(unitType::BARRACKS)){
-        setUnitConstructCount(unitType::BARRACKS,1);
-        b_Baracks= false;
+std::unique_ptr<Structure> UIClass::getSelectedBuilding() {
+    b_SelectToBuild = false;
+    if (getIfSelectToBuild(unitType::BARRACKS)) {
+        setUnitConstructCount(unitType::BARRACKS, 1);
+        b_Baracks = false;
         ButtonScript.SetUsed(unitType::BARRACKS);
         return std::make_unique<Barracks>();
     }
-    if(getIfSelectToBuild(unitType::ORE_REF)){
-        setUnitConstructCount(unitType::ORE_REF,1);
-        b_OreRefinery= false;
+    if (getIfSelectToBuild(unitType::ORE_REF)) {
+        setUnitConstructCount(unitType::ORE_REF, 1);
+        b_OreRefinery = false;
         ButtonScript.SetUsed(unitType::ORE_REF);
         return std::make_unique<OreRefinery>();
     }
-    if(getIfSelectToBuild(unitType::POWER_PLANT)){
-        setUnitConstructCount(unitType::POWER_PLANT,1);
-        b_PowerPlants= false;
+    if (getIfSelectToBuild(unitType::POWER_PLANT)) {
+        setUnitConstructCount(unitType::POWER_PLANT, 1);
+        b_PowerPlants = false;
         ButtonScript.SetUsed(unitType::POWER_PLANT);
         return std::make_unique<PowerPlants>();
     }
-    if(getIfSelectToBuild(unitType::WAR_FACT)){
-        setUnitConstructCount(unitType::WAR_FACT,1);
-        b_WarFactory= false;
+    if (getIfSelectToBuild(unitType::WAR_FACT)) {
+        setUnitConstructCount(unitType::WAR_FACT, 1);
+        b_WarFactory = false;
         ButtonScript.SetUsed(unitType::WAR_FACT);
         return std::make_unique<WarFactory>();
     }
-    if(getIfSelectToBuild(unitType::ADV_POWER_PLANT)){
-        setUnitConstructCount(unitType::ADV_POWER_PLANT,1);
-        b_ADVPowerPlant= false;
+    if (getIfSelectToBuild(unitType::ADV_POWER_PLANT)) {
+        setUnitConstructCount(unitType::ADV_POWER_PLANT, 1);
+        b_ADVPowerPlant = false;
         ButtonScript.SetUsed(unitType::ADV_POWER_PLANT);
         return std::make_unique<ADVPowerPlants>();
     }
 }
-bool UIClass::getIfSelectToBuild(unitType type){
-    if (type==unitType::BARRACKS) {
+bool UIClass::getIfSelectToBuild(unitType type) {
+    if (type == unitType::BARRACKS) {
         return b_Baracks;
-    } else if (type==unitType::ORE_REF) {
+    } else if (type == unitType::ORE_REF) {
         return b_OreRefinery;
-    } else if (type==unitType::POWER_PLANT) {
+    } else if (type == unitType::POWER_PLANT) {
         return b_PowerPlants;
-    } else if (type==unitType::WAR_FACT) {
+    } else if (type == unitType::WAR_FACT) {
         return b_WarFactory;
-    } else if (type==unitType::ADV_POWER_PLANT) {
+    } else if (type == unitType::ADV_POWER_PLANT) {
         return b_ADVPowerPlant;
     }
 }
-void UIClass::setSelectToBuild(unitType type){
-    b_SelectToBuild  = true;
-    if (type==unitType::BARRACKS) {
-        b_Baracks= true;
-    } else if (type==unitType::ORE_REF) {
-        b_OreRefinery= true;
-    } else if (type==unitType::POWER_PLANT) {
-        b_PowerPlants= true;
-    } else if (type==unitType::WAR_FACT) {
-        b_WarFactory= true;
-    } else if (type==unitType::ADV_POWER_PLANT) {
-        b_ADVPowerPlant= true;
+void UIClass::setSelectToBuild(unitType type) {
+    b_SelectToBuild = true;
+    if (type == unitType::BARRACKS) {
+        b_Baracks = true;
+    } else if (type == unitType::ORE_REF) {
+        b_OreRefinery = true;
+    } else if (type == unitType::POWER_PLANT) {
+        b_PowerPlants = true;
+    } else if (type == unitType::WAR_FACT) {
+        b_WarFactory = true;
+    } else if (type == unitType::ADV_POWER_PLANT) {
+        b_ADVPowerPlant = true;
     }
 }
-bool UIClass::selectLock(){
-    return !(b_Baracks|b_OreRefinery|b_PowerPlants|b_WarFactory|b_ADVPowerPlant);
+bool UIClass::selectLock() {
+    return !(b_Baracks | b_OreRefinery | b_PowerPlants | b_WarFactory |
+             b_ADVPowerPlant);
 }
-bool UIClass::getIfAnythingCanSelectToBuild(){
-    return b_SelectToBuild&&(ButtonScript.GetIfFinished(unitType::BARRACKS)||ButtonScript.GetIfFinished(unitType::POWER_PLANT)||ButtonScript.GetIfFinished(unitType::ORE_REF)||ButtonScript.GetIfFinished(unitType::WAR_FACT)||ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT));
+bool UIClass::getIfAnythingCanSelectToBuild() {
+    return b_SelectToBuild &&
+           (ButtonScript.GetIfFinished(unitType::BARRACKS) ||
+            ButtonScript.GetIfFinished(unitType::POWER_PLANT) ||
+            ButtonScript.GetIfFinished(unitType::ORE_REF) ||
+            ButtonScript.GetIfFinished(unitType::WAR_FACT) ||
+            ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT));
 }

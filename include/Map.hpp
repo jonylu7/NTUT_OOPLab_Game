@@ -79,21 +79,17 @@ public:
                          int(cellCoord[1] * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
     }
 
-    static std::shared_ptr<TileClass> getTileByCellPosition(glm::vec2 position) {
-        /*
+    std::shared_ptr<TileClass> getTileByCellPosition(glm::vec2 position) {
+
         if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
             position.x < 0 || position.y < 0) {
-            LOG_DEBUG("False Position Getting");
             return std::make_shared<TileClass>("null", 0, 0, 0, 0);
         }
         return m_Map[position.x][position.y];
-         */
-        return std::make_shared<TileClass>("null", 0, 0, 0, 0);
-
     }
 
     static void setTileByCellPosition(glm::vec2 position,
-                               std::shared_ptr<TileClass> tile) {
+                                      std::shared_ptr<TileClass> tile) {
         /*
         if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
             position.x < 0 || position.y < 0) {

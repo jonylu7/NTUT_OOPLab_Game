@@ -13,8 +13,6 @@ void DefaultScene::Start() {
     m_TileSetSpriteSheet->Start("../assets/sprites/TILESET_Field.png", 24, 24,
                                 20, 0);
 
-    m_OgMap = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    m_OgMap = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     std::vector<std::shared_ptr<TileClass>> maps;
     for (unsigned int i = 0; i < 10; i++) {
         maps.push_back(std::make_shared<TileClass>("rock-" + std::to_string(i),
@@ -31,20 +29,18 @@ void DefaultScene::Start() {
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
 
-
-    //m_dummy.Start();
-    m_waypointUnit.setCurrentCell({glm::vec2(0,0)});
-    m_waypointUnit.setNextCell({glm::vec2(0,0)});
-    m_waypointUnit.findPath(15,10);
-
+    // m_dummy.Start();
+    m_waypointUnit.setCurrentCell({glm::vec2(0, 0)});
+    m_waypointUnit.setNextCell({glm::vec2(0, 0)});
+    m_waypointUnit.findPath(15, 10);
 }
 
 void DefaultScene::Update() {
-    //m_dummy.Update();
+    // m_dummy.Update();
 
     m_waypointUnit.Update();
 
-    for(auto i :m_BuiltStructure){
+    for (auto i : m_BuiltStructure) {
         i->Update();
     }
 
@@ -70,8 +66,7 @@ void DefaultScene::Update() {
     m_testdraw.DrawUsingCamera(trans2, 1);
     //  m_GameObjectManager.Update();
 
-
-    if(m_UI.getIfAnythingCanSelectToBuild()){
+    if (m_UI.getIfAnythingCanSelectToBuild()) {
         m_BuiltStructure.push_back(m_UI.getSelectedBuilding());
         m_BuiltStructure.back()->Start();
         printf("(Scene) Structure Started\n");
