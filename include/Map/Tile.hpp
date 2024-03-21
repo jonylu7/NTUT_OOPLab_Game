@@ -16,7 +16,7 @@ public:
           m_Walkable(walkable),
           m_Clickable(clickable),
           m_TileImage(tileimage) {}
-    
+
     TileClass(const unitType unittype, bool buildable, bool walkable,
               bool clickable)
         : m_Id(GameObjectID(unittype)),

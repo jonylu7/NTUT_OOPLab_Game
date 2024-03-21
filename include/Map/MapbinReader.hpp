@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MAPBINREADER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MAPBINREADER_HPP
+#include "Tile.hpp"
 #include "YAMLReader.hpp"
 #include <fstream>
 #include <iostream>
@@ -30,7 +31,7 @@ public:
     readBin(const std::string filepath, int width, int hieght) {
 
         std::vector<std::vector<std::shared_ptr<TileClass>>> fullmap;
-        std::vector<std::shared_ptr<TileClass>> maprow;
+        std::vector<std::shared_ptr<TileClass>> mapRow;
         auto file = readBinFiles(filepath);
 
         unsigned char data;
@@ -55,9 +56,10 @@ public:
                     imageIndex = static_cast<int>(data);
                     auto tileimage =
                         YAMLReader::convertYAMLTileToImage(imageId, imageIndex);
-                    YAMLReader::convertYAMLTileToTileClass maprow.push_back(
-                        std::make_shared<TileClass>());
 
+                    auto tile = YAMLReader::convertYAMLTileToTileClass(
+                        imageId, imageIndex);
+                    mapRow.push_back(tile);
                     imageId = 0;
                     k = -1;
                     imageIndex = 0;
@@ -68,12 +70,16 @@ public:
             }
 
             i++;
+            if (i % width == 0) {
+                fullmap.push_back(mapRow);
+                mapRow.clear();
+            }
         }
 
         // Close the file
         file.close();
 
-        return 0;
+        return fullmap;
     }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAPBINREADER_HPP

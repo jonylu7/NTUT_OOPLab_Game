@@ -111,6 +111,7 @@ set(SRC_FILES
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
+        ${INCLUDE_DIR}/Util/AssetStore.hpp
         ${INCLUDE_DIR}/Map/MapbinReader.hpp
         ${INCLUDE_DIR}/Map/YAMLReader.hpp
         ${INCLUDE_DIR}/Core/Context.hpp

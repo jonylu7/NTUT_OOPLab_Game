@@ -1,8 +1,8 @@
 #ifndef UTIL_SFX_HPP
 #define UTIL_SFX_HPP
 
+#include "Util/AssetStore.hpp"
 #include "pch.hpp" // IWYU pragma: export
-
 namespace Util {
 
 /**
@@ -90,13 +90,9 @@ public:
     void FadeIn(unsigned int tick, int oop = -1, unsigned int duration = -1);
 
 private:
-    // Use functor instead of function pointer as deleter to
-    // make it  less confusing.
-    struct ChunkDeleter {
-        void operator()(Mix_Chunk *chunk) { Mix_FreeChunk(chunk); }
-    };
+    static Util::AssetStore<std::shared_ptr<Mix_Chunk>> s_Store;
 
-    std::unique_ptr<Mix_Chunk, ChunkDeleter> m_Chunk;
+    std::unique_ptr<Mix_Chunk> m_Chunk;
 };
 
 } // namespace Util

@@ -6,9 +6,7 @@
 #include <iostream>
 void MapScene::Start() {
 
-    reading.readBin("../assets/map/europe/map.bin", 204 * 161);
-    auto images = reading.getTileImages();
-    m_Images = images;
+    reading.readBin("../assets/map/europe/map.bin", 204, 161);
     // OccupiedID::InitID();
     //  image.SetImage("../assets/sprites/Shapes/B_Box.png");
     /*
@@ -67,8 +65,4 @@ void MapScene::Update() {
     Util::Transform trans;
     trans.scale = {1, 1};
     trans.translation = {0, 0};
-    for (auto i : m_Images) {
-        i->DrawUsingCamera(trans, 3);
-        trans.translation.x += 24;
-    }
 }

@@ -4,8 +4,8 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_YAMLREADER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_YAMLREADER_HPP
-
 #include "TerrainConfig.hpp"
+#include "Tile.hpp"
 #include "Util/Image.hpp"
 #include <fstream>
 #include <iostream>
@@ -15,8 +15,8 @@ public:
     static std::shared_ptr<Util::Image> convertYAMLTileToImage(int id,
                                                                int index);
 
-    static std::shared_ptr<Util::Image> convertYAMLTileToTileClass(int id,
-                                                                   int index);
+    static std::shared_ptr<TileClass> convertYAMLTileToTileClass(int id,
+                                                                 int index);
 
 private:
     static std::shared_ptr<YAML::Node> m_mapTile;
