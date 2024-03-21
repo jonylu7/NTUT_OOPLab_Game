@@ -36,16 +36,21 @@ public:
     ~UIScriptProcess(){};
     //
     bool GetIfFinished(unitType type);
-    void SetFinished(unitType type);
-    void SetUsed(unitType type);
+    // if b_Stall==false not currently building
+    // true currently is building
+    void SetSTALL(bool value) { b_STALL = value; };
+    /*
+     * false for used, true for finished
+     */
+    void SetIfFinished(unitType type, bool value);
     float GetCDLeft();
     std::string GetFormattedCD();
     // Event
-    void buttonEvent(unitType type);
+    void AddToBuildQueue(unitType type);
     void Update();
 
     // CountDown
-    void SetCoolDown(float time);
+    void SetCountDown(float time);
     void CountDown();
     // transform to ptr
     float GetStructureTime(unitType type);

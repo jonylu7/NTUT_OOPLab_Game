@@ -122,7 +122,7 @@ void UIClass::ShowBuildingTab() {
                 ButtonScript.GetIfFinished(unitType::POWER_PLANT)) {
                 setSelectToBuild(unitType::POWER_PLANT);
             } else {
-                ButtonScript.buttonEvent(unitType::POWER_PLANT);
+                ButtonScript.AddToBuildQueue(unitType::POWER_PLANT);
             }
         }
 
@@ -142,7 +142,7 @@ void UIClass::ShowBuildingTab() {
                 ButtonScript.GetIfFinished(unitType::BARRACKS)) {
                 setSelectToBuild(unitType::BARRACKS);
             } else {
-                ButtonScript.buttonEvent(unitType::BARRACKS);
+                ButtonScript.AddToBuildQueue(unitType::BARRACKS);
             }
         }
         p.x += 80.F;
@@ -156,7 +156,7 @@ void UIClass::ShowBuildingTab() {
             if (selectLock() && ButtonScript.GetIfFinished(unitType::ORE_REF)) {
                 setSelectToBuild(unitType::ORE_REF);
             } else {
-                ButtonScript.buttonEvent(unitType::ORE_REF);
+                ButtonScript.AddToBuildQueue(unitType::ORE_REF);
             }
         }
         p.x += 80.F;
@@ -171,7 +171,7 @@ void UIClass::ShowBuildingTab() {
                 ButtonScript.GetIfFinished(unitType::WAR_FACT)) {
                 setSelectToBuild(unitType::WAR_FACT);
             } else {
-                ButtonScript.buttonEvent(unitType::WAR_FACT);
+                ButtonScript.AddToBuildQueue(unitType::WAR_FACT);
             }
         }
         dl = ImGui::GetWindowDrawList();
@@ -189,7 +189,7 @@ void UIClass::ShowBuildingTab() {
                 ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT)) {
                 setSelectToBuild(unitType::ADV_POWER_PLANT);
             } else {
-                ButtonScript.buttonEvent(unitType::ADV_POWER_PLANT);
+                ButtonScript.AddToBuildQueue(unitType::ADV_POWER_PLANT);
             }
             LOG_DEBUG("TEST");
         }
@@ -358,31 +358,31 @@ std::unique_ptr<Structure> UIClass::getSelectedBuilding() {
     if (getIfSelectToBuild(unitType::BARRACKS)) {
         setUnitConstructCount(unitType::BARRACKS, 1);
         b_Baracks = false;
-        ButtonScript.SetUsed(unitType::BARRACKS);
+        ButtonScript.SetIfFinished(unitType::BARRACKS, false);
         return std::make_unique<Barracks>();
     }
     if (getIfSelectToBuild(unitType::ORE_REF)) {
         setUnitConstructCount(unitType::ORE_REF, 1);
         b_OreRefinery = false;
-        ButtonScript.SetUsed(unitType::ORE_REF);
+        ButtonScript.SetIfFinished(unitType::ORE_REF, false);
         return std::make_unique<OreRefinery>();
     }
     if (getIfSelectToBuild(unitType::POWER_PLANT)) {
         setUnitConstructCount(unitType::POWER_PLANT, 1);
         b_PowerPlants = false;
-        ButtonScript.SetUsed(unitType::POWER_PLANT);
+        ButtonScript.SetIfFinished(unitType::POWER_PLANT, false);
         return std::make_unique<PowerPlants>();
     }
     if (getIfSelectToBuild(unitType::WAR_FACT)) {
         setUnitConstructCount(unitType::WAR_FACT, 1);
         b_WarFactory = false;
-        ButtonScript.SetUsed(unitType::WAR_FACT);
+        ButtonScript.SetIfFinished(unitType::WAR_FACT, false);
         return std::make_unique<WarFactory>();
     }
     if (getIfSelectToBuild(unitType::ADV_POWER_PLANT)) {
         setUnitConstructCount(unitType::ADV_POWER_PLANT, 1);
         b_ADVPowerPlant = false;
-        ButtonScript.SetUsed(unitType::ADV_POWER_PLANT);
+        ButtonScript.SetIfFinished(unitType::ADV_POWER_PLANT, false);
         return std::make_unique<ADVPowerPlants>();
     }
 }

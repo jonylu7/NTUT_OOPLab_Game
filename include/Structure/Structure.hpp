@@ -28,7 +28,6 @@ public:
         m_CurrentState = updateMode::Invisidable;
     };
 
-
     Structure(float electricPower, float buildingTime, float buildingCost,
               float buildingHp, GameObjectID id)
         : electricPower(electricPower),
@@ -55,12 +54,19 @@ public:
     glm::vec2 GetTranScale() { return m_Transform.scale; };
     virtual void SetAttachVisible(bool visible);
     glm::vec2 GetDrawLocation() { return DrawLocation; };
+    void SetID(GameObjectID id) { m_ID = id; };
 
     static glm::vec2 ChangeToCell(glm::vec2 location);
     virtual void onSelected(bool selected);
     virtual void attachmentUpdate(); // this function now will update
                                      // attachment's location and draw as well
-    bool getBuilt(){ if(m_CurrentState==updateMode::Fixed){return true;}else{return false;}}
+    bool getBuilt() {
+        if (m_CurrentState == updateMode::Fixed) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /*
     void SetElectricPower(float electricPower);
     void SetBuildingTime(float buildingTime);
@@ -77,6 +83,7 @@ public:
     float GetBuildingTime();
     float GetBuildingCost();
     float GetBuildingHp();
+    GameObjectID GetID() { return m_ID; }
 
 private:
     updateMode m_CurrentState = updateMode::Invisidable;
@@ -89,7 +96,6 @@ private:
     float buildingHp;
     HighLight m_HighLight;
     GameObjectID m_ID;
-
 
 protected:
     bool b_selected = false;

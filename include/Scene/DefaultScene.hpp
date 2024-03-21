@@ -22,14 +22,14 @@
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
 #include "UI/UI.hpp"
+#include "Unit/Dummy.hpp"
+#include "Unit/PathfindingUnit.hpp"
+#include "Unit/WayPointUnit.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Renderer.hpp"
-#include "Unit/Dummy.hpp"
-#include "Unit/PathfindingUnit.hpp"
-#include "Unit/WayPointUnit.hpp"
 
 class DefaultScene {
 public:
@@ -53,7 +53,7 @@ private:
     std::vector<int> m_OgMap;
     std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
         std::make_shared<SpriteSheet>();
-    std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
+    GameObjectManager m_Manager;
     Dummy m_dummy;
     WayPointUnit m_waypointUnit;
 };

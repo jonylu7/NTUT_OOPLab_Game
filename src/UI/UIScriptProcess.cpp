@@ -5,29 +5,17 @@
 #include <iomanip>
 #include <sstream>
 bool UIScriptProcess::GetIfFinished(unitType type) {
-    if (type == unitType::BARRACKS) {
+    switch (type) {
+    case unitType::BARRACKS:
         return b_Baracks;
-    } else if (type == unitType::ORE_REF) {
+    case unitType::ORE_REF:
         return b_OreRefinery;
-    } else if (type == unitType::POWER_PLANT) {
+    case unitType::POWER_PLANT:
         return b_PowerPlants;
-    } else if (type == unitType::WAR_FACT) {
+    case unitType::WAR_FACT:
         return b_WarFactory;
-    } else if (type == unitType::ADV_POWER_PLANT) {
+    case unitType::ADV_POWER_PLANT:
         return b_ADVPowerPlant;
-    }
-}
-void UIScriptProcess::SetFinished(unitType type) {
-    if (type == unitType::BARRACKS) {
-        b_Baracks = true;
-    } else if (type == unitType::ORE_REF) {
-        b_OreRefinery = true;
-    } else if (type == unitType::POWER_PLANT) {
-        b_PowerPlants = true;
-    } else if (type == unitType::WAR_FACT) {
-        b_WarFactory = true;
-    } else if (type == unitType::ADV_POWER_PLANT) {
-        b_ADVPowerPlant = true;
     }
 }
 
@@ -53,7 +41,7 @@ std::string UIScriptProcess::GetFormattedCD() {
     sec << std::setw(2);
     sec << std::to_string(int(f - min_part * 60));
 
-    if (f == -1) {
+    if (f < 0) {
         return "Ready";
     } else {
         return min.str() + ":" + sec.str();
@@ -70,17 +58,17 @@ void UIScriptProcess::CountDown() {
     }
     if (elapsed.count() >= TargetTime && b_STALL) {
         // printf("(Button) Construction Finished\n");
-        SetFinished(m_currentStructure);
+        SetIfFinished(m_currentStructure, true);
         b_STALL = false;
         return;
     }
 }
-void UIScriptProcess::SetCoolDown(float time) {
+void UIScriptProcess::SetCountDown(float time) {
     TargetTime = time;
     m_StartTime = std::chrono::high_resolution_clock::now();
 }
 
-void UIScriptProcess::buttonEvent(unitType type) {
+void UIScriptProcess::AddToBuildQueue(unitType type) {
     if (GetIfFinished(type)) {
         return;
     }
@@ -92,7 +80,7 @@ void UIScriptProcess::Update() {
         m_currentStructure = buildQueue.front();
         buildQueue.pop_front();
         b_STALL = true;
-        SetCoolDown(GetStructureTime(m_currentStructure));
+        SetCountDown(GetStructureTime(m_currentStructure));
     }
     CountDown();
 }
@@ -114,16 +102,27 @@ float UIScriptProcess::GetStructureTime(unitType type) {
         return advPowerPlant->GetBuildingTime();
     }
 }
-void UIScriptProcess::SetUsed(unitType type) {
-    if (type == unitType::BARRACKS) {
-        b_Baracks = false;
-    } else if (type == unitType::ORE_REF) {
-        b_OreRefinery = false;
-    } else if (type == unitType::POWER_PLANT) {
-        b_PowerPlants = false;
-    } else if (type == unitType::WAR_FACT) {
-        b_WarFactory = false;
-    } else if (type == unitType::ADV_POWER_PLANT) {
-        b_ADVPowerPlant = false;
+
+void UIScriptProcess::SetIfFinished(unitType type, bool value) {
+    switch (type) {
+    case unitType::BARRACKS:
+        b_Baracks = value;
+        break;
+    case unitType::ORE_REF:
+        b_OreRefinery = value;
+        break;
+    case unitType::POWER_PLANT:
+        b_PowerPlants = value;
+        break;
+    case unitType::WAR_FACT:
+        b_WarFactory = value;
+        break;
+    case unitType::ADV_POWER_PLANT:
+        b_ADVPowerPlant = value;
+        break;
+    default:
+        // Handle the case when type doesn't match any of the options
+        // For example, you might throw an exception or set a default value
+        break;
     }
 }

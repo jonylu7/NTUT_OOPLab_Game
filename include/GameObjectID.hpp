@@ -6,6 +6,8 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP
 #include <string>
 #include <unordered_map>
+
+// namespace std
 enum class unitType {
     // buildings
     POWER_PLANT,
@@ -48,8 +50,8 @@ public:
     ~GameObjectID() {}
 
     void generateID(unitType type) { m_unitType = type; }
-    int getNumber() { return number; }
-    unitType getUnitType() { return m_unitType; }
+    int getNumber() const { return number; }
+    unitType getUnitType() const { return m_unitType; }
 
     bool operator==(const GameObjectID &id) const {
         if (this->m_unitType == id.m_unitType && this->number == id.number) {

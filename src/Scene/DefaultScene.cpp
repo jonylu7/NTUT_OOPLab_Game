@@ -40,9 +40,7 @@ void DefaultScene::Update() {
 
     m_waypointUnit.Update();
 
-    for (auto i : m_BuiltStructure) {
-        i->Update();
-    }
+    m_Manager.Update();
 
     Util::Transform trans;
     m_Map.Draw(trans, 0);
@@ -67,8 +65,6 @@ void DefaultScene::Update() {
     //  m_GameObjectManager.Update();
 
     if (m_UI.getIfAnythingCanSelectToBuild()) {
-        m_BuiltStructure.push_back(m_UI.getSelectedBuilding());
-        m_BuiltStructure.back()->Start();
-        printf("(Scene) Structure Started\n");
+        m_Manager.Append(m_UI.getSelectedBuilding());
     }
 }

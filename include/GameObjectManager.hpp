@@ -11,32 +11,53 @@
 #include "Structure/PowerPlants.hpp"
 #include "Structure/Structure.hpp"
 #include "Structure/WarFactory.hpp"
+#include <unordered_map>
+#include <utility>
 class GameObjectManager {
 public:
-    /*
     GameObjectManager() {}
     ~GameObjectManager() {}
     void Start() {
+        /*
         for (auto pair : m_StrcutMap) {
             pair.second->Start();
+            */
+        for (auto pair : m_BuiltStructure) {
+            pair->Start();
         }
     }
     void Update() {
-        for (auto pair : m_StrcutMap) {
-            pair.second->Update();
+        for (auto pair : m_BuiltStructure) {
+            pair->Update();
         }
     }
 
-    void Append(std::shared_ptr<Structure> newstruct) {}
+    void Append(std::shared_ptr<Structure> newstruct) {
+        newstruct->Start();
+        m_BuiltStructure.push_back(newstruct);
+    }
 
     void RemoveStructByID(const GameObjectID id) {
-        // auto it = m_StrcutMap.find(id);
+        for (int i = 0; i < m_BuiltStructure.size(); i++) {
+            if (m_BuiltStructure[i]->GetID() == id) {
+                std::remove(m_BuiltStructure.begin(), m_BuiltStructure.end(),
+                            m_BuiltStructure[i]);
+                return;
+            }
+        }
+    }
+
+    int GetTotalPower() {
+        int totalPower = 0;
+        for (int i = 0; i < m_BuiltStructure.size(); i++) {
+            totalPower += m_BuiltStructure[i]->GetElectricPower();
+        }
+        return totalPower;
     }
 
 private:
-    std::unordered_map<GameObjectID, std::shared_ptr<Structure>> m_StrcutMap;
+    std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
     // std::vector<std::shared_ptr<Unit>> m_UnitArray;
-    */
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
