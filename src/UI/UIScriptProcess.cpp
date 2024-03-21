@@ -2,7 +2,8 @@
 // Created by nudle on 2024/3/8.
 //
 #include "UI/UIScriptProcess.hpp"
-
+#include <iomanip>
+#include <sstream>
 bool UIScriptProcess::GetIfFinished(unitType type) {
     if (type == unitType::BARRACKS) {
         return b_Baracks;
@@ -41,9 +42,22 @@ float UIScriptProcess::GetCDLeft() {
 }
 std::string UIScriptProcess::GetFormattedCD() {
     float f = GetCDLeft();
+    int min_part = int(f / 60);
+    std::ostringstream min;
+    min << std::setfill('0');
+    min << std::setw(2);
+    min << std::to_string(min_part);
+
+    std::ostringstream sec;
+    sec << std::setfill('0');
+    sec << std::setw(2);
+    sec << std::to_string(int(f - min_part * 60));
+
     if (f == -1) {
+        return "Ready";
+    } else {
+        return min.str() + ":" + sec.str();
     }
-    return "";
 }
 
 void UIScriptProcess::CountDown() {
@@ -51,11 +65,11 @@ void UIScriptProcess::CountDown() {
     std::chrono::duration<double> elapsed =
         m_CountDownCurrentTime - m_StartTime;
     if (b_STALL) {
-        printf("(Button) CD: %.2f,%s\n", TargetTime - elapsed.count(),
-               elapsed.count() >= TargetTime ? "True" : "False");
+        // printf("(Button) CD: %.2f,%s\n", TargetTime - elapsed.count(),
+        // elapsed.count() >= TargetTime ? "True" : "False");
     }
     if (elapsed.count() >= TargetTime && b_STALL) {
-        printf("(Button) Construction Finished\n");
+        // printf("(Button) Construction Finished\n");
         SetFinished(m_currentStructure);
         b_STALL = false;
         return;

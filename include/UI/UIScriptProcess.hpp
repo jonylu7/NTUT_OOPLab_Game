@@ -50,6 +50,8 @@ public:
     // transform to ptr
     float GetStructureTime(unitType type);
 
+    unitType GetCurrentStructure() { return m_currentStructure; };
+
 private:
     std::shared_ptr<Structure> barracks = std::make_shared<Barracks>();
     std::shared_ptr<Structure> oreRefinery = std::make_shared<OreRefinery>();

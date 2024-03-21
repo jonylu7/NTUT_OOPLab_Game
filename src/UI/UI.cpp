@@ -131,11 +131,10 @@ void UIClass::ShowBuildingTab() {
         p.x += 5.F;
         p.y -= 38.F;
         ImGui::PushFont(sacker_heav);
-
-        std::string s =
-            std::string(fmt::format("00:{:.0f}", ButtonScript.GetCDLeft()));
-        dl->AddText(p, IM_COL32(2, 255, 2, 255), s.c_str());
-
+        if (ButtonScript.GetCurrentStructure() == unitType::POWER_PLANT) {
+            dl->AddText(p, IM_COL32(2, 255, 2, 255),
+                        ButtonScript.GetFormattedCD().c_str());
+        }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 22)) {
             // barracks
@@ -147,7 +146,10 @@ void UIClass::ShowBuildingTab() {
             }
         }
         p.x += 80.F;
-        dl->AddText(p, IM_COL32(2, 255, 2, 255), "sometext");
+        if (ButtonScript.GetCurrentStructure() == unitType::BARRACKS) {
+            dl->AddText(p, IM_COL32(2, 255, 2, 255),
+                        ButtonScript.GetFormattedCD().c_str());
+        }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 8)) {
             // ore
@@ -158,10 +160,12 @@ void UIClass::ShowBuildingTab() {
             }
         }
         p.x += 80.F;
-        dl->AddText(p, IM_COL32(2, 255, 2, 255), "sometext");
+        if (ButtonScript.GetCurrentStructure() == unitType::ORE_REF) {
+            dl->AddText(p, IM_COL32(2, 255, 2, 255),
+                        ButtonScript.GetFormattedCD().c_str());
+        }
         ImGui::NewLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 20)) {
-
             // war factory
             if (selectLock() &&
                 ButtonScript.GetIfFinished(unitType::WAR_FACT)) {
@@ -174,7 +178,10 @@ void UIClass::ShowBuildingTab() {
         p = ImGui::GetCursorScreenPos();
         p.x += 5.F;
         p.y -= 38.F;
-        dl->AddText(p, IM_COL32(2, 255, 2, 255), "sometext");
+        if (ButtonScript.GetCurrentStructure() == unitType::WAR_FACT) {
+            dl->AddText(p, IM_COL32(2, 255, 2, 255),
+                        ButtonScript.GetFormattedCD().c_str());
+        }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 1)) {
             // advance power
@@ -187,7 +194,10 @@ void UIClass::ShowBuildingTab() {
             LOG_DEBUG("TEST");
         }
         p.x += 80.F;
-        dl->AddText(p, IM_COL32(2, 255, 2, 255), "sometext");
+        if (ButtonScript.GetCurrentStructure() == unitType::ADV_POWER_PLANT) {
+            dl->AddText(p, IM_COL32(2, 255, 2, 255),
+                        ButtonScript.GetFormattedCD().c_str());
+        }
 
         ImGui::NewLine();
         if (ImGui::Button("Radar Dome")) {
@@ -377,30 +387,37 @@ std::unique_ptr<Structure> UIClass::getSelectedBuilding() {
     }
 }
 bool UIClass::getIfSelectToBuild(unitType type) {
-    if (type == unitType::BARRACKS) {
+    switch (type) {
+    case unitType::BARRACKS:
         return b_Baracks;
-    } else if (type == unitType::ORE_REF) {
+    case unitType::ORE_REF:
         return b_OreRefinery;
-    } else if (type == unitType::POWER_PLANT) {
+    case unitType::POWER_PLANT:
         return b_PowerPlants;
-    } else if (type == unitType::WAR_FACT) {
+    case unitType::WAR_FACT:
         return b_WarFactory;
-    } else if (type == unitType::ADV_POWER_PLANT) {
+    case unitType::ADV_POWER_PLANT:
         return b_ADVPowerPlant;
     }
 }
 void UIClass::setSelectToBuild(unitType type) {
     b_SelectToBuild = true;
-    if (type == unitType::BARRACKS) {
+    switch (type) {
+    case unitType::BARRACKS:
         b_Baracks = true;
-    } else if (type == unitType::ORE_REF) {
+        break;
+    case unitType::ORE_REF:
         b_OreRefinery = true;
-    } else if (type == unitType::POWER_PLANT) {
+        break;
+    case unitType::POWER_PLANT:
         b_PowerPlants = true;
-    } else if (type == unitType::WAR_FACT) {
+        break;
+    case unitType::WAR_FACT:
         b_WarFactory = true;
-    } else if (type == unitType::ADV_POWER_PLANT) {
+        break;
+    case unitType::ADV_POWER_PLANT:
         b_ADVPowerPlant = true;
+        break;
     }
 }
 bool UIClass::selectLock() {
