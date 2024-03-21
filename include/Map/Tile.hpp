@@ -42,6 +42,11 @@ public:
     void setTileImage(std::shared_ptr<Core::Drawable> tileimage) {
         m_TileImage = tileimage;
     };
+
+    void drawTileImage(Util::Transform trans, int zindex) {
+        m_TileImage->DrawUsingCamera(trans, zindex);
+    }
+
     /*
     bool operator==(const TileClass &tile) const {
         if (tile.m_Name == m_Name && m_Walkable == tile.m_Walkable &&

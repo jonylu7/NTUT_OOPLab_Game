@@ -6,7 +6,7 @@
 #include <iostream>
 void MapScene::Start() {
 
-    reading.readBin("../assets/map/europe/map.bin", 204, 161);
+    m_Map = reading.readBin("../assets/map/europe/map.bin", 204, 161);
     // OccupiedID::InitID();
     //  image.SetImage("../assets/sprites/Shapes/B_Box.png");
     /*
@@ -64,5 +64,10 @@ void MapScene::Update() {
     m_SceneCamera.Update();
     Util::Transform trans;
     trans.scale = {1, 1};
-    trans.translation = {0, 0};
+    for (int i = 0; i < m_Map.size(); i++) {
+        for (int j = 0; j < m_Map[i].size(); j++) {
+            trans.translation = {i * 24.F, j * 24.F};
+            m_Map[i][j]->drawTileImage(trans, 1);
+        }
+    }
 }

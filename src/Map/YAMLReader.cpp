@@ -36,31 +36,19 @@ std::shared_ptr<Util::Image> YAMLReader::convertYAMLTileToImage(int id,
 
 std::shared_ptr<TileClass> YAMLReader::convertYAMLTileToTileClass(int id,
                                                                   int index) {
-    std::string str = std::to_string(index); // Example string
-    // Create an output string stream
-    std::ostringstream oss;
-
-    // Set the fill character to '0'
-    oss << std::setfill('0');
-
-    // Set the width to the desired length
-    oss << std::setw(4);
-
-    oss << str;
-
-    // Get the formatted string
-    std::string formattedStr = oss.str();
 
     auto tileSet =
         (*YAMLReader::m_mapTile)["Templates"]["Template@" + std::to_string(id)];
 
     std::string imageFileName = Dump(tileSet["Images"]);
+    std::string terrainName = Dump(tileSet["Tiles"][std::to_string(index)]);
 
-    std::string convertedImageFileName =
-        imageFileName.substr(0, imageFileName.size() - 4) + "-" + formattedStr +
-        ".png";
+    std::shared_ptr<Util::Image> image = convertYAMLTileToImage(id, index);
+    std::shared_ptr<TileClass> tile =
+        std::move(TerrainConfig::GetConfig(terrainName));
+    tile->setTileImage(image);
 
-    return std::make_shared<TileClass>();
+    return tile;
 }
 
 // variable

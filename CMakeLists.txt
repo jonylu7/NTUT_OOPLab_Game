@@ -107,6 +107,7 @@ set(SRC_FILES
         ${SRC_DIR}/UI/UI.cpp
         ${SRC_DIR}/GameObjectID.cpp
         ${SRC_DIR}/Map/YAMLReader.cpp
+        ${SRC_DIR}/Map/TerrainConfig.cpp
 
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)

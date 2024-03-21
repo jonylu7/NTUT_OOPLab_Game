@@ -39,8 +39,7 @@ public:
     void End(){};
 
 private:
-    std::vector<std::shared_ptr<Util::Image>> m_Images =
-        std::vector<std::shared_ptr<Util::Image>>({});
+    std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
     MapbinReader reading;
 
     SpriteSheet m_SpriteSheet;
