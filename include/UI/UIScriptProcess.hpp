@@ -47,7 +47,7 @@ public:
     std::string GetFormattedCD();
     // Event
     void AddToBuildQueue(unitType type);
-    void Update();
+    void Update(bool queueContinue);
 
     // CountDown
     void SetCountDown(float time);

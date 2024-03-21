@@ -32,7 +32,7 @@ void UIClass::Update() {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    ButtonScript.Update();
+    ButtonScript.Update(getIfAnythingCanSelectToBuild());
     // printf("(UI)Button Lock :
     // %s,%s\n",selectLock()?"Unlock":"Lock",b_SelectToBuild?"True":"False");
 }

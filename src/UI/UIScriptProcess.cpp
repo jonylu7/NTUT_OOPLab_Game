@@ -75,8 +75,11 @@ void UIScriptProcess::AddToBuildQueue(unitType type) {
     buildQueue.push_back(type);
     return;
 }
-void UIScriptProcess::Update() {
-    if (!buildQueue.empty() && !b_STALL) {
+void UIScriptProcess::Update(bool queueContinue) {
+    //(buildQueue.size() > 1 && queueContinue && !b_STALL) for waiting player to
+    //build strucutre, then continue operating
+    if ((buildQueue.size() == 1 && !b_STALL) ||
+        ((buildQueue.size() > 1 && queueContinue && !b_STALL))) {
         m_currentStructure = buildQueue.front();
         buildQueue.pop_front();
         b_STALL = true;
