@@ -40,7 +40,9 @@ float UIScriptProcess::GetCDLeft() {
     }
 }
 std::string UIScriptProcess::GetFormattedCD() {
-    // TODO:TBD
+    float f = GetCDLeft();
+    if (f == -1) {
+    }
     return "";
 }
 
