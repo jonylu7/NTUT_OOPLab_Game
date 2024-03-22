@@ -28,15 +28,13 @@ void DefaultScene::Start() {
     m_testdraw.Start(std::vector({glm::vec2(0.F, 0.F)}),
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
+    m_dummy.setCurrentCell({5,5});
+    m_dummy.Start({23,16});
 
-    // m_dummy.Start();
-    m_waypointUnit.setCurrentCell({glm::vec2(0, 0)});
-    m_waypointUnit.setNextCell({glm::vec2(0, 0)});
-    m_waypointUnit.findPath(15, 10);
 }
 
 void DefaultScene::Update() {
-    // m_dummy.Update();
+    m_dummy.Update();
 
     m_waypointUnit.Update();
 

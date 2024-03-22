@@ -13,6 +13,13 @@ void Grid::Start(std::vector<Line> lineVector) {
 
     InitVertexAndColor();
 }
+void Grid::queStart(std::deque<Line> lineQue) {
+
+    // debug grid:
+    m_lineVector = std::vector<Line> (lineQue.begin(),lineQue.end());
+
+    InitVertexAndColor();
+}
 
 void Grid::Draw(const Util::Transform &transform, const float zindex) {
     // nothing

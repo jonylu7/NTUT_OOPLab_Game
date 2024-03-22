@@ -10,6 +10,7 @@
 #include "Core/VertexArray.hpp"
 #include "Line.hpp"
 #include "Util/TransformUtils.hpp"
+#include <deque>
 
 class Grid : public Core::Drawable {
 
@@ -18,6 +19,7 @@ public:
     ~Grid(){};
     void InitVertexAndColor();
     void Start(std::vector<Line> lineVector);
+    void queStart(std::deque<Line> lineVector);
     void Draw(const Util::Transform &transform, const float zIndex) override;
     void DrawUsingCamera(const Util::Transform &transform,
                          const float zIndex) override;
