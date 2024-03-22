@@ -97,59 +97,42 @@ void PathfindingUnit::findNextCellDir() {
     int targetCellY = m_targetCell.y;
     int currCellX=m_currentCell.x;
     int currCellY=m_currentCell.y;
-    printf("(find)Cell now :{%.d,%.d}\n(find)Cell target : {%.d,%.d}\n",currCellX,currCellY,targetCellX,targetCellY);
+    printf("(findNextCellDir)Cell now :{%.d,%.d}\n(find)Cell target : {%.d,%.d}\n",currCellX,currCellY,targetCellX,targetCellY);
     if (targetCellX == currCellX && targetCellY == currCellY) {
         m_currentDir = MoveDirection::IDLE;
-        printf("Current direction: IDLE\n");
+        printf("(findNextCellDir)Current direction: IDLE\n");
     } else if (targetCellY == currCellY) {
         if (targetCellX > currCellX) {
             m_currentDir = MoveDirection::RIGHT;
-            printf("Current direction: RIGHT\n");
+            printf("(findNextCellDir)Current direction: RIGHT\n");
         } else if (targetCellX < currCellX) {
             m_currentDir = MoveDirection::LEFT;
-            printf("Current direction: LEFT\n");
+            printf("(findNextCellDir)Current direction: LEFT\n");
         }
     } else if (targetCellX == currCellX) {
         if (targetCellY > currCellY) {
             m_currentDir = MoveDirection::UP;
-            printf("Current direction: UP\n");
+            printf("(findNextCellDir)Current direction: UP\n");
         } else if (targetCellY < currCellY) {
             m_currentDir = MoveDirection::DOWN;
-            printf("Current direction: DOWN\n");
+            printf("(findNextCellDir)Current direction: DOWN\n");
         }
-    } else if (abs(targetCellX - currCellX) == abs(targetCellY - currCellY)) {
-        if (targetCellX > currCellX && targetCellY > currCellY) {
+    } else if (targetCellX > currCellX && targetCellY > currCellY) {
             m_currentDir = MoveDirection::UP_RIGHT;
-            printf("Current direction: UP_RIGHT\n");
-        } else if (targetCellX < currCellX && targetCellY < currCellY) {
+            printf("(findNextCellDir)Current direction: UP_RIGHT\n");
+    } else if (targetCellX < currCellX && targetCellY < currCellY) {
             m_currentDir = MoveDirection::DOWN_LEFT;
-            printf("Current direction: DOWN_LEFT\n");
+            printf("(findNextCellDir)Current direction: DOWN_LEFT\n");
         }
-    } else if (targetCellX < currCellX && targetCellY > currCellY) {
+     else if (targetCellX < currCellX && targetCellY > currCellY) {
         m_currentDir = MoveDirection::UP_LEFT;
-        printf("Current direction: UP_LEFT\n");
+        printf("(findNextCellDir)Current direction: UP_LEFT\n");
     } else if (targetCellX > currCellX && targetCellY < currCellY) {
         m_currentDir = MoveDirection::DOWN_RIGHT;
-        printf("Current direction: DOWN_RIGHT\n");
-    }else if(abs(targetCellX - currCellX)>abs(targetCellY - currCellY)){
-        if (targetCellX > currCellX && targetCellY > currCellY) {
-            m_currentDir = MoveDirection::RIGHT;
-            printf("Current direction: RIGHT\n");
-        } else if (targetCellX < currCellX && targetCellY < currCellY) {
-            m_currentDir = MoveDirection::LEFT;
-            printf("Current direction: LEFT\n");
-        }
-    }else if(abs(targetCellX - currCellX)<abs(targetCellY - currCellY)){
-        if (targetCellX > currCellX && targetCellY > currCellY) {
-            m_currentDir = MoveDirection::UP;
-            printf("Current direction: UP\n");
-        } else if (targetCellX < currCellX && targetCellY < currCellY) {
-            m_currentDir = MoveDirection::DOWN;
-            printf("Current direction: DOWN\n");
-        }
-    }
-    else{
-        printf("(find)Direction debug didn't move\n");
+        printf("(findNextCellDir)Current direction: DOWN_RIGHT\n");
+    } else{
+        m_currentDir = MoveDirection::IDLE;
+        printf("(findNextCellDir)Direction debug didn't move\n");
     }
 }
 void PathfindingUnit::findNextCellDir(MoveDirection lastDir,int times){
@@ -168,7 +151,7 @@ void PathfindingUnit::findNextCellDir(MoveDirection lastDir,int times){
 
 }
 
-void PathfindingUnit::walkTowardNextCell(){
+bool PathfindingUnit::walkTowardNextCell(){
     switch (m_currentDir) {
     case MoveDirection::RIGHT:{
         m_currentLocation={m_currentLocation.x+m_MovementSpeed,m_currentLocation.y};
@@ -187,21 +170,26 @@ void PathfindingUnit::walkTowardNextCell(){
         break;
     }
     case MoveDirection::UP_RIGHT:{
-        m_currentLocation={m_currentLocation.x+m_MovementSpeed,m_currentLocation.y+m_MovementSpeed};
+        m_currentLocation={m_currentLocation.x+m_MovementSpeed/SPEED,m_currentLocation.y+m_MovementSpeed/SPEED};
         break;
     }
     case MoveDirection::DOWN_LEFT:{
-        m_currentLocation={m_currentLocation.x-m_MovementSpeed,m_currentLocation.y-m_MovementSpeed};
+        m_currentLocation={m_currentLocation.x-m_MovementSpeed/SPEED,m_currentLocation.y-m_MovementSpeed/SPEED};
         break;
     }
     case MoveDirection::DOWN_RIGHT:{
-        m_currentLocation={m_currentLocation.x+m_MovementSpeed,m_currentLocation.y-m_MovementSpeed};
+        m_currentLocation={m_currentLocation.x+m_MovementSpeed/SPEED,m_currentLocation.y-m_MovementSpeed/SPEED};
         break;
     }
     case MoveDirection::UP_LEFT:{
-        m_currentLocation={m_currentLocation.x-m_MovementSpeed,m_currentLocation.y+m_MovementSpeed};
+        m_currentLocation={m_currentLocation.x-m_MovementSpeed/SPEED,m_currentLocation.y+m_MovementSpeed/SPEED};
         break;
     }
     }
-    moveDistance+=m_MovementSpeed;
+    if(moveDistance>=48){
+        moveDistance=0;
+        return true;
+    }else
+        moveDistance+=m_MovementSpeed;
+        return false;
 }

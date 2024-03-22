@@ -12,7 +12,6 @@ private:
     std::deque<MoveDirection> m_dirQue;
     std::deque<glm::vec2> m_pathQueue;
     int count=0;
-    int m_gridCount=0;
 public:
     WayPointUnit():PathfindingUnit(){setMovementSpeed(48);};
     virtual ~WayPointUnit()override{};
@@ -25,6 +24,7 @@ public:
             if(m_lineVector.size()!=0){
                 m_lineVector.pop_front();
             }
+            m_grid.queStart( m_lineVector);
             return front;
         }
         return {-1,-1};
@@ -43,11 +43,11 @@ public:
         this->m_dirQue.clear();
         this->m_lineVector.clear();
     }
-    void findPath(int x,int y){
-        setTargetCell(x,y);
+    void findPath(glm::vec2 target){
+        setTargetCell(target);
         while(getCurrentCell().x!=getTargetCell().x&&getCurrentCell().y!=getTargetCell().y){
-            printf("target : {%.0f,%.0f}\n",getTargetCell().x,getTargetCell().y);
-            printf("finding : %d\n Cell now :{%.0f,%.0f}\n,Cell next : {%.0f,%.0f}\n",count++,getCurrentCell().x,getCurrentCell().y,getNextCell().x,getNextCell().y);
+            printf("(WayPointUnit)target : {%.0f,%.0f}\n",getTargetCell().x,getTargetCell().y);
+            printf("(WayPointUnit)finding : %d\n (WayPointUnit)Cell now :{%.0f,%.0f}\n(WayPointUnit)Cell next : {%.0f,%.0f}\n",count++,getCurrentCell().x,getCurrentCell().y,getNextCell().x,getNextCell().y);
 
             setCurrentCell(getNextCell());
             m_dirQue.push_back(getCurrentDir());
@@ -59,10 +59,6 @@ public:
         m_grid.SetActivate(true);
     }
     virtual void Update()override{
-        if(m_gridCount%30==0){
-            m_grid.queStart( m_lineVector);
-        }
-        m_gridCount++;
         m_grid.DrawUsingCamera(m_emptyTrans,defaultZIndex);
     }
 };
