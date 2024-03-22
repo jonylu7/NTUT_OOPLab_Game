@@ -29,12 +29,11 @@ void DefaultScene::Start() {
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
 
-    m_dummy.Start({5,5});
-
+    m_dummy.Start({5, 5});
 }
 
 void DefaultScene::Update() {
-    m_Avatar.Update();
+    m_dummy.Update();
 
     m_waypointUnit.Update();
 
