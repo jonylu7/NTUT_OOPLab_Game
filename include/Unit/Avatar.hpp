@@ -11,6 +11,7 @@ class Avatar:public PathfindingUnit{
 private:
     WayPointUnit m_wayPointUnit;
     bool b_selectedNewTarget= false;
+    bool b_justStarted = true;
 public:
     Avatar():PathfindingUnit(){};
     ~Avatar()override{};
@@ -30,25 +31,18 @@ public:
         setMovementSpeed(4);
     }
     virtual void aliveUpdate(){
-        m_wayPointUnit.findPath(getTargetCell());
-        if(walkTowardNextCell()){
-            glm::vec2 nextCell = m_wayPointUnit.getFirstCell();
-            if(nextCell.x!=-1&&nextCell.y!=-1) {
-                setCurrentCell(getNextCell()); // reset object location
-                setNextCell(nextCell);
-                //m_wayPointUnit.setCurrentCell(getCurrentCell());
-                setCurrentDir(m_wayPointUnit.getFirstCellDir());
-            }else{
-                setCurrentDir(MoveDirection::IDLE);
-            }
-        }else{
-            //m_grid.Start({Line(getCurrentLocation(),MapClass::CellCoordToGlobal(getNextCell()))});
+        if(walkTowardNextCell()||b_justStarted){
+            b_justStarted= false;
+            setCurrentCell(MapClass::GlobalCoordToCellCoord(getCurrentLocation()));
+            setCurrentDir(m_wayPointUnit.getFirstCellDir());
+            UpdateNextCell();
+            printf("(aliveUpdate) getting new dir\n");
         }
-        m_grid.DrawUsingCamera(m_emptyTrans,defaultZIndex);
         m_wayPointUnit.Update();
         m_Transform.translation=getCurrentLocation();
         Draw();
         onSelect(true);
+        printf("-----------------------------\n");
     }
     virtual void Update()override{
         switch(m_currentMode){
@@ -66,6 +60,7 @@ public:
         m_wayPointUnit.setCurrentCell(getNextCell());
         m_wayPointUnit.setNextCell(getNextCell());
         m_wayPointUnit.findPath(getTargetCell());
+        //setCurrentDir(m_wayPointUnit.getFirstCellDir());
     }
     void onSelect(bool selected){
         if (b_selectedNewTarget) {

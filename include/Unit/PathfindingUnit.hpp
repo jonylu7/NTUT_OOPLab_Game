@@ -27,7 +27,7 @@ protected:
     Util::Transform m_emptyTrans;
     Line m_line;
     Grid m_grid;
-    std::deque<Line> m_lineVector;
+    std::vector<Line> m_lineVector;
     float defaultZIndex=15;
     UnitMode m_currentMode=UnitMode::ALIVE;//debug :DEAD
 private:
