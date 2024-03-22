@@ -28,13 +28,12 @@ void DefaultScene::Start() {
     m_testdraw.Start(std::vector({glm::vec2(0.F, 0.F)}),
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
-    m_dummy.setCurrentCell({5,5});
-    m_dummy.Start({23,16});
-
+    m_Avatar.setCurrentCell({5, 5});
+    m_Avatar.Start({23, 16});
 }
 
 void DefaultScene::Update() {
-    m_dummy.Update();
+    m_Avatar.Update();
 
     m_waypointUnit.Update();
 

@@ -54,7 +54,7 @@ private:
     std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
         std::make_shared<SpriteSheet>();
     GameObjectManager m_Manager;
-    Dummy m_dummy;
+    Avatar m_Avatar;
     WayPointUnit m_waypointUnit;
 };
 
