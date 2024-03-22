@@ -22,7 +22,7 @@
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
 #include "UI/UI.hpp"
-#include "Unit/Dummy.hpp"
+#include "Unit/Avatar.hpp"
 #include "Unit/PathfindingUnit.hpp"
 #include "Unit/WayPointUnit.hpp"
 #include "Util/Image.hpp"

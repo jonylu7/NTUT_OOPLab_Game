@@ -84,6 +84,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/Unit/PathfindingUnit.cpp
 
+
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
         ${SRC_DIR}/SpriteSheet.cpp
@@ -159,7 +160,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/ADVPowerPlants.hpp
 
         ${INCLUDE_DIR}/Unit/PathfindingUnit.hpp
-        ${INCLUDE_DIR}/Unit/Dummy.hpp
+        ${INCLUDE_DIR}/Unit/Avatar.hpp
         ${INCLUDE_DIR}/Unit/WayPointUnit.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h

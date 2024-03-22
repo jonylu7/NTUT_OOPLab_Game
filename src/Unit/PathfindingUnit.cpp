@@ -38,8 +38,59 @@ void PathfindingUnit::UpdateNextCell(){
     }
     case MoveDirection::IDLE:{
         printf("Direction debug didn't move\n");
+        break;
     }
     }
+
+}
+
+
+bool PathfindingUnit::UpdateNextCell(int* times){
+    switch (m_currentDir) {
+    case MoveDirection::RIGHT:{
+        m_nextCell={m_nextCell.x+1,m_nextCell.y};
+        break;
+    }
+    case MoveDirection::LEFT:{
+        m_nextCell={m_nextCell.x-1,m_nextCell.y};
+        break;
+    }
+    case MoveDirection::UP:{
+        m_nextCell={m_nextCell.x,m_nextCell.y+1};
+        break;
+    }
+    case MoveDirection::DOWN:{
+        m_nextCell={m_nextCell.x,m_nextCell.y-1};
+        break;
+    }
+    case MoveDirection::UP_RIGHT:{
+        m_nextCell={m_nextCell.x+1,m_nextCell.y+1};
+        break;
+    }
+    case MoveDirection::DOWN_LEFT:{
+        m_nextCell={m_nextCell.x-1,m_nextCell.y-1};
+        break;
+    }
+    case MoveDirection::DOWN_RIGHT:{
+        m_nextCell={m_nextCell.x+1,m_nextCell.y-1};
+        break;
+    }
+    case MoveDirection::UP_LEFT:{
+        m_nextCell={m_nextCell.x-1,m_nextCell.y+1};
+        break;
+    }
+    case MoveDirection::IDLE:{
+        printf("Direction debug didn't move\n");
+        break;
+    }
+    }
+    if(false){//not walkable
+        times+=1;
+        return true;    //Dir.pop_back
+    }else{
+        return false;
+    }
+
 }
 void PathfindingUnit::findNextCellDir() {
     int targetCellX = m_targetCell.x;
@@ -101,6 +152,22 @@ void PathfindingUnit::findNextCellDir() {
         printf("(find)Direction debug didn't move\n");
     }
 }
+void PathfindingUnit::findNextCellDir(MoveDirection lastDir,int times){
+    std::vector<MoveDirection> dictionary = {MoveDirection::UP,MoveDirection::UP_RIGHT,MoveDirection::RIGHT,MoveDirection::DOWN_RIGHT,MoveDirection::DOWN,MoveDirection::DOWN_LEFT,MoveDirection::LEFT,MoveDirection::UP_LEFT};
+    int index=0;
+    if(times!=0){
+        while(dictionary[index]!=lastDir){
+            index++;
+        }
+        if(index+times>dictionary.size()){
+            times-=dictionary.size();
+        }
+        m_currentDir =dictionary[index+times];
+        return;
+    }
+
+}
+
 void PathfindingUnit::walkTowardNextCell(){
     switch (m_currentDir) {
     case MoveDirection::RIGHT:{
