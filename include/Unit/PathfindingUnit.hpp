@@ -13,21 +13,23 @@
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
 
-#define SPEED 240
+#define SPEED 1
 
 class PathfindingUnit:public Util::GameObject{
 protected:
     enum class UnitMode{
-        ATTACK,MOVE,WAIT
+        DEAD,ALIVE
     };
     enum class MoveDirection{
         UP,UP_RIGHT,UP_LEFT,RIGHT,LEFT,DOWN_RIGHT,DOWN_LEFT,DOWN,IDLE
     };
+
     Util::Transform m_emptyTrans;
     Line m_line;
     Grid m_grid;
-    std::deque<Line> m_lineVector;
+    std::vector<Line> m_lineVector;
     float defaultZIndex=15;
+    UnitMode m_currentMode=UnitMode::ALIVE;//debug :DEAD
 private:
     glm::vec2 m_targetCell;
     glm::vec2 m_nextCell;
@@ -35,7 +37,6 @@ private:
     glm::vec2 m_currentLocation;
 
     MoveDirection m_currentDir=MoveDirection::IDLE;
-    UnitMode m_currentMode=UnitMode::WAIT;
 
     float m_Hp=100.F;
     float m_MovementSpeed=1.F;
@@ -48,6 +49,9 @@ public:
         m_ZIndex=defaultZIndex;
     };
     virtual ~PathfindingUnit(){};
+    //Set Unit
+    void setHp(float hp){m_Hp=hp;}
+    //
 
     void setTargetCell(int x,int y){this->m_targetCell={glm::vec2(x,y)};}
     void setTargetCell(glm::vec2 cell){this->m_targetCell=cell;}
@@ -78,22 +82,14 @@ public:
     void UpdateNextCell();
     bool UpdateNextCell(int* times);
 
-    void walkTowardNextCell();
+    bool walkTowardNextCell();
 
     virtual void Start(){}
     virtual void Update(){
-        Walk();
         m_Transform.translation=getCurrentLocation();
         Draw();
     }
-    virtual bool Walk(){
-        walkTowardNextCell();
-        if(moveDistance>=48){
-            moveDistance = 0;
-            return true;
-        }
-        return false;
-    }
+
 
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP

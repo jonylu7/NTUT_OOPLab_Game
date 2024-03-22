@@ -28,8 +28,9 @@ void DefaultScene::Start() {
     m_testdraw.Start(std::vector({glm::vec2(0.F, 0.F)}),
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
-    m_Avatar.setCurrentCell({5, 5});
-    m_Avatar.Start({23, 16});
+
+    m_dummy.Start({5,5});
+
 }
 
 void DefaultScene::Update() {
