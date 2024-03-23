@@ -148,5 +148,4 @@ public:
                          int(cellCoord[1] * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
     }
 };
-
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP

@@ -4,10 +4,10 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
-
 #include "Grid.hpp"
 #include "Line.hpp"
 #include "Map.hpp"
+
 #include "Tile.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
