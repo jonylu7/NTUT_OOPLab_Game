@@ -87,6 +87,9 @@ public:
         }
         return m_Map[position.x][position.y];
     }
+    bool getWalkable(glm::vec2 position) {
+        return getTileByCellPosition(position)->getWalkable();
+    }
 
     static void setTileByCellPosition(glm::vec2 position,
                                       std::shared_ptr<TileClass> tile) {

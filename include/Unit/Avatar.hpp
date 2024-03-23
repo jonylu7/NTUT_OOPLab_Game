@@ -4,28 +4,29 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
+#include "Unit/FindValidPathToDest.hpp"
 #include "Unit/PathfindingUnit.hpp"
-#include "Unit/WayPointUnit.hpp"
 
 class Avatar : public PathfindingUnit {
 private:
-    WayPointUnit m_wayPointUnit;
+    FindValidPathToDest m_wayPointUnit;
     bool b_SelectedByCursor = true;
     bool b_justStarted = true;
 
 public:
-    Avatar()
-        : PathfindingUnit(){};
+    Avatar(){};
     ~Avatar() override{};
 
-    virtual void Start(glm::vec2 destination) { // destination = Barrack's
-                                                // waypointLocation
+    virtual void
+    Start(glm::vec2 destination,
+          std::shared_ptr<MapClass> map) { // destination = Barrack's
+                                           // waypointLocation
         // setCurrentCell()  //CurrentCell = Structure's Location
         this->SetDrawable(
             std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
         SetVisible(true);
         m_grid.SetActivate(true);
-
+        m_wayPointUnit.Start(map);
         setCurrentCell(destination);
         setNextCell(destination);
         m_wayPointUnit.setCurrentCell(destination);
@@ -40,7 +41,7 @@ public:
             setCurrentCell(
                 MapClass::GlobalCoordToCellCoord(getCurrentLocation()));
             setCurrentDir(m_wayPointUnit.getFirstCellDir());
-            UpdateNextCell();
+            setNextCell(UpdateCellByDir(getCurrentDir(), getNextCell()));
             printf("(aliveUpdate) getting new dir\n");
         }
         m_wayPointUnit.Update();

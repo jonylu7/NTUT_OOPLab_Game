@@ -44,9 +44,7 @@ private:
 
     MoveDirection m_currentDir = MoveDirection::IDLE;
 
-    float m_Hp = 100.F;
     float m_MovementSpeed = 1.F;
-    float m_Armor = 5.f;
 
     int moveDistance = 0;
 
@@ -56,8 +54,7 @@ public:
         m_ZIndex = defaultZIndex;
     };
     virtual ~PathfindingUnit(){};
-    // Set Unit
-    void setHp(float hp) { m_Hp = hp; }
+
     //
 
     void setDestinationCell(int x, int y) {
@@ -84,10 +81,11 @@ public:
     MoveDirection getCurrentDir() { return m_currentDir; }
     void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
 
-    void findNextCellDir();
-    void findNextCellDir(MoveDirection lastDir, int times);
-    void UpdateNextCell();
-    bool UpdateNextCell(int *times);
+    MoveDirection getNextCellDir(glm::vec2 currentcell,
+                                 glm::vec2 destinationcell);
+    // void findNextCellDir(MoveDirection lastDir, int times);
+    glm::vec2 UpdateCellByDir(MoveDirection currentdir, glm::vec2 nextcell);
+    // bool UpdateNextCell(int *times);
 
     bool walkTowardNextCell();
 

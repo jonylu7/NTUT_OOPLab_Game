@@ -23,8 +23,8 @@
 #include "Structure/WayPoint.hpp"
 #include "UI/UI.hpp"
 #include "Unit/Avatar.hpp"
+#include "Unit/FindValidPathToDest.hpp"
 #include "Unit/PathfindingUnit.hpp"
-#include "Unit/WayPointUnit.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -48,15 +48,10 @@ private:
     GameObjectManager m_GameObjectManager;
     Util::Renderer m_Renderer;
     UIClass m_UI;
-    MapClass m_Map;
-    std::map<int, TileClass> m_tileSets;
-    std::vector<int> m_OgMap;
-    std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
-        std::make_shared<SpriteSheet>();
+    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     GameObjectManager m_Manager;
 
     Avatar m_dummy;
-    WayPointUnit m_waypointUnit;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
