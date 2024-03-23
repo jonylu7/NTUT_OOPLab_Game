@@ -81,10 +81,11 @@ public:
     MoveDirection getCurrentDir() { return m_currentDir; }
     void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
 
-    MoveDirection getNextCellDir(glm::vec2 currentcell,
-                                 glm::vec2 destinationcell);
+    MoveDirection getDirByRelativeCells(glm::vec2 currentcell,
+                                        glm::vec2 destinationcell);
     // void findNextCellDir(MoveDirection lastDir, int times);
-    glm::vec2 UpdateCellByDir(MoveDirection currentdir, glm::vec2 nextcell);
+    glm::vec2 getNextCellByCurrent(MoveDirection currentdir,
+                                   glm::vec2 currentcell);
     // bool UpdateNextCell(int *times);
 
     bool walkTowardNextCell();

@@ -2,39 +2,39 @@
 // Created by nudle on 2024/3/15.
 //
 #include "Unit/PathfindingUnit.hpp"
-glm::vec2 PathfindingUnit::UpdateCellByDir(MoveDirection currentdir,
-                                           glm::vec2 nextcell) {
+glm::vec2 PathfindingUnit::getNextCellByCurrent(MoveDirection currentdir,
+                                                glm::vec2 currentcell) {
     switch (currentdir) {
     case MoveDirection::RIGHT: {
-        nextcell = {nextcell.x + 1, nextcell.y};
+        currentcell = {currentcell.x + 1, currentcell.y};
         break;
     }
     case MoveDirection::LEFT: {
-        nextcell = {nextcell.x - 1, nextcell.y};
+        currentcell = {currentcell.x - 1, currentcell.y};
         break;
     }
     case MoveDirection::UP: {
-        nextcell = {nextcell.x, nextcell.y + 1};
+        currentcell = {currentcell.x, currentcell.y + 1};
         break;
     }
     case MoveDirection::DOWN: {
-        nextcell = {nextcell.x, nextcell.y - 1};
+        currentcell = {currentcell.x, currentcell.y - 1};
         break;
     }
     case MoveDirection::UP_RIGHT: {
-        nextcell = {nextcell.x + 1, nextcell.y + 1};
+        currentcell = {currentcell.x + 1, currentcell.y + 1};
         break;
     }
     case MoveDirection::DOWN_LEFT: {
-        nextcell = {nextcell.x - 1, nextcell.y - 1};
+        currentcell = {currentcell.x - 1, currentcell.y - 1};
         break;
     }
     case MoveDirection::DOWN_RIGHT: {
-        nextcell = {nextcell.x + 1, nextcell.y - 1};
+        currentcell = {currentcell.x + 1, currentcell.y - 1};
         break;
     }
     case MoveDirection::UP_LEFT: {
-        nextcell = {nextcell.x - 1, nextcell.y + 1};
+        currentcell = {currentcell.x - 1, currentcell.y + 1};
         break;
     }
     case MoveDirection::IDLE: {
@@ -42,7 +42,7 @@ glm::vec2 PathfindingUnit::UpdateCellByDir(MoveDirection currentdir,
         break;
     }
     }
-    return nextcell;
+    return currentcell;
 }
 /*
 bool PathfindingUnit::UpdateNextCell(int *times) {
@@ -93,8 +93,8 @@ bool PathfindingUnit::UpdateNextCell(int *times) {
 }
  */
 PathfindingUnit::MoveDirection
-PathfindingUnit::getNextCellDir(glm::vec2 currentcell,
-                                glm::vec2 destinationcell) {
+PathfindingUnit::getDirByRelativeCells(glm::vec2 currentcell,
+                                       glm::vec2 destinationcell) {
     MoveDirection direction;
     int destinationCellX = destinationcell.x;
     int destinationCellY = destinationcell.y;

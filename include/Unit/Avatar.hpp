@@ -41,7 +41,7 @@ public:
             setCurrentCell(
                 MapClass::GlobalCoordToCellCoord(getCurrentLocation()));
             setCurrentDir(m_wayPointUnit.getFirstCellDir());
-            setNextCell(UpdateCellByDir(getCurrentDir(), getNextCell()));
+            setNextCell(getNextCellByCurrent(getCurrentDir(), getNextCell()));
             printf("(aliveUpdate) getting new dir\n");
         }
         m_wayPointUnit.Update();

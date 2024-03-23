@@ -57,12 +57,12 @@ public:
         }
     }
 
-    MoveDirection getDirIfObstacle(MoveDirection nextcell, Side side) {
+    MoveDirection getDirIfObstacle(MoveDirection ogDir, Side side) {
 
         // please be notice that the "Side's" R or L represent its facing
         // direction
         MoveDirection newdir;
-        switch (nextcell) {
+        switch (ogDir) {
         case MoveDirection::RIGHT: {
             if (side == Side::R) {
                 newdir = MoveDirection::DOWN_RIGHT;
@@ -139,7 +139,8 @@ public:
     void findPath(glm::vec2 destination) {
         // what if desintation is not walkable
         setDestinationCell(destination);
-
+        Side whichSideToTouch = randomlyChooseSide();
+        std::shared_ptr<MoveDirection> dirToTouch = nullptr;
         while (getCurrentCell() != getDestinationCell()) {
 
             if (m_Map
@@ -149,26 +150,39 @@ public:
                 // move current to next cell
                 setCurrentCell(getNextCell());
                 m_dirQue.push_back(getCurrentDir());
-                setCurrentDir(
-                    getNextCellDir(getCurrentCell(), getDestinationCell()));
+                setCurrentDir(getDirByRelativeCells(getCurrentCell(),
+                                                    getDestinationCell()));
 
                 // set next
-                setNextCell(UpdateCellByDir(getCurrentDir(), getNextCell()));
+                setNextCell(
+                    getNextCellByCurrent(getCurrentDir(), getNextCell()));
 
                 m_lineVector.push_back(
                     Line(MapClass::CellCoordToGlobal(getCurrentCell()),
                          MapClass::CellCoordToGlobal(getNextCell())));
+                whichSideToTouch = randomlyChooseSide();
+                // dirToTouch = nullptr;
             } else {
-                setCurrentDir(getDirIfObstacle(
-                    getNextCellDir(getCurrentCell(), getDestinationCell()),
-                    randomlyChooseSide()));
-                setNextCell(UpdateCellByDir(getCurrentDir(), getNextCell()));
-                // not walkable
-                // select one direction (left or right) using one of
-                // several heuristics advance in the said direction
-                // keeping your left/right hand touching the obstacle's
-                // wall when you can advance in a straight line towards
-                // the target again, do so
+                if (dirToTouch == nullptr) {
+                    dirToTouch = std::make_shared<MoveDirection>(
+                        getDirIfObstacle(getDirByRelativeCells(getCurrentCell(),
+                                                               getNextCell()),
+                                         whichSideToTouch));
+                } else {
+                    dirToTouch = std::make_shared<MoveDirection>(
+                        getDirIfObstacle(*dirToTouch, whichSideToTouch));
+                }
+
+                setCurrentDir(*dirToTouch);
+                setNextCell(
+                    getNextCellByCurrent(*dirToTouch, getCurrentCell()));
+                // setCurrentCell(getNextCell());
+                //  not walkable
+                //  select one direction (left or right) using one of
+                //  several heuristics advance in the said direction
+                //  keeping your left/right hand touching the obstacle's
+                //  wall when you can advance in a straight line towards
+                //  the target again, do so
 
                 // getNextCellObstacle(randomlyChooseSide(),
                 // nextCellClear);
