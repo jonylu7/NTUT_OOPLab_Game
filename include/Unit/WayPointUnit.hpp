@@ -10,59 +10,47 @@
 class WayPointUnit:public PathfindingUnit{
 private:
     std::deque<MoveDirection> m_dirQue;
-    std::deque<glm::vec2> m_pathQueue;
     int count=0;
-    int m_gridCount=0;
+    bool b_InitNewLine= false;
 public:
     WayPointUnit():PathfindingUnit(){setMovementSpeed(48);};
     virtual ~WayPointUnit()override{};
 
-
-    glm::vec2 getFirstCell(){
-        if(m_pathQueue.size()!=0){
-            glm::vec2 front = m_pathQueue.front();
-            m_pathQueue.pop_front();
-            if(m_lineVector.size()!=0){
-                m_lineVector.pop_front();
-            }
-            return front;
-        }
-        return {-1,-1};
-    }
     MoveDirection getFirstCellDir(){
-        if( m_dirQue.size()!=0){
+        if( !m_dirQue.empty()){
             MoveDirection front = m_dirQue.front();
             m_dirQue.pop_front();
             return front;
         }
+
         return MoveDirection::IDLE;
     }
 
     void resetQueue(){
-        this->m_pathQueue.clear();
+        b_InitNewLine= true;
         this->m_dirQue.clear();
         this->m_lineVector.clear();
     }
-    void findPath(int x,int y){
-        setTargetCell(x,y);
+    void findPath(glm::vec2 target){
+        setTargetCell(target);
         while(getCurrentCell().x!=getTargetCell().x&&getCurrentCell().y!=getTargetCell().y){
-            printf("target : {%.0f,%.0f}\n",getTargetCell().x,getTargetCell().y);
-            printf("finding : %d\n Cell now :{%.0f,%.0f}\n,Cell next : {%.0f,%.0f}\n",count++,getCurrentCell().x,getCurrentCell().y,getNextCell().x,getNextCell().y);
-
+            printf("(WayPointUnit)target : {%.0f,%.0f}\n",getTargetCell().x,getTargetCell().y);
+            printf("(WayPointUnit)finding : %d\n (WayPointUnit)Cell now :{%.0f,%.0f}\n(WayPointUnit)Cell next : {%.0f,%.0f}\n",count++,getCurrentCell().x,getCurrentCell().y,getNextCell().x,getNextCell().y);
             setCurrentCell(getNextCell());
             m_dirQue.push_back(getCurrentDir());
-            m_pathQueue.push_back(getCurrentCell());
             findNextCellDir();
             UpdateNextCell();
             m_lineVector.push_back(Line(MapClass::CellCoordToGlobal(getCurrentCell()),MapClass::CellCoordToGlobal(getNextCell())));
         }
+        if(b_InitNewLine && getCurrentCell().x==getTargetCell().x && getCurrentCell().y==getTargetCell().y){
+            b_InitNewLine= false;
+            if(!m_lineVector.empty()){
+                m_grid.Start(m_lineVector);
+            }
+        }
         m_grid.SetActivate(true);
     }
     virtual void Update()override{
-        if(m_gridCount%30==0){
-            m_grid.queStart( m_lineVector);
-        }
-        m_gridCount++;
         m_grid.DrawUsingCamera(m_emptyTrans,defaultZIndex);
     }
 };
