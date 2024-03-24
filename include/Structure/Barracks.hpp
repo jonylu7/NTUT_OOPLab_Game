@@ -22,7 +22,7 @@ private:
     std::vector<Line> m_lineVector;
 
 public:
-    Barracks(float electricPower = -20.F, float buildingTime = 15.F,
+    Barracks(float electricPower = -20.F, float buildingTime = 1.f/*15.F*/,
              float buildingCost = 300.F, float buildingHp = 800.F)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
                     unitType::BARRACKS){};

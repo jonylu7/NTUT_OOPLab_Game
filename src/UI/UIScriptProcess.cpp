@@ -52,9 +52,15 @@ void UIScriptProcess::CountDown() {
     m_CountDownCurrentTime = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed =
         m_CountDownCurrentTime - m_StartTime;
+    std::chrono::duration<double> unitElapsed =
+        m_CountDownCurrentTime - m_SpawnStartTime;
     if (b_STALL) {
         // printf("(Button) CD: %.2f,%s\n", TargetTime - elapsed.count(),
         // elapsed.count() >= TargetTime ? "True" : "False");
+    }
+    if (b_spawnInCD) {
+        printf("(UISC) CD: %.2f,%s\n", unitElapsed.count(),
+        elapsed.count() >= m_SpawnTime ? "True" : "False");
     }
     if (elapsed.count() >= TargetTime && b_STALL) {
         // printf("(Button) Construction Finished\n");
@@ -62,10 +68,20 @@ void UIScriptProcess::CountDown() {
         b_STALL = false;
         return;
     }
+    if (unitElapsed.count() >= m_SpawnTime && b_spawnInCD) {
+        b_readytoSpawn=true;
+        b_spawnInCD = false;
+        printf("(UISC)Unit Ready\n");
+        return;
+    }
 }
 void UIScriptProcess::SetCountDown(float time) {
     TargetTime = time;
     m_StartTime = std::chrono::high_resolution_clock::now();
+}
+void UIScriptProcess::SetSpawnCountDown(float time) {
+    m_SpawnTime = time;
+    m_SpawnStartTime = std::chrono::high_resolution_clock::now();
 }
 
 void UIScriptProcess::AddToBuildQueue(unitType type) {
@@ -84,6 +100,12 @@ void UIScriptProcess::Update(bool queueContinue) {
         buildQueue.pop_front();
         b_STALL = true;
         SetCountDown(GetStructureTime(m_currentStructure));
+    }
+    if (m_spawnQueue.size() !=0 && !b_spawnInCD) {
+        m_currentAvatar = m_spawnQueue.front();
+        m_spawnQueue.pop_front();
+        b_spawnInCD = true;
+        SetSpawnCountDown(GetSpawnTime(m_currentAvatar));
     }
     CountDown();
 }
@@ -127,5 +149,28 @@ void UIScriptProcess::SetIfFinished(unitType type, bool value) {
         // Handle the case when type doesn't match any of the options
         // For example, you might throw an exception or set a default value
         break;
+    }
+}
+
+void UIScriptProcess::AddToSpawnQueue(unitType type){
+    printf("(UISC)Add Spawn Queue\n");
+    m_spawnQueue.push_back(type);
+    return;
+
+}
+float UIScriptProcess::GetSpawnTime(unitType type){
+    switch (type) {
+    case unitType::INFANTRY:{
+        return 5.F;
+    }
+    }
+}
+
+std::shared_ptr<Avatar> UIScriptProcess::spawnAvatar(){
+    printf("(UISC)spawnAvatar\n");
+    switch (m_currentAvatar) {
+    case unitType::INFANTRY:{
+        return std::make_unique<Infantry>();
+    }
     }
 }

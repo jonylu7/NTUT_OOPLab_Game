@@ -11,6 +11,7 @@
 #include "Structure/PowerPlants.hpp"
 #include "Structure/Structure.hpp"
 #include "Structure/WarFactory.hpp"
+#include "Unit/Avatar.hpp"
 #include <unordered_map>
 #include <utility>
 class GameObjectManager {
@@ -30,11 +31,19 @@ public:
         for (auto pair : m_BuiltStructure) {
             pair->Update();
         }
+        for (auto unit : m_UnitArray){
+            unit->Update();
+            printf("(GOM) update back success\n");
+        }
     }
 
     void Append(std::shared_ptr<Structure> newstruct) {
         newstruct->Start();
         m_BuiltStructure.push_back(newstruct);
+    }
+    void unitAppend(std::shared_ptr<Avatar> newUnit) {
+        m_UnitArray.push_back(newUnit);
+        printf("(GOM) push back success\n");
     }
 
     void RemoveStructByID(const GameObjectID id) {
@@ -55,9 +64,11 @@ public:
         return totalPower;
     }
 
+    std::vector<std::shared_ptr<Structure>> getStructureArray(){return m_BuiltStructure;}
+
 private:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
-    // std::vector<std::shared_ptr<Unit>> m_UnitArray;
+    std::vector<std::shared_ptr<Avatar>> m_UnitArray;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP

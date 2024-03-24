@@ -25,11 +25,11 @@ void DefaultScene::Start() {
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
 
-    m_dummy.Start({5, 5}, m_Map);
+    //m_dummy.Start({5, 5}, m_Map);
 }
 
 void DefaultScene::Update() {
-    m_dummy.Update();
+    //m_dummy.Update();
 
     m_Manager.Update();
 
@@ -57,5 +57,10 @@ void DefaultScene::Update() {
 
     if (m_UI.getIfAnythingCanSelectToBuild()) {
         m_Manager.Append(m_UI.getSelectedBuilding());
+    }
+    m_UI.checkExistBuilding(m_Manager.getStructureArray());
+    m_UI.importMap(m_Map);
+    if(m_UI.getIfUnitReadyToSpawn()){
+        m_Manager.unitAppend(m_UI.getUnitFromUI());
     }
 }
