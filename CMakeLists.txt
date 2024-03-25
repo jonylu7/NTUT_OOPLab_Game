@@ -94,6 +94,7 @@ set(SRC_FILES
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
+
         ${INCLUDE_DIR}/Core/Context.hpp
         ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp
         ${INCLUDE_DIR}/Core/VertexArray.hpp
@@ -128,7 +129,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/ImageArray.hpp
         ${INCLUDE_DIR}/Util/CustomizableImage.hpp
 
-
+        ${INCLUDE_DIR}/Map.hpp
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/GameObjectManager.hpp
         ${INCLUDE_DIR}/GameObjectID.hpp
@@ -149,6 +150,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/MouseOverlapTool.h
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
+        ${INCLUDE_DIR}/House.hpp
         ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
         ${INCLUDE_DIR}/DrawOverlays.hpp
         ${INCLUDE_DIR}/UI/UI.hpp

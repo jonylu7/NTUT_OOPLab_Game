@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP
+#include "House.hpp"
 #include <string>
 #include <unordered_map>
 
@@ -44,9 +45,10 @@ public:
     GameObjectID()
         : m_unitType(unitType::null),
           number(0) {}
-    GameObjectID(unitType type)
+    GameObjectID(unitType type, HouseType house)
         : m_unitType(type),
-          number(OccupiedID::getNewestID(type)) {}
+          number(OccupiedID::getNewestID(type)),
+          m_house(house) {}
     ~GameObjectID() {}
 
     void generateID(unitType type) { m_unitType = type; }
@@ -70,6 +72,7 @@ public:
 private:
     unitType m_unitType;
     unsigned int number;
+    HouseType m_house;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP

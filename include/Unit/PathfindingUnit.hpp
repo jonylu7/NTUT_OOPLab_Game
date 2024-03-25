@@ -65,7 +65,8 @@ public:
 
     void setCurrentCell(glm::vec2 cell) {
         this->m_currentCell = glm::vec2(cell);
-        glm::vec2 temp = MapClass::CellCoordToGlobal(m_currentCell);
+        // MapClass::CellCoordToGlobal(m_currentCell);
+        glm::vec2 temp = MapUtil::CellCoordToGlobal(this->m_currentCell);
         // m_currentLocation={temp.x+CELL_SIZE.x/2,temp.y+CELL_SIZE.y/2};
         m_currentLocation = {temp.x, temp.y};
     }

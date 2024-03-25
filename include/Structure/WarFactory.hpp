@@ -22,9 +22,10 @@ private:
 
 public:
     WarFactory(float electricPower = -30.F, float buildingTime = 100.F,
-               float buildingCost = 2000.F, float buildingHp = 1000.F)
+               float buildingCost = 2000.F, float buildingHp = 1000.F,
+               HouseType house = HouseType::NONE)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
-                    unitType::WAR_FACT){};
+                    GameObjectID(unitType::WAR_FACT, house)){};
     void Start() override;
 
     virtual void onSelected(bool selected) override;

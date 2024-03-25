@@ -6,7 +6,6 @@
 #include <iostream>
 void DefaultScene::Start() {
     // image.SetImage("../assets/sprites/Shapes/B_Box.png");
-    OccupiedID::InitID();
     LOG_TRACE("Start");
 
     /* doing some weird stuff, fix is needed
@@ -41,10 +40,10 @@ void DefaultScene::Update() {
 
     Util::Transform trans2;
     trans2.translation = Structure::ChangeToCell(
-        MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
+        MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
 
-    auto tile = m_Map->getTileByCellPosition(MapClass::GlobalCoordToCellCoord(
-        MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition())));
+    auto tile = m_Map->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
+        MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition())));
 
     if (tile->getWalkable()) {
         m_testdraw.setDrawMode(DrawOverlays::OverlayShapes::B_BOXES);

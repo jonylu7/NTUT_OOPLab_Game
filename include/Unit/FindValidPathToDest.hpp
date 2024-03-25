@@ -158,8 +158,8 @@ public:
                     getNextCellByCurrent(getCurrentDir(), getNextCell()));
 
                 m_lineVector.push_back(
-                    Line(MapClass::CellCoordToGlobal(getCurrentCell()),
-                         MapClass::CellCoordToGlobal(getNextCell())));
+                    Line(MapUtil::CellCoordToGlobal(getCurrentCell()),
+                         MapUtil::CellCoordToGlobal(getNextCell())));
                 whichSideToTouch = randomlyChooseSide();
                 // dirToTouch = nullptr;
             } else {

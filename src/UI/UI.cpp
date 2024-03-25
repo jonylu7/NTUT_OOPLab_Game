@@ -57,12 +57,12 @@ void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
 
 void UIClass::ShowHeaderSection() {
 
-    glm::vec2 CursorGlobalPosition = MapClass::ScreenToGlobalCoord(
+    glm::vec2 CursorGlobalPosition = MapUtil::ScreenToGlobalCoord(
         glm::vec2(Util::Input::GetCursorPosition()));
     ImGui::Text(std::string("X: " + std::to_string(CursorGlobalPosition.x) +
                             "  Y: " + std::to_string(CursorGlobalPosition.y))
                     .c_str());
-    auto cellLocation = MapClass::GlobalCoordToCellCoord(CursorGlobalPosition);
+    auto cellLocation = MapUtil::GlobalCoordToCellCoord(CursorGlobalPosition);
     ImGui::Text(std::string("Cell X: " + std::to_string(int(cellLocation.x)) +
                             "  Cell Y: " + std::to_string(int(cellLocation.y)))
                     .c_str());

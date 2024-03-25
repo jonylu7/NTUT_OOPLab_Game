@@ -56,29 +56,6 @@ public:
          */
     }
 
-    static glm::vec2 ScreenToGlobalCoord(glm::vec2 screenCoord) {
-        auto proj = CameraClass::getProjectionMatrix();
-        auto view = CameraClass::getViewMatrix();
-        glm::vec2 offset = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2};
-        glm::vec4 vec4ScreenCoord(
-            {screenCoord[0] + CameraClass::getPosition().x + offset.x,
-             screenCoord[1] + CameraClass::getPosition().y + offset.y, 0.F,
-             1.F});
-        glm::vec4 global(vec4ScreenCoord);
-
-        return glm::vec2(global[0], global[1]);
-    }
-
-    static glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord) {
-        return glm::vec2(int(globalCoord[0] / CELL_SIZE.x),
-                         int(globalCoord[1] / CELL_SIZE.y));
-    }
-
-    static glm::vec2 CellCoordToGlobal(glm::vec2 cellCoord) {
-        return glm::vec2(int(cellCoord[0] * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
-                         int(cellCoord[1] * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
-    }
-
     std::shared_ptr<TileClass> getTileByCellPosition(glm::vec2 position) {
 
         if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
@@ -91,9 +68,9 @@ public:
         return getTileByCellPosition(position)->getWalkable();
     }
 
-    static void setTileByCellPosition(glm::vec2 position,
-                                      std::shared_ptr<TileClass> tile) {
-        /*
+    void setTileByCellPosition(glm::vec2 position,
+                               std::shared_ptr<TileClass> tile) {
+
         if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
             position.x < 0 || position.y < 0) {
             LOG_DEBUG("False Position Setting");
@@ -101,20 +78,11 @@ public:
         }
 
         m_Map[position.x][position.y] = tile;
-         */
     }
 
     void setGridActive(bool value) { m_Grid.SetActivate(value); }
 
     // weird
-    static std::vector<std::shared_ptr<TileClass>>
-    readMapAndTileSet(std::vector<int> map, std::map<int, TileClass> tileset) {
-        std::vector<std::shared_ptr<TileClass>> maps;
-        for (int i = 0; i < map.size(); i++) {
-            maps.push_back(std::make_shared<TileClass>(tileset[map[i]]));
-        }
-        return maps;
-    }
 
 protected:
     void InitGrid() {
@@ -144,6 +112,41 @@ private:
     std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
     int m_ZIndex = 0;
     Grid m_Grid;
+};
+
+class MapUtil {
+public:
+    static std::vector<std::shared_ptr<TileClass>>
+    readMapAndTileSet(std::vector<int> map, std::map<int, TileClass> tileset) {
+        std::vector<std::shared_ptr<TileClass>> maps;
+        for (int i = 0; i < map.size(); i++) {
+            maps.push_back(std::make_shared<TileClass>(tileset[map[i]]));
+        }
+        return maps;
+    }
+
+    static glm::vec2 ScreenToGlobalCoord(glm::vec2 screenCoord) {
+        auto proj = CameraClass::getProjectionMatrix();
+        auto view = CameraClass::getViewMatrix();
+        glm::vec2 offset = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2};
+        glm::vec4 vec4ScreenCoord(
+            {screenCoord[0] + CameraClass::getPosition().x + offset.x,
+             screenCoord[1] + CameraClass::getPosition().y + offset.y, 0.F,
+             1.F});
+        glm::vec4 global(vec4ScreenCoord);
+
+        return glm::vec2(global[0], global[1]);
+    }
+
+    static glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord) {
+        return glm::vec2(int(globalCoord[0] / CELL_SIZE.x),
+                         int(globalCoord[1] / CELL_SIZE.y));
+    }
+
+    static glm::vec2 CellCoordToGlobal(const glm::vec2 cellCoord) {
+        return glm::vec2(int(cellCoord[0] * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
+                         int(cellCoord[1] * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
+    }
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP
