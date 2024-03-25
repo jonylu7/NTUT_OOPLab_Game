@@ -152,6 +152,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
         ${INCLUDE_DIR}/DrawOverlays.hpp
         ${INCLUDE_DIR}/UI/UI.hpp
+        ${INCLUDE_DIR}/Player.hpp
 
         ${INCLUDE_DIR}/Structure/Barracks.hpp
         ${INCLUDE_DIR}/Structure/OreRefinery.hpp

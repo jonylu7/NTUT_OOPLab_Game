@@ -32,7 +32,7 @@ void UIClass::Update() {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    ButtonScript.Update(getIfAnythingCanSelectToBuild());
+    ButtonScript.Update(getIfAnyBuildingReadyToBuild());
     // printf("(UI)Button Lock :
     // %s,%s\n",selectLock()?"Unlock":"Lock",b_SelectToBuild?"True":"False");
 }
@@ -429,7 +429,7 @@ bool UIClass::selectLock() {
     return !(b_Baracks | b_OreRefinery | b_PowerPlants | b_WarFactory |
              b_ADVPowerPlant);
 }
-bool UIClass::getIfAnythingCanSelectToBuild() {
+bool UIClass::getIfAnyBuildingReadyToBuild() {
     return b_SelectToBuild &&
            (ButtonScript.GetIfFinished(unitType::BARRACKS) ||
             ButtonScript.GetIfFinished(unitType::POWER_PLANT) ||

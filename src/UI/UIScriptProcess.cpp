@@ -20,10 +20,10 @@ bool UIScriptProcess::GetIfFinished(unitType type) {
 }
 
 float UIScriptProcess::GetCDLeft() {
-    if (b_STALL) {
+    if (b_isBuildingInCoolDown) {
         std::chrono::duration<double> elapsed =
-            m_CountDownCurrentTime - m_StartTime;
-        return TargetTime - elapsed.count();
+            m_currentCountDownTime - m_buildStartTime;
+        return m_buildCoolDownTime - elapsed.count();
     } else {
         return -1.F;
     }
@@ -49,38 +49,38 @@ std::string UIScriptProcess::GetFormattedCD() {
 }
 
 void UIScriptProcess::CountDown() {
-    m_CountDownCurrentTime = std::chrono::high_resolution_clock::now();
+    m_currentCountDownTime = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed =
-        m_CountDownCurrentTime - m_StartTime;
+        m_currentCountDownTime - m_buildStartTime;
     std::chrono::duration<double> unitElapsed =
-        m_CountDownCurrentTime - m_SpawnStartTime;
-    if (b_STALL) {
-        // printf("(Button) CD: %.2f,%s\n", TargetTime - elapsed.count(),
-        // elapsed.count() >= TargetTime ? "True" : "False");
+        m_currentCountDownTime - m_SpawnStartTime;
+    if (b_isBuildingInCoolDown) {
+        // printf("(Button) CD: %.2f,%s\n", m_buildCoolDownTime - elapsed.count(),
+        // elapsed.count() >= m_buildCoolDownTime ? "True" : "False");
     }
-    if (b_spawnInCD) {
+    if (b_isSpawningInCooldown) {
         printf("(UISC) CD: %.2f,%s\n", unitElapsed.count(),
-        elapsed.count() >= m_SpawnTime ? "True" : "False");
+        elapsed.count() >= m_spawnCooldownTime ? "True" : "False");
     }
-    if (elapsed.count() >= TargetTime && b_STALL) {
+    if (elapsed.count() >= m_buildCoolDownTime && b_isBuildingInCoolDown) {
         // printf("(Button) Construction Finished\n");
-        SetIfFinished(m_currentStructure, true);
-        b_STALL = false;
+        SetIfFinished(m_currentStructureType, true);
+        b_isBuildingInCoolDown = false;
         return;
     }
-    if (unitElapsed.count() >= m_SpawnTime && b_spawnInCD) {
-        b_readytoSpawn=true;
-        b_spawnInCD = false;
+    if (unitElapsed.count() >= m_spawnCooldownTime && b_isSpawningInCooldown) {
+        b_isReadyToSpawn=true;
+        b_isSpawningInCooldown = false;
         printf("(UISC)Unit Ready\n");
         return;
     }
 }
 void UIScriptProcess::SetCountDown(float time) {
-    TargetTime = time;
-    m_StartTime = std::chrono::high_resolution_clock::now();
+    m_buildCoolDownTime = time;
+    m_buildStartTime = std::chrono::high_resolution_clock::now();
 }
 void UIScriptProcess::SetSpawnCountDown(float time) {
-    m_SpawnTime = time;
+    m_spawnCooldownTime = time;
     m_SpawnStartTime = std::chrono::high_resolution_clock::now();
 }
 
@@ -88,24 +88,24 @@ void UIScriptProcess::AddToBuildQueue(unitType type) {
     if (GetIfFinished(type)) {
         return;
     }
-    buildQueue.push_back(type);
+    m_buildQueue.push_back(type);
     return;
 }
 void UIScriptProcess::Update(bool queueContinue) {
-    //(buildQueue.size() > 1 && queueContinue && !b_STALL) for waiting player to
+    //(m_buildQueue.size() > 1 && queueContinue && !b_isBuildingInCoolDown) for waiting player to
     //build strucutre, then continue operating
-    if ((buildQueue.size() == 1 && !b_STALL) ||
-        ((buildQueue.size() > 1 && queueContinue && !b_STALL))) {
-        m_currentStructure = buildQueue.front();
-        buildQueue.pop_front();
-        b_STALL = true;
-        SetCountDown(GetStructureTime(m_currentStructure));
+    if ((m_buildQueue.size() == 1 && !b_isBuildingInCoolDown) ||
+        ((m_buildQueue.size() > 1 && queueContinue && !b_isBuildingInCoolDown))) {
+        m_currentStructureType = m_buildQueue.front();
+        m_buildQueue.pop_front();
+        b_isBuildingInCoolDown = true;
+        SetCountDown(GetStructureTime(m_currentStructureType));
     }
-    if (m_spawnQueue.size() !=0 && !b_spawnInCD) {
-        m_currentAvatar = m_spawnQueue.front();
+    if (m_spawnQueue.size() !=0 && !b_isSpawningInCooldown) {
+        m_currentAvatarType = m_spawnQueue.front();
         m_spawnQueue.pop_front();
-        b_spawnInCD = true;
-        SetSpawnCountDown(GetSpawnTime(m_currentAvatar));
+        b_isSpawningInCooldown = true;
+        SetSpawnCountDown(GetSpawnTime(m_currentAvatarType));
     }
     CountDown();
 }
@@ -168,7 +168,7 @@ float UIScriptProcess::GetSpawnTime(unitType type){
 
 std::shared_ptr<Avatar> UIScriptProcess::spawnAvatar(){
     printf("(UISC)spawnAvatar\n");
-    switch (m_currentAvatar) {
+    switch (m_currentAvatarType) {
     case unitType::INFANTRY:{
         return std::make_unique<Infantry>();
     }

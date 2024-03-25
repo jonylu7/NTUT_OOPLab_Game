@@ -6,6 +6,7 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #include "Camera.hpp"
 #include "GameObjectID.hpp"
+#include "Player.hpp"
 #include "SpriteSheet.hpp"
 #include "UI/UIScriptProcess.hpp"
 #include "imgui/imgui.h"
@@ -31,12 +32,15 @@ public:
 
     std::unique_ptr<Structure> getSelectedBuilding();
     bool
-    getIfAnythingCanSelectToBuild(); // 避免Scene收到空的getSelectedBuilding
+    getIfAnyBuildingReadyToBuild(); // 避免Scene收到空的getSelectedBuilding
 
     std::shared_ptr<Avatar> getUnitFromUI();
     bool getIfUnitReadyToSpawn(){return ButtonScript.getIfReadytoSpawn();}
     void setIfUnitReadyToSpawn(bool b){ButtonScript.setIfReadytoSpawn(b);}
+
+    //import from scene
     void importMap(std::shared_ptr<MapClass> m_Map){this->m_Map=m_Map;}
+    void importPlayer(std::shared_ptr<Player> m_Player){this->m_Player=m_Player;}
 
     //check if building has built
     void checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList);
@@ -105,7 +109,9 @@ private:
     glm::vec2 m_orerefineryCell;
     glm::vec2 m_orerefineryTargetCell;
 
+    //ptr import from scene
     std::shared_ptr<MapClass> m_Map;
+    std::shared_ptr<Player> m_Player;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
