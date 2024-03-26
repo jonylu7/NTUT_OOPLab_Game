@@ -4,21 +4,15 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_ATTACKANDDAMAGEUNIT_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_ATTACKANDDAMAGEUNIT_HPP
-#include "Avatar.hpp"
-class AttackAndDameageUnit {
+#include "Weapon.hpp"
+class AttackAndDamageUnit {
 public:
-    AttackAndDameageUnit() {}
-    ~AttackAndDameageUnit() {}
+    AttackAndDamageUnit() {}
+    virtual ~AttackAndDamageUnit() {}
 
     int getHP() { return m_HP; }
-    int getArmorRate() { return m_ArmorRate; }
-    int getSoftAttack() { return m_SoftAttack; }
-    int getHardAttack() { return m_HardAttack; }
 
     void setHP(int hp) { m_HP = hp; }
-    void setArmorRate(int armor) { m_ArmorRate = armor; }
-    void setSoftAttack(int softattack) { m_SoftAttack = softattack; }
-    void setHardAttack(int hardattack) { m_SoftAttack = hardattack; }
 
     void takeDamage(int softattack, int hardattack) {
 
@@ -26,20 +20,18 @@ public:
                 m_ArmorRate * (1 / 100) * hardattack;
     }
 
-    void ForceAttackUnit(std::shared_ptr<AttackAndDameageUnit> target) {
+    void ForceAttackUnit(std::shared_ptr<AttackAndDamageUnit> target) {
+
         // check withinrange
         // cd time
-        target->takeDamage(m_SoftAttack, m_HardAttack);
+        target->takeDamage(m_Weapon.getSoftAttack(), m_Weapon.getHardAttack());
         return;
     }
 
 private:
     int m_HP;
+    Weapon m_Weapon;
     float m_ArmorRate;
-    int m_SoftAttack;
-    int m_HardAttack;
-    float m_AttackRange;
-    int cd;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_ATTACKANDDAMAGEUNIT_HPP

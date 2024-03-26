@@ -13,7 +13,6 @@
 #include "Util/Input.hpp"
 #include "Util/TransformUtils.hpp"
 #include "glm/glm.hpp"
-#define CELL 48.F
 #define DEFAULT_ZINDEX 15
 
 class Structure : public Util::GameObject {
@@ -24,7 +23,8 @@ public:
         : electricPower(100.F),
           buildingTime(100.F),
           buildingCost(100.F),
-          buildingHp(100.F) {
+          buildingHp(100.F),
+          m_ID(GameObjectID(unitType::null, HouseType::NONE)) {
         m_CurrentState = updateMode::Invisidable;
     };
 

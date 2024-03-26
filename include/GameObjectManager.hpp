@@ -46,15 +46,7 @@ public:
         printf("(GOM) push back success\n");
     }
 
-    void RemoveStructByID(const GameObjectID id) {
-        for (int i = 0; i < m_BuiltStructure.size(); i++) {
-            if (m_BuiltStructure[i]->GetID() == id) {
-                std::remove(m_BuiltStructure.begin(), m_BuiltStructure.end(),
-                            m_BuiltStructure[i]);
-                return;
-            }
-        }
-    }
+    void RemoveStructByID(const GameObjectID id) {}
 
     int GetTotalPower() {
         int totalPower = 0;
@@ -69,6 +61,9 @@ public:
 private:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
     std::vector<std::shared_ptr<Avatar>> m_UnitArray;
+
+    std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
+
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP

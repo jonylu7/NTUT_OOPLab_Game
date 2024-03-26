@@ -5,6 +5,8 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP
 #include "SpriteSheet.hpp"
+#include "Structure/Structure.hpp"
+#include "Unit/PathfindingUnit.hpp"
 #include <map>
 class TileClass {
 public:
@@ -61,6 +63,7 @@ private:
     bool m_Buildable;
     bool m_Clickable;
     std::string m_Name;
+    // std::vector<std::shared_ptr<PathfindingUnit>> m_Units;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP

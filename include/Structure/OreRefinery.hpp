@@ -22,9 +22,10 @@ private:
 
 public:
     OreRefinery(float electricPower = -30.F, float buildingTime = 100.F,
-                float buildingCost = 2000.F, float buildingHp = 900.F)
+                float buildingCost = 2000.F, float buildingHp = 900.F,
+                HouseType house = HouseType::NONE)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
-                    unitType::ORE_REF){};
+                    GameObjectID(unitType::ORE_REF, house)){};
     void Start() override;
 
     virtual void onSelected(bool selected) override;

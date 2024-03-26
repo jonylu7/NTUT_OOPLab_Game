@@ -4,10 +4,11 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
+#include "Unit/AttackAndDamageUnit.hpp"
 #include "Unit/FindValidPathToDest.hpp"
 #include "Unit/PathfindingUnit.hpp"
 
-class Avatar : public PathfindingUnit {
+class Avatar : public PathfindingUnit, public AttackAndDamageUnit {
 private:
     FindValidPathToDest m_wayPointUnit;
     bool b_SelectedByCursor = true;
@@ -39,7 +40,7 @@ public:
         if (walkTowardNextCell() || b_justStarted) {
             b_justStarted = false;
             setCurrentCell(
-                MapClass::GlobalCoordToCellCoord(getCurrentLocation()));
+                MapUtil::GlobalCoordToCellCoord(getCurrentLocation()));
             setCurrentDir(m_wayPointUnit.getFirstCellDir());
             setNextCell(getNextCellByCurrent(getCurrentDir(), getNextCell()));
             printf("(aliveUpdate) getting new dir\n");
@@ -72,7 +73,7 @@ public:
         if (b_SelectedByCursor &&
             Util::Input::IsKeyPressed(Util::Keycode::MOUSE_RB)) {
             this->setNewDestination(
-                MapClass::GlobalCoordToCellCoord(MapClass::ScreenToGlobalCoord(
+                MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
                     Util::Input::GetCursorPosition())));
         }
     }

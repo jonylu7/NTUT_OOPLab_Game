@@ -22,10 +22,12 @@ private:
     std::vector<Line> m_lineVector;
 
 public:
-    Barracks(float electricPower = -20.F, float buildingTime = 1.f/*15.F*/,
-             float buildingCost = 300.F, float buildingHp = 800.F)
+    Barracks(float electricPower = -20.F, float buildingTime = 1.F,
+             float buildingCost = 300.F, float buildingHp = 800.F,
+             HouseType house = HouseType::NONE)
+
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
-                    unitType::BARRACKS){};
+                    GameObjectID(unitType::BARRACKS, house)){};
     void Start() override;
 
     virtual void onSelected(bool selected) override;
