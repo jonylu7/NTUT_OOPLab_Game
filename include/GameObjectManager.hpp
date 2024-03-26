@@ -27,14 +27,35 @@ public:
             pair->Start();
         }
     }
+    glm::vec2 start;
+    glm::vec2 end;
     void Update() {
         for (auto pair : m_BuiltStructure) {
             pair->Update();
         }
-        for (auto unit : m_UnitArray){
+        for (auto unit : m_UnitArray) {
             unit->Update();
-            printf("(GOM) update back success\n");
         }
+
+        CursorSelect(&start, &end);
+    }
+
+    void CursorSelect(glm::vec2 *start, glm::vec2 *end) {
+        if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
+            *start = Util::Input::GetCursorPosition();
+        }
+        if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
+            *end = Util::Input::GetCursorPosition();
+        }
+        MapUtil::ScreenToGlobalCoord(*start);
+    }
+
+    static bool ifObjectClicked(glm::vec2 objpos, glm::vec2 objsize,
+                                glm::vec2 mousestart, glm::vec2 mouseend) {
+        mousestart = MapUtil::GlobalCoordToCellCoord(mousestart);
+        mouseend = MapUtil::GlobalCoordToCellCoord(mouseend);
+        objpos = MapUtil::GlobalCoordToCellCoord(objpos);
+        return (mousestart == objpos);
     }
 
     void Append(std::shared_ptr<Structure> newstruct) {
@@ -56,14 +77,15 @@ public:
         return totalPower;
     }
 
-    std::vector<std::shared_ptr<Structure>> getStructureArray(){return m_BuiltStructure;}
+    std::vector<std::shared_ptr<Structure>> getStructureArray() {
+        return m_BuiltStructure;
+    }
 
 private:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
     std::vector<std::shared_ptr<Avatar>> m_UnitArray;
 
     std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
-
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP

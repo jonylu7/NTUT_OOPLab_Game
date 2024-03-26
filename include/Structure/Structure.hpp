@@ -7,7 +7,7 @@
 #include "GameObjectID.hpp"
 #include "HighLight.h"
 #include "Map.hpp"
-#include "Structure/MouseOverlapTool.h"
+#include "Selectable.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
@@ -15,7 +15,7 @@
 #include "glm/glm.hpp"
 #define DEFAULT_ZINDEX 15
 
-class Structure : public Util::GameObject {
+class Structure : public Util::GameObject, public Selectable {
 
 public:
     enum class updateMode { Invisidable, Moveable, Fixed };
@@ -57,9 +57,10 @@ public:
     void SetID(GameObjectID id) { m_ID = id; };
 
     static glm::vec2 ChangeToCell(glm::vec2 location);
-    virtual void onSelected(bool selected);
+    void onSelected() override;
     virtual void attachmentUpdate(); // this function now will update
-                                     // attachment's location and draw as well
+                                     // attachment's location and draw as
+                                     // well
     bool getBuilt() {
         if (m_CurrentState == updateMode::Fixed) {
             return true;
@@ -98,7 +99,6 @@ private:
     GameObjectID m_ID;
 
 protected:
-    bool b_selected = false;
     bool b_selectingNewWayPoint = false;
 };
 

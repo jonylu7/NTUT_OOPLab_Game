@@ -16,7 +16,6 @@
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/IWayPointStructure.hpp"
-#include "Structure/MouseOverlapTool.h"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
@@ -49,7 +48,7 @@ private:
     Util::Renderer m_Renderer;
     UIClass m_UI;
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
-    std::shared_ptr<Player> m_Player=std::make_shared<Player>();
+    std::shared_ptr<Player> m_Player = std::make_shared<Player>();
     GameObjectManager m_Manager;
 
     Avatar m_dummy;

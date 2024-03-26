@@ -1,8 +1,8 @@
 //
 // Created by 盧威任 on 1/30/24.
 //
-
 #include "Structure/Structure.hpp"
+#include "GameObjectManager.hpp"
 #include "Util/Input.hpp"
 #include "Util/Transform.hpp"
 #include "config.hpp"
@@ -36,20 +36,6 @@ void Structure::updateFixed() {
     attachmentUpdate();
     this->Draw();
     // Script when select--------------------
-    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB) &&
-        !b_selectingNewWayPoint) {
-        if (MouseOverlapTool::ifObjectClicked(
-                GetObjectLocation() /*,GetScaledSize()*/)) {
-            b_selected = true;
-        } else {
-            b_selected = false;
-        }
-    }
-    if (b_selected) {
-        onSelected(true);
-    } else {
-        onSelected(false);
-    }
 }
 void Structure::updateMoveable() {
     // debug
@@ -105,8 +91,8 @@ void Structure::SetObjectLocation(glm::vec2 location) {
                     location.y + 0.5 * CELL_SIZE.y};
     m_Transform.translation = DrawLocation;
 }
-void Structure::onSelected(bool selected) {
-    this->SetAttachVisible(selected);
+void Structure::onSelected() {
+    this->SetAttachVisible(getSelected());
 };
 
 void Structure::SetAttachVisible(bool visible) {

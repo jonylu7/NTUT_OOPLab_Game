@@ -71,8 +71,6 @@ set(SRC_FILES
 
         ${SRC_DIR}/Structure/Structure.cpp
         ${SRC_DIR}/Structure/WayPoint.cpp
-        ${SRC_DIR}/Structure/MouseOverlapTool.cpp
-        ${SRC_DIR}/Structure/IWayPointStructure.cpp
         ${SRC_DIR}/Structure/HighLight.cpp
         ${SRC_DIR}/UI/UIScriptProcess.cpp
 
@@ -80,7 +78,7 @@ set(SRC_FILES
         ${SRC_DIR}/Structure/OreRefinery.cpp
         ${SRC_DIR}/Structure/PowerPlants.cpp
         ${SRC_DIR}/Structure/WarFactory.cpp
-        #${SRC_DIR}/Structure/ADVPowerPlants.cpp
+        ${SRC_DIR}/Structure/WayPointStructure.cpp
 
         ${SRC_DIR}/Unit/PathfindingUnit.cpp
 
@@ -107,6 +105,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Core/Texture.hpp
         ${INCLUDE_DIR}/Core/TextureUtils.hpp
         ${INCLUDE_DIR}/Core/Drawable.hpp
+        ${INCLUDE_DIR}/Structure/WayPointStructure.hpp
 
 
         ${INCLUDE_DIR}/Util/LoadTextFile.hpp
@@ -147,7 +146,6 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/Structure/Structure.hpp
         ${INCLUDE_DIR}/Structure/WayPoint.hpp
-        ${INCLUDE_DIR}/Structure/MouseOverlapTool.h
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
         ${INCLUDE_DIR}/House.hpp
