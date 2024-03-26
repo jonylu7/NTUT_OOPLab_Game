@@ -218,7 +218,7 @@ void UIClass::ShowInfantryTab() {
     if (ImGui::BeginTabItem("Inf")) {
         if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 0)) {
             // rifle
-            if(b_barackBuilt){
+            if (b_barackBuilt) {
                 ButtonScript.AddToSpawnQueue(unitType::INFANTRY);
                 setUnitConstructCount(unitType::INFANTRY, 1);
             }
@@ -438,38 +438,45 @@ bool UIClass::getIfAnyBuildingReadyToBuild() {
             ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT));
 }
 
-void UIClass::checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList){
-    b_barackBuilt= false;
-    b_warfactoryBuilt= false;
-    b_orerefineryBuilt= false;
-    if(buildingList.size()==0){
+void UIClass::checkExistBuilding(
+    std::vector<std::shared_ptr<Structure>> buildingList) {
+    b_barackBuilt = false;
+    b_warfactoryBuilt = false;
+    b_orerefineryBuilt = false;
+    if (buildingList.size() == 0) {
         return;
     }
-    for(auto i:buildingList){
-        if(std::dynamic_pointer_cast<Barracks>(i)&&!b_barackBuilt){
-            m_barrackTargetCell=MapClass::GlobalCoordToCellCoord(std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
-            b_barackBuilt= true;
-            m_barrackCell=MapClass::GlobalCoordToCellCoord(i->GetObjectLocation());
-        }
-        else if(std::dynamic_pointer_cast<WarFactory>(i)&&!b_warfactoryBuilt){
-            m_warfactoryTargetCell=MapClass::GlobalCoordToCellCoord(std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
-            b_warfactoryBuilt= true;
-            m_warfactoryCell=MapClass::GlobalCoordToCellCoord(i->GetObjectLocation());
-        }
-        else if(std::dynamic_pointer_cast<OreRefinery>(i)&&!b_orerefineryBuilt){
-            m_orerefineryTargetCell=MapClass::GlobalCoordToCellCoord(std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
-            b_orerefineryBuilt= true;
-            m_orerefineryCell=MapClass::GlobalCoordToCellCoord(i->GetObjectLocation());
+    for (auto i : buildingList) {
+        if (std::dynamic_pointer_cast<Barracks>(i) && !b_barackBuilt) {
+            m_barrackTargetCell = MapUtil::GlobalCoordToCellCoord(
+                std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
+            b_barackBuilt = true;
+            m_barrackCell =
+                MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
+        } else if (std::dynamic_pointer_cast<WarFactory>(i) &&
+                   !b_warfactoryBuilt) {
+            m_warfactoryTargetCell = MapUtil::GlobalCoordToCellCoord(
+                std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
+            b_warfactoryBuilt = true;
+            m_warfactoryCell =
+                MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
+        } else if (std::dynamic_pointer_cast<OreRefinery>(i) &&
+                   !b_orerefineryBuilt) {
+            m_orerefineryTargetCell = MapUtil::GlobalCoordToCellCoord(
+                std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
+            b_orerefineryBuilt = true;
+            m_orerefineryCell =
+                MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
         }
     }
 }
 
-std::shared_ptr<Avatar> UIClass::getUnitFromUI(){
+std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
     printf("(UI)return to GOM\n");
     auto Avatar = ButtonScript.spawnAvatar();
     ButtonScript.setIfReadytoSpawn(false);
-    if(std::dynamic_pointer_cast<Infantry>(Avatar)){
-        Avatar->Start(m_barrackCell,m_Map);
+    if (std::dynamic_pointer_cast<Infantry>(Avatar)) {
+        Avatar->Start(m_barrackCell, m_Map);
         Avatar->setNewDestination(m_barrackTargetCell);
     } /*else if(std::dynamic_pointer_cast< >(Avatar)){
         Avatar->Start(m_warfactoryCell,m_Map);
