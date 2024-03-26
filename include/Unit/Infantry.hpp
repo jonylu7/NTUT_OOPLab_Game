@@ -9,7 +9,7 @@
 class Infantry:public Avatar{
 public:
     Infantry():Avatar(){
-        setHp(50);
+        //setHp(50);
         setMovementSpeed(4);
     }
 private:

@@ -22,9 +22,10 @@ private:
     std::vector<Line> m_lineVector;
 
 public:
-    Barracks(float electricPower = -20.F, float buildingTime = 15.F,
+    Barracks(float electricPower = -20.F, float buildingTime = 1.F,
              float buildingCost = 300.F, float buildingHp = 800.F,
              HouseType house = HouseType::NONE)
+
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
                     GameObjectID(unitType::BARRACKS, house)){};
     void Start() override;

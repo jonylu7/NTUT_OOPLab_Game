@@ -32,7 +32,7 @@ void UIClass::Update() {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    ButtonScript.Update(getIfAnythingCanSelectToBuild());
+    ButtonScript.Update(getIfAnyBuildingReadyToBuild());
     // printf("(UI)Button Lock :
     // %s,%s\n",selectLock()?"Unlock":"Lock",b_SelectToBuild?"True":"False");
 }
@@ -218,7 +218,11 @@ void UIClass::ShowInfantryTab() {
     if (ImGui::BeginTabItem("Inf")) {
         if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 0)) {
             // rifle
-            setUnitConstructCount(unitType::INFANTRY, 1);
+            if(b_barackBuilt){
+                ButtonScript.AddToSpawnQueue(unitType::INFANTRY);
+                setUnitConstructCount(unitType::INFANTRY, 1);
+            }
+
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
@@ -252,6 +256,7 @@ void UIClass::ShowDefTab() {
     if (ImGui::BeginTabItem("Def")) {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 18)) {
             // sandbags
+
             setUnitConstructCount(unitType::SANDBAGS, 1);
             LOG_DEBUG("TEST");
         }
@@ -424,11 +429,55 @@ bool UIClass::selectLock() {
     return !(b_Baracks | b_OreRefinery | b_PowerPlants | b_WarFactory |
              b_ADVPowerPlant);
 }
-bool UIClass::getIfAnythingCanSelectToBuild() {
+bool UIClass::getIfAnyBuildingReadyToBuild() {
     return b_SelectToBuild &&
            (ButtonScript.GetIfFinished(unitType::BARRACKS) ||
             ButtonScript.GetIfFinished(unitType::POWER_PLANT) ||
             ButtonScript.GetIfFinished(unitType::ORE_REF) ||
             ButtonScript.GetIfFinished(unitType::WAR_FACT) ||
             ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT));
+}
+
+void UIClass::checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList){
+    b_barackBuilt= false;
+    b_warfactoryBuilt= false;
+    b_orerefineryBuilt= false;
+    if(buildingList.size()==0){
+        return;
+    }
+    for(auto i:buildingList){
+        if(std::dynamic_pointer_cast<Barracks>(i)&&!b_barackBuilt){
+            m_barrackTargetCell=MapClass::GlobalCoordToCellCoord(std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
+            b_barackBuilt= true;
+            m_barrackCell=MapClass::GlobalCoordToCellCoord(i->GetObjectLocation());
+        }
+        else if(std::dynamic_pointer_cast<WarFactory>(i)&&!b_warfactoryBuilt){
+            m_warfactoryTargetCell=MapClass::GlobalCoordToCellCoord(std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
+            b_warfactoryBuilt= true;
+            m_warfactoryCell=MapClass::GlobalCoordToCellCoord(i->GetObjectLocation());
+        }
+        else if(std::dynamic_pointer_cast<OreRefinery>(i)&&!b_orerefineryBuilt){
+            m_orerefineryTargetCell=MapClass::GlobalCoordToCellCoord(std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
+            b_orerefineryBuilt= true;
+            m_orerefineryCell=MapClass::GlobalCoordToCellCoord(i->GetObjectLocation());
+        }
+    }
+}
+
+std::shared_ptr<Avatar> UIClass::getUnitFromUI(){
+    printf("(UI)return to GOM\n");
+    auto Avatar = ButtonScript.spawnAvatar();
+    ButtonScript.setIfReadytoSpawn(false);
+    if(std::dynamic_pointer_cast<Infantry>(Avatar)){
+        Avatar->Start(m_barrackCell,m_Map);
+        Avatar->setNewDestination(m_barrackTargetCell);
+    } /*else if(std::dynamic_pointer_cast< >(Avatar)){
+        Avatar->Start(m_warfactoryCell,m_Map);
+        Avatar->setNewDestination(m_warfactoryTargetCell);
+    } else if(std::dynamic_pointer_cast< >(Avatar)){
+        Avatar->Start(m_orerefineryCell,m_Map);
+        Avatar->setNewDestination(m_orerefineryTargetCell);
+    }*/
+    printf("(UI)return to GOM success\n");
+    return Avatar;
 }
