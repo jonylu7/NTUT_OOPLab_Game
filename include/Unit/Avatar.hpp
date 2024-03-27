@@ -67,7 +67,6 @@ public:
         m_wayPointUnit.setCurrentCell(getNextCell());
         m_wayPointUnit.setNextCell(getNextCell());
         m_wayPointUnit.findPath(getDestinationCell());
-        // setCurrentDir(m_wayPointUnit.getFirstCellDir());
     }
     void cursorSetNewDest() {
         if (b_SelectedByCursor &&
