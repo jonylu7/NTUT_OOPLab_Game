@@ -3,9 +3,10 @@
 
 #include "WayPointStructure.hpp"
 
+
 class Barracks : public WayPointStructure {
 public:
-    Barracks(float electricPower = -20.F, float buildingTime = 1.F,
+    Barracks(float electricPower = -20.F, float buildingTime = 15.F*CHEAT,
              float buildingCost = 300.F, float buildingHp = 800.F,
              HouseType house = HouseType::NONE)
 

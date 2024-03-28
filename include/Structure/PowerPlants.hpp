@@ -5,7 +5,7 @@
 
 class PowerPlants : public Structure {
 public:
-    PowerPlants(float electricPower = 100.F, float buildingTime = 15.F,
+    PowerPlants(float electricPower = 100.F, float buildingTime = 15.F*CHEAT,
                 float buildingCost = 300.F, float buildingHp = 400.F,
                 HouseType house = HouseType::NONE)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,

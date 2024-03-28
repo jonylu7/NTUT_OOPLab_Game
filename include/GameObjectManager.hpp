@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
 #include "GameObjectID.hpp"
+#include "Player.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/OreRefinery.hpp"
@@ -14,6 +15,7 @@
 #include "Unit/Avatar.hpp"
 #include <unordered_map>
 #include <utility>
+#include <chrono>
 class GameObjectManager {
 public:
     GameObjectManager() {}
@@ -26,6 +28,7 @@ public:
         for (auto pair : m_BuiltStructure) {
             pair->Start();
         }
+        m_StartTime = std::chrono::high_resolution_clock::now();
     }
     glm::vec2 start;
     glm::vec2 end;
@@ -38,6 +41,14 @@ public:
         }
 
         CursorSelect(&start, &end);
+
+        //currency update
+        std::chrono::high_resolution_clock::time_point m_currentTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed = m_currentTime - m_StartTime;
+        if(elapsed.count()-m_lastElapsed>=1){//update every second
+            m_lastElapsed=elapsed.count();
+            updateTotalCurrency();
+        }
     }
 
     void CursorSelect(glm::vec2 *start, glm::vec2 *end) {
@@ -62,7 +73,7 @@ public:
         newstruct->Start();
         m_BuiltStructure.push_back(newstruct);
     }
-    void unitAppend(std::shared_ptr<Avatar> newUnit) {
+    void Append(std::shared_ptr<Avatar> newUnit) {
         m_UnitArray.push_back(newUnit);
         printf("(GOM) push back success\n");
     }
@@ -76,16 +87,32 @@ public:
         }
         return totalPower;
     }
+    int GetTotalCurrency() {
+        return m_Player->getTotalCurrency();
+    }
+    void updateTotalCurrency(){
+        int totalCurrency = m_Player->getTotalCurrency();
+        if(m_BuiltStructure.size()>0){
+            for (int i = 0; i < m_BuiltStructure.size(); i++) {
+                totalCurrency += m_BuiltStructure[i]->GetBuildingIncome();
+            }
+        }
+        m_Player->setTotalCurrency(totalCurrency);
+    }
 
     std::vector<std::shared_ptr<Structure>> getStructureArray() {
         return m_BuiltStructure;
     }
 
+    void importPlayer(std::shared_ptr<Player> player){m_Player=player;}
 private:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
     std::vector<std::shared_ptr<Avatar>> m_UnitArray;
 
     std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
+    std::shared_ptr<Player> m_Player;
+    std::chrono::high_resolution_clock::time_point m_StartTime;
+    double m_lastElapsed=0.F;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP

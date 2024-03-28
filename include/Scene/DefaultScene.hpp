@@ -49,7 +49,7 @@ private:
     UIClass m_UI;
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::shared_ptr<Player> m_Player = std::make_shared<Player>();
-    GameObjectManager m_Manager;
+    std::shared_ptr<GameObjectManager> m_Manager = std::make_shared<GameObjectManager>();
 
     Avatar m_dummy;
 };

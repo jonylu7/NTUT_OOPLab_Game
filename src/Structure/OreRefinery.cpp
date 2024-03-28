@@ -2,8 +2,7 @@
 #include "Structure/OreRefinery.hpp"
 void OreRefinery::Start() {
     // Set Texture----------------------------------------
-    this->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/barracks.png"));
+    SetDrawable(std::make_unique<Util::Image>("../assets/sprites/OreRefinery.png"));
     m_wayPoint->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/flagB.png"));
     m_HighLight.SetDrawable(

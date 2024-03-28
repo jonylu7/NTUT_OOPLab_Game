@@ -68,8 +68,8 @@ void UIClass::ShowHeaderSection() {
                     .c_str());
     // ImGui::Text(fmt::format("Zoom: {}",
     // m_SceneCamera.getCameraZoom()).c_str());
-    ImGui::Text(fmt::format("$ {}", 1000).c_str());
-    ImGui::Text(fmt::format("Power {}", 50).c_str());
+    ImGui::Text(fmt::format("$ {}", m_Player->getTotalCurrency()).c_str());
+    ImGui::Text(fmt::format("Power {}", m_gameObjectManager->GetTotalPower()).c_str());
     ImGui::PushFont(sacker_med);
     if (ImGui::Button("Grid")) {
     }
@@ -456,14 +456,14 @@ void UIClass::checkExistBuilding(
         } else if (std::dynamic_pointer_cast<WarFactory>(i) &&
                    !b_warfactoryBuilt) {
             m_warfactoryTargetCell = MapUtil::GlobalCoordToCellCoord(
-                std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
+                std::dynamic_pointer_cast<WarFactory>(i)->GetWayPointLocation());
             b_warfactoryBuilt = true;
             m_warfactoryCell =
                 MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
         } else if (std::dynamic_pointer_cast<OreRefinery>(i) &&
                    !b_orerefineryBuilt) {
             m_orerefineryTargetCell = MapUtil::GlobalCoordToCellCoord(
-                std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
+                std::dynamic_pointer_cast<OreRefinery>(i)->GetWayPointLocation());
             b_orerefineryBuilt = true;
             m_orerefineryCell =
                 MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
