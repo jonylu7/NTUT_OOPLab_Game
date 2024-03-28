@@ -13,9 +13,11 @@
 #include "Structure/Structure.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Unit/Avatar.hpp"
+#include "Unit/FindValidPathToDest.hpp"
+#include <chrono>
 #include <unordered_map>
 #include <utility>
-#include <chrono>
+
 class GameObjectManager {
 public:
     GameObjectManager() {}
@@ -29,9 +31,11 @@ public:
             pair->Start();
         }
         m_StartTime = std::chrono::high_resolution_clock::now();
+        m_wayPointUnit.setCurrentCell(destination);
+        m_wayPointUnit.setNextCell(destination);
     }
-    glm::vec2 start;
-    glm::vec2 end;
+    glm::vec2 cursorstart;
+    glm::vec2 cursorend;
     void Update() {
         for (auto pair : m_BuiltStructure) {
             pair->Update();
@@ -40,16 +44,19 @@ public:
             unit->Update();
         }
 
-        CursorSelect(&start, &end);
+        CursorSelect(&cursorstart, &cursorend);
 
-        //currency update
-        std::chrono::high_resolution_clock::time_point m_currentTime = std::chrono::high_resolution_clock::now();
+        // currency update
+        std::chrono::high_resolution_clock::time_point m_currentTime =
+            std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed = m_currentTime - m_StartTime;
-        if(elapsed.count()-m_lastElapsed>=1){//update every second
-            m_lastElapsed=elapsed.count();
+        if (elapsed.count() - m_lastElapsed >= 1) { // update every second
+            m_lastElapsed = elapsed.count();
             updateTotalCurrency();
         }
     }
+
+    // Select Unit to take action
 
     void CursorSelect(glm::vec2 *start, glm::vec2 *end) {
         if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
@@ -87,12 +94,10 @@ public:
         }
         return totalPower;
     }
-    int GetTotalCurrency() {
-        return m_Player->getTotalCurrency();
-    }
-    void updateTotalCurrency(){
+    int GetTotalCurrency() { return m_Player->getTotalCurrency(); }
+    void updateTotalCurrency() {
         int totalCurrency = m_Player->getTotalCurrency();
-        if(m_BuiltStructure.size()>0){
+        if (m_BuiltStructure.size() > 0) {
             for (int i = 0; i < m_BuiltStructure.size(); i++) {
                 totalCurrency += m_BuiltStructure[i]->GetBuildingIncome();
             }
@@ -104,15 +109,16 @@ public:
         return m_BuiltStructure;
     }
 
-    void importPlayer(std::shared_ptr<Player> player){m_Player=player;}
+    void importPlayer(std::shared_ptr<Player> player) { m_Player = player; }
+
 private:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
     std::vector<std::shared_ptr<Avatar>> m_UnitArray;
-
-    std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
+    FindValidPathToDest m_wayPointUnit;
+    std::shared_ptr<MapClass> m_Map;
     std::shared_ptr<Player> m_Player;
     std::chrono::high_resolution_clock::time_point m_StartTime;
-    double m_lastElapsed=0.F;
+    double m_lastElapsed = 0.F;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP

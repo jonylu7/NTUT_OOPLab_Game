@@ -17,7 +17,6 @@
 
 class PathfindingUnit : public Util::GameObject {
 protected:
-    enum class UnitMode { DEAD, ALIVE };
     enum class MoveDirection {
         UP,
         UP_RIGHT,
@@ -35,7 +34,7 @@ protected:
     Grid m_grid;
     std::vector<Line> m_lineVector;
     float defaultZIndex = 15;
-    UnitMode m_currentMode = UnitMode::ALIVE; // debug :DEAD
+    // debug :DEAD
 private:
     glm::vec2 m_destinationCell;
     glm::vec2 m_nextCell;

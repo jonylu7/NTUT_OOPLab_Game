@@ -8,7 +8,6 @@
 #include <random>
 class FindValidPathToDest : public PathfindingUnit {
 private:
-    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::deque<MoveDirection> m_dirQue;
     bool b_InitNewLine = false;
 
@@ -19,7 +18,7 @@ public:
         setMovementSpeed(48);
     };
     virtual ~FindValidPathToDest() override{};
-    void Start(std::shared_ptr<MapClass> map) { m_Map = map; }
+    void Start() {}
     MoveDirection getFirstCellDir() {
         if (!m_dirQue.empty()) {
             MoveDirection front = m_dirQue.front();
