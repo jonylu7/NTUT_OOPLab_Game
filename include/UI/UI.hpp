@@ -6,6 +6,7 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #include "Camera.hpp"
 #include "GameObjectID.hpp"
+#include "GameObjectManager.hpp"
 #include "Player.hpp"
 #include "SpriteSheet.hpp"
 #include "UI/UIScriptProcess.hpp"
@@ -40,8 +41,11 @@ public:
 
     //import from scene
     void importMap(std::shared_ptr<MapClass> m_Map){this->m_Map=m_Map;}
-    void importPlayer(std::shared_ptr<Player> m_Player){this->m_Player=m_Player;}
-
+    void importPlayer(std::shared_ptr<Player> m_Player){this->m_Player=m_Player; ButtonScript.importPlayer(m_Player);}
+    void importGameObjManager(std::shared_ptr<GameObjectManager> gameObjectManager){
+        m_gameObjectManager=gameObjectManager;
+        ButtonScript.importGameObjManager(gameObjectManager);
+    }
     //check if building has built
     void checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList);
 private:
@@ -112,6 +116,7 @@ private:
     //ptr import from scene
     std::shared_ptr<MapClass> m_Map;
     std::shared_ptr<Player> m_Player;
+    std::shared_ptr<GameObjectManager> m_gameObjectManager;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP

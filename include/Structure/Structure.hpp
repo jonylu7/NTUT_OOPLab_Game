@@ -14,6 +14,7 @@
 #include "Util/TransformUtils.hpp"
 #include "glm/glm.hpp"
 #define DEFAULT_ZINDEX 15
+#define CHEAT 0.1F
 
 class Structure : public Util::GameObject, public Selectable {
 
@@ -83,6 +84,8 @@ public:
     float GetElectricPower();
     float GetBuildingTime();
     float GetBuildingCost();
+    virtual float GetBuildingIncome(){return buildingIncome;};
+    void SetBuildingIncome(float income){buildingIncome=income;}
     float GetBuildingHp();
     GameObjectID GetID() { return m_ID; }
 
@@ -95,6 +98,7 @@ private:
     float buildingTime;
     float buildingCost;
     float buildingHp;
+    float buildingIncome=0.F;
     HighLight m_HighLight;
     GameObjectID m_ID;
 

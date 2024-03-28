@@ -4,7 +4,7 @@
 #include "Structure.hpp"
 class ADVPowerPlants : public Structure {
 public:
-    ADVPowerPlants(float electricPower = 200.F, float buildingTime = 25.F,
+    ADVPowerPlants(float electricPower = 200.F, float buildingTime = 25.F*CHEAT,
                    float buildingCost = 500.F, float buildingHp = 700.F,
                    HouseType house = HouseType::NONE)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
