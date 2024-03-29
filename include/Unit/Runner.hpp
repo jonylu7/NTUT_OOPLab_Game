@@ -28,7 +28,7 @@ public:
     }
     std::shared_ptr<Util::Image> customizeImage()override{ return std::make_unique<Util::Image>("../assets/sprites/Runner.png");}
     void customizeUpdate() override{
-        if(b_beingChase){
+        if(b_beingChase && m_hunter->getUnitMode()==UnitMode::ALIVE){
             glm::vec2 hunterCell = m_hunter->getCurrentCell();
             if(getDistance(hunterCell)<=ATTACK_RANGE-1 && lastTargetCell==getCurrentCell()){
                 edgeCount=0;
@@ -36,7 +36,7 @@ public:
                 DEBUG_printCurrentMoveDirection(Dir);
                 glm::vec2 nextCell = getNextCellByCurrentPlus3(Dir,getCurrentCell(),3,1);
                 while(nextCell.x<0 || nextCell.y<0){
-                    edgeCount++;
+                    edgeCount+=rand() %2+1;
                     Dir=findNewDir(Dir,edgeCount);
                     DEBUG_printCurrentMoveDirection(Dir);
                     nextCell = getNextCellByCurrentPlus3(Dir,getCurrentCell(),1,3);
@@ -45,6 +45,8 @@ public:
                 setNewDestination(nextCell);
 
             }
+        }else{
+            b_beingChase=false;
         }
     }
     MoveDirection findNewDir(MoveDirection Dir,int edgeCount){
