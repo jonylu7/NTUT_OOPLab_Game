@@ -34,11 +34,12 @@ public:
                 edgeCount=0;
                 MoveDirection Dir = oppositeDir(getDirByRelativeCells(getCurrentCell(),hunterCell),runMode::LIDL_RANDOM);
                 DEBUG_printCurrentMoveDirection(Dir);
-                glm::vec2 nextCell = getNextCellByCurrentPlus3(Dir,getCurrentCell());
-                while(nextCell.x<0||nextCell.y<0){
+                glm::vec2 nextCell = getNextCellByCurrentPlus3(Dir,getCurrentCell(),3,1);
+                while(nextCell.x<0 || nextCell.y<0){
                     edgeCount++;
-                    findNewDir(Dir,edgeCount);
-                    nextCell = getNextCellByCurrentPlus3(Dir,getCurrentCell());
+                    Dir=findNewDir(Dir,edgeCount);
+                    DEBUG_printCurrentMoveDirection(Dir);
+                    nextCell = getNextCellByCurrentPlus3(Dir,getCurrentCell(),1,3);
                 }
                 lastTargetCell=nextCell;
                 setNewDestination(nextCell);
@@ -49,11 +50,11 @@ public:
     MoveDirection findNewDir(MoveDirection Dir,int edgeCount){
         for(int i=0;i<8;i++){
             if(dictionary[i]==Dir){
-                if(i+1>7){
-                    return dictionary[i+1-7];
-                }else{
-                    return dictionary[i+1];
+                int index = (i+edgeCount)%8;
+                if(index<0){
+                    index+=8;
                 }
+                return dictionary[index];
             }
         }
     }
@@ -89,9 +90,7 @@ public:
         }
     }
     glm::vec2 getNextCellByCurrentPlus3(MoveDirection currentdir,
-                                                    glm::vec2 currentcell) {
-        int n=3;
-        int m=1;
+                                                    glm::vec2 currentcell,int n,int m) {
         switch (currentdir) {
         case MoveDirection::RIGHT: {
             currentcell = {currentcell.x + n, currentcell.y};
