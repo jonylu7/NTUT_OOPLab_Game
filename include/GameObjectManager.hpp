@@ -71,6 +71,7 @@ public:
 
     void Append(std::shared_ptr<Structure> newstruct) {
         newstruct->Start();
+//        newstruct->importMap(m_Map);
         m_BuiltStructure.push_back(newstruct);
     }
     void Append(std::shared_ptr<Avatar> newUnit) {

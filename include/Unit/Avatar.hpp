@@ -9,6 +9,8 @@
 #include "Unit/PathfindingUnit.hpp"
 
 class Avatar : public PathfindingUnit, public AttackAndDamageUnit {
+protected:
+    std::shared_ptr<Util::Image> m_Image;
 private:
     FindValidPathToDest m_wayPointUnit;
     bool b_SelectedByCursor = true;
@@ -24,7 +26,7 @@ public:
                                            // waypointLocation
         // setCurrentCell()  //CurrentCell = Structure's Location
         this->SetDrawable(
-            std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
+            customizeImage());
         SetVisible(true);
         m_grid.SetActivate(true);
         m_wayPointUnit.Start(map);
@@ -51,6 +53,8 @@ public:
         cursorSetNewDest();
         printf("-----------------------------\n");
     }
+    virtual void customizeUpdate(){}
+    virtual std::shared_ptr<Util::Image> customizeImage(){ return std::make_unique<Util::Image>("../assets/sprites/capybara.png");}
     virtual void Update() override {
         switch (m_currentMode) {
         case (UnitMode::DEAD): {
@@ -58,6 +62,7 @@ public:
         }
         case (UnitMode::ALIVE): {
             aliveUpdate();
+            customizeUpdate();
         }
         }
     }
@@ -75,6 +80,50 @@ public:
             this->setNewDestination(
                 MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
                     Util::Input::GetCursorPosition())));
+        }
+    }
+    float getDistance(glm::vec2 cell){
+        return sqrt(pow(cell.x-getCurrentCell().x,2)+pow(cell.y-getCurrentCell().y,2));
+    }
+
+    void DEBUG_printCurrentMoveDirection(MoveDirection Dir){
+        switch (Dir) {
+        case MoveDirection::RIGHT: {
+            printf("(DEBUG)Avatar DIR:Right\n");
+            break;
+        }
+        case MoveDirection::LEFT: {
+            printf("(DEBUG)Avatar DIR:Left\n");
+            break;
+        }
+        case MoveDirection::UP: {
+            printf("(DEBUG)Avatar DIR:Up\n");
+            break;
+        }
+        case MoveDirection::DOWN: {
+            printf("(DEBUG)Avatar DIR:Down\n");
+            break;
+        }
+        case MoveDirection::UP_RIGHT: {
+            printf("(DEBUG)Avatar DIR:Up_Right\n");
+            break;
+        }
+        case MoveDirection::DOWN_LEFT: {
+            printf("(DEBUG)Avatar DIR:Down_Left\n");
+            break;
+        }
+        case MoveDirection::DOWN_RIGHT: {
+            printf("(DEBUG)Avatar DIR:Down_Right\n");
+            break;
+        }
+        case MoveDirection::UP_LEFT: {
+            printf("(DEBUG)Avatar DIR:Up_Left\n");
+            break;
+        }
+        case MoveDirection::IDLE: {
+            printf("(DEBUG)Avatar DIR:IDLE\n");
+            break;
+        }
         }
     }
 };

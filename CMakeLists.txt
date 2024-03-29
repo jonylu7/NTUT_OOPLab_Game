@@ -163,6 +163,8 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Unit/PathfindingUnit.hpp
         ${INCLUDE_DIR}/Unit/Avatar.hpp
         ${INCLUDE_DIR}/Unit/WayPointUnit.hpp
+        ${INCLUDE_DIR}/Unit/Runner.hpp
+        ${INCLUDE_DIR}/Unit/Hunter.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h
