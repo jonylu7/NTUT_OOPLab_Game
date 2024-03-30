@@ -14,6 +14,7 @@ class Avatar : public PathfindingUnit, public AttackAndDamageUnit {
 private:
     bool b_SelectedByCursor = true;
     bool b_justStarted = true;
+    UnitMode m_currentMode;
 
 public:
     Avatar(){};
@@ -32,7 +33,7 @@ public:
 
         setMovementSpeed(4);
     }
-    virtual void aliveUpdate(currentdir) {
+    virtual void aliveUpdate() {
         if (walkTowardNextCell() || b_justStarted) {
             b_justStarted = false;
             setCurrentCell(
@@ -55,9 +56,9 @@ public:
         case (UnitMode::MOVE): {
             aliveUpdate();
         }
-case(UnitMode::MOVE_ATTACK){
-aliveUpdate();
-}
+        case (UnitMode::MOVE_ATTACK): {
+            aliveUpdate();
+        }
             // attack
         }
     }

@@ -7,7 +7,6 @@
 #include "GameObjectID.hpp"
 #include "HighLight.h"
 
-#include "Map/Map.hpp"
 #include "Selectable.hpp"
 
 #include "Util/GameObject.hpp"

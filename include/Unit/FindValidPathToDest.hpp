@@ -4,11 +4,15 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
+#include "Map/Map.hpp"
+#include "Map/MapUtility.hpp"
 #include "Unit/PathfindingUnit.hpp"
 #include <random>
 class FindValidPathToDest : public PathfindingUnit {
 private:
+    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::deque<MoveDirection> m_dirQue;
+    bool b_InitNewLine = false;
 
 public:
     enum class Side { R, L };
@@ -17,8 +21,22 @@ public:
         setMovementSpeed(48);
     };
     virtual ~FindValidPathToDest() override{};
-    void Start() {}
+    void Start(std::shared_ptr<MapClass> map) { m_Map = map; }
+    MoveDirection getFirstCellDir() {
+        if (!m_dirQue.empty()) {
+            MoveDirection front = m_dirQue.front();
+            m_dirQue.pop_front();
+            return front;
+        }
 
+        return MoveDirection::IDLE;
+    }
+
+    void resetQueue() {
+        b_InitNewLine = true;
+        this->m_dirQue.clear();
+        this->m_lineVector.clear();
+    }
     Side randomlyChooseSide() {
         // Create a random number generator engine
         std::random_device rd;  // Obtain a random seed from the hardware

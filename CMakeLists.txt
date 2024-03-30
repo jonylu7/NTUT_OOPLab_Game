@@ -115,7 +115,8 @@ set(SRC_FILES
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
-
+        ${INCLUDE_DIR}/Map/Map.hpp
+        ${INCLUDE_DIR}/Map/MapUtility.hpp
         ${INCLUDE_DIR}/Util/AssetStore.hpp
         ${INCLUDE_DIR}/Map/MapbinReader.hpp
         ${INCLUDE_DIR}/Map/YAMLReader.hpp
@@ -157,8 +158,6 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/Scene/MapScene.hpp
 
-
-        ${INCLUDE_DIR}/Map.hpp
 
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/GameObjectManager.hpp

@@ -6,9 +6,8 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
 #include "Grid.hpp"
 #include "Line.hpp"
-#include "Map.hpp"
 
-#include "Tile.hpp"
+#include "Map/Tile.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
 #include "glm/glm.hpp"

@@ -8,13 +8,13 @@
 #include "SpriteSheet.hpp"
 
 #include "Structure/Structure.hpp"
-#include "Unit/PathfindingUnit.hpp"
-#include <map>
+#include <unordered_map>
 class TileClass {
 public:
     TileClass(const unitType unittype, bool buildable, bool walkable,
               bool clickable, std::string tileimagepath)
         : m_Id(GameObjectID(unittype, HouseType::NONE)),
+          m_Clickable(clickable),
           m_Buildable(buildable),
           m_Walkable(walkable),
           m_TileImagePath(tileimagepath) {}

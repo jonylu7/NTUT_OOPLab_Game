@@ -31,8 +31,8 @@ public:
             pair->Start();
         }
         m_StartTime = std::chrono::high_resolution_clock::now();
-        m_wayPointUnit.setCurrentCell(destination);
-        m_wayPointUnit.setNextCell(destination);
+        // m_wayPointUnit.setCurrentCell(destination);
+        // m_wayPointUnit.setNextCell(destination);
     }
     glm::vec2 cursorstart;
     glm::vec2 cursorend;

@@ -4,12 +4,12 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP
-
 #include "Grid.hpp"
-#include "Tile.hpp"
+#include "Map/Tile.hpp"
 #include "Util/ImageArray.hpp"
 #include "glm/vec2.hpp"
 #include "pch.hpp"
+#include <vector>
 
 class MapClass : public Core::Drawable {
 public:
@@ -38,10 +38,7 @@ public:
 
         for (int i = 0; i < m_Map.size(); i++) {
             for (int j = 0; j < m_Map[i].size(); j++) {
-                if (m_Map[i][j]->getTileImagePath() == "d10-0006.png") {
-                    if (1 == 1) {
-                    };
-                }
+
                 auto findResult = m_Tiles.find(m_Map[i][j]->getTileImagePath());
                 if (findResult != m_Tiles.end()) {
                     m_Tiles[m_Map[i][j]->getTileImagePath()].push_back(
@@ -143,39 +140,4 @@ private:
     Grid m_Grid;
 };
 
-class MapUtil {
-public:
-    static std::vector<std::shared_ptr<TileClass>>
-    readMapAndTileSet(std::vector<int> map,
-                      std::unordered_map<int, TileClass> tileset) {
-        std::vector<std::shared_ptr<TileClass>> maps;
-        for (int i = 0; i < map.size(); i++) {
-            maps.push_back(std::make_shared<TileClass>(tileset[map[i]]));
-        }
-        return maps;
-    }
-
-    static glm::vec2 ScreenToGlobalCoord(glm::vec2 screenCoord) {
-        auto proj = CameraClass::getProjectionMatrix();
-        auto view = CameraClass::getViewMatrix();
-        glm::vec2 offset = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2};
-        glm::vec4 vec4ScreenCoord(
-            {screenCoord[0] + CameraClass::getPosition().x + offset.x,
-             screenCoord[1] + CameraClass::getPosition().y + offset.y, 0.F,
-             1.F});
-        glm::vec4 global(vec4ScreenCoord);
-
-        return glm::vec2(global[0], global[1]);
-    }
-
-    static glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord) {
-        return glm::vec2(int(globalCoord[0] / CELL_SIZE.x),
-                         int(globalCoord[1] / CELL_SIZE.y));
-    }
-
-    static glm::vec2 CellCoordToGlobal(const glm::vec2 cellCoord) {
-        return glm::vec2(int(cellCoord[0] * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
-                         int(cellCoord[1] * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
-    }
-};
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP
