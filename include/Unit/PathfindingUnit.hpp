@@ -54,7 +54,7 @@ public:
     virtual ~PathfindingUnit(){};
 
     //
-
+    UnitMode getUnitMode(){return m_currentMode;}
     void setDestinationCell(int x, int y) {
         this->m_destinationCell = {glm::vec2(x, y)};
     }

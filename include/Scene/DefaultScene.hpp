@@ -23,6 +23,8 @@
 #include "UI/UI.hpp"
 #include "Unit/Avatar.hpp"
 #include "Unit/FindValidPathToDest.hpp"
+#include "Unit/Hunter.hpp"
+#include "Unit/Runner.hpp"
 #include "Unit/PathfindingUnit.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
@@ -55,5 +57,7 @@ private:
         std::make_shared<GameObjectManager>();
 
     Avatar m_dummy;
+    std::shared_ptr<Hunter> m_hunter=std::make_shared<Hunter>();
+    std::shared_ptr<Runner> m_runner=std::make_shared<Runner>();
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

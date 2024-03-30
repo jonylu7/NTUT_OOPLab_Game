@@ -102,7 +102,8 @@ set(SRC_FILES
         ${SRC_DIR}/Structure/WayPointStructure.cpp
 
         ${SRC_DIR}/Unit/PathfindingUnit.cpp
-
+        ${SRC_DIR}/Unit/Runner.cpp
+        ${SRC_DIR}/Unit/Hunter.cpp
 
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
@@ -193,6 +194,8 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Unit/PathfindingUnit.hpp
         ${INCLUDE_DIR}/Unit/Avatar.hpp
         ${INCLUDE_DIR}/Unit/WayPointUnit.hpp
+        ${INCLUDE_DIR}/Unit/Runner.hpp
+        ${INCLUDE_DIR}/Unit/Hunter.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h

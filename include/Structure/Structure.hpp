@@ -90,6 +90,7 @@ public:
     float GetBuildingHp();
     GameObjectID GetID() { return m_ID; }
 
+//    void importMap(std::shared_ptr<MapClass> map){m_Map=map;}
 private:
     updateMode m_CurrentState = updateMode::Invisidable;
     glm::vec2 ObjectLocation = {100, 100};
@@ -104,6 +105,7 @@ private:
     GameObjectID m_ID;
 
 protected:
+//    std::shared_ptr<MapClass> m_Map;
     bool b_selectingNewWayPoint = false;
 };
 

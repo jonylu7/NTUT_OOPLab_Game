@@ -13,14 +13,15 @@ void WayPointStructure::updateMoveable() {
     this->SetVisible(true);
     this->Draw();
     glm::vec2 cellPos = MapUtil::GlobalCoordToCellCoord(location);
-    if (Util::Input::IsKeyPressed(
-            Util::Keycode::
-                MOUSE_LB) /*&&MapClass::getTileByCellPosition(cellPos)->getBuildable()*/) {
+//    std::shared_ptr<TileClass> tileClass = m_Map->getTileByCellPosition(cellPos);
+    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)  /*tileClass->getBuildable()*/) {
         this->SetObjectLocation(location);
         this->SetWayPointLocation({GetDrawLocation().x + CELL_SIZE.x,
                                    GetDrawLocation().y + CELL_SIZE.y});
         onSelected();
         this->SetCurrentUpdateMode(updateMode::Fixed);
+//        tileClass->setBuildable(false);
+//        tileClass->setWalkable(false);
         // 在這裡增加設置Tile屬性
         /*
                 std::shared_ptr<TileClass>tile =

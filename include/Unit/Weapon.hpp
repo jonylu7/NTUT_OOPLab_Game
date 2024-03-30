@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_WEAPON_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_WEAPON_HPP
+#include <memory>
 enum class WeaponType {
     COLT_45,
     M16,
