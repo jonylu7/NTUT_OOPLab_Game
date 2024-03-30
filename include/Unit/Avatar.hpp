@@ -55,15 +55,14 @@ public:
         case (UnitMode::MOVE): {
             aliveUpdate();
         }
+case(UnitMode::MOVE_ATTACK){
+aliveUpdate();
+}
             // attack
         }
     }
     void setNewDestination(glm::vec2 destination) {
         setDestinationCell(destination.x, destination.y);
-        // m_wayPointUnit.resetQueue();
-        // m_wayPointUnit.setCurrentCell(getNextCell());
-        // m_wayPointUnit.setNextCell(getNextCell());
-        // m_wayPointUnit.findPath(getDestinationCell());
     }
     void cursorSetNewDest() {
         if (b_SelectedByCursor &&

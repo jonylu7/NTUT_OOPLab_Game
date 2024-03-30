@@ -9,7 +9,6 @@
 class FindValidPathToDest : public PathfindingUnit {
 private:
     std::deque<MoveDirection> m_dirQue;
-    bool b_InitNewLine = false;
 
 public:
     enum class Side { R, L };
@@ -19,21 +18,7 @@ public:
     };
     virtual ~FindValidPathToDest() override{};
     void Start() {}
-    MoveDirection getFirstCellDir() {
-        if (!m_dirQue.empty()) {
-            MoveDirection front = m_dirQue.front();
-            m_dirQue.pop_front();
-            return front;
-        }
 
-        return MoveDirection::IDLE;
-    }
-
-    void resetQueue() {
-        b_InitNewLine = true;
-        this->m_dirQue.clear();
-        this->m_lineVector.clear();
-    }
     Side randomlyChooseSide() {
         // Create a random number generator engine
         std::random_device rd;  // Obtain a random seed from the hardware

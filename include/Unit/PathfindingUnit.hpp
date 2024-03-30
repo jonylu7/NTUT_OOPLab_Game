@@ -89,7 +89,6 @@ public:
     glm::vec2 getNextCellByCurrent(MoveDirection currentdir,
                                    glm::vec2 currentcell);
     // bool UpdateNextCell(int *times);
-
     bool walkTowardNextCell();
 
     virtual void Start() {}
