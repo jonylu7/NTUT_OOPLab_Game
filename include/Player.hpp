@@ -9,12 +9,19 @@ public:
     Player() {}
     ~Player() {}
 
-    void setCurrency(int value) { m_totalCurrency += value; };
+    void setTotalCurrency(int value) { m_totalCurrency = value; };
+    void addCurrency(int value) { m_totalCurrency += value; };
 
-    int getTotalPower() {}
+    void setTotalPower(int value){m_totalPower=value;}
+    void addPower(int value){m_totalPower+=value;}
+
+    int getTotalPower() {return m_totalPower;}
     int getTotalCurrency() { return m_totalCurrency; }
+    int getMaxTroopSize(){return m_maxTroopSize;}
 
 private:
+    int m_maxTroopSize = 200;
+    int m_totalPower = 0 ;
     int m_totalCurrency = 0;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PLAYER_HPP

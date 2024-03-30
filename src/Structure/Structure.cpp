@@ -1,8 +1,8 @@
 //
 // Created by 盧威任 on 1/30/24.
 //
-
 #include "Structure/Structure.hpp"
+#include "GameObjectManager.hpp"
 #include "Util/Input.hpp"
 #include "Util/Transform.hpp"
 #include "config.hpp"
@@ -36,30 +36,28 @@ void Structure::updateFixed() {
     attachmentUpdate();
     this->Draw();
     // Script when select--------------------
-    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB) &&
-        !b_selectingNewWayPoint) {
-        if (MousOverlapTool::checkMous(
-                GetObjectLocation() /*,GetScaledSize()*/)) {
-            b_selected = true;
-        } else {
-            b_selected = false;
-        }
-    }
-    if (b_selected) {
-        onSelected(true);
-    } else {
-        onSelected(false);
-    }
 }
 void Structure::updateMoveable() {
+    // debug
+    printf("debug message : Structure movable\n");
+    //
     glm::vec2 location = Util::Input::GetCursorPosition();
-    location = MapClass::ScreenToGlobalCoord(location);
+    location = MapUtil::ScreenToGlobalCoord(location);
     this->SetObjectLocation(location);
     this->SetVisible(true);
     this->Draw();
-    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
+    glm::vec2 cellPos = MapUtil::GlobalCoordToCellCoord(location);
+    if (Util::Input::IsKeyPressed(
+            Util::Keycode::
+                MOUSE_LB) /*&&MapClass::getTileByCellPosition(cellPos)->getBuildable()*/) {
         this->SetObjectLocation(location);
         this->SetCurrentUpdateMode(updateMode::Fixed);
+        // 在這裡增加設置Tile屬性
+        /*
+                std::shared_ptr<TileClass>tile =
+           MapClass::getTileByCellPosition(cellPos); tile->setWalkable(false);
+                tile->setBuildable(false);
+                MapClass::setTileByCellPosition(cellPos,tile);*/
     }
 }
 void Structure::updateInvinsible() {
@@ -89,11 +87,12 @@ glm::vec2 Structure::ChangeToCell(glm::vec2 location) {
 void Structure::SetObjectLocation(glm::vec2 location) {
     location = ChangeToCell(location);
     ObjectLocation = location;
-    DrawLocation = {location.x + 0.5 * CELL, location.y + 0.5 * CELL};
+    DrawLocation = {location.x + 0.5 * CELL_SIZE.x,
+                    location.y + 0.5 * CELL_SIZE.y};
     m_Transform.translation = DrawLocation;
 }
-void Structure::onSelected(bool selected) {
-    this->SetAttachVisible(selected);
+void Structure::onSelected() {
+    this->SetAttachVisible(getSelected());
 };
 
 void Structure::SetAttachVisible(bool visible) {

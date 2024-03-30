@@ -89,17 +89,20 @@ set(SRC_FILES
 
         ${SRC_DIR}/Structure/Structure.cpp
         ${SRC_DIR}/Structure/WayPoint.cpp
-        ${SRC_DIR}/Structure/MousOverlapTool.cpp
-        ${SRC_DIR}/Structure/IWayPointStructure.cpp
         ${SRC_DIR}/Structure/HighLight.cpp
         ${SRC_DIR}/UI/UIScriptProcess.cpp
 
-        # ${SRC_DIR}/Structure/Buildings.cpp
         ${SRC_DIR}/Structure/Barracks.cpp
         ${SRC_DIR}/Structure/OreRefinery.cpp
         ${SRC_DIR}/Structure/PowerPlants.cpp
         ${SRC_DIR}/Structure/WarFactory.cpp
+
         ${SRC_DIR}/Scene/MapScene.cpp
+
+        ${SRC_DIR}/Structure/WayPointStructure.cpp
+
+        ${SRC_DIR}/Unit/PathfindingUnit.cpp
+
 
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
@@ -112,9 +115,11 @@ set(SRC_FILES
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
+
         ${INCLUDE_DIR}/Util/AssetStore.hpp
         ${INCLUDE_DIR}/Map/MapbinReader.hpp
         ${INCLUDE_DIR}/Map/YAMLReader.hpp
+
         ${INCLUDE_DIR}/Core/Context.hpp
         ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp
         ${INCLUDE_DIR}/Core/VertexArray.hpp
@@ -127,6 +132,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Core/Texture.hpp
         ${INCLUDE_DIR}/Core/TextureUtils.hpp
         ${INCLUDE_DIR}/Core/Drawable.hpp
+        ${INCLUDE_DIR}/Structure/WayPointStructure.hpp
 
 
         ${INCLUDE_DIR}/Util/LoadTextFile.hpp
@@ -148,7 +154,12 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/Util/ImageArray.hpp
         ${INCLUDE_DIR}/Util/CustomizableImage.hpp
+
         ${INCLUDE_DIR}/Scene/MapScene.hpp
+
+
+        ${INCLUDE_DIR}/Map.hpp
+
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/GameObjectManager.hpp
         ${INCLUDE_DIR}/GameObjectID.hpp
@@ -166,19 +177,23 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/Structure/Structure.hpp
         ${INCLUDE_DIR}/Structure/WayPoint.hpp
-        ${INCLUDE_DIR}/Structure/MousOverlapTool.h
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
-        ${INCLUDE_DIR}/UI/UIScriptProcess.h
+        ${INCLUDE_DIR}/House.hpp
+        ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
         ${INCLUDE_DIR}/DrawOverlays.hpp
         ${INCLUDE_DIR}/UI/UI.hpp
+        ${INCLUDE_DIR}/Player.hpp
 
-        #${INCLUDE_DIR}/Structure/Buildings.hpp
         ${INCLUDE_DIR}/Structure/Barracks.hpp
         ${INCLUDE_DIR}/Structure/OreRefinery.hpp
         ${INCLUDE_DIR}/Structure/PowerPlants.hpp
         ${INCLUDE_DIR}/Structure/WarFactory.hpp
         ${INCLUDE_DIR}/Structure/ADVPowerPlants.hpp
+
+        ${INCLUDE_DIR}/Unit/PathfindingUnit.hpp
+        ${INCLUDE_DIR}/Unit/Avatar.hpp
+        ${INCLUDE_DIR}/Unit/WayPointUnit.hpp
 
         ${INCLUDE_DIR}/imgui/imconfig.h
         ${INCLUDE_DIR}/imgui/imgui.h

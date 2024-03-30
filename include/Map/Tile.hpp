@@ -7,28 +7,31 @@
 #include "GameObjectID.hpp"
 #include "SpriteSheet.hpp"
 
+#include "Structure/Structure.hpp"
+#include "Unit/PathfindingUnit.hpp"
+#include <map>
 class TileClass {
 public:
     TileClass(const unitType unittype, bool buildable, bool walkable,
               bool clickable, std::string tileimagepath)
-        : m_Id(GameObjectID(unittype)),
+        : m_Id(GameObjectID(unittype, HouseType::NONE)),
           m_Buildable(buildable),
           m_Walkable(walkable),
           m_TileImagePath(tileimagepath) {}
 
     TileClass(const unitType unittype, bool buildable, bool walkable,
               bool clickable)
-        : m_Id(GameObjectID(unittype)),
+        : m_Id(GameObjectID(unittype, HouseType::NONE)),
           m_Buildable(buildable),
           m_Walkable(walkable),
           m_Clickable(clickable),
           m_TileImagePath("") {}
     TileClass()
-        : m_Id(GameObjectID(unitType::null)),
+        : m_Id(GameObjectID(unitType::null, HouseType::NONE)),
           m_Buildable(false),
           m_Walkable(false),
           m_Clickable(true),
-          m_TileImagePath("") {}
+          m_TileImagePath(""){};
     ~TileClass() {}
 
     bool getWalkable() { return m_Walkable; };
@@ -71,6 +74,7 @@ public:
         this->m_Walkable = tile.m_Walkable;
         this->m_Clickable = tile.m_Clickable;
         this->m_TileImagePath = tile.m_TileImagePath;
+
         this->m_Buildable = tile.m_Buildable;
         this->m_Id = tile.m_Id;
         return *this;

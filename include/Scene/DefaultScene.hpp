@@ -16,12 +16,14 @@
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/IWayPointStructure.hpp"
-#include "Structure/MousOverlapTool.h"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
 #include "UI/UI.hpp"
+#include "Unit/Avatar.hpp"
+#include "Unit/FindValidPathToDest.hpp"
+#include "Unit/PathfindingUnit.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -29,7 +31,7 @@
 #include "Util/Renderer.hpp"
 
 class DefaultScene {
-    /*
+
 public:
     DefaultScene(){};
     ~DefaultScene(){};
@@ -46,11 +48,12 @@ private:
     GameObjectManager m_GameObjectManager;
     Util::Renderer m_Renderer;
     UIClass m_UI;
-    MapClass m_Map;
-    std::map<int, TileClass> m_tileSets;
-    std::vector<int> m_OgMap;
-    std::shared_ptr<SpriteSheet> m_TileSetSpriteSheet =
-        std::make_shared<SpriteSheet>();
-        */
+
+    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
+    std::shared_ptr<Player> m_Player = std::make_shared<Player>();
+    std::shared_ptr<GameObjectManager> m_Manager =
+        std::make_shared<GameObjectManager>();
+
+    Avatar m_dummy;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

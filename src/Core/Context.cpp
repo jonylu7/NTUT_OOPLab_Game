@@ -71,6 +71,7 @@ Context::Context() {
     // init Imgui
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
+
     (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 

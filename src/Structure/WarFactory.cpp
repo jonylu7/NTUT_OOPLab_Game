@@ -14,51 +14,7 @@ void WarFactory::Start() {
     // Set Attachment Scale &
     // Visibility----------------------------------------
     m_HighLight.SetHLScale(this->GetTranScale());
-    onSelected(false);
+    onSelected();
     // State
     SetCurrentUpdateMode(Structure::updateMode::Moveable);
-}
-void WarFactory::updateMoveable() {
-    glm::vec2 location = Util::Input::GetCursorPosition();
-    location = MapClass::ScreenToGlobalCoord(location);
-    location = MapClass::GlobalCoordToCellCoord(location);
-    location = MapClass::CellCoordToGlobal(location);
-    this->SetObjectLocation(location);
-    this->SetVisible(true);
-    this->Draw();
-    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
-        this->SetObjectLocation(location);
-        this->SetWayPointLocation({GetDrawLocation().x + CELL_SIZE.x,
-                                   GetDrawLocation().y + CELL_SIZE.y});
-        onSelected(false);
-        this->SetCurrentUpdateMode(updateMode::Fixed);
-    }
-}
-void WarFactory::onSelected(bool selected) {
-    if (b_selectingNewWayPoint) {
-        this->SetWayPointLocation(
-            MapClass::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
-        b_selectingNewWayPoint = false;
-    }
-    attachmentUpdate();
-    this->SetAttachVisible(selected);
-    if (selected) {
-        if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_RB)) {
-            b_selectingNewWayPoint = true;
-        }
-    }
-}
-void WarFactory::SetAttachVisible(bool visible) {
-    m_wayPoint->SetVisible(visible);
-    m_HighLight.SetVisible(visible);
-    m_Grid.SetActivate(visible);
-}
-void WarFactory::attachmentUpdate() {
-    m_HighLight.SetObjectLocation(this->GetDrawLocation());
-    m_wayPoint->SetObjectLocation(this->GetWayPointLocation());
-    m_Grid.setLine(GetDrawLocation(), GetWayPointLocation());
-    m_wayPoint->Draw();
-    m_HighLight.Draw();
-    Util::Transform Trans;
-    m_Grid.DrawUsingCamera(Trans, DEFAULT_ZINDEX);
 }
