@@ -39,7 +39,7 @@ public:
     void End(){};
 
 private:
-    std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
+    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     MapbinReader reading;
 
     SpriteSheet m_SpriteSheet;

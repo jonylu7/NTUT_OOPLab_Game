@@ -10,42 +10,43 @@
 class TileClass {
 public:
     TileClass(const unitType unittype, bool buildable, bool walkable,
-              bool clickable, std::shared_ptr<Core::Drawable> tileimage)
+              bool clickable, std::string tileimagepath)
         : m_Id(GameObjectID(unittype)),
           m_Buildable(buildable),
           m_Walkable(walkable),
-          m_Clickable(clickable),
-          m_TileImage(tileimage) {}
+          m_TileImagePath(tileimagepath) {}
 
     TileClass(const unitType unittype, bool buildable, bool walkable,
               bool clickable)
         : m_Id(GameObjectID(unittype)),
           m_Buildable(buildable),
           m_Walkable(walkable),
-          m_Clickable(clickable) {}
+          m_Clickable(clickable),
+          m_TileImagePath("") {}
     TileClass()
         : m_Id(GameObjectID(unitType::null)),
           m_Buildable(false),
           m_Walkable(false),
-          m_Clickable(true) {}
+          m_Clickable(true),
+          m_TileImagePath("") {}
     ~TileClass() {}
 
     bool getWalkable() { return m_Walkable; };
     bool getBuildable() { return m_Buildable; };
     bool getClickable() { return m_Clickable; };
-    std::shared_ptr<Core::Drawable> getTileImage() { return m_TileImage; };
+    std::string getTileImagePath() { return m_TileImagePath; };
 
     void setWalkable(bool value) { m_Walkable = value; };
     void setBuildable(bool value) { m_Buildable = value; };
     void setClickable(bool value) { m_Clickable = value; };
 
-    void setTileImage(std::shared_ptr<Core::Drawable> tileimage) {
-        m_TileImage = tileimage;
-    };
+    void setTileImage(std::string tileimage) { m_TileImagePath = tileimage; };
 
+    /*
     void drawTileImage(Util::Transform trans, int zindex) {
-        m_TileImage->DrawUsingCamera(trans, zindex);
+        m_TileImagePath->DrawUsingCamera(trans, zindex);
     }
+     */
 
     /*
     bool operator==(const TileClass &tile) const {
@@ -69,7 +70,7 @@ public:
     TileClass &operator=(const TileClass &tile) {
         this->m_Walkable = tile.m_Walkable;
         this->m_Clickable = tile.m_Clickable;
-        this->m_TileImage = tile.m_TileImage;
+        this->m_TileImagePath = tile.m_TileImagePath;
         this->m_Buildable = tile.m_Buildable;
         this->m_Id = tile.m_Id;
         return *this;
@@ -79,7 +80,7 @@ private:
     bool m_Walkable;
     bool m_Buildable;
     bool m_Clickable;
-    std::shared_ptr<Core::Drawable> m_TileImage;
+    std::string m_TileImagePath;
     GameObjectID m_Id;
 };
 

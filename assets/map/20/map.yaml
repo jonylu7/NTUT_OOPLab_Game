@@ -1,0 +1,30 @@
+MapFormat: 12
+
+RequiresMod: ra
+
+Title: Name your map here
+
+Author: Your name here
+
+Tileset: TEMPERAT
+
+MapSize: 22,22
+
+Bounds: 1,1,20,20
+
+Visibility: Lobby
+
+Categories: Conquest
+
+Players:
+	PlayerReference@Neutral:
+		Name: Neutral
+		OwnsWorld: True
+		NonCombatant: True
+		Faction: england
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: england
+
+Actors:

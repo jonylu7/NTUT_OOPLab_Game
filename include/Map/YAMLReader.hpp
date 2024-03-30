@@ -12,8 +12,7 @@
 #include <yaml-cpp/yaml.h>
 class YAMLReader {
 public:
-    static std::shared_ptr<Util::Image> convertYAMLTileToImage(int id,
-                                                               int index);
+    static std::string convertYAMLTileToImagePath(int id, int index);
 
     static std::shared_ptr<TileClass> convertYAMLTileToTileClass(int id,
                                                                  int index);

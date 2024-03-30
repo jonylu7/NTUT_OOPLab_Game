@@ -40,40 +40,54 @@ public:
         int k = 0;
         int imageId = 0;
         int imageIndex = 0;
+        int case1hasValue = -1;
         while (file.read(reinterpret_cast<char *>(&data), 1)) {
-            if (i > width * hieght) {
+
+            if ((i - 17) / 3 >= width * hieght) {
                 break;
             }
             if (i >= 17) {
-                // std::cout << static_cast<int>(data) << " ";
+                std::cout << static_cast<int>(data) << " ";
                 switch (k) {
                 case 0:
                     imageId = static_cast<int>(data);
                     break;
                 case 1:
+                    /*
+                    if (!(static_cast<int>(data) == 255 ||
+                          static_cast<int>(data) == 0)) {
+                        imageIndex = static_cast<int>(data);
+                        case1hasValue = 1;
+                    }
+                     */
                     break;
                 case 2:
-                    imageIndex = static_cast<int>(data);
-                    auto tileimage =
-                        YAMLReader::convertYAMLTileToImage(imageId, imageIndex);
+                    if (case1hasValue != 1) {
+                        imageIndex = static_cast<int>(data);
+                    }
+
+                    auto tileimage = YAMLReader::convertYAMLTileToImagePath(
+                        imageId, imageIndex);
 
                     auto tile = YAMLReader::convertYAMLTileToTileClass(
                         imageId, imageIndex);
-                    mapRow.push_back(tile);
+                    mapRow.push_back(std::make_shared<TileClass>(*tile));
                     imageId = 0;
                     k = -1;
                     imageIndex = 0;
-                    // std::cout << "\n";
+                    std::cout << " " << i << "\n";
+
+                    if (((i - 16) / 3) % (width) == 0) {
+                        fullmap.push_back(mapRow);
+                        mapRow.clear();
+                    }
+                    case1hasValue = -1;
                     break;
                 }
                 k++;
             }
 
             i++;
-            if (i % width == 0) {
-                fullmap.push_back(mapRow);
-                mapRow.clear();
-            }
         }
 
         // Close the file

@@ -5,8 +5,10 @@
 #include "DrawOverlays.hpp"
 #include <iostream>
 void MapScene::Start() {
+    // m_Map->Init(204, 161);
+    m_Map->Init(reading.readBin("../assets/map/green-belt/map.bin", 98, 98), 98,
+                98);
 
-    m_Map = reading.readBin("../assets/map/europe/map.bin", 204, 161);
     // OccupiedID::InitID();
     //  image.SetImage("../assets/sprites/Shapes/B_Box.png");
     /*
@@ -64,10 +66,6 @@ void MapScene::Update() {
     m_SceneCamera.Update();
     Util::Transform trans;
     trans.scale = {1, 1};
-    for (int i = 0; i < 60; i++) {
-        for (int j = 0; j < 30; j++) {
-            trans.translation = {i * 24.F, j * 24.F};
-            m_Map[i][j]->drawTileImage(trans, 1);
-        }
-    }
+    trans.translation = {0, 0};
+    m_Map->Draw(trans, 0);
 }

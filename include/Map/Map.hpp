@@ -7,15 +7,13 @@
 
 #include "Grid.hpp"
 #include "Tile.hpp"
+#include "Util/ImageArray.hpp"
 #include "glm/vec2.hpp"
 #include "pch.hpp"
 
-typedef unsigned int CELL;
-
 class MapClass : public Core::Drawable {
 public:
-    MapClass() {}
-    void Init(CELL width, CELL height) {
+    void Init(unsigned int width, unsigned int height) {
         m_MapWdith = width;
         m_MapHeight = height;
         for (int i = 0; i < m_MapHeight; i++) {
@@ -28,19 +26,49 @@ public:
         InitGrid();
     }
     void Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
-              CELL width, CELL height) {
-        m_Map = map;
+              unsigned int width, unsigned int height) {
+
         m_MapWdith = width;
         m_MapHeight = height;
-        InitGrid();
+        m_Map = map;
+
+        // m_Map = map;
+
+        // InitGrid();
+
+        for (int i = 0; i < m_Map.size(); i++) {
+            for (int j = 0; j < m_Map[i].size(); j++) {
+                if (m_Map[i][j]->getTileImagePath() == "d10-0006.png") {
+                    if (1 == 1) {
+                    };
+                }
+                auto findResult = m_Tiles.find(m_Map[i][j]->getTileImagePath());
+                if (findResult != m_Tiles.end()) {
+                    m_Tiles[m_Map[i][j]->getTileImagePath()].push_back(
+                        glm::vec2(i, m_MapHeight - j));
+                } else {
+                    m_Tiles[m_Map[i][j]->getTileImagePath()] =
+                        std::vector<glm::vec2>({glm::vec2(i, m_MapHeight - j)});
+                }
+            }
+        }
+
+        for (auto pair : m_Tiles) {
+            std::string motherPath = "../assets/sprites/temperate_sprite/";
+            m_Images.push_back(std::make_shared<Util::ImageArray>(
+                motherPath + pair.first, pair.second));
+        }
     }
 
     void Draw(const Util::Transform &trans, const float zindex) override {
 
         Util::Transform mapTrans;
         mapTrans.translation = m_MapPosition;
-        m_Grid.DrawUsingCamera(mapTrans, 0.1);
+        for (auto i : m_Images) {
+            i->DrawUsingCamera(mapTrans, 3);
+        }
 
+        // m_Grid.DrawUsingCamera(mapTrans, 0.1);
         /*
         // TODO: new feature, draw tiles only within given range
         Util::Transform drawLocation = {glm::vec2(0, 0)};
@@ -83,8 +111,7 @@ public:
         if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
             position.x < 0 || position.y < 0) {
             LOG_DEBUG("False Position Getting");
-            return std::make_shared<TileClass>(unitType::null, 0, 0, 0,
-                                               std::shared_ptr<Util::Image>());
+            return std::make_shared<TileClass>(unitType::null, 0, 0, 0, "");
         }
         return m_Map[position.x][position.y];
     }
@@ -123,8 +150,10 @@ protected:
     }
 
 private:
-    CELL m_MapWdith;
-    CELL m_MapHeight;
+    std::vector<std::shared_ptr<Util::ImageArray>> m_Images;
+    std::unordered_map<std::string, std::vector<glm::vec2>> m_Tiles;
+    unsigned int m_MapWdith = 0;
+    unsigned int m_MapHeight = 0;
     glm::vec2 m_MapPosition = {0, 0};
     std::vector<std::vector<std::shared_ptr<TileClass>>> m_Map;
     int m_ZIndex = 0;

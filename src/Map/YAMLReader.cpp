@@ -4,9 +4,8 @@
 #include "Map/YAMLReader.hpp"
 #include "Map/Tile.hpp"
 
-std::shared_ptr<Util::Image> YAMLReader::convertYAMLTileToImage(int id,
-                                                                int index) {
-    std::string str = std::to_string(index); // Example string
+std::string YAMLReader::convertYAMLTileToImagePath(int id, int index) {
+    std::string indexStr = std::to_string(index); // Example string
     // Create an output string stream
     std::ostringstream oss;
 
@@ -16,7 +15,7 @@ std::shared_ptr<Util::Image> YAMLReader::convertYAMLTileToImage(int id,
     // Set the width to the desired length
     oss << std::setw(4);
 
-    oss << str;
+    oss << indexStr;
 
     // Get the formatted string
     std::string formattedStr = oss.str();
@@ -30,8 +29,10 @@ std::shared_ptr<Util::Image> YAMLReader::convertYAMLTileToImage(int id,
         imageFileName.substr(0, imageFileName.size() - 4) + "-" + formattedStr +
         ".png";
 
-    return std::make_shared<Util::Image>("../assets/sprites/temperate_sprite/" +
-                                         convertedImageFileName);
+    return convertedImageFileName;
+    // return
+    // std::make_shared<Util::Image>("../assets/sprites/temperate_sprite/" +
+    // convertedImageFileName);
 }
 
 std::shared_ptr<TileClass> YAMLReader::convertYAMLTileToTileClass(int id,
@@ -43,10 +44,20 @@ std::shared_ptr<TileClass> YAMLReader::convertYAMLTileToTileClass(int id,
     std::string imageFileName = Dump(tileSet["Images"]);
     std::string terrainName = Dump(tileSet["Tiles"][std::to_string(index)]);
 
-    std::shared_ptr<Util::Image> image = convertYAMLTileToImage(id, index);
+    if (terrainName == "") {
+        for (auto k : tileSet["Tiles"]) {
+            index = std::stoi(k.first.Scalar());
+            terrainName = Dump(tileSet["Tiles"][std::to_string(index)]);
+            break;
+        }
+    }
+
+    // std::shared_ptr<Util::Image> image = convertYAMLTileToImage(id, index);
+
     std::shared_ptr<TileClass> tile =
         std::move(TerrainConfig::GetConfig(terrainName));
-    tile->setTileImage(image);
+    tile->setTileImage(convertYAMLTileToImagePath(id, index));
+    // tile->setTileImage(image);
 
     return tile;
 }
