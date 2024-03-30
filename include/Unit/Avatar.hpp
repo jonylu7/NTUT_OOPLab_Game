@@ -4,14 +4,11 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
+#include "Map/MapUtility.hpp"
 #include "Unit/AttackAndDamageUnit.hpp"
-#include "Unit/FindValidPathToDest.hpp"
 #include "Unit/PathfindingUnit.hpp"
-
+enum class UnitMode { DEAD, MOVE, IDLE, MOVE_ATTACK, ALIVE };
 class Avatar : public PathfindingUnit, public AttackAndDamageUnit {
-
-    enum class UnitMode { DEAD, MOVE, IDLE, MOVE_ATTACK };
-
 
 protected:
     std::shared_ptr<Util::Image> m_Image;
@@ -28,8 +25,7 @@ public:
     virtual void Start(glm::vec2 destination) { // destination = Barrack's
                                                 // waypointLocation
         // setCurrentCell()  //CurrentCell = Structure's Location
-        this->SetDrawable(
-            customizeImage());
+        this->SetDrawable(customizeImage());
         SetVisible(true);
         m_grid.SetActivate(true);
         setCurrentCell(destination);
@@ -53,8 +49,10 @@ public:
         cursorSetNewDest();
         printf("-----------------------------\n");
     }
-    virtual void customizeUpdate(){}
-    virtual std::shared_ptr<Util::Image> customizeImage(){ return std::make_unique<Util::Image>("../assets/sprites/capybara.png");}
+    virtual void customizeUpdate() {}
+    virtual std::shared_ptr<Util::Image> customizeImage() {
+        return std::make_unique<Util::Image>("../assets/sprites/capybara.png");
+    }
     virtual void Update() override {
         switch (m_currentMode) {
         case (UnitMode::DEAD): {
@@ -81,11 +79,15 @@ public:
                     Util::Input::GetCursorPosition())));
         }
     }
-    float getDistance(glm::vec2 cell){
-        return sqrt(pow(cell.x-getCurrentCell().x,2)+pow(cell.y-getCurrentCell().y,2));
+    float getDistance(glm::vec2 cell) {
+        return sqrt(pow(cell.x - getCurrentCell().x, 2) +
+                    pow(cell.y - getCurrentCell().y, 2));
     }
 
-    void DEBUG_printCurrentMoveDirection(MoveDirection Dir){
+    UnitMode getUnitMode() { return m_currentMode; }
+    void setUnitMode(UnitMode mode) { m_currentMode = mode; }
+
+    void DEBUG_printCurrentMoveDirection(MoveDirection Dir) {
         switch (Dir) {
         case MoveDirection::RIGHT: {
             printf("(DEBUG)Avatar DIR:Right\n");

@@ -6,7 +6,6 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
 #include "Grid.hpp"
 #include "Line.hpp"
-
 #include "Map/Tile.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
@@ -53,8 +52,6 @@ public:
     };
     virtual ~PathfindingUnit(){};
 
-    //
-    UnitMode getUnitMode(){return m_currentMode;}
     void setDestinationCell(int x, int y) {
         this->m_destinationCell = {glm::vec2(x, y)};
     }

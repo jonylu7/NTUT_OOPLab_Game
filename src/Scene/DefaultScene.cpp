@@ -32,10 +32,10 @@ void DefaultScene::Start() {
 
     m_Player->setTotalCurrency(5000);
 
-//    m_hunter->setCurrentCell({20,10});
-//    m_runner->setCurrentCell({10,10});
-    m_hunter->Start({20,9},m_Map);
-    m_runner->Start({9,10},m_Map);
+    //    m_hunter->setCurrentCell({20,10});
+    //    m_runner->setCurrentCell({10,10});
+    m_hunter->Start({20, 9});
+    m_runner->Start({9, 10});
     m_hunter->setTarget(m_runner);
     m_runner->setBeingChase(m_hunter);
 }
