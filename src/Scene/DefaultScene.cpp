@@ -25,10 +25,10 @@ void DefaultScene::Start() {
     // m_GameObjectManager.Start();
 
     // m_dummy.Start({5, 5}, m_Map);
-    m_Manager->importPlayer(m_Player);
+    m_GameObjectManager->importPlayer(m_Player);
     m_UI.importMap(m_Map);
     m_UI.importPlayer(m_Player);
-    m_UI.importGameObjManager(m_Manager);
+    m_UI.importGameObjManager(m_GameObjectManager);
 
     m_Player->setTotalCurrency(5000);
 
@@ -46,7 +46,7 @@ void DefaultScene::Update() {
     m_hunter->Update();
     m_runner->Update();
 
-    m_Manager->Update();
+    m_GameObjectManager->Update();
 
     Util::Transform trans;
     m_Map->Draw(trans, 0);
@@ -71,10 +71,10 @@ void DefaultScene::Update() {
     //  m_GameObjectManager.Update();
 
     if (m_UI.getIfAnyBuildingReadyToBuild()) {
-        m_Manager->Append(m_UI.getSelectedBuilding());
+        m_GameObjectManager->Append(m_UI.getSelectedBuilding());
     }
-    m_UI.checkExistBuilding(m_Manager->getStructureArray());
+    m_UI.checkExistBuilding(m_GameObjectManager->getStructureArray());
     if (m_UI.getIfUnitReadyToSpawn()) {
-        m_Manager->Append(m_UI.getUnitFromUI());
+        m_GameObjectManager->Append(m_UI.getUnitFromUI());
     }
 }
