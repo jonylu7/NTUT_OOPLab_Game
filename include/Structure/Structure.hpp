@@ -6,8 +6,9 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #include "GameObjectID.hpp"
 #include "HighLight.h"
-#include "Map.hpp"
+
 #include "Selectable.hpp"
+
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
@@ -84,8 +85,8 @@ public:
     float GetElectricPower();
     float GetBuildingTime();
     float GetBuildingCost();
-    virtual float GetBuildingIncome(){return buildingIncome;};
-    void SetBuildingIncome(float income){buildingIncome=income;}
+    virtual float GetBuildingIncome() { return buildingIncome; };
+    void SetBuildingIncome(float income) { buildingIncome = income; }
     float GetBuildingHp();
     GameObjectID GetID() { return m_ID; }
 
@@ -99,7 +100,7 @@ private:
     float buildingTime;
     float buildingCost;
     float buildingHp;
-    float buildingIncome=0.F;
+    float buildingIncome = 0.F;
     HighLight m_HighLight;
     GameObjectID m_ID;
 

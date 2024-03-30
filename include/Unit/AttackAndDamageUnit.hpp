@@ -22,8 +22,6 @@ public:
     }
 
     void ForceAttackUnit(std::shared_ptr<AttackAndDamageUnit> target) {
-
-        // check withinrange
         // cd time
         target->takeDamage(m_Weapon.getSoftAttack(), m_Weapon.getHardAttack());
         return;

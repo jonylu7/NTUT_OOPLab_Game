@@ -10,15 +10,16 @@
 #include "config.hpp"
 
 namespace Util {
-ImageArray::ImageArray(const std::string &filepath)
+ImageArray::ImageArray(const std::string &filepath,
+                       std::vector<glm::vec2> offset)
     : m_Path(filepath) {
     if (s_Program == nullptr) {
         InitProgram();
     }
-    if (s_VertexArray == nullptr) {
-        InitVertexArray();
+    if (m_VertexArray == nullptr) {
+        InitVertexArray(offset);
     }
-    if (s_UniformBuffer == nullptr) {
+    if (m_UniformBuffer == nullptr) {
         InitUniformBuffer();
     }
 
@@ -56,26 +57,28 @@ void ImageArray::SetImage(const std::string &filepath) {
 
 void ImageArray::Draw(const Util::Transform &transform, const float zIndex) {
     auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
-    s_UniformBuffer->SetData(0, data);
+    m_UniformBuffer->SetData(0, data);
 
     m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
     s_Program->Bind();
     s_Program->Validate();
 
-    s_VertexArray->Bind();
-    s_VertexArray->DrawTriangles();
+    m_VertexArray->Bind();
+    m_VertexArray->DrawTriangles();
 }
 
-void ImageArray::DrawUsingCamera(const Util::Transform &transform, const float zIndex){
-    auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(transform, m_Size, zIndex);
-    s_UniformBuffer->SetData(0, data);
+void ImageArray::DrawUsingCamera(const Util::Transform &transform,
+                                 const float zIndex) {
+    auto data = Util::ConvertToUniformBufferDataUsingCameraMatrix(
+        transform, m_Size, zIndex);
+    m_UniformBuffer->SetData(0, data);
 
     m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
     s_Program->Bind();
     s_Program->Validate();
 
-    s_VertexArray->Bind();
-    s_VertexArray->DrawTriangles();
+    m_VertexArray->Bind();
+    m_VertexArray->DrawTriangles();
 }
 
 void ImageArray::InitProgram() {
@@ -88,8 +91,8 @@ void ImageArray::InitProgram() {
     glUniform1i(location, UNIFORM_SURFACE_LOCATION);
 }
 
-void ImageArray::InitVertexArray() {
-    s_VertexArray = std::make_unique<Core::VertexArray>();
+void ImageArray::InitVertexArray(std::vector<glm::vec2> offset) {
+    m_VertexArray = std::make_unique<Core::VertexArray>();
 
     // NOLINTBEGIN
     // These are vertex data for the rectangle but clang-tidy has magic
@@ -97,72 +100,56 @@ void ImageArray::InitVertexArray() {
 
     // Vertex
 
-    //init position,uv,index according to "offset"vector
+    // init position,uv,index according to "offset"vector
 
     std::vector<float> positionVertex;
     std::vector<float> uvVertex;
     std::vector<unsigned int> indexBuffer;
 
-    std::vector<glm::vec2> offset={glm::vec2(0,0),glm::vec2(1,0),glm::vec2(1,1),glm::vec2(0,1)
-                                                                                            ,glm::vec2(0,3)
-    };
+    for (int i = 0; i < offset.size(); i++) {
+        positionVertex.push_back(-0.5F + offset[i].x);
+        positionVertex.push_back(0.5F + offset[i].y);
 
+        positionVertex.push_back(-0.5F + offset[i].x);
+        positionVertex.push_back(-0.5F + offset[i].y);
+        positionVertex.push_back(0.5F + offset[i].x);
+        positionVertex.push_back(-0.5F + offset[i].y);
 
-    for(int i=0;i<offset.size();i++){
-        positionVertex.push_back(-0.5F+offset[i].x);
-        positionVertex.push_back(0.5F+offset[i].y);
+        positionVertex.push_back(0.5F + offset[i].x);
+        positionVertex.push_back(0.5F + offset[i].y);
 
-        positionVertex.push_back(-0.5F+offset[i].x);
-        positionVertex.push_back(-0.5F+offset[i].y);
-        positionVertex.push_back(0.5F+offset[i].x);
-        positionVertex.push_back(-0.5F+offset[i].y);
+        std::vector<float> uv({0.0F, 0.0F, //
+                               0.0F, 1.0F, //
+                               1.0F, 1.0F, //
+                               1.0F, 0.0F});
+        uvVertex.insert(uvVertex.end(), uv.begin(), uv.end());
 
-        positionVertex.push_back(0.5F+offset[i].x);
-        positionVertex.push_back(0.5F+offset[i].y);
+        unsigned int iBufferStep = i * 4;
+        std::vector<unsigned int> iBuffer(
+            {0 + iBufferStep, 1 + iBufferStep, 2 + iBufferStep, //
+             0 + iBufferStep, 2 + iBufferStep, 3 + iBufferStep});
 
-
-        std::vector<float> uv({ 0.0F, 0.0F, //
-                            0.0F, 1.0F, //
-                            1.0F, 1.0F, //
-                            1.0F, 0.0F});
-        uvVertex.insert(uvVertex.end(),uv.begin(),uv.end());
-
-        unsigned int iBufferStep=i*4;
-        std::vector<unsigned int> iBuffer({0+iBufferStep, 1+iBufferStep, 2+iBufferStep, //
-            0+iBufferStep, 2+iBufferStep, 3+iBufferStep});
-
-        indexBuffer.insert(indexBuffer.end(),iBuffer.begin(),iBuffer.end());
-
+        indexBuffer.insert(indexBuffer.end(), iBuffer.begin(), iBuffer.end());
     }
 
-
-
-
-    s_VertexArray->AddVertexBuffer(std::make_unique<Core::VertexBuffer>(
-positionVertex,
-        2));
+    m_VertexArray->AddVertexBuffer(
+        std::make_unique<Core::VertexBuffer>(positionVertex, 2));
 
     // UV
-    s_VertexArray->AddVertexBuffer(std::make_unique<Core::VertexBuffer>(
-        uvVertex,
-        2));
+    m_VertexArray->AddVertexBuffer(
+        std::make_unique<Core::VertexBuffer>(uvVertex, 2));
 
     // Index
-    s_VertexArray->SetIndexBuffer(
+    m_VertexArray->SetIndexBuffer(
         std::make_unique<Core::IndexBuffer>(indexBuffer));
     // NOLINTEND
-
-
 }
 
 void ImageArray::InitUniformBuffer() {
-    s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
+    m_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
         *s_Program, "Matrices", 0);
 }
 
-
 std::unique_ptr<Core::Program> ImageArray::s_Program = nullptr;
-std::unique_ptr<Core::VertexArray> ImageArray::s_VertexArray = nullptr;
-std::unique_ptr<Core::UniformBuffer<Core::Matrices>> ImageArray::s_UniformBuffer =
-    nullptr;
+// namespace Util
 } // namespace Util

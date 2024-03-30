@@ -4,7 +4,7 @@
 namespace Util {
 
 SFX::SFX(const std::string &path)
-    : m_Chunk(Mix_LoadWAV(path.c_str()), SFX::ChunkDeleter()) {
+    : m_Chunk(Mix_LoadWAV(path.c_str())) {
     if (m_Chunk == nullptr) {
         LOG_DEBUG("Failed to load SFX: {}{}", path,
                   std::string(Mix_GetError()));

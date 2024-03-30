@@ -4,6 +4,8 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
+#include "Map/Map.hpp"
+#include "Map/MapUtility.hpp"
 #include "Unit/PathfindingUnit.hpp"
 #include <random>
 class FindValidPathToDest : public PathfindingUnit {

@@ -3,10 +3,23 @@
 #include "Core/Texture.hpp"
 #include "Core/TextureUtils.hpp"
 
+#include "Util/Logger.hpp"
 #include "Util/Text.hpp"
 #include "Util/TransformUtils.hpp"
 
 #include "config.hpp"
+
+std::shared_ptr<SDL_RWops> LoadFontFile(const std::string &filepath) {
+    auto file = std::shared_ptr<SDL_RWops>(
+        SDL_RWFromFile(filepath.c_str(), "rb"), SDL_RWclose);
+
+    if (file == nullptr) {
+        LOG_ERROR("Failed to load font: '{}'", filepath);
+        LOG_ERROR("{}", TTF_GetError());
+    }
+
+    return file;
+}
 
 namespace Util {
 Text::Text(const std::string &font, int fontSize, const std::string &text,
@@ -19,16 +32,12 @@ Text::Text(const std::string &font, int fontSize, const std::string &text,
     if (s_VertexArray == nullptr) {
         InitVertexArray();
     }
-    if (s_UniformBuffer == nullptr) {
+    if (m_UniformBuffer == nullptr) {
         InitUniformBuffer();
     }
 
-    m_Font = {TTF_OpenFont(font.c_str(), fontSize), TTF_CloseFont};
-
-    if (m_Font == nullptr) {
-        LOG_ERROR("Failed to load font: '{}'", text);
-        LOG_ERROR("{}", TTF_GetError());
-    }
+    m_Font = {TTF_OpenFontRW(s_Store.Get(font).get(), 0, fontSize),
+              TTF_CloseFont};
 
     auto surface =
         std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
@@ -50,7 +59,7 @@ Text::Text(const std::string &font, int fontSize, const std::string &text,
 
 void Text::Draw(const Util::Transform &transform, const float zIndex) {
     auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
-    s_UniformBuffer->SetData(0, data);
+    m_UniformBuffer->SetData(0, data);
 
     m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
     s_Program->Bind();
@@ -107,7 +116,7 @@ void Text::InitVertexArray() {
 }
 
 void Text::InitUniformBuffer() {
-    s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
+    m_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
         *s_Program, "Matrices", 0);
 }
 
@@ -130,7 +139,6 @@ void Text::ApplyTexture() {
 
 std::unique_ptr<Core::Program> Text::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> Text::s_VertexArray = nullptr;
-std::unique_ptr<Core::UniformBuffer<Core::Matrices>> Text::s_UniformBuffer =
-    nullptr;
 
+Util::AssetStore<std::shared_ptr<SDL_RWops>> Text::s_Store(LoadFontFile);
 } // namespace Util

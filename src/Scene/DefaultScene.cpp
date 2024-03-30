@@ -4,10 +4,10 @@
 #include "Scene/DefaultScene.hpp"
 #include "DrawOverlays.hpp"
 #include <iostream>
+
 void DefaultScene::Start() {
     // image.SetImage("../assets/sprites/Shapes/B_Box.png");
     LOG_TRACE("Start");
-
     /* doing some weird stuff, fix is needed
     std::vector<std::shared_ptr<TileClass>> maps =
         m_Map.readMapAndTileSet(m_OgMap, m_tileSets);
@@ -24,12 +24,11 @@ void DefaultScene::Start() {
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
 
-    //m_dummy.Start({5, 5}, m_Map);
+    // m_dummy.Start({5, 5}, m_Map);
     m_Manager->importPlayer(m_Player);
     m_UI.importMap(m_Map);
     m_UI.importPlayer(m_Player);
     m_UI.importGameObjManager(m_Manager);
-
 
     m_Player->setTotalCurrency(5000);
 
@@ -42,7 +41,7 @@ void DefaultScene::Start() {
 }
 
 void DefaultScene::Update() {
-    //m_dummy.Update();
+    // m_dummy.Update();
 
     m_hunter->Update();
     m_runner->Update();
@@ -75,7 +74,7 @@ void DefaultScene::Update() {
         m_Manager->Append(m_UI.getSelectedBuilding());
     }
     m_UI.checkExistBuilding(m_Manager->getStructureArray());
-    if(m_UI.getIfUnitReadyToSpawn()){
+    if (m_UI.getIfUnitReadyToSpawn()) {
         m_Manager->Append(m_UI.getUnitFromUI());
     }
 }

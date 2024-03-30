@@ -1,7 +1,7 @@
 #ifndef APP_HPP
 #define APP_HPP
 
-#include "Scene/DefaultScene.hpp"
+#include "Scene/MapScene.hpp"
 #include "pch.hpp" // IWYU pragma: export
 
 #include "Util/Renderer.hpp"
@@ -21,7 +21,7 @@ public:
 private:
     State m_CurrentState = State::START;
 
-    DefaultScene testScene;
+    MapScene mapScene;
 };
 
 #endif

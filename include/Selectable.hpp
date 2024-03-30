@@ -10,7 +10,7 @@ public:
     bool getSelected() { return b_Selected; }
     void setSelected(bool value) { b_Selected = value; }
 
-private:
+protected:
     bool b_Selected;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SELECTABLE_HPP

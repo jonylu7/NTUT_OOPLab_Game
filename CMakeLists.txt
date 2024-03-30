@@ -24,6 +24,24 @@ endif ()
 
 option(PTSD_ENABLE_PCH "Turn on PCH to increase compilation speed" OFF)
 
+
+## yaml
+include(FetchContent)
+
+FetchContent_Declare(
+        yaml-cpp
+        GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+        # Can be a tag (yaml-cpp-x.x.x), a commit hash, or a branch name (master)
+)
+FetchContent_GetProperties(yaml-cpp)
+
+if (NOT yaml-cpp_POPULATED)
+    message(STATUS "Fetching yaml-cpp...")
+    FetchContent_Populate(yaml-cpp)
+    add_subdirectory(${yaml-cpp_SOURCE_DIR} ${yaml-cpp_BINARY_DIR})
+endif ()
+
+
 include(cmake/Dependencies.cmake)
 
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
@@ -78,6 +96,9 @@ set(SRC_FILES
         ${SRC_DIR}/Structure/OreRefinery.cpp
         ${SRC_DIR}/Structure/PowerPlants.cpp
         ${SRC_DIR}/Structure/WarFactory.cpp
+
+        ${SRC_DIR}/Scene/MapScene.cpp
+
         ${SRC_DIR}/Structure/WayPointStructure.cpp
 
         ${SRC_DIR}/Unit/PathfindingUnit.cpp
@@ -89,10 +110,17 @@ set(SRC_FILES
         ${SRC_DIR}/SpriteSheet.cpp
         ${SRC_DIR}/UI/UI.cpp
         ${SRC_DIR}/GameObjectID.cpp
+        ${SRC_DIR}/Map/YAMLReader.cpp
+        ${SRC_DIR}/Map/TerrainConfig.cpp
 
 )
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(INCLUDE_FILES
+        ${INCLUDE_DIR}/Map/Map.hpp
+        ${INCLUDE_DIR}/Map/MapUtility.hpp
+        ${INCLUDE_DIR}/Util/AssetStore.hpp
+        ${INCLUDE_DIR}/Map/MapbinReader.hpp
+        ${INCLUDE_DIR}/Map/YAMLReader.hpp
 
         ${INCLUDE_DIR}/Core/Context.hpp
         ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp
@@ -129,7 +157,9 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/ImageArray.hpp
         ${INCLUDE_DIR}/Util/CustomizableImage.hpp
 
-        ${INCLUDE_DIR}/Map.hpp
+        ${INCLUDE_DIR}/Scene/MapScene.hpp
+
+
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/GameObjectManager.hpp
         ${INCLUDE_DIR}/GameObjectID.hpp
@@ -209,16 +239,23 @@ target_link_libraries(Sample
         SDL2::SDL2main # IDK what happens if we don't link SDL2main
         ${DEPENDENCY_LINK_LIBRARIES}
 )
+##yaml
+target_link_libraries(Sample yaml-cpp::yaml-cpp ${DEPENDENCY_LINK_LIBRARIES}) # The library or executable that require yaml-cpp library
+
 target_include_directories(Sample SYSTEM PRIVATE
         ${DEPENDENCY_INCLUDE_DIRS}
 )
 target_include_directories(Sample PRIVATE
         ${INCLUDE_DIR}
 )
+
+
 if (${PTSD_ENABLE_PCH})
     target_precompile_headers(Sample PRIVATE
             include/pch.hpp
     )
+
+
 endif ()
 target_compile_options(Sample PRIVATE
         ${TARGET_COMPILE_OPTIONS}

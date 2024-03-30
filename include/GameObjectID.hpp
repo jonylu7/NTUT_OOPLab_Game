@@ -8,7 +8,6 @@
 #include <string>
 #include <unordered_map>
 
-// namespace std
 enum class unitType {
     // buildings
     POWER_PLANT,
@@ -27,7 +26,22 @@ enum class unitType {
     // Vehicles
     TRUCK,
     // null
-    null
+    null,
+
+    // tile
+    TILE_BEACH,
+    TILE_BRIDGE,
+    TILE_CLEAR,
+    TILE_RIVER,
+    TILE_ROAD,
+    TILE_ROUGH,
+    TILE_WATER,
+    TILE_ROCK,
+    TILE_TREE,
+
+    // overlays
+    OVERLAY_GEMS,
+    OVERLAY_ORE
 };
 
 class OccupiedID {
@@ -36,8 +50,6 @@ private:
 
 public:
     static int getNewestID(unitType type);
-    static void removeID(unitType type, int id){};
-    static void InitID();
 };
 
 class GameObjectID {

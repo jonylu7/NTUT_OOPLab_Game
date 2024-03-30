@@ -11,7 +11,7 @@
 
 #include "DrawOverlays.hpp"
 #include "Grid.hpp"
-#include "Map.hpp"
+#include "Map/Map.hpp"
 #include "SpriteSheet.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
@@ -33,6 +33,7 @@
 #include "Util/Renderer.hpp"
 
 class DefaultScene {
+
 public:
     DefaultScene(){};
     ~DefaultScene(){};
@@ -49,13 +50,14 @@ private:
     GameObjectManager m_GameObjectManager;
     Util::Renderer m_Renderer;
     UIClass m_UI;
+
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::shared_ptr<Player> m_Player = std::make_shared<Player>();
-    std::shared_ptr<GameObjectManager> m_Manager = std::make_shared<GameObjectManager>();
+    std::shared_ptr<GameObjectManager> m_Manager =
+        std::make_shared<GameObjectManager>();
 
     Avatar m_dummy;
     std::shared_ptr<Hunter> m_hunter=std::make_shared<Hunter>();
     std::shared_ptr<Runner> m_runner=std::make_shared<Runner>();
 };
-
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP

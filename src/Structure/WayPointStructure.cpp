@@ -1,8 +1,8 @@
 //
 // Created by 盧威任 on 3/26/24.
 //
-
 #include "Structure/WayPointStructure.hpp"
+#include "Map/MapUtility.hpp"
 
 void WayPointStructure::updateMoveable() {
     glm::vec2 location = Util::Input::GetCursorPosition();

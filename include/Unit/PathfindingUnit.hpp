@@ -6,9 +6,8 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
 #include "Grid.hpp"
 #include "Line.hpp"
-#include "Map.hpp"
 
-#include "Tile.hpp"
+#include "Map/Tile.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
 #include "glm/glm.hpp"
@@ -17,7 +16,6 @@
 
 class PathfindingUnit : public Util::GameObject {
 protected:
-    enum class UnitMode { DEAD, ALIVE };
     enum class MoveDirection {
         UP,
         UP_RIGHT,
@@ -35,7 +33,7 @@ protected:
     Grid m_grid;
     std::vector<Line> m_lineVector;
     float defaultZIndex = 15;
-    UnitMode m_currentMode = UnitMode::ALIVE; // debug :DEAD
+    // debug :DEAD
 private:
     glm::vec2 m_destinationCell;
     glm::vec2 m_nextCell;
@@ -90,7 +88,6 @@ public:
     glm::vec2 getNextCellByCurrent(MoveDirection currentdir,
                                    glm::vec2 currentcell);
     // bool UpdateNextCell(int *times);
-
     bool walkTowardNextCell();
 
     virtual void Start() {}
