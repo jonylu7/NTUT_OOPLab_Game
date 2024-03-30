@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP
 #include <string>
+#include <unordered_map>
 enum class unitType {
     // buildings
     POWER_PLANT,
