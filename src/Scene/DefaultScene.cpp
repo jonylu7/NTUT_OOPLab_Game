@@ -24,18 +24,17 @@ void DefaultScene::Start() {
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
 
-    //m_dummy.Start({5, 5}, m_Map);
+    m_dummy.Start({8, 6}, m_Map);
     m_Manager->importPlayer(m_Player);
     m_UI.importMap(m_Map);
     m_UI.importPlayer(m_Player);
     m_UI.importGameObjManager(m_Manager);
 
-
     m_Player->setTotalCurrency(5000);
 }
 
 void DefaultScene::Update() {
-    //m_dummy.Update();
+    m_dummy.Update();
 
     m_Manager->Update();
 
@@ -65,7 +64,7 @@ void DefaultScene::Update() {
         m_Manager->Append(m_UI.getSelectedBuilding());
     }
     m_UI.checkExistBuilding(m_Manager->getStructureArray());
-    if(m_UI.getIfUnitReadyToSpawn()){
+    if (m_UI.getIfUnitReadyToSpawn()) {
         m_Manager->Append(m_UI.getUnitFromUI());
     }
 }

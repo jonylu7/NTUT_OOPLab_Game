@@ -29,9 +29,7 @@ public:
         m_grid.SetActivate(true);
         m_wayPointUnit.Start(map);
         setCurrentCell(destination);
-        setNextCell(destination);
         m_wayPointUnit.setCurrentCell(destination);
-        m_wayPointUnit.setNextCell(destination);
         setNewDestination(getCurrentCell());
 
         setMovementSpeed(4);
@@ -42,7 +40,6 @@ public:
             setCurrentCell(
                 MapUtil::GlobalCoordToCellCoord(getCurrentLocation()));
             setCurrentDir(m_wayPointUnit.getFirstCellDir());
-            setNextCell(getNextCellByCurrent(getCurrentDir(), getNextCell()));
             printf("(aliveUpdate) getting new dir\n");
         }
         m_wayPointUnit.Update();
@@ -64,8 +61,7 @@ public:
     void setNewDestination(glm::vec2 destination) {
         setDestinationCell(destination.x, destination.y);
         m_wayPointUnit.resetQueue();
-        m_wayPointUnit.setCurrentCell(getNextCell());
-        m_wayPointUnit.setNextCell(getNextCell());
+        m_wayPointUnit.setCurrentCell(getCurrentCell());
         m_wayPointUnit.findPath(getDestinationCell());
         // setCurrentDir(m_wayPointUnit.getFirstCellDir());
     }

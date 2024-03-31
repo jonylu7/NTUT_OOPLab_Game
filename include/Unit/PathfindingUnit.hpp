@@ -38,7 +38,7 @@ protected:
     UnitMode m_currentMode = UnitMode::ALIVE; // debug :DEAD
 private:
     glm::vec2 m_destinationCell;
-    glm::vec2 m_nextCell;
+    // glm::vec2 m_nextCell;
     glm::vec2 m_currentCell;
     glm::vec2 m_currentLocation;
 
@@ -74,8 +74,8 @@ public:
     }
     glm::vec2 getCurrentCell() { return m_currentCell; }
 
-    void setNextCell(glm::vec2 cell) { this->m_nextCell = glm::vec2(cell); }
-    glm::vec2 getNextCell() { return m_nextCell; }
+    // void setNextCell(glm::vec2 cell) { this->m_nextCell = glm::vec2(cell); }
+    // glm::vec2 getNextCell() { return m_nextCell; }
 
     glm::vec2 getCurrentLocation() { return m_currentLocation; }
 

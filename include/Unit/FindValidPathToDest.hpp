@@ -131,8 +131,20 @@ public:
             printf("Direction debug didn't move\n");
             break;
         }
+        }
+        return newdir;
+    }
 
-            return newdir;
+    bool checkFollowingDirOppositeWithCurrent(MoveDirection currentDir,
+                                              MoveDirection followingDir,
+                                              glm::vec2 currentcell) {
+        auto firstStep = getNextCellByCurrent(currentDir, currentcell);
+        auto nextStep = getNextCellByCurrent(followingDir, firstStep);
+
+        if (currentcell == nextStep) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -140,87 +152,44 @@ public:
         // what if desintation is not walkable
         setDestinationCell(destination);
         Side whichSideToTouch = randomlyChooseSide();
-        std::shared_ptr<MoveDirection> dirToTouch = nullptr;
+        MoveDirection dirToTouch = MoveDirection::IDLE;
+        setCurrentDir(
+            getDirByRelativeCells(getCurrentCell(), getDestinationCell()));
         while (getCurrentCell() != getDestinationCell()) {
 
             if (m_Map
                     ->getTileByCellPosition(
-                        glm::vec2(getNextCell().x, getNextCell().y))
+                        getNextCellByCurrent(getCurrentDir(), getCurrentCell()))
                     ->getWalkable()) {
-                // move current to next cell
-                setCurrentCell(getNextCell());
                 m_dirQue.push_back(getCurrentDir());
-                setCurrentDir(getDirByRelativeCells(getCurrentCell(),
-                                                    getDestinationCell()));
-
+                // move current to next cell
                 // set next
-                setNextCell(
-                    getNextCellByCurrent(getCurrentDir(), getNextCell()));
 
-                m_lineVector.push_back(
-                    Line(MapUtil::CellCoordToGlobal(getCurrentCell()),
-                         MapUtil::CellCoordToGlobal(getNextCell())));
-                whichSideToTouch = randomlyChooseSide();
-                // dirToTouch = nullptr;
-            } else {
-                if (dirToTouch == nullptr) {
-                    dirToTouch = std::make_shared<MoveDirection>(
-                        getDirIfObstacle(getDirByRelativeCells(getCurrentCell(),
-                                                               getNextCell()),
-                                         whichSideToTouch));
-                } else {
-                    dirToTouch = std::make_shared<MoveDirection>(
-                        getDirIfObstacle(*dirToTouch, whichSideToTouch));
+                setCurrentCell(
+                    getNextCellByCurrent(getCurrentDir(), getCurrentCell()));
+                // 這裏會造成無限迴圈
+
+                auto followingDir = getDirByRelativeCells(getCurrentCell(),
+                                                          getDestinationCell());
+
+                bool ifOpposite = checkFollowingDirOppositeWithCurrent(
+                    getCurrentDir(), followingDir, getCurrentCell());
+                // if not opposite, or walk along
+                if (!ifOpposite) {
+                    setCurrentDir(followingDir);
                 }
 
-                setCurrentDir(*dirToTouch);
-                setNextCell(
-                    getNextCellByCurrent(*dirToTouch, getCurrentCell()));
-                // setCurrentCell(getNextCell());
-                //  not walkable
-                //  select one direction (left or right) using one of
-                //  several heuristics advance in the said direction
-                //  keeping your left/right hand touching the obstacle's
-                //  wall when you can advance in a straight line towards
-                //  the target again, do so
+            } else {
+                dirToTouch = getDirIfObstacle(
+                    getDirByRelativeCells(
+                        getCurrentCell(),
+                        getNextCellByCurrent(getCurrentDir(),
+                                             getCurrentCell())),
+                    whichSideToTouch);
 
-                // getNextCellObstacle(randomlyChooseSide(),
-                // nextCellClear);
+                setCurrentDir(dirToTouch);
             }
         }
-        /*
-        while (getCurrentCell().x != getDestinationCell().x &&
-               getCurrentCell().y != getDestinationCell().y) {
-            // printf("(FindValidPathToDest)destination :
-    {%.0f,%.0f}\n", getDestinationCell().x, getDestinationCell().y);
-                   // printf(
-                   "(FindValidPathToDest)finding : %d\n "
-                   "(FindValidPathToDest)Cell "
-                   "now "
-                   ":{%.0f,%.0f}\n(FindValidPathToDest)Cell next : "
-                   "{%.0f,%.0f}\n",
-                       // count++, getCurrentCell().x,
-    getCurrentCell().y,
-                       // getNextCell().x, getNextCell().y);
-                       setCurrentCell(getNextCell());
-                   m_dirQue.push_back(getCurrentDir());
-                   findNextCellDir();
-                   UpdateNextCell();
-                   m_lineVector.push_back(
-                       Line(MapClass::CellCoordToGlobal(getCurrentCell()),
-                            MapClass::CellCoordToGlobal(getNextCell())));
-
-    }
-*/
-        // draw lines
-        if (b_InitNewLine && getCurrentCell().x == getDestinationCell().x &&
-            getCurrentCell().y == getDestinationCell().y) {
-            b_InitNewLine = false;
-            if (!m_lineVector.empty()) {
-                m_grid.Start(m_lineVector);
-            }
-        }
-        m_grid.SetActivate(true);
     }
     virtual void Update() override {
         m_grid.DrawUsingCamera(m_emptyTrans, defaultZIndex);
