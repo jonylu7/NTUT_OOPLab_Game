@@ -2,7 +2,7 @@
 #define APP_HPP
 
 #include "Scene/DefaultScene.hpp"
-#include "Scene/MapScene.hpp"
+#include "Scene/MenuScene.hpp"
 #include "pch.hpp" // IWYU pragma: export
 
 #include "Util/Renderer.hpp"
@@ -22,7 +22,7 @@ public:
 private:
     State m_CurrentState = State::START;
 
-    DefaultScene mapScene;
+    MenuScene mapScene;
 };
 
 #endif

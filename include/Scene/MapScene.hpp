@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MAPSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MAPSCENE_HPP
 #include "Scene/Scene.hpp"
+#include "Util/BGM.hpp"
 class MapScene : public Scene {
 public:
     MapScene(){};
