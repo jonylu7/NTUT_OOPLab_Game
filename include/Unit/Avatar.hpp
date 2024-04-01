@@ -4,11 +4,13 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
+#include "FindValidPathToDest.hpp"
+#include "PathfindingUnit.hpp"
 #include "Unit/AttackAndDamageUnit.hpp"
-#include "Unit/FindValidPathToDest.hpp"
-#include "Unit/PathfindingUnit.hpp"
 
-class Avatar : public PathfindingUnit, public AttackAndDamageUnit {
+class Avatar : public PathfindingUnit,
+               public AttackAndDamageUnit,
+               public Util::GameObject {
     enum class UnitMode { DEAD, MOVE, IDLE, MOVE_ATTACK };
 
 private:
@@ -25,14 +27,12 @@ public:
         this->SetDrawable(
             std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
         SetVisible(true);
-        m_grid.SetActivate(true);
         setCurrentCell(destination);
         setNextCell(destination);
-        setNewDestination(getCurrentCell());
 
         setMovementSpeed(4);
     }
-    virtual void aliveUpdate(currentdir) {
+    virtual void aliveUpdate() {
         if (walkTowardNextCell() || b_justStarted) {
             b_justStarted = false;
             setCurrentCell(
@@ -44,7 +44,6 @@ public:
         // m_wayPointUnit.Update();
         m_Transform.translation = getCurrentLocation();
         Draw();
-        cursorSetNewDest();
         printf("-----------------------------\n");
     }
     virtual void Update() override {
@@ -56,21 +55,6 @@ public:
             aliveUpdate();
         }
             // attack
-        }
-    }
-    void setNewDestination(glm::vec2 destination) {
-        setDestinationCell(destination.x, destination.y);
-        // m_wayPointUnit.resetQueue();
-        // m_wayPointUnit.setCurrentCell(getNextCell());
-        // m_wayPointUnit.setNextCell(getNextCell());
-        // m_wayPointUnit.findPath(getDestinationCell());
-    }
-    void cursorSetNewDest() {
-        if (b_SelectedByCursor &&
-            Util::Input::IsKeyPressed(Util::Keycode::MOUSE_RB)) {
-            this->setNewDestination(
-                MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
-                    Util::Input::GetCursorPosition())));
         }
     }
 };

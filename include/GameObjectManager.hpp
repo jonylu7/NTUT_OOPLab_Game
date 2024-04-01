@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
+#include "FindValidPathToDest.hpp"
 #include "GameObjectID.hpp"
 #include "Player.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
@@ -13,7 +14,6 @@
 #include "Structure/Structure.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Unit/Avatar.hpp"
-#include "Unit/FindValidPathToDest.hpp"
 #include <chrono>
 #include <unordered_map>
 #include <utility>
@@ -31,8 +31,6 @@ public:
             pair->Start();
         }
         m_StartTime = std::chrono::high_resolution_clock::now();
-        m_wayPointUnit.setCurrentCell(destination);
-        m_wayPointUnit.setNextCell(destination);
     }
     glm::vec2 cursorstart;
     glm::vec2 cursorend;
@@ -110,6 +108,21 @@ public:
     }
 
     void importPlayer(std::shared_ptr<Player> player) { m_Player = player; }
+
+    void setNewDestination(glm::vec2 destination) {
+        // setDestinationCell(destination.x, destination.y);
+        //  m_wayPointUnit.resetQueue();
+        //  m_wayPointUnit.setCurrentCell(getNextCell());
+        //  m_wayPointUnit.setNextCell(getNextCell());
+        //  m_wayPointUnit.findPath(getDestinationCell());
+    }
+    void cursorSetNewDest() {
+        if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_RB)) {
+            this->setNewDestination(
+                MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
+                    Util::Input::GetCursorPosition())));
+        }
+    }
 
 private:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;

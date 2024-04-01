@@ -4,21 +4,57 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
-#include "Unit/PathfindingUnit.hpp"
+#include "Map.hpp"
+#include "Unit/MoveDirection.hpp"
 #include <random>
-class FindValidPathToDest : public PathfindingUnit {
+class FindValidPathToDest {
+
 private:
     std::deque<MoveDirection> m_dirQue;
-    bool b_InitNewLine = false;
+    std::shared_ptr<MapClass> m_Map;
+
+private:
+    glm::vec2 m_destinationCell;
+    glm::vec2 m_nextCell;
+    glm::vec2 m_currentCell;
+    glm::vec2 m_currentLocation;
+
+    MoveDirection m_currentDir = MoveDirection::IDLE;
 
 public:
+    FindValidPathToDest(){};
+    ~FindValidPathToDest(){};
+
+    void setDestinationCell(int x, int y) {
+        this->m_destinationCell = {glm::vec2(x, y)};
+    }
+    void setDestinationCell(glm::vec2 cell) { this->m_destinationCell = cell; }
+    glm::vec2 getDestinationCell() { return m_destinationCell; }
+
+    void setCurrentCell(glm::vec2 cell) {
+        this->m_currentCell = glm::vec2(cell);
+        glm::vec2 temp(
+            int(this->m_currentCell.x * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
+            int(this->m_currentCell.y * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
+        m_currentLocation = {temp.x, temp.y};
+    }
+    glm::vec2 getCurrentCell() { return m_currentCell; }
+
+    void setNextCell(glm::vec2 cell) { this->m_nextCell = glm::vec2(cell); }
+    glm::vec2 getNextCell() { return m_nextCell; }
+
+    glm::vec2 getCurrentLocation() { return m_currentLocation; }
+
+    MoveDirection getCurrentDir() { return m_currentDir; }
+    void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
+
+    MoveDirection getDirByRelativeCells(glm::vec2 currentcell,
+                                        glm::vec2 destinationcell);
+
+    glm::vec2 getNextCellByCurrent(MoveDirection currentdir,
+                                   glm::vec2 currentcell);
+
     enum class Side { R, L };
-    FindValidPathToDest()
-        : PathfindingUnit() {
-        setMovementSpeed(48);
-    };
-    virtual ~FindValidPathToDest() override{};
-    void Start() {}
     MoveDirection getFirstCellDir() {
         if (!m_dirQue.empty()) {
             MoveDirection front = m_dirQue.front();
@@ -29,11 +65,8 @@ public:
         return MoveDirection::IDLE;
     }
 
-    void resetQueue() {
-        b_InitNewLine = true;
-        this->m_dirQue.clear();
-        this->m_lineVector.clear();
-    }
+    void resetQueue() { this->m_dirQue.clear(); }
+
     Side randomlyChooseSide() {
         // Create a random number generator engine
         std::random_device rd;  // Obtain a random seed from the hardware
@@ -156,9 +189,6 @@ public:
                 setNextCell(
                     getNextCellByCurrent(getCurrentDir(), getNextCell()));
 
-                m_lineVector.push_back(
-                    Line(MapUtil::CellCoordToGlobal(getCurrentCell()),
-                         MapUtil::CellCoordToGlobal(getNextCell())));
                 whichSideToTouch = randomlyChooseSide();
                 // dirToTouch = nullptr;
             } else {
@@ -175,54 +205,8 @@ public:
                 setCurrentDir(*dirToTouch);
                 setNextCell(
                     getNextCellByCurrent(*dirToTouch, getCurrentCell()));
-                // setCurrentCell(getNextCell());
-                //  not walkable
-                //  select one direction (left or right) using one of
-                //  several heuristics advance in the said direction
-                //  keeping your left/right hand touching the obstacle's
-                //  wall when you can advance in a straight line towards
-                //  the target again, do so
-
-                // getNextCellObstacle(randomlyChooseSide(),
-                // nextCellClear);
             }
         }
-        /*
-        while (getCurrentCell().x != getDestinationCell().x &&
-               getCurrentCell().y != getDestinationCell().y) {
-            // printf("(FindValidPathToDest)destination :
-    {%.0f,%.0f}\n", getDestinationCell().x, getDestinationCell().y);
-                   // printf(
-                   "(FindValidPathToDest)finding : %d\n "
-                   "(FindValidPathToDest)Cell "
-                   "now "
-                   ":{%.0f,%.0f}\n(FindValidPathToDest)Cell next : "
-                   "{%.0f,%.0f}\n",
-                       // count++, getCurrentCell().x,
-    getCurrentCell().y,
-                       // getNextCell().x, getNextCell().y);
-                       setCurrentCell(getNextCell());
-                   m_dirQue.push_back(getCurrentDir());
-                   findNextCellDir();
-                   UpdateNextCell();
-                   m_lineVector.push_back(
-                       Line(MapClass::CellCoordToGlobal(getCurrentCell()),
-                            MapClass::CellCoordToGlobal(getNextCell())));
-
-    }
-*/
-        // draw lines
-        if (b_InitNewLine && getCurrentCell().x == getDestinationCell().x &&
-            getCurrentCell().y == getDestinationCell().y) {
-            b_InitNewLine = false;
-            if (!m_lineVector.empty()) {
-                m_grid.Start(m_lineVector);
-            }
-        }
-        m_grid.SetActivate(true);
-    }
-    virtual void Update() override {
-        m_grid.DrawUsingCamera(m_emptyTrans, defaultZIndex);
     }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP

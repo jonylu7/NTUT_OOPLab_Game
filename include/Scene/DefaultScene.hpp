@@ -10,6 +10,7 @@
 #include "GameObjectManager.hpp"
 
 #include "DrawOverlays.hpp"
+#include "FindValidPathToDest.hpp"
 #include "Grid.hpp"
 #include "Map.hpp"
 #include "SpriteSheet.hpp"
@@ -22,7 +23,6 @@
 #include "Structure/WayPoint.hpp"
 #include "UI/UI.hpp"
 #include "Unit/Avatar.hpp"
-#include "Unit/FindValidPathToDest.hpp"
 #include "Unit/PathfindingUnit.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
@@ -49,7 +49,8 @@ private:
     UIClass m_UI;
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::shared_ptr<Player> m_Player = std::make_shared<Player>();
-    std::shared_ptr<GameObjectManager> m_Manager = std::make_shared<GameObjectManager>();
+    std::shared_ptr<GameObjectManager> m_Manager =
+        std::make_shared<GameObjectManager>();
 
     Avatar m_dummy;
 };
