@@ -6,11 +6,11 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_SELECTABLE_HPP
 class Selectable {
 public:
-    virtual void onSelected() = 0;
+    // virtual void onSelected() = 0;
     bool getSelected() { return b_Selected; }
     void setSelected(bool value) { b_Selected = value; }
 
-private:
+protected:
     bool b_Selected;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SELECTABLE_HPP

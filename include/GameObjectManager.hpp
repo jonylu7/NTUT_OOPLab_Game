@@ -62,8 +62,17 @@ public:
         }
         if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
             *end = Util::Input::GetCursorPosition();
+            // traverse range start to end
+            // to record prevausily selected objects
+            auto objects =
+                m_Map
+                    ->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
+                        MapUtil::ScreenToGlobalCoord(*start)))
+                    ->getSelectableObjects();
+            for (auto i : objects) {
+                i->setSelected(true);
+            }
         }
-        MapUtil::ScreenToGlobalCoord(*start);
     }
 
     static bool ifObjectClicked(glm::vec2 objpos, glm::vec2 objsize,
@@ -110,13 +119,10 @@ public:
     void importPlayer(std::shared_ptr<Player> player) { m_Player = player; }
 
     void setNewDestination(glm::vec2 destination) {
-        // setDestinationCell(destination.x, destination.y);
-        //  m_wayPointUnit.resetQueue();
-        //  m_wayPointUnit.setCurrentCell(getNextCell());
-        //  m_wayPointUnit.setNextCell(getNextCell());
-        //  m_wayPointUnit.findPath(getDestinationCell());
+        auto queue = m_wayPointUnit.findPath(destination, destination);
     }
     void cursorSetNewDest() {
+        // all prevousily selected objects to set
         if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_RB)) {
             this->setNewDestination(
                 MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(

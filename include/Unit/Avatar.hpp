@@ -10,7 +10,8 @@
 
 class Avatar : public PathfindingUnit,
                public AttackAndDamageUnit,
-               public Util::GameObject {
+               public Util::GameObject,
+               public Selectable {
     enum class UnitMode { DEAD, MOVE, IDLE, MOVE_ATTACK };
 
 private:

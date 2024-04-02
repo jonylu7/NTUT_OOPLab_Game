@@ -58,7 +58,7 @@ public:
     void SetID(GameObjectID id) { m_ID = id; };
 
     static glm::vec2 ChangeToCell(glm::vec2 location);
-    void onSelected() override;
+    void onSelected();
     virtual void attachmentUpdate(); // this function now will update
                                      // attachment's location and draw as
                                      // well
@@ -84,8 +84,8 @@ public:
     float GetElectricPower();
     float GetBuildingTime();
     float GetBuildingCost();
-    virtual float GetBuildingIncome(){return buildingIncome;};
-    void SetBuildingIncome(float income){buildingIncome=income;}
+    virtual float GetBuildingIncome() { return buildingIncome; };
+    void SetBuildingIncome(float income) { buildingIncome = income; }
     float GetBuildingHp();
     GameObjectID GetID() { return m_ID; }
 
@@ -98,7 +98,7 @@ private:
     float buildingTime;
     float buildingCost;
     float buildingHp;
-    float buildingIncome=0.F;
+    float buildingIncome = 0.F;
     HighLight m_HighLight;
     GameObjectID m_ID;
 

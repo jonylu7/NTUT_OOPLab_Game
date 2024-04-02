@@ -32,7 +32,7 @@ public:
                     id){};
     virtual ~WayPointStructure(){};
 
-    virtual void onSelected() override;
+    virtual void onSelected();
     virtual void SetAttachVisible(bool visible) override;
 
     virtual void updateMoveable() override;

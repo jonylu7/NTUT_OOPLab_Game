@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP
+#include "Selectable.hpp"
 #include "SpriteSheet.hpp"
 #include "Structure/Structure.hpp"
 #include "Unit/PathfindingUnit.hpp"
@@ -26,10 +27,19 @@ public:
     bool getWalkable() { return m_Walkable; };
     bool getBuildable() { return m_Buildable; };
     bool getClickable() { return m_Clickable; };
+    std::vector<std::shared_ptr<Selectable>> getSelectableObjects() {
+        return m_SelectableObjects;
+    }
 
     void setWalkable(bool value) { m_Walkable = value; };
     void setBuildable(bool value) { m_Buildable = value; };
     void setClickable(bool value) { m_Clickable = value; };
+
+    void pushSelectableObjects(std::shared_ptr<Selectable> object) {
+        m_SelectableObjects.push_back(object);
+    }
+
+    void clearSelectableObjects() { m_SelectableObjects.clear(); }
 
     /*
     bool operator==(const TileClass &tile) const {
@@ -63,7 +73,7 @@ private:
     bool m_Buildable;
     bool m_Clickable;
     std::string m_Name;
-    // std::vector<std::shared_ptr<PathfindingUnit>> m_Units;
+    std::vector<std::shared_ptr<Selectable>> m_SelectableObjects;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP
