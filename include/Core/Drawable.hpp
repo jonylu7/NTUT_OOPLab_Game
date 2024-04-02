@@ -9,6 +9,7 @@
 #include "Core/UniformBuffer.hpp"
 #include "Core/VertexArray.hpp"
 
+#include "Camera.hpp"
 #include "Texture.hpp"
 #include "Util/Transform.hpp"
 
@@ -22,7 +23,13 @@ class Drawable {
 public:
     virtual ~Drawable() = default;
     virtual void Draw(const Util::Transform &transform, const float zIndex) = 0;
-    virtual glm::vec2 GetSize() const = 0;
+    virtual void DrawUsingCamera(const Util::Transform &transform,
+                                 const float zIndex){};
+
+
+    virtual glm::vec2 GetSize() const { return {0, 0}; };
+
+
 };
 } // namespace Core
 

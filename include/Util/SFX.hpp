@@ -1,9 +1,11 @@
 #ifndef UTIL_SFX_HPP
 #define UTIL_SFX_HPP
 
+#include "Util/AssetStore.hpp"
 #include "pch.hpp" // IWYU pragma: export
 
 #include "Util/AssetStore.hpp"
+
 
 namespace Util {
 
@@ -93,9 +95,8 @@ public:
 
 private:
     static Util::AssetStore<std::shared_ptr<Mix_Chunk>> s_Store;
-
-private:
     std::shared_ptr<Mix_Chunk> m_Chunk;
+
 };
 
 } // namespace Util

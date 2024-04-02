@@ -28,7 +28,9 @@ public:
     /**
      * @brief Retrieves the scroll distance of an element.\n
      *
+
      * @details The scroll distance is the distance that the mouse wheel has
+
      * been scrolled. The distance is expressed in multiples or fractions of
      * lines; for example, if the mouse wheel is rotated three lines downward,
      * the scroll distance is {-1.0F, 0.0F}. If the mouse wheel is rotated three
@@ -66,29 +68,11 @@ public:
     static bool IsKeyPressed(const Keycode &key);
 
     /**
-     * @brief Check if a specific key is being pressed.
-     *
-     * This function checks whether the given key is currently being pressed.
-     *
-     * @param key The keycode of the key to check.
-     *
-     * @return true if `key` is currently pressed, false otherwise.
-     *
-     * @see Util::Keycode
+     * @brief Checks if the middle mouse Structure is currently pressed.
+     * @return  true if the middle mouse Structure is currently pressed, false
+     * otherwise.
      */
     static bool IsKeyDown(const Keycode &key);
-
-    /**
-     * @brief Check if a specific key is being un-pressed.
-     *
-     * This function checks whether the given key is currently being un-pressed.
-     *
-     * @param key The keycode of the key to check.
-     *
-     * @return true if `key` is currently pressed, false otherwise.
-     *
-     * @see Util::Keycode
-     */
     static bool IsKeyUp(const Keycode &key);
 
     /**
@@ -142,7 +126,9 @@ private:
     static bool s_MouseMoving;
     static bool s_Exit;
 
+
     static ImGuiIO s_Io;
+
 };
 
 } // namespace Util

@@ -1,8 +1,12 @@
 #include "Util/Input.hpp"
 
+
 #include <SDL_events.h> // for SDL_Event
 
+
 #include "config.hpp"
+#include "imgui/imgui_impl_sdl2.h"
+#include <SDL_events.h> // for SDL_Event
 
 namespace Util {
 
@@ -22,12 +26,16 @@ bool Input::s_Scroll = false;
 bool Input::s_MouseMoving = false;
 bool Input::s_Exit = false;
 
+
 ImGuiIO Input::s_Io; // allocate memory only because it is invalid
                      // to call `ImGui::GetIO()` at this time
+
+
 
 bool Input::IsKeyPressed(const Keycode &key) {
 
     return s_KeyState[key].second;
+
 }
 
 bool Input::IsKeyDown(const Keycode &key) {
@@ -84,19 +92,22 @@ void Input::Update() {
     s_CursorPosition.x -= static_cast<float>(WINDOW_WIDTH) / 2;
     s_CursorPosition.y =
         -(s_CursorPosition.y - static_cast<float>(WINDOW_HEIGHT) / 2);
-
     s_Scroll = s_MouseMoving = false;
+
 
     for (auto &[_, i] : s_KeyState) {
         i.first = i.second;
+
     }
 
     s_Io = ImGui::GetIO();
 
     while (SDL_PollEvent(&s_Event) != 0) {
+
         if (s_Io.WantCaptureMouse) {
             ImGui_ImplSDL2_ProcessEvent(&s_Event);
             continue;
+
         }
         if (s_Event.type == SDL_KEYDOWN || s_Event.type == SDL_KEYUP) {
             UpdateKeyState(&s_Event);
@@ -104,6 +115,9 @@ void Input::Update() {
                    s_Event.type == SDL_MOUSEBUTTONUP) {
             UpdateKeyState(&s_Event);
         }
+
+        ImGui_ImplSDL2_ProcessEvent(&s_Event);
+
 
         s_Scroll = s_Event.type == SDL_MOUSEWHEEL || s_Scroll;
 

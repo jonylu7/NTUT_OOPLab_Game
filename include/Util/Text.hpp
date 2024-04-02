@@ -1,8 +1,8 @@
 #ifndef UTIL_TEXT_HPP
 #define UTIL_TEXT_HPP
 
+#include "Util/AssetStore.hpp"
 #include "pch.hpp" // IWYU pragma: export
-
 #include <functional>
 
 #include "Core/Drawable.hpp"
@@ -72,7 +72,8 @@ private:
 
     static std::unique_ptr<Core::Program> s_Program;
     static std::unique_ptr<Core::VertexArray> s_VertexArray;
-    static std::unique_ptr<Core::UniformBuffer<Core::Matrices>> s_UniformBuffer;
+    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_UniformBuffer;
+    static Util::AssetStore<std::shared_ptr<SDL_RWops>> s_Store;
 
     // loads resources using `TTF_OpenFontRW`
     static Util::AssetStore<std::shared_ptr<SDL_RWops>> s_Store;

@@ -22,6 +22,8 @@ namespace Util {
  */
 Core::Matrices ConvertToUniformBufferData(const Util::Transform &transform,
                                           const glm::vec2 &size, float zIndex);
+Core::Matrices ConvertToUniformBufferDataUsingCameraMatrix(const Util::Transform &transform,
+                                                     const glm::vec2 &size, float zIndex);
 
 } // namespace Util
 

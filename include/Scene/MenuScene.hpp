@@ -1,0 +1,65 @@
+//
+// Created by 盧威任 on 4/1/24.
+//
+
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP
+#include "Scene/DefaultScene.hpp"
+#include "Scene/MapScene.hpp"
+#include "Scene/Scene.hpp"
+class MenuScene : public Scene {
+    enum class SceneMode { DEFAULT, MAP, MENU };
+
+public:
+    MenuScene()
+        : m_BGM("../assets/BGM/RA3-Soviet_March.mp3") {}
+    ~MenuScene() {}
+
+    void Start() override {
+
+        m_MapScene->Start();
+        m_DefaultScene->Start();
+    }
+    void Update() override {
+
+        if (m_currentMode == SceneMode::MENU) {
+            if (Util::Input::IsKeyPressed(Util::Keycode::P)) {
+                m_BGM.Play();
+            }
+            if (Util::Input::IsKeyPressed(Util::Keycode::M)) {
+                m_currentMode = SceneMode::MAP;
+            }
+            if (Util::Input::IsKeyPressed(Util::Keycode::D)) {
+                m_currentMode = SceneMode::DEFAULT;
+            }
+        }
+
+        switch (m_currentMode) {
+        case (SceneMode::MAP):
+            m_MapScene->Update();
+            break;
+        case (SceneMode::DEFAULT):
+            m_DefaultScene->Update();
+            break;
+        case (SceneMode::MENU):
+        }
+    }
+
+private:
+    SceneMode m_currentMode = SceneMode::MENU;
+    std::shared_ptr<MapScene> m_MapScene = std::make_shared<MapScene>();
+    std::shared_ptr<DefaultScene> m_DefaultScene =
+        std::make_shared<DefaultScene>();
+    Util::BGM m_BGM;
+    std::shared_ptr<Util::Image> m_ButtonSinglePlayer =
+        std::make_shared<Util::Image>(
+            "../assets/Button/Button_SinglePlayer.png");
+    std::shared_ptr<Util::Image> m_ButtonSetting =
+        std::make_shared<Util::Image>("../assets/Button/Button_Setting.png");
+    std::shared_ptr<Util::Image> m_ButtonExit =
+        std::make_shared<Util::Image>("../assets/Button/Button_Exit.png");
+
+    std::shared_ptr<Util::Image> m_ButtonExtra =
+        std::make_shared<Util::Image>("../assets/Button/Button_Extras.png");
+};
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP

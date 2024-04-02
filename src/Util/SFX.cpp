@@ -5,9 +5,11 @@ std::shared_ptr<Mix_Chunk> LoadChunk(const std::string &filepath) {
     auto chunk = std::shared_ptr<Mix_Chunk>(Mix_LoadWAV(filepath.c_str()),
                                             Mix_FreeChunk);
 
+
     if (chunk == nullptr) {
         LOG_DEBUG("Failed to load SFX: '{}'", filepath);
         LOG_DEBUG("{}", Mix_GetError());
+
     }
 
     return chunk;

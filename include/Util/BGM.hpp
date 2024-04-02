@@ -1,9 +1,12 @@
 #ifndef UTIL_BGM_HPP
 #define UTIL_BGM_HPP
 
+#include "Util/AssetStore.hpp"
 #include "pch.hpp" // IWYU pragma: export
 
+
 #include "Util/AssetStore.hpp"
+
 
 namespace Util {
 /**
@@ -110,8 +113,6 @@ public:
 private:
     static Util::AssetStore<std::shared_ptr<Mix_Music>> s_Store;
 
-private:
-    std::shared_ptr<Mix_Music> m_BGM;
 };
 
 } // namespace Util

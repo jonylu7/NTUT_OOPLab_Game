@@ -1,0 +1,30 @@
+MapFormat: 12
+
+RequiresMod: ra
+
+Title: t
+
+Author: Your name here
+
+Tileset: SNOW
+
+MapSize: 4,4
+
+Bounds: 1,1,2,2
+
+Visibility: Lobby
+
+Categories: Conquest
+
+Players:
+	PlayerReference@Neutral:
+		Name: Neutral
+		OwnsWorld: True
+		NonCombatant: True
+		Faction: england
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: england
+
+Actors:

@@ -32,7 +32,7 @@ Text::Text(const std::string &font, int fontSize, const std::string &text,
     if (s_VertexArray == nullptr) {
         InitVertexArray();
     }
-    if (s_UniformBuffer == nullptr) {
+    if (m_UniformBuffer == nullptr) {
         InitUniformBuffer();
     }
 
@@ -59,7 +59,7 @@ Text::Text(const std::string &font, int fontSize, const std::string &text,
 
 void Text::Draw(const Util::Transform &transform, const float zIndex) {
     auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
-    s_UniformBuffer->SetData(0, data);
+    m_UniformBuffer->SetData(0, data);
 
     m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
     s_Program->Bind();
@@ -116,7 +116,7 @@ void Text::InitVertexArray() {
 }
 
 void Text::InitUniformBuffer() {
-    s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
+    m_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
         *s_Program, "Matrices", 0);
 }
 
@@ -139,8 +139,6 @@ void Text::ApplyTexture() {
 
 std::unique_ptr<Core::Program> Text::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> Text::s_VertexArray = nullptr;
-std::unique_ptr<Core::UniformBuffer<Core::Matrices>> Text::s_UniformBuffer =
-    nullptr;
 
 Util::AssetStore<std::shared_ptr<SDL_RWops>> Text::s_Store(LoadFontFile);
 } // namespace Util
