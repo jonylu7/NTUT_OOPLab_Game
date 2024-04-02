@@ -30,6 +30,8 @@ public:
     void SetWindowWidth(unsigned int width) { m_WindowWidth = width; }
     void SetWindowHeight(unsigned int height) { m_WindowHeight = height; }
 
+    void Setup();
+
     static int IsCurosrAtBoarder() {
         /*
          * will check if the cursor at the window boarder

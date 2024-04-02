@@ -21,8 +21,10 @@ public:
 
 private:
     State m_CurrentState = State::START;
+    bool showDemoWindow = true;
 
     MenuScene mapScene;
+
 };
 
 #endif

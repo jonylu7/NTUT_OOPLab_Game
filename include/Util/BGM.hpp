@@ -3,6 +3,11 @@
 
 #include "Util/AssetStore.hpp"
 #include "pch.hpp" // IWYU pragma: export
+
+
+#include "Util/AssetStore.hpp"
+
+
 namespace Util {
 /**
  * @class BGM
@@ -108,7 +113,6 @@ public:
 private:
     static Util::AssetStore<std::shared_ptr<Mix_Music>> s_Store;
 
-    std::shared_ptr<Mix_Music> m_BGM;
 };
 
 } // namespace Util

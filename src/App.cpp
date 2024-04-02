@@ -11,7 +11,9 @@ void App::Update() {
         Util::Input::IfExit()) {
         m_CurrentState = State::END;
     }
+
     mapScene.Update();
+
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)

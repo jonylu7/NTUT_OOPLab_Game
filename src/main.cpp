@@ -1,13 +1,18 @@
 #include "App.hpp"
 #include "Core/Context.hpp"
 
+#include "Util/Input.hpp"
+
 int main(int, char **) {
 
     auto context = Core::Context::GetInstance();
     App app;
 
     while (!context->GetExit()) {
-        context->Update();
+
+        context->Setup();
+
+
         switch (app.GetCurrentState()) {
         case App::State::START:
             app.Start();
@@ -21,6 +26,11 @@ int main(int, char **) {
             context->SetExit(true);
             break;
         }
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        context->Update();
+
     }
     return 0;
 }

@@ -3,13 +3,14 @@
 
 #include "pch.hpp" // IWYU pragma: export
 
-#include <functional>
 #include <glm/fwd.hpp>
 
 #include "Core/Drawable.hpp"
 #include "Core/Texture.hpp"
 
+
 #include "Camera.hpp"
+
 #include "Util/AssetStore.hpp"
 #include "Util/Transform.hpp"
 
@@ -75,6 +76,8 @@ private:
     static std::unique_ptr<Core::Program> s_Program;
     static std::unique_ptr<Core::VertexArray> s_VertexArray;
     std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_UniformBuffer;
+
+    static Util::AssetStore<std::shared_ptr<SDL_Surface>> s_Store;
 
     static Util::AssetStore<std::shared_ptr<SDL_Surface>> s_Store;
 

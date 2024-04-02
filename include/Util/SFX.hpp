@@ -3,6 +3,10 @@
 
 #include "Util/AssetStore.hpp"
 #include "pch.hpp" // IWYU pragma: export
+
+#include "Util/AssetStore.hpp"
+
+
 namespace Util {
 
 /**
@@ -91,8 +95,8 @@ public:
 
 private:
     static Util::AssetStore<std::shared_ptr<Mix_Chunk>> s_Store;
+    std::shared_ptr<Mix_Chunk> m_Chunk;
 
-    std::unique_ptr<Mix_Chunk> m_Chunk;
 };
 
 } // namespace Util
