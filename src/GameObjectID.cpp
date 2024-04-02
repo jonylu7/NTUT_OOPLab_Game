@@ -5,6 +5,7 @@
 std::unordered_map<unitType, unsigned int> OccupiedID::m_OccupiedID;
 
 int OccupiedID::getNewestID(unitType type) {
+    return 0;
     auto it = OccupiedID::m_OccupiedID.find(type);
     if (it != OccupiedID::m_OccupiedID.end()) {
         return OccupiedID::m_OccupiedID[type]++;
