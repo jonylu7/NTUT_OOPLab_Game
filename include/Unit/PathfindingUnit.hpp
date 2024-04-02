@@ -7,7 +7,7 @@
 #include "Grid.hpp"
 #include "Line.hpp"
 #include "Map.hpp"
-#include "MoveDirection.hpp"
+#include "PathUtility.hpp"
 
 #include "Tile.hpp"
 #include "Util/GameObject.hpp"
@@ -47,11 +47,9 @@ public:
 
     void setCurrentCell(glm::vec2 cell) {
         this->m_currentCell = glm::vec2(cell);
-        // MapClass::CellCoordToGlobal(m_currentCell);
         glm::vec2 temp(
             int(this->m_currentCell.x * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
             int(this->m_currentCell.y * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
-        // m_currentLocation={temp.x+CELL_SIZE.x/2,temp.y+CELL_SIZE.y/2};
         m_currentLocation = {temp.x, temp.y};
     }
     glm::vec2 getCurrentCell() { return m_currentCell; }
@@ -65,8 +63,6 @@ public:
 
     MoveDirection getCurrentDir() { return m_currentDir; }
     void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
-
-    // bool UpdateNextCell(int *times);
 
     bool walkTowardNextCell();
 };

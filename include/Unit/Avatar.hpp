@@ -16,6 +16,7 @@ class Avatar : public PathfindingUnit,
 private:
     bool b_SelectedByCursor = true;
     bool b_justStarted = true;
+    UnitMode m_currentMode;
 
 public:
     Avatar(){};
@@ -38,7 +39,8 @@ public:
             setCurrentCell(
                 MapUtil::GlobalCoordToCellCoord(getCurrentLocation()));
             // setCurrentDir(m_wayPointUnit.getFirstCellDir());
-            setNextCell(getNextCellByCurrent(getCurrentDir(), getNextCell()));
+            setNextCell(PathUtility::getNextCellByCurrent(getCurrentDir(),
+                                                          getNextCell()));
             printf("(aliveUpdate) getting new dir\n");
         }
         // m_wayPointUnit.Update();

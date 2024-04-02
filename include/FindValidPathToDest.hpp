@@ -5,89 +5,35 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
 #include "Map.hpp"
-#include "Unit/MoveDirection.hpp"
+#include "Unit/PathUtility.hpp"
 #include <random>
 class FindValidPathToDest {
+    enum class Side { R, L };
 
 private:
-    std::deque<MoveDirection> m_dirQue;
     std::shared_ptr<MapClass> m_Map;
 
-private:
     glm::vec2 m_destinationCell;
     glm::vec2 m_nextCell;
     glm::vec2 m_currentCell;
-    glm::vec2 m_currentLocation;
 
     MoveDirection m_currentDir = MoveDirection::IDLE;
 
-public:
-    FindValidPathToDest(){};
-    ~FindValidPathToDest(){};
-
-    void setDestinationCell(int x, int y) {
-        this->m_destinationCell = {glm::vec2(x, y)};
-    }
+protected:
+    // set
     void setDestinationCell(glm::vec2 cell) { this->m_destinationCell = cell; }
-    glm::vec2 getDestinationCell() { return m_destinationCell; }
-
     void setCurrentCell(glm::vec2 cell) {
         this->m_currentCell = glm::vec2(cell);
-        glm::vec2 temp(
-            int(this->m_currentCell.x * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
-            int(this->m_currentCell.y * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
-        m_currentLocation = {temp.x, temp.y};
     }
-    glm::vec2 getCurrentCell() { return m_currentCell; }
-
-    void setNextCell(glm::vec2 cell) { this->m_nextCell = glm::vec2(cell); }
-    glm::vec2 getNextCell() { return m_nextCell; }
-
-    glm::vec2 getCurrentLocation() { return m_currentLocation; }
-
-    MoveDirection getCurrentDir() { return m_currentDir; }
     void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
+    void setNextCell(glm::vec2 cell) { this->m_nextCell = glm::vec2(cell); }
 
-    MoveDirection getDirByRelativeCells(glm::vec2 currentcell,
-                                        glm::vec2 destinationcell);
+    // get
+    glm::vec2 getDestinationCell() { return m_destinationCell; }
 
-    glm::vec2 getNextCellByCurrent(MoveDirection currentdir,
-                                   glm::vec2 currentcell);
-
-    enum class Side { R, L };
-    MoveDirection getFirstCellDir() {
-        if (!m_dirQue.empty()) {
-            MoveDirection front = m_dirQue.front();
-            m_dirQue.pop_front();
-            return front;
-        }
-
-        return MoveDirection::IDLE;
-    }
-
-    void resetQueue() { this->m_dirQue.clear(); }
-
-    Side randomlyChooseSide() {
-        // Create a random number generator engine
-        std::random_device rd;  // Obtain a random seed from the hardware
-        std::mt19937 gen(rd()); // Initialize the Mersenne Twister
-                                // pseudo-random number generator
-
-        // Define a distribution (uniform distribution in this case)
-        std::uniform_int_distribution<int> distribution(
-            0, 1); // Uniform distribution between 1 and 6 (inclusive)
-
-        // Generate a random number
-        int random_number = distribution(gen); // Generate a random number using
-                                               // the generator and distribution
-
-        switch (random_number) {
-        case 0:
-            return Side::R;
-        case 1:
-            return Side ::L;
-        }
-    }
+    glm::vec2 getCurrentCell() { return m_currentCell; }
+    MoveDirection getCurrentDir() { return m_currentDir; }
+    glm::vec2 getNextCell() { return m_nextCell; }
 
     MoveDirection getDirIfObstacle(MoveDirection ogDir, Side side) {
 
@@ -168,9 +114,39 @@ public:
         }
     }
 
-    void findPath(glm::vec2 destination) {
+public:
+    FindValidPathToDest(){};
+    ~FindValidPathToDest(){};
+
+    Side randomlyChooseSide() {
+        // Create a random number generator engine
+        std::random_device rd;  // Obtain a random seed from the hardware
+        std::mt19937 gen(rd()); // Initialize the Mersenne Twister
+                                // pseudo-random number generator
+
+        // Define a distribution (uniform distribution in this case)
+        std::uniform_int_distribution<int> distribution(
+            0, 1); // Uniform distribution between 1 and 6 (inclusive)
+
+        // Generate a random number
+        int random_number = distribution(gen); // Generate a random number using
+                                               // the generator and distribution
+
+        switch (random_number) {
+        case 0:
+            return Side::R;
+        case 1:
+            return Side ::L;
+        }
+    }
+
+    std::deque<MoveDirection> findPath(glm::vec2 currentcell,
+                                       glm::vec2 destination) {
         // what if desintation is not walkable
+        setCurrentCell(currentcell);
         setDestinationCell(destination);
+        std::deque<MoveDirection> m_dirQue;
+
         Side whichSideToTouch = randomlyChooseSide();
         std::shared_ptr<MoveDirection> dirToTouch = nullptr;
         while (getCurrentCell() != getDestinationCell()) {
@@ -182,20 +158,20 @@ public:
                 // move current to next cell
                 setCurrentCell(getNextCell());
                 m_dirQue.push_back(getCurrentDir());
-                setCurrentDir(getDirByRelativeCells(getCurrentCell(),
-                                                    getDestinationCell()));
+                setCurrentDir(PathUtility::PathUtility::getDirByRelativeCells(
+                    getCurrentCell(), getDestinationCell()));
 
                 // set next
-                setNextCell(
-                    getNextCellByCurrent(getCurrentDir(), getNextCell()));
+                setNextCell(PathUtility::getNextCellByCurrent(getCurrentDir(),
+                                                              getNextCell()));
 
                 whichSideToTouch = randomlyChooseSide();
                 // dirToTouch = nullptr;
             } else {
                 if (dirToTouch == nullptr) {
                     dirToTouch = std::make_shared<MoveDirection>(
-                        getDirIfObstacle(getDirByRelativeCells(getCurrentCell(),
-                                                               getNextCell()),
+                        getDirIfObstacle(PathUtility::getDirByRelativeCells(
+                                             getCurrentCell(), getNextCell()),
                                          whichSideToTouch));
                 } else {
                     dirToTouch = std::make_shared<MoveDirection>(
@@ -203,10 +179,11 @@ public:
                 }
 
                 setCurrentDir(*dirToTouch);
-                setNextCell(
-                    getNextCellByCurrent(*dirToTouch, getCurrentCell()));
+                setNextCell(PathUtility::getNextCellByCurrent(
+                    *dirToTouch, getCurrentCell()));
             }
         }
+        return m_dirQue;
     }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
