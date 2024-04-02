@@ -2,9 +2,9 @@
 #define UTIL_IMAGEARRAY_HPP
 
 #include "pch.hpp" // IWYU pragma: export
-
 #include <functional>
 #include <glm/fwd.hpp>
+#include <vector>
 
 #include "Core/Drawable.hpp"
 #include "Core/Texture.hpp"
@@ -29,8 +29,8 @@ public:
      *
      * @param filepath The file path to the image.
      */
-    explicit ImageArray(const std::string &filepath);
-
+    explicit ImageArray(const std::string &filepath,
+                        const std::vector<glm::vec2> offset);
 
     /**
      * @brief Retrieves the size of the image.
@@ -63,27 +63,27 @@ public:
     unsigned int getTextureID() { return m_Texture->GetTextureId(); }
 
     void Draw(const Util::Transform &transform, const float zIndex) override;
-    void DrawUsingCamera(const Util::Transform &transform, const float zIndex) override;
+    void DrawUsingCamera(const Util::Transform &transform,
+                         const float zIndex) override;
 
-    //should be deleted
+    // should be deleted
     int getHeight() { return 0; };
     int getWidth() { return 0; };
 
 private:
     void InitProgram();
-    void InitVertexArray();
+    void InitVertexArray(std::vector<glm::vec2> offset);
     void InitUniformBuffer();
-
 
     static constexpr int UNIFORM_SURFACE_LOCATION = 0;
 
     static std::unique_ptr<Core::Program> s_Program;
-    static std::unique_ptr<Core::VertexArray> s_VertexArray;
-    static std::unique_ptr<Core::UniformBuffer<Core::Matrices>> s_UniformBuffer;
+    std::unique_ptr<Core::VertexArray> m_VertexArray;
+    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_UniformBuffer;
 
 private:
     std::unique_ptr<Core::Texture> m_Texture = nullptr;
-
+    std::vector<glm::vec2> m_Offset;
     std::string m_Path;
     glm::vec2 m_Size;
 };

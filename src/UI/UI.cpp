@@ -3,7 +3,7 @@
 //
 
 #include "UI/UI.hpp"
-#include "Map.hpp"
+#include "Map/Map.hpp"
 
 ImVec2 start_pos;
 ImVec2 end_pos;
@@ -480,9 +480,9 @@ std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
     ButtonScript.setIfReadytoSpawn(false);
     if (std::dynamic_pointer_cast<Infantry>(Avatar)) {
 
-        // Avatar->Start(m_barrackCell);
-        // Avatar->setNewDestination(m_barrackTargetCell);
-        
+        Avatar->Start(m_barrackCell);
+        Avatar->setNewDestination(m_barrackTargetCell);
+
     } /*else if(std::dynamic_pointer_cast< >(Avatar)){
         Avatar->Start(m_warfactoryCell,m_Map);
         Avatar->setNewDestination(m_warfactoryTargetCell);

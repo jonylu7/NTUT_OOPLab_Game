@@ -4,7 +4,8 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
-#include "FindValidPathToDest.hpp"
+
+#include "Map/MapUtility.hpp"
 #include "PathfindingUnit.hpp"
 #include "Unit/AttackAndDamageUnit.hpp"
 
@@ -12,7 +13,10 @@ class Avatar : public PathfindingUnit,
                public AttackAndDamageUnit,
                public Util::GameObject,
                public Selectable {
-    enum class UnitMode { DEAD, MOVE, IDLE, MOVE_ATTACK };
+    enum class UnitMode { DEAD, MOVE, IDLE, MOVE_ATTACK, ALIVE };
+
+protected:
+    std::shared_ptr<Util::Image> m_Image;
 
 private:
     bool b_SelectedByCursor = true;
@@ -26,8 +30,7 @@ public:
     virtual void Start(glm::vec2 destination) { // destination = Barrack's
                                                 // waypointLocation
         // setCurrentCell()  //CurrentCell = Structure's Location
-        this->SetDrawable(
-            std::make_unique<Util::Image>("../assets/sprites/capybara.png"));
+        this->SetDrawable(customizeImage());
         SetVisible(true);
         setCurrentCell(destination);
         setNextCell(destination);
@@ -49,6 +52,10 @@ public:
         Draw();
         printf("-----------------------------\n");
     }
+    virtual void customizeUpdate() {}
+    virtual std::shared_ptr<Util::Image> customizeImage() {
+        return std::make_unique<Util::Image>("../assets/sprites/capybara.png");
+    }
     virtual void Update() override {
         switch (m_currentMode) {
         case (UnitMode::DEAD): {
@@ -56,6 +63,10 @@ public:
         }
         case (UnitMode::MOVE): {
             aliveUpdate();
+        }
+        case (UnitMode::MOVE_ATTACK): {
+            aliveUpdate();
+            customizeUpdate();
         }
             // attack
         }

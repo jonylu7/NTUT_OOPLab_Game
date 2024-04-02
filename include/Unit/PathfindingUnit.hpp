@@ -6,10 +6,11 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
 #include "Grid.hpp"
 #include "Line.hpp"
-#include "Map.hpp"
+
 #include "PathUtility.hpp"
 
-#include "Tile.hpp"
+#include "Map/Tile.hpp"
+
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
 #include "glm/glm.hpp"
@@ -37,8 +38,6 @@ public:
     PathfindingUnit(){};
     virtual ~PathfindingUnit(){};
 
-    //
-
     void setDestinationCell(int x, int y) {
         this->m_destinationCell = {glm::vec2(x, y)};
     }
@@ -63,6 +62,13 @@ public:
 
     MoveDirection getCurrentDir() { return m_currentDir; }
     void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
+
+    MoveDirection getDirByRelativeCells(glm::vec2 currentcell,
+                                        glm::vec2 destinationcell);
+    // void findNextCellDir(MoveDirection lastDir, int times);
+    glm::vec2 getNextCellByCurrent(MoveDirection currentdir,
+                                   glm::vec2 currentcell);
+    // bool UpdateNextCell(int *times);
 
     bool walkTowardNextCell();
 };

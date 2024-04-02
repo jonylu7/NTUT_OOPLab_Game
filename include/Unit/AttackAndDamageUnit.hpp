@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_ATTACKANDDAMAGEUNIT_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_ATTACKANDDAMAGEUNIT_HPP
 #include "Weapon.hpp"
+
 class AttackAndDamageUnit {
 public:
     AttackAndDamageUnit() {}

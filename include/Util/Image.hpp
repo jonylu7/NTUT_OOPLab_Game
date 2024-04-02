@@ -10,7 +10,7 @@
 #include "Core/Texture.hpp"
 
 #include "Camera.hpp"
-#include "Util/Logger.hpp"
+#include "Util/AssetStore.hpp"
 #include "Util/Transform.hpp"
 
 namespace Util {
@@ -74,7 +74,9 @@ private:
 
     static std::unique_ptr<Core::Program> s_Program;
     static std::unique_ptr<Core::VertexArray> s_VertexArray;
-    static std::unique_ptr<Core::UniformBuffer<Core::Matrices>> s_UniformBuffer;
+    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_UniformBuffer;
+
+    static Util::AssetStore<std::shared_ptr<SDL_Surface>> s_Store;
 
 private:
     std::unique_ptr<Core::Texture> m_Texture = nullptr;
