@@ -144,6 +144,7 @@ protected:
         }
     }
 
+public:
     std::deque<MoveDirection> findPath(glm::vec2 currentcell,
                                        glm::vec2 destination) {
         // what if desintation is not walkable

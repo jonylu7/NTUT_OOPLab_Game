@@ -58,6 +58,10 @@ public:
 
     glm::vec2 getCurrentLocation() { return m_currentLocation; }
 
+    void setNewDestination(glm::vec2 destination) {}
+
+    glm::vec2 getNewDestination() { return glm::vec2(); }
+
     void setMovementSpeed(int speed) { this->m_MovementSpeed = speed; }
 
     MoveDirection getCurrentDir() { return m_currentDir; }

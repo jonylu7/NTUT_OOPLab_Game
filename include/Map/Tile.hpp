@@ -41,6 +41,7 @@ public:
     bool getWalkable() { return m_Walkable; };
     bool getBuildable() { return m_Buildable; };
     bool getClickable() { return m_Clickable; };
+    std::string getTileImagePath() { return m_TileImagePath; }
     std::vector<std::shared_ptr<Selectable>> getSelectableObjects() {
         return m_SelectableObjects;
     }
@@ -48,6 +49,7 @@ public:
     void setWalkable(bool value) { m_Walkable = value; };
     void setBuildable(bool value) { m_Buildable = value; };
     void setClickable(bool value) { m_Clickable = value; };
+    void setTileImage(std::string path) { m_TileImagePath = path; };
 
     void pushSelectableObjects(std::shared_ptr<Selectable> object) {
         m_SelectableObjects.push_back(object);
