@@ -79,7 +79,6 @@ private:
 
     static Util::AssetStore<std::shared_ptr<SDL_Surface>> s_Store;
 
-    static Util::AssetStore<std::shared_ptr<SDL_Surface>> s_Store;
 
 private:
     std::unique_ptr<Core::Texture> m_Texture = nullptr;

@@ -31,6 +31,7 @@ int main(int, char **) {
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         context->Update();
 
+
     }
     return 0;
 }

@@ -4,7 +4,6 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
-#include "Component/Component.hpp"
 #include "Core/Context.hpp"
 #include "Core/Drawable.hpp"
 #include "config.hpp"
@@ -12,7 +11,7 @@
 //164.F perfect for
 constexpr float FOV_UPPER_LIMIT = 164.F;
 constexpr float FOV_LOWER_LIMIT = 1.F;
-class CameraClass : public Component {
+class CameraClass{
 public:
     CameraClass() { setPosition(glm::vec2(0, 0)); }
     CameraClass(glm::vec2 position) { setPosition(position); }
@@ -55,8 +54,8 @@ float(WINDOW_WIDTH) / (float(WINDOW_HEIGHT)),
     float getZoomingSpeed() { return m_ZoomingSpeed; }
     void changeFOV(float offset);
 
-    void Start() override;
-    void Update() override;
+    void Start() ;
+    void Update() ;
     void UpdateWhenCursorAtBoarder();
     void UpdateWhenCursorScroll();
 

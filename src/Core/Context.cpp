@@ -9,9 +9,9 @@
 #include "Util/Time.hpp"
 
 #include "config.hpp"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_opengl3.h"
-#include "imgui/imgui_impl_sdl2.h"
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl2.h"
 
 namespace Core {
 Context::Context() {
@@ -74,6 +74,8 @@ Context::Context() {
 
     (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigWindowsMoveFromTitleBarOnly = true;
 
     ImGui_ImplSDL2_InitForOpenGL(m_Window, m_GlContext);
     ImGui_ImplOpenGL3_Init();
@@ -95,14 +97,6 @@ Context::Context() {
     LOG_INFO("  GLSL Version: {}", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
     IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigWindowsMoveFromTitleBarOnly = true;
-
-    ImGui_ImplSDL2_InitForOpenGL(m_Window, m_GlContext);
-    ImGui_ImplOpenGL3_Init();
 }
 std::shared_ptr<Context> Context::s_Instance(nullptr);
 

@@ -153,9 +153,6 @@ void Image::InitUniformBuffer() {
 std::unique_ptr<Core::Program> Image::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> Image::s_VertexArray = nullptr;
 
-std::unique_ptr<Core::UniformBuffer<Core::Matrices>> Image::s_UniformBuffer =
-    nullptr;
-
 
 Util::AssetStore<std::shared_ptr<SDL_Surface>> Image::s_Store(LoadSurface);
 } // namespace Util
