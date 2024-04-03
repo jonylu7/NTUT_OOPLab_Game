@@ -11,7 +11,6 @@
 #include "Map/YAMLReader.hpp"
 
 #include "Camera.hpp"
-#include "Component/Object.hpp"
 #include "DrawOverlays.hpp"
 #include "Grid.hpp"
 #include "Map/Map.hpp"

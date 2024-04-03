@@ -76,14 +76,7 @@ set(SRC_FILES
         ${SRC_DIR}/Util/ImageArray.cpp
         ${SRC_DIR}/Util/CustomizableImage.cpp
 
-        ${SRC_DIR}/imgui/imgui.cpp
-        ${SRC_DIR}/imgui/imgui_demo.cpp
-        ${SRC_DIR}/imgui/imgui_draw.cpp
-        ${SRC_DIR}/imgui/imgui_impl_sdl2.cpp
-        ${SRC_DIR}/imgui/imgui_tables.cpp
-        ${SRC_DIR}/imgui/imgui_widgets.cpp
-        ${SRC_DIR}/imgui/imgui_impl_sdlrenderer2.cpp
-        ${SRC_DIR}/imgui/imgui_impl_opengl3.cpp
+
 
         ${SRC_DIR}/App.cpp
         ${SRC_DIR}/Grid.cpp
@@ -200,16 +193,6 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Unit/Runner.hpp
         ${INCLUDE_DIR}/Unit/Hunter.hpp
 
-        ${INCLUDE_DIR}/imgui/imconfig.h
-        ${INCLUDE_DIR}/imgui/imgui.h
-        ${INCLUDE_DIR}/imgui/imgui_impl_sdl2.h
-        ${INCLUDE_DIR}/imgui/imgui_internal.h
-        ${INCLUDE_DIR}/imgui/imstb_rectpack.h
-        ${INCLUDE_DIR}/imgui/imstb_textedit.h
-        ${INCLUDE_DIR}/imgui/imstb_truetype.h
-        ${INCLUDE_DIR}/imgui/imgui_impl_sdlrenderer2..h
-        ${INCLUDE_DIR}/imgui/imgui_impl_opengl3.h
-        ${INCLUDE_DIR}/imgui/imgui_impl_opengl3_loader.h
 
         ${INCLUDE_DIR}/Scene/Scene.hpp
 

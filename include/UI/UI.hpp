@@ -10,9 +10,9 @@
 #include "Player.hpp"
 #include "SpriteSheet.hpp"
 #include "UI/UIScriptProcess.hpp"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_opengl3.h"
-#include "imgui/imgui_impl_sdl2.h"
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl2.h"
 #include "pch.hpp"
 #include <unordered_map>
 

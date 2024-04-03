@@ -22,17 +22,10 @@ void UIClass::Start() {
 }
 
 void UIClass::Update() {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
-
-    ImGui::NewFrame();
     ShowCursorSelectionRegion(&start_pos, &end_pos, ImGuiMouseButton_Left);
     ShowPlayerConstructionMenu();
-
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
     ButtonScript.Update(getIfAnyBuildingReadyToBuild());
+
     // printf("(UI)Button Lock :
     // %s,%s\n",selectLock()?"Unlock":"Lock",b_SelectToBuild?"True":"False");
 }

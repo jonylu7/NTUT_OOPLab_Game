@@ -112,6 +112,7 @@ public:
 
 private:
     static Util::AssetStore<std::shared_ptr<Mix_Music>> s_Store;
+    std::shared_ptr<Mix_Music> m_BGM;
 
 };
 
