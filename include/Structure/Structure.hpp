@@ -59,7 +59,7 @@ public:
     void SetID(GameObjectID id) { m_ID = id; };
 
     static glm::vec2 ChangeToCell(glm::vec2 location);
-    void onSelected() override;
+    void onSelected();
     virtual void attachmentUpdate(); // this function now will update
                                      // attachment's location and draw as
                                      // well

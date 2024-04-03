@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
+
 #include "Scene.hpp"
 #include "Unit/Avatar.hpp"
 #include "Unit/Hunter.hpp"

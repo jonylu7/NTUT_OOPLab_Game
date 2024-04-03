@@ -472,8 +472,10 @@ std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
     auto Avatar = ButtonScript.spawnAvatar();
     ButtonScript.setIfReadytoSpawn(false);
     if (std::dynamic_pointer_cast<Infantry>(Avatar)) {
+
         Avatar->Start(m_barrackCell);
         Avatar->setNewDestination(m_barrackTargetCell);
+
     } /*else if(std::dynamic_pointer_cast< >(Avatar)){
         Avatar->Start(m_warfactoryCell,m_Map);
         Avatar->setNewDestination(m_warfactoryTargetCell);

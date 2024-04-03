@@ -8,7 +8,12 @@
 #include "Scene/MapScene.hpp"
 #include "Scene/Scene.hpp"
 class MenuScene : public Scene {
-    enum class SceneMode { DEFAULT, MAP, MENU };
+    enum class SceneMode {
+        DEFAULT,
+        MAP,
+        MENU,
+        TOTURIAL,
+    };
 
 public:
     MenuScene()
@@ -16,14 +21,18 @@ public:
     ~MenuScene() {}
 
     void Start() override {
-
         m_MapScene->Start();
         m_DefaultScene->Start();
     }
+
     void Update() override {
 
         if (m_currentMode == SceneMode::MENU) {
             if (Util::Input::IsKeyPressed(Util::Keycode::P)) {
+                m_BGM.Play();
+            }
+            if (Util::Input::IsKeyPressed(Util::Keycode::K)) {
+                m_BGM.LoadMedia("../assets/BGM/Jimmy_Scott-Sycamore_Trees.mp3");
                 m_BGM.Play();
             }
             if (Util::Input::IsKeyPressed(Util::Keycode::M)) {

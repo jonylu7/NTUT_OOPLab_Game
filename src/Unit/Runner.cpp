@@ -2,79 +2,85 @@
 // Created by nudle on 2024/3/29.
 //
 #include "Unit/Runner.hpp"
-
-void Runner::setBeingChase(std::shared_ptr<Avatar> hunter){
-    b_beingChase=true;
-    m_hunter=hunter;
-    lastTargetCell=getCurrentCell();
+#include "Unit/PathUtility.hpp"
+void Runner::setBeingChase(std::shared_ptr<Avatar> hunter) {
+    b_beingChase = true;
+    m_hunter = hunter;
+    lastTargetCell = getCurrentCell();
 }
-void Runner::customizeUpdate(){
-    if(b_beingChase && m_hunter->getUnitMode()==UnitMode::ALIVE){
+void Runner::customizeUpdate() {
+    if (b_beingChase && m_hunter->getUnitMode() == UnitMode::ALIVE) {
         glm::vec2 hunterCell = m_hunter->getCurrentCell();
-        if(getDistance(hunterCell)<=ATTACK_RANGE-1 && lastTargetCell==getCurrentCell()){
-            edgeCount=0;
-            MoveDirection Dir = oppositeDir(getDirByRelativeCells(getCurrentCell(),hunterCell),runMode::LIDL_RANDOM);
+        if (getDistance(hunterCell) <= ATTACK_RANGE - 1 &&
+            lastTargetCell == getCurrentCell()) {
+            edgeCount = 0;
+            MoveDirection Dir = oppositeDir(PathUtility::getDirByRelativeCells(
+                                                getCurrentCell(), hunterCell),
+                                            runMode::LIDL_RANDOM);
             DEBUG_printCurrentMoveDirection(Dir);
-            glm::vec2 nextCell = getNextCellByCurrentPlus3(Dir,getCurrentCell(),3,1);
-            while(nextCell.x<0 || nextCell.y<0){
-                edgeCount+=rand() %2+1;
-                Dir=findNewDir(Dir,edgeCount);
+            glm::vec2 nextCell =
+                getNextCellByCurrentPlus3(Dir, getCurrentCell(), 3, 1);
+            while (nextCell.x < 0 || nextCell.y < 0) {
+                edgeCount += rand() % 2 + 1;
+                Dir = findNewDir(Dir, edgeCount);
                 DEBUG_printCurrentMoveDirection(Dir);
-                nextCell = getNextCellByCurrentPlus3(Dir,getCurrentCell(),1,3);
+                nextCell =
+                    getNextCellByCurrentPlus3(Dir, getCurrentCell(), 1, 3);
             }
-            lastTargetCell=nextCell;
+            lastTargetCell = nextCell;
             setNewDestination(nextCell);
-
         }
-    }else{
-        b_beingChase=false;
+    } else {
+        b_beingChase = false;
     }
 }
 
-PathfindingUnit::MoveDirection Runner::findNewDir(MoveDirection Dir,int edgeCount){
-    for(int i=0;i<8;i++){
-        if(dictionary[i]==Dir){
-            int index = (i+edgeCount)%8;
-            if(index<0){
-                index+=8;
+MoveDirection Runner::findNewDir(MoveDirection Dir, int edgeCount) {
+    for (int i = 0; i < 8; i++) {
+        if (dictionary[i] == Dir) {
+            int index = (i + edgeCount) % 8;
+            if (index < 0) {
+                index += 8;
             }
             return dictionary[index];
         }
     }
 }
 
-PathfindingUnit::MoveDirection Runner::oppositeDir(MoveDirection Dir,runMode mode){
+MoveDirection Runner::oppositeDir(MoveDirection Dir, runMode mode) {
     switch (mode) {
-    case (runMode::REASONABLE):{
-        for(int i=0;i<8;i++){
-            if(dictionary[i]==Dir){
-                if(i+3>7){
-                    return dictionary[i+3-7];
-                }else{
-                    return dictionary[i+3];
+    case (runMode::REASONABLE): {
+        for (int i = 0; i < 8; i++) {
+            if (dictionary[i] == Dir) {
+                if (i + 3 > 7) {
+                    return dictionary[i + 3 - 7];
+                } else {
+                    return dictionary[i + 3];
                 }
             }
         }
     }
-    case runMode::LIDL_RANDOM:{
-        for(int i=0;i<8;i++){
-            if(dictionary[i]==Dir){
-                int index = i+3-7+rand()%3-1;
-                if(index<0){
-                    return dictionary[index+8];
-                }else{
+    case runMode::LIDL_RANDOM: {
+        for (int i = 0; i < 8; i++) {
+            if (dictionary[i] == Dir) {
+                int index = i + 3 - 7 + rand() % 3 - 1;
+                if (index < 0) {
+                    return dictionary[index + 8];
+                } else {
                     return dictionary[index];
                 }
             }
         }
     }
-    case runMode::FULL_RANDOM:{
-        return dictionary[rand()%8+0];
+    case runMode::FULL_RANDOM: {
+        return dictionary[rand() % 8 + 0];
     }
     }
 }
 
-glm::vec2 Runner::getNextCellByCurrentPlus3(MoveDirection currentdir,glm::vec2 currentcell,int n,int m) {
+glm::vec2 Runner::getNextCellByCurrentPlus3(MoveDirection currentdir,
+                                            glm::vec2 currentcell, int n,
+                                            int m) {
     switch (currentdir) {
     case MoveDirection::RIGHT: {
         currentcell = {currentcell.x + n, currentcell.y};

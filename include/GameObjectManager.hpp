@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
+#include "FindValidPathToDest.hpp"
 #include "GameObjectID.hpp"
 #include "Player.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
@@ -13,7 +14,6 @@
 #include "Structure/Structure.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Unit/Avatar.hpp"
-#include "Unit/FindValidPathToDest.hpp"
 #include <chrono>
 #include <unordered_map>
 #include <utility>
@@ -31,8 +31,6 @@ public:
             pair->Start();
         }
         m_StartTime = std::chrono::high_resolution_clock::now();
-        // m_wayPointUnit.setCurrentCell(destination);
-        // m_wayPointUnit.setNextCell(destination);
     }
     glm::vec2 cursorstart;
     glm::vec2 cursorend;
@@ -64,8 +62,17 @@ public:
         }
         if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
             *end = Util::Input::GetCursorPosition();
+            // traverse range start to end
+            // to record prevausily selected objects
+            auto objects =
+                m_Map
+                    ->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
+                        MapUtil::ScreenToGlobalCoord(*start)))
+                    ->getSelectableObjects();
+            for (auto i : objects) {
+                i->setSelected(true);
+            }
         }
-        MapUtil::ScreenToGlobalCoord(*start);
     }
 
     static bool ifObjectClicked(glm::vec2 objpos, glm::vec2 objsize,
@@ -78,7 +85,7 @@ public:
 
     void Append(std::shared_ptr<Structure> newstruct) {
         newstruct->Start();
-//        newstruct->importMap(m_Map);
+        //        newstruct->importMap(m_Map);
         m_BuiltStructure.push_back(newstruct);
     }
     void Append(std::shared_ptr<Avatar> newUnit) {
@@ -111,6 +118,18 @@ public:
     }
 
     void importPlayer(std::shared_ptr<Player> player) { m_Player = player; }
+
+    void setNewDestination(glm::vec2 destination) {
+        auto queue = m_wayPointUnit.findPath(destination, destination);
+    }
+    void cursorSetNewDest() {
+        // all prevousily selected objects to set
+        if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_RB)) {
+            this->setNewDestination(
+                MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
+                    Util::Input::GetCursorPosition())));
+        }
+    }
 
 private:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
