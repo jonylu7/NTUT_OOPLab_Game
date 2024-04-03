@@ -14,9 +14,9 @@ void Runner::customizeUpdate() {
         if (getDistance(hunterCell) <= ATTACK_RANGE - 1 &&
             lastTargetCell == getCurrentCell()) {
             edgeCount = 0;
-            MoveDirection Dir =
-                oppositeDir(getDirByRelativeCells(getCurrentCell(), hunterCell),
-                            runMode::LIDL_RANDOM);
+            MoveDirection Dir = oppositeDir(PathUtility::getDirByRelativeCells(
+                                                getCurrentCell(), hunterCell),
+                                            runMode::LIDL_RANDOM);
             DEBUG_printCurrentMoveDirection(Dir);
             glm::vec2 nextCell =
                 getNextCellByCurrentPlus3(Dir, getCurrentCell(), 3, 1);

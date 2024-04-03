@@ -92,7 +92,11 @@ public:
     }
 
     UnitMode getUnitMode() { return m_currentMode; }
-    virtual void customizeUpdate() {}
+    virtual void customizeUpdate() {
+        if (1 == 1) {
+        }
+    }
+
     virtual std::shared_ptr<Util::Image> customizeImage() {
         return std::make_unique<Util::Image>("../assets/sprites/capybara.png");
     }
