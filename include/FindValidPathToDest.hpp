@@ -20,7 +20,6 @@ private:
 
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::deque<MoveDirection> m_dirQue;
-    bool b_InitNewLine = false;
 
 public:
     FindValidPathToDest(){};

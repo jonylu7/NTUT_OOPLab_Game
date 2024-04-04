@@ -8,12 +8,7 @@
 #include "Scene/MapScene.hpp"
 #include "Scene/Scene.hpp"
 class MenuScene : public Scene {
-    enum class SceneMode {
-        DEFAULT,
-        MAP,
-        MENU,
-        TOTURIAL,
-    };
+    enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL };
 
 public:
     MenuScene()
