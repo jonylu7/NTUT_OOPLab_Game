@@ -48,7 +48,7 @@ public:
         // Generate a random number
         int random_number = distribution(gen); // Generate a random number using
                                                // the generator and distribution
-
+        return Side::R;
         switch (random_number) {
         case 0:
             return Side::R;
@@ -65,33 +65,33 @@ public:
         switch (ogDir) {
         case MoveDirection::RIGHT: {
             if (side == Side::R) {
-                newdir = MoveDirection::DOWN_RIGHT;
-            } else if (side == Side::L) {
                 newdir = MoveDirection::UP_RIGHT;
+            } else if (side == Side::L) {
+                newdir = MoveDirection::DOWN_RIGHT;
             }
         } break;
 
         case MoveDirection::LEFT: {
             if (side == Side::R) {
-                newdir = MoveDirection::UP_LEFT;
-            } else if (side == Side::L) {
                 newdir = MoveDirection::DOWN_LEFT;
+            } else if (side == Side::L) {
+                newdir = MoveDirection::UP_LEFT;
             }
             break;
         }
         case MoveDirection::UP: {
             if (side == Side::R) {
-                newdir = MoveDirection::UP_RIGHT;
-            } else if (side == Side::L) {
                 newdir = MoveDirection::UP_LEFT;
+            } else if (side == Side::L) {
+                newdir = MoveDirection::UP_RIGHT;
             }
             break;
         }
         case MoveDirection::DOWN: {
             if (side == Side::R) {
-                newdir = MoveDirection::DOWN_LEFT;
-            } else if (side == Side::L) {
                 newdir = MoveDirection::DOWN_RIGHT;
+            } else if (side == Side::L) {
+                newdir = MoveDirection::DOWN_LEFT;
             }
             break;
         }
@@ -113,22 +113,22 @@ public:
         }
         case MoveDirection::DOWN_RIGHT: {
             if (side == Side::R) {
-                newdir = MoveDirection::DOWN;
-            } else if (side == Side::L) {
                 newdir = MoveDirection::RIGHT;
+            } else if (side == Side::L) {
+                newdir = MoveDirection::DOWN;
             }
             break;
         }
         case MoveDirection::UP_LEFT: {
             if (side == Side::R) {
-                newdir = MoveDirection::UP;
-            } else if (side == Side::L) {
                 newdir = MoveDirection::LEFT;
+            } else if (side == Side::L) {
+                newdir = MoveDirection::UP;
             }
             break;
         }
         case MoveDirection::IDLE: {
-            printf("Direction debug didn't move\n");
+            // printf("Direction debug didn't move\n");
             break;
         }
         }
@@ -149,24 +149,28 @@ public:
     }
 
     void findPath(glm::vec2 destination) {
-        // what if desintation is not walkable
+        if (m_Map->getTileByCellPosition(destination)->getWalkable() == false) {
+            return;
+        }
         setDestinationCell(destination);
         Side whichSideToTouch = randomlyChooseSide();
         MoveDirection dirToTouch = MoveDirection::IDLE;
+
         setCurrentDir(
             getDirByRelativeCells(getCurrentCell(), getDestinationCell()));
+
         while (getCurrentCell() != getDestinationCell()) {
 
             if (m_Map
                     ->getTileByCellPosition(
                         getNextCellByCurrent(getCurrentDir(), getCurrentCell()))
                     ->getWalkable()) {
-                m_dirQue.push_back(getCurrentDir());
+
                 // move current to next cell
                 // set next
-
                 setCurrentCell(
                     getNextCellByCurrent(getCurrentDir(), getCurrentCell()));
+
                 // 這裏會造成無限迴圈
 
                 auto followingDir = getDirByRelativeCells(getCurrentCell(),
@@ -176,9 +180,9 @@ public:
                     getCurrentDir(), followingDir, getCurrentCell());
                 // if not opposite, or walk along
                 if (!ifOpposite) {
+                    m_dirQue.push_back(getCurrentDir());
                     setCurrentDir(followingDir);
                 }
-
             } else {
                 dirToTouch = getDirIfObstacle(
                     getDirByRelativeCells(

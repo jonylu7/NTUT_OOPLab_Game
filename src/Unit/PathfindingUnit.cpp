@@ -100,16 +100,28 @@ PathfindingUnit::getDirByRelativeCells(glm::vec2 currentcell,
     int destinationCellY = destinationcell.y;
     int currCellX = currentcell.x;
     int currCellY = currentcell.y;
-    printf("(findNextCellDir)Cell now :{%.d,%.d}\n(find)Cell destination : "
-           "{%.d,%.d}\n",
-           currCellX, currCellY, destinationCellX, destinationCellY);
+    // printf("(findNextCellDir)Cell now :{%.d,%.d}\n(find)Cell destination : "
+    //     "{%.d,%.d}\n",
+    //   currCellX, currCellY, destinationCellX, destinationCellY);
+
     int xDiff = destinationCellX - currCellX;
     int yDiff = destinationCellY - currCellY;
-    int xAbs = abs(xDiff);
-    int yAbs = abs(yDiff);
-    if (xAbs == 0 && yAbs == 0) {
+
+    if (yDiff == 0) {
+        if (xDiff > 0) {
+            direction = MoveDirection::RIGHT;
+        } else if (xDiff < 0) {
+            direction = MoveDirection::LEFT;
+        }
+    } else if (xDiff == 0) {
+        if (yDiff > 0) {
+            direction = MoveDirection::UP;
+        } else if (yDiff < 0) {
+            direction = MoveDirection::DOWN;
+        }
+    } else if (xDiff == yDiff && xDiff == 0) {
         direction = MoveDirection::IDLE;
-    } else if (xAbs == yAbs) {
+    } else {
         if (xDiff > 0 && yDiff > 0) {
             direction = MoveDirection::UP_RIGHT;
         } else if (xDiff > 0 && yDiff < 0) {
@@ -119,27 +131,8 @@ PathfindingUnit::getDirByRelativeCells(glm::vec2 currentcell,
         } else {
             direction = MoveDirection::DOWN_LEFT;
         }
-    } else {
-        if (xAbs > yAbs) {
-            if (xDiff > 0) {
-                direction = MoveDirection::RIGHT;
-            } else if (xDiff < 0) {
-                direction = MoveDirection::LEFT;
-            } else {
-                printf("(findNextCellDir)Error Wrong Dir!");
-                direction = MoveDirection::IDLE;
-            }
-        } else {
-            if (yDiff > 0) {
-                direction = MoveDirection::UP;
-            } else if (yDiff < 0) {
-                direction = MoveDirection::DOWN;
-            } else {
-                printf("(findNextCellDir)Error Wrong Dir!");
-                direction = MoveDirection::IDLE;
-            }
-        }
     }
+
     return direction;
 }
 /*
