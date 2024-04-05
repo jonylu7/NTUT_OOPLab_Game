@@ -57,80 +57,104 @@ public:
         }
     }
 
-    MoveDirection getDirIfObstacle(MoveDirection ogDir, Side side) {
+    MoveDirection moveAlongSideObstacle(Side side, glm::vec2 currentcell,
+                                        MoveDirection currentdir) {
 
-        // please be notice that the "Side's" R or L represent its facing
-        // direction
-        MoveDirection newdir;
-        switch (ogDir) {
-        case MoveDirection::RIGHT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::UP_RIGHT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::DOWN_RIGHT;
-            }
-        } break;
+        std::shared_ptr<TileClass> upTile = m_Map->getTileByCellPosition(
+            glm::vec2(currentcell.x, currentcell.y + 1));
+        std::shared_ptr<TileClass> downTile = m_Map->getTileByCellPosition(
+            glm::vec2(currentcell.x, currentcell.y - 1));
+        std::shared_ptr<TileClass> rightTile = m_Map->getTileByCellPosition(
+            glm::vec2(currentcell.x + 1, currentcell.y));
+        std::shared_ptr<TileClass> leftTile = m_Map->getTileByCellPosition(
+            glm::vec2(currentcell.x - 1, currentcell.y));
 
-        case MoveDirection::LEFT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::DOWN_LEFT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::UP_LEFT;
+        std::shared_ptr<TileClass> upRightTile = m_Map->getTileByCellPosition(
+            glm::vec2(currentcell.x + 1, currentcell.y + 1));
+        std::shared_ptr<TileClass> downRightTile = m_Map->getTileByCellPosition(
+            glm::vec2(currentcell.x + 1, currentcell.y - 1));
+        std::shared_ptr<TileClass> upLeftTile = m_Map->getTileByCellPosition(
+            glm::vec2(currentcell.x - 1, currentcell.y + 1));
+        std::shared_ptr<TileClass> downLeftTile = m_Map->getTileByCellPosition(
+            glm::vec2(currentcell.x - 1, currentcell.y - 1));
+
+        // please be notice that the "Side's" R or L
+        // represent its facing direction
+        MoveDirection newdir = currentdir;
+        while (m_Map
+                   ->getTileByCellPosition(
+                       getNextCellByCurrent(newdir, currentcell))
+                   ->getWalkable() == false) {
+            switch (newdir) {
+            case MoveDirection::RIGHT: {
+                if (side == Side::R) {
+                    newdir = MoveDirection::UP_RIGHT;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::DOWN_RIGHT;
+                }
+            } break;
+
+            case MoveDirection::LEFT: {
+                if (side == Side::R) {
+                    newdir = MoveDirection::DOWN_LEFT;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::UP_LEFT;
+                }
+                break;
             }
-            break;
-        }
-        case MoveDirection::UP: {
-            if (side == Side::R) {
-                newdir = MoveDirection::UP_LEFT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::UP_RIGHT;
+            case MoveDirection::UP: {
+                if (side == Side::R) {
+                    newdir = MoveDirection::UP_LEFT;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::UP_RIGHT;
+                }
+                break;
             }
-            break;
-        }
-        case MoveDirection::DOWN: {
-            if (side == Side::R) {
-                newdir = MoveDirection::DOWN_RIGHT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::DOWN_LEFT;
+            case MoveDirection::DOWN: {
+                if (side == Side::R) {
+                    newdir = MoveDirection::DOWN_RIGHT;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::DOWN_LEFT;
+                }
+                break;
             }
-            break;
-        }
-        case MoveDirection::UP_RIGHT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::RIGHT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::UP;
+            case MoveDirection::UP_RIGHT: {
+                if (side == Side::R) {
+                    newdir = MoveDirection::RIGHT;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::UP;
+                }
+                break;
             }
-            break;
-        }
-        case MoveDirection::DOWN_LEFT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::LEFT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::DOWN;
+            case MoveDirection::DOWN_LEFT: {
+                if (side == Side::R) {
+                    newdir = MoveDirection::LEFT;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::DOWN;
+                }
+                break;
             }
-            break;
-        }
-        case MoveDirection::DOWN_RIGHT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::RIGHT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::DOWN;
+            case MoveDirection::DOWN_RIGHT: {
+                if (side == Side::R) {
+                    newdir = MoveDirection::RIGHT;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::DOWN;
+                }
+                break;
             }
-            break;
-        }
-        case MoveDirection::UP_LEFT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::LEFT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::UP;
+            case MoveDirection::UP_LEFT: {
+                if (side == Side::R) {
+                    newdir = MoveDirection::LEFT;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::UP;
+                }
+                break;
             }
-            break;
-        }
-        case MoveDirection::IDLE: {
-            // printf("Direction debug didn't move\n");
-            break;
-        }
+            case MoveDirection::IDLE: {
+                // printf("Direction debug didn't move\n");
+                break;
+            }
+            }
         }
         return newdir;
     }
@@ -148,52 +172,39 @@ public:
         }
     }
 
-    void findPath(glm::vec2 destination) {
-        if (m_Map->getTileByCellPosition(destination)->getWalkable() == false) {
+    void findPath(glm::vec2 destinationcell) {
+        if (m_Map->getTileByCellPosition(destinationcell)->getWalkable() ==
+            false) {
             return;
         }
-        setDestinationCell(destination);
+        glm::vec2 currentcell = getCurrentCell();
         Side whichSideToTouch = randomlyChooseSide();
-        MoveDirection dirToTouch = MoveDirection::IDLE;
-
-        setCurrentDir(
-            getDirByRelativeCells(getCurrentCell(), getDestinationCell()));
-
+        MoveDirection followingDir =
+            getDirByRelativeCells(currentcell, destinationcell);
         while (getCurrentCell() != getDestinationCell()) {
+            auto straight = findStraightPath(currentcell, destinationcell);
+            straight[straight.size() - 1]
+            // if walk straight line
+            // stop at obstacle and walk on its edge until walk straight line
+            // again
+        }
+    }
 
-            if (m_Map
-                    ->getTileByCellPosition(
-                        getNextCellByCurrent(getCurrentDir(), getCurrentCell()))
-                    ->getWalkable()) {
-
-                // move current to next cell
-                // set next
-                setCurrentCell(
-                    getNextCellByCurrent(getCurrentDir(), getCurrentCell()));
-
-                // 這裏會造成無限迴圈
-
-                auto followingDir = getDirByRelativeCells(getCurrentCell(),
-                                                          getDestinationCell());
-
-                bool ifOpposite = checkFollowingDirOppositeWithCurrent(
-                    getCurrentDir(), followingDir, getCurrentCell());
-                // if not opposite, or walk along
-                if (!ifOpposite) {
-                    m_dirQue.push_back(getCurrentDir());
-                    setCurrentDir(followingDir);
-                }
+    std::vector<MoveDirection> findStraightPath(glm::vec2 currentcell,
+                                                glm::vec2 destinationcell) {
+        std::vector<MoveDirection> path;
+        while (getCurrentCell() != getDestinationCell()) {
+            MoveDirection followingDir =
+                getDirByRelativeCells(currentcell, destinationcell);
+            if (m_Map->getWalkable(
+                    getNextCellByCurrent(followingDir, currentcell))) {
+                path.push_back(followingDir);
+                currentcell = getNextCellByCurrent(followingDir, currentcell);
             } else {
-                dirToTouch = getDirIfObstacle(
-                    getDirByRelativeCells(
-                        getCurrentCell(),
-                        getNextCellByCurrent(getCurrentDir(),
-                                             getCurrentCell())),
-                    whichSideToTouch);
-
-                setCurrentDir(dirToTouch);
+                break;
             }
         }
+        return path;
     }
     virtual void Update() override {
         m_grid.DrawUsingCamera(m_emptyTrans, defaultZIndex);

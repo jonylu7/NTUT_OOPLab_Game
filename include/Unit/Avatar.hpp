@@ -30,7 +30,6 @@ public:
         m_wayPointUnit.Start(map);
         setCurrentCell(destination);
         m_wayPointUnit.setCurrentCell(destination);
-        setNewDestination(getCurrentCell());
 
         setMovementSpeed(4);
     }
@@ -62,7 +61,7 @@ public:
         setDestinationCell(destination.x, destination.y);
         m_wayPointUnit.resetQueue();
         m_wayPointUnit.setCurrentCell(getCurrentCell());
-        m_wayPointUnit.findPath(getDestinationCell());
+        m_wayPointUnit.findPath(destination);
         // setCurrentDir(m_wayPointUnit.getFirstCellDir());
     }
     void cursorSetNewDest() {
