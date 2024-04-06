@@ -182,29 +182,32 @@ public:
         MoveDirection followingDir =
             getDirByRelativeCells(currentcell, destinationcell);
         while (getCurrentCell() != getDestinationCell()) {
-            auto straight = findStraightPath(currentcell, destinationcell);
-            straight[straight.size() - 1]
+            std::vector<MoveDirection> newDirque;
+            auto staightpath =
+                findStraightPath(currentcell, destinationcell, &newDirque);
+            if (staightpath[straight.size() - 1] != destinationcell) {
+            }
             // if walk straight line
             // stop at obstacle and walk on its edge until walk straight line
             // again
         }
     }
 
-    std::vector<MoveDirection> findStraightPath(glm::vec2 currentcell,
-                                                glm::vec2 destinationcell) {
-        std::vector<MoveDirection> path;
+    bool findStraightPath(glm::vec2 currentcell, glm::vec2 destinationcell,
+                          std::vector<MoveDirection> *path) {
+
         while (getCurrentCell() != getDestinationCell()) {
             MoveDirection followingDir =
                 getDirByRelativeCells(currentcell, destinationcell);
             if (m_Map->getWalkable(
                     getNextCellByCurrent(followingDir, currentcell))) {
-                path.push_back(followingDir);
+                *path.push_back(followingDir);
                 currentcell = getNextCellByCurrent(followingDir, currentcell);
             } else {
-                break;
+                return false;
             }
         }
-        return path;
+        return true;
     }
     virtual void Update() override {
         m_grid.DrawUsingCamera(m_emptyTrans, defaultZIndex);
