@@ -48,7 +48,6 @@ public:
         // Generate a random number
         int random_number = distribution(gen); // Generate a random number using
                                                // the generator and distribution
-        return Side::R;
         switch (random_number) {
         case 0:
             return Side::R;
@@ -102,17 +101,17 @@ public:
             }
             case MoveDirection::UP_RIGHT: {
                 if (side == Side::R) {
-                    newdir = MoveDirection::RIGHT;
-                } else if (side == Side::L) {
                     newdir = MoveDirection::UP;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::RIGHT;
                 }
                 break;
             }
             case MoveDirection::DOWN_LEFT: {
                 if (side == Side::R) {
-                    newdir = MoveDirection::LEFT;
-                } else if (side == Side::L) {
                     newdir = MoveDirection::DOWN;
+                } else if (side == Side::L) {
+                    newdir = MoveDirection::LEFT;
                 }
                 break;
             }
@@ -140,22 +139,6 @@ public:
         }
         return newdir;
     }
-/*
-    bool checkFollowingDirOppositeWithCurrent(MoveDirection currentDir,
-                                              MoveDirection followingDir,
-                                              glm::vec2 currentcell) {
-        auto firstStep = getNextCellByCurrent(currentDir, currentcell);
-        auto nextStep = getNextCellByCurrent(followingDir, firstStep);
-
-        if (currentcell == nextStep) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    */
-
 
 
     bool isTouchedByObstacle(Side side,glm::vec2 currentcell,MoveDirection currentdir){
@@ -180,76 +163,75 @@ public:
 
 
         std::shared_ptr<TileClass> checkedTile=std::make_shared<TileClass>();
-        MoveDirection newdir;
         switch (currentdir) {
-        case MoveDirection::RIGHT: {
+        case MoveDirection::RIGHT:
             if (side == Side::R) {
-               checkedTile=downRightTile;
+               checkedTile=downTile;
             } else if (side == Side::L) {
-                checkedTile=upRightTile;
+                checkedTile=upTile;
             }
-        } break;
+         break;
 
-        case MoveDirection::LEFT: {
+        case MoveDirection::LEFT:
             if (side == Side::R) {
-                checkedTile=downLeftTile;
+                checkedTile=upTile;
             } else if (side == Side::L) {
-               checkedTile=upLeftTile;
+               checkedTile=downTile;
             }
             break;
-        }
-        case MoveDirection::UP: {
+
+        case MoveDirection::UP:
             if (side == Side::R) {
-               checkedTile=upRightTile;
+               checkedTile=rightTile;
             } else if (side == Side::L) {
-              checkedTile=upLeftTile;
+              checkedTile=leftTile;
             }
             break;
-        }
-        case MoveDirection::DOWN: {
+
+        case MoveDirection::DOWN:
             if (side == Side::R) {
-                checkedTile=downLeftTile;
+                checkedTile=leftTile;
             } else if (side == Side::L) {
-               checkedTile=downRightTile;
+               checkedTile=rightTile;
             }
             break;
-        }
-        case MoveDirection::UP_RIGHT: {
+
+        case MoveDirection::UP_RIGHT:
             if (side == Side::R) {
                 checkedTile=rightTile;
             } else if (side == Side::L) {
                 checkedTile=upTile;
             }
             break;
-        }
-        case MoveDirection::DOWN_LEFT: {
+
+        case MoveDirection::DOWN_LEFT:
             if (side == Side::R) {
                 checkedTile=leftTile;
             } else if (side == Side::L) {
                checkedTile=downTile;
             }
             break;
-        }
-        case MoveDirection::DOWN_RIGHT: {
+
+        case MoveDirection::DOWN_RIGHT:
             if (side == Side::R) {
                 checkedTile=downTile;
             } else if (side == Side::L) {
                checkedTile=rightTile;
             }
             break;
-        }
-        case MoveDirection::UP_LEFT: {
+
+        case MoveDirection::UP_LEFT:
             if (side == Side::R) {
                checkedTile=upTile;
             } else if (side == Side::L) {
                 checkedTile=leftTile;
             }
             break;
-        }
-        case MoveDirection::IDLE: {
+
+        case MoveDirection::IDLE:
             // printf("Direction debug didn't move\n");
             break;
-        }
+
 
         }
 
@@ -269,78 +251,76 @@ public:
 
         MoveDirection newdir;
         switch (currentdir) {
-        case MoveDirection::RIGHT: {
+        case MoveDirection::RIGHT:
             if (side == Side::R) {
                 newdir = MoveDirection::DOWN_RIGHT;
             } else if (side == Side::L) {
                 newdir = MoveDirection::UP_RIGHT;
             }
-        } break;
+         break;
 
-        case MoveDirection::LEFT: {
+        case MoveDirection::LEFT:
             if (side == Side::R) {
-                newdir = MoveDirection::DOWN_LEFT;
-            } else if (side == Side::L) {
                 newdir = MoveDirection::UP_LEFT;
+            } else if (side == Side::L) {
+                newdir = MoveDirection::DOWN_LEFT;
             }
             break;
-        }
-        case MoveDirection::UP: {
+
+        case MoveDirection::UP:
             if (side == Side::R) {
                 newdir = MoveDirection::UP_RIGHT;
             } else if (side == Side::L) {
                 newdir = MoveDirection::UP_LEFT;
             }
             break;
-        }
-        case MoveDirection::DOWN: {
+
+        case MoveDirection::DOWN:
             if (side == Side::R) {
                 newdir = MoveDirection::DOWN_LEFT;
             } else if (side == Side::L) {
                 newdir = MoveDirection::DOWN_RIGHT;
             }
             break;
-        }
-        case MoveDirection::UP_RIGHT: {
+
+        case MoveDirection::UP_RIGHT:
             if (side == Side::R) {
                 newdir = MoveDirection::RIGHT;
             } else if (side == Side::L) {
                 newdir = MoveDirection::UP;
             }
             break;
-        }
-        case MoveDirection::DOWN_LEFT: {
+
+        case MoveDirection::DOWN_LEFT:
             if (side == Side::R) {
                 newdir = MoveDirection::LEFT;
             } else if (side == Side::L) {
                 newdir = MoveDirection::DOWN;
             }
             break;
-        }
-        case MoveDirection::DOWN_RIGHT: {
+
+        case MoveDirection::DOWN_RIGHT:
             if (side == Side::R) {
                 newdir = MoveDirection::DOWN;
             } else if (side == Side::L) {
                 newdir = MoveDirection::RIGHT;
             }
             break;
-        }
-        case MoveDirection::UP_LEFT: {
+
+        case MoveDirection::UP_LEFT:
             if (side == Side::R) {
                 newdir = MoveDirection::UP;
             } else if (side == Side::L) {
                 newdir = MoveDirection::LEFT;
             }
             break;
-        }
-        case MoveDirection::IDLE: {
+
+        case MoveDirection::IDLE:
             // printf("Direction debug didn't move\n");
             break;
+
         }
-
-
-
-    }}
+        return newdir;}
 
 
     std::vector<MoveDirection> moveAlongsideObstacle(Side side, glm::vec2 currentcell,
@@ -359,13 +339,11 @@ public:
             }
 
             //if next to be obstacle, turn findNewDirWhenCrash
-            //newcurrentdir=findNewDirWhenNotTouchedByObstacle(side,currentcell,newcurrentdir);
 
             //walk along
             path.push_back(currentdir);
             currentcell= getNextCellByCurrent(currentdir,currentcell);
 
-            path.empty();
 
         }
 
@@ -404,8 +382,6 @@ public:
                 MoveDirection turndir;
                 if(m_Map->getWalkable(getNextCellByCurrent(facingDir,currentcell))==false){
                      turndir=findNewDirWhenCrash(whichSideToTouchObstacle,currentcell,facingDir);
-                    m_dirQue.push_back(turndir);
-                    currentcell= getNextCellByCurrent(turndir,currentcell);
                 };
 
 
