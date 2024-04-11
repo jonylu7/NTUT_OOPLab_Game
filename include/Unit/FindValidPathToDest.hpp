@@ -343,31 +343,33 @@ public:
     }}
 
 
-    void moveAlongsideObstacle(Side side, glm::vec2 currentcell,
-                               MoveDirection currentdir,glm::vec2 destinationcell,std::vector<MoveDirection> *dirque){
+    std::vector<MoveDirection> moveAlongsideObstacle(Side side, glm::vec2 currentcell,
+                               MoveDirection currentdir,glm::vec2 destinationcell){
 
         //side
         //
         //return dirque
         //check
         std::vector<MoveDirection> path;
-        while(!canResumeWalkingStraight(currentcell,destinationcell,&path)){
+        while(!canResumeWalkingStraight(currentcell,destinationcell)){
+
+            //if next is not touched by obstacle, turn
+            if(!isTouchedByObstacle(side,currentcell,currentdir)){
+                currentdir= findNewDirWhenNotTouchedByObstacle(side,currentcell,currentdir);
+            }
+
+            //if next to be obstacle, turn findNewDirWhenCrash
+            //newcurrentdir=findNewDirWhenNotTouchedByObstacle(side,currentcell,newcurrentdir);
 
             //walk along
-            //if next is not touched by obstacle, turn
-            //if next to be obstacle, turn findNewDirWhenCrash
-
-
-
-
-
-
+            path.push_back(currentdir);
+            currentcell= getNextCellByCurrent(currentdir,currentcell);
 
             path.empty();
 
         }
 
-        //return dirque
+        return path;
 
     }
 
@@ -399,32 +401,31 @@ public:
             }else{
                 auto facingDir=getDirByRelativeCells(currentcell, destinationcell);
                 //turn
-                MoveDirection turndir=findNewDirWhenCrash(whichSideToTouchObstacle,currentcell,facingDir);
-                m_dirQue.push_back(turndir);
-                currentcell= getNextCellByCurrent(turndir,currentcell);
+                MoveDirection turndir;
+                if(m_Map->getWalkable(getNextCellByCurrent(facingDir,currentcell))==false){
+                     turndir=findNewDirWhenCrash(whichSideToTouchObstacle,currentcell,facingDir);
+                    m_dirQue.push_back(turndir);
+                    currentcell= getNextCellByCurrent(turndir,currentcell);
+                };
 
-                std::vector<MoveDirection> movealognDirque;
-                //moveAlongsideObstacle(whichSideToTouchObstacle,currentcell,turndir,&movealognDirque);
 
-                for(auto i:movealognDirque){
+                std::vector<MoveDirection> movealong=moveAlongsideObstacle(whichSideToTouchObstacle,currentcell,turndir,destinationcell);
+
+                for(auto i:movealong){
                     m_dirQue.push_back(i);
                     currentcell= getNextCellByCurrent(i,currentcell);
                 }
-
-                break;
-                //push newdirque into dirque and update current cell and current dir
 
             }
         }
     }
 
 
-    //resumewalkingstraight
 
-    bool canResumeWalkingStraight(glm::vec2 currentcell, glm::vec2 destinationcell,
-                                  std::vector<MoveDirection> *path){
-        auto arrived=findStraightPath(currentcell,destinationcell,path);
-        if(arrived || !path->empty()){
+    bool canResumeWalkingStraight(glm::vec2 currentcell, glm::vec2 destinationcell){
+        std::vector<MoveDirection> path;
+        auto arrived=findStraightPath(currentcell,destinationcell,&path);
+        if(arrived || !path.empty()){
             return true;
         }
         return false;
@@ -436,6 +437,7 @@ public:
         while (currentcell != destinationcell) {
             MoveDirection followingDir =
                 getDirByRelativeCells(currentcell, destinationcell);
+
             if (m_Map->getWalkable(
                     getNextCellByCurrent(followingDir, currentcell))) {
                 path->push_back(followingDir);
