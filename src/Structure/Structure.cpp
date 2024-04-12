@@ -63,25 +63,7 @@ void Structure::updateMoveable() {
                 MapClass::setTileByCellPosition(cellPos,tile);*/
     }
 }
-void Structure::updateInvinsible() {
-    this->SetAttachVisible(false);
-}
 
-void Structure::DecreaseHp(float Hp) {
-    this->buildingHp -= Hp;
-}
-float Structure::GetElectricPower() {
-    return this->electricPower;
-}
-float Structure::GetBuildingTime() {
-    return this->buildingTime;
-}
-float Structure::GetBuildingCost() {
-    return this->buildingCost;
-}
-float Structure::GetBuildingHp() {
-    return this->buildingHp;
-}
 glm::vec2 Structure::ChangeToCell(glm::vec2 location) {
     int _x = location.x / CELL_SIZE.x;
     int _y = location.y / CELL_SIZE.y;
@@ -94,9 +76,6 @@ void Structure::SetObjectLocation(glm::vec2 location) {
                     location.y + 0.5 * CELL_SIZE.y};
     m_Transform.translation = DrawLocation;
 }
-void Structure::onSelected() {
-    this->SetAttachVisible(getSelected());
-};
 
 void Structure::SetAttachVisible(bool visible) {
     m_HighLight.SetObjectLocation(this->DrawLocation);
