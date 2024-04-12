@@ -86,6 +86,8 @@ public:
         newstruct->Start();
         //        newstruct->importMap(m_Map);
         m_BuiltStructure.push_back(newstruct);
+        m_Map->AppendSelectableObjectByCellPosition(
+            newstruct->GetObjectLocation(), newstruct);
     }
     void Append(std::shared_ptr<Avatar> newUnit) {
         m_UnitArray.push_back(newUnit);
