@@ -4,8 +4,8 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_PATHUTILITY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_PATHUTILITY_HPP
-#include <iostream>
 #include "pch.hpp"
+#include <iostream>
 enum class MoveDirection {
     UP,
     UP_RIGHT,
@@ -26,11 +26,13 @@ public:
 
     static MoveDirection getDirByRelativeCells(glm::vec2 currentcell,
                                                glm::vec2 destinationcell);
-    static MoveDirection findNewDirWhenNotTouchedByObstacle(Side side, glm::vec2 currentcell, MoveDirection currentdir);
-    static bool isTouchedByObstacle(Side side, glm::vec2 currentcell, MoveDirection currentdir);
-    static MoveDirection findNewDirWhenCrash(Side side, glm::vec2 currentcell, MoveDirection currentdir);
-
-
+    static MoveDirection
+    findNewDirWhenNotTouchedByObstacle(Side side, glm::vec2 currentcell,
+                                       MoveDirection currentdir);
+    static bool isTouchedByObstacle(Side side, glm::vec2 currentcell,
+                                    MoveDirection currentdir);
+    static MoveDirection findNewDirWhenCrash(Side side, glm::vec2 currentcell,
+                                             MoveDirection currentdir);
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PATHUTILITY_HPP

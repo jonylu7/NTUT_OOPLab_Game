@@ -3,8 +3,8 @@
 //
 #include "Unit/PathUtility.hpp"
 
-
-MoveDirection PathUtility::findNewDirWhenNotTouchedByObstacle(Side side, glm::vec2 currentcell, MoveDirection currentdir) {
+MoveDirection PathUtility::findNewDirWhenNotTouchedByObstacle(
+    Side side, glm::vec2 currentcell, MoveDirection currentdir) {
     MoveDirection newdir;
     switch (currentdir) {
     case MoveDirection::RIGHT:
@@ -74,12 +74,12 @@ MoveDirection PathUtility::findNewDirWhenNotTouchedByObstacle(Side side, glm::ve
     case MoveDirection::IDLE:
         // printf("Direction debug didn't move\n");
         break;
-
     }
     return newdir;
 }
 
-MoveDirection PathUtility::getDirByRelativeCells(glm::vec2 currentcell, glm::vec2 destinationcell)  {
+MoveDirection PathUtility::getDirByRelativeCells(glm::vec2 currentcell,
+                                                 glm::vec2 destinationcell) {
     MoveDirection direction;
     int destinationCellX = destinationcell.x;
     int destinationCellY = destinationcell.y;
@@ -128,7 +128,8 @@ MoveDirection PathUtility::getDirByRelativeCells(glm::vec2 currentcell, glm::vec
     return direction;
 }
 
-glm::vec2 PathUtility::getNextCellByCurrent(MoveDirection currentdir, glm::vec2 currentcell)  {
+glm::vec2 PathUtility::getNextCellByCurrent(MoveDirection currentdir,
+                                            glm::vec2 currentcell) {
     switch (currentdir) {
     case MoveDirection::RIGHT: {
         currentcell = {currentcell.x + 1, currentcell.y};

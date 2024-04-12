@@ -22,11 +22,10 @@ class GameObjectManager {
 public:
     GameObjectManager() {}
     ~GameObjectManager() {}
-    void Start() {
-        /*
-        for (auto pair : m_StrcutMap) {
-            pair.second->Start();
-            */
+    void Start(std::shared_ptr<MapClass> map, std::shared_ptr<Player> player) {
+        m_Map = map;
+        m_Player = player;
+
         for (auto pair : m_BuiltStructure) {
             pair->Start();
         }
@@ -117,8 +116,6 @@ public:
         return m_BuiltStructure;
     }
 
-    void importPlayer(std::shared_ptr<Player> player) { m_Player = player; }
-
     void setNewDestination(glm::vec2 destination) {
         auto queue = m_wayPointUnit.findPath(destination, destination);
     }
@@ -135,7 +132,7 @@ private:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
     std::vector<std::shared_ptr<Avatar>> m_UnitArray;
     FindValidPathToDest m_wayPointUnit;
-    std::shared_ptr<MapClass> m_Map;
+    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::shared_ptr<Player> m_Player;
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
