@@ -45,7 +45,6 @@ public:
         case (SceneMode::DEFAULT):
             m_DefaultScene->Update();
             break;
-        case (SceneMode::MENU):
         }
     }
 

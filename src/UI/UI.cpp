@@ -473,7 +473,7 @@ std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
     ButtonScript.setIfReadytoSpawn(false);
     if (std::dynamic_pointer_cast<Infantry>(Avatar)) {
 
-        Avatar->Start(m_barrackCell);
+        Avatar->Start({m_barrackCell.x+1,m_barrackCell.y+1});
         Avatar->setNewDestination(m_barrackTargetCell);
 
     } /*else if(std::dynamic_pointer_cast< >(Avatar)){

@@ -29,15 +29,15 @@ void DefaultScene::Start() {
 
     //    m_hunter->setCurrentCell({20,10});
     //    m_runner->setCurrentCell({10,10});
-    m_hunter->Start({20, 9});
-    m_runner->Start({9, 10});
-    m_hunter->setTarget(m_runner);
-    m_runner->setBeingChase(m_hunter);
+//    m_hunter->Start({20, 9});
+//    m_runner->Start({9, 10});
+//    m_hunter->setTarget(m_runner);
+//    m_runner->setBeingChase(m_hunter);
 }
 
 void DefaultScene::Update() {
-    m_hunter->Update();
-    m_runner->Update();
+//    m_hunter->Update();
+//    m_runner->Update();
 
     m_GameObjectManager->Update();
 
