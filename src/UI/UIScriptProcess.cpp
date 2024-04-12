@@ -116,7 +116,7 @@ void UIScriptProcess::CountDown() {
             b_isSpawningInCooldown) {
             b_isReadyToSpawn = true;
             b_isSpawningInCooldown = false;
-            //        printf("(UISC)Unit Ready\n");
+            printf("(UISC)Unit Ready\n");
         }
     }
 
@@ -126,8 +126,8 @@ void UIScriptProcess::CountDown() {
         // "False");
     }
     if (b_isSpawningInCooldown) {
-        //        printf("(UISC) CD: %.2f,%s\n", unitElapsed.count(),
-        //        elapsed.count() >= m_spawnCooldownTime ? "True" : "False");
+        printf("(UISC) CD: %.2f,%s\n", spawnElapsed.count(),spawnElapsed.count() >= spawnCoolDownTime ? "True" : "False");
+
     }
 }
 void UIScriptProcess::SetBuildCountDown(float time) {

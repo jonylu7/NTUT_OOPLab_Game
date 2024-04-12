@@ -28,6 +28,8 @@ public:
         setNextCell(destination);
 
         setMovementSpeed(4);
+        m_currentMode=UnitMode::MOVE;
+        m_Transform.scale={0.5,0.5};
     }
     virtual void aliveUpdate() {
         if (walkTowardNextCell() || b_justStarted) {
@@ -40,9 +42,13 @@ public:
             printf("(aliveUpdate) getting new dir\n");
         }
         // m_wayPointUnit.Update();
+        SetVisible(true);
         m_Transform.translation = getCurrentLocation();
+
         Draw();
-        printf("-----------------------------\n");
+
+        printf("Avatar cell={%d,%d}\n",getCurrentLocation().x,getCurrentLocation().y);
+        printf("-----------avatar------------------\n");
     }
 
     float getDistance(glm::vec2 cell) {
@@ -98,19 +104,22 @@ public:
     }
 
     virtual std::shared_ptr<Util::Image> customizeImage() {
-        return std::make_unique<Util::Image>("../assets/sprites/capybara.png");
+        return std::make_unique<Util::Image>("../assets/sprites/Hunter.png");
     }
     virtual void Update() override {
         switch (m_currentMode) {
         case (UnitMode::DEAD): {
             SetVisible(false);
+            break;
         }
         case (UnitMode::MOVE): {
             aliveUpdate();
+            break;
         }
         case (UnitMode::MOVE_ATTACK): {
             aliveUpdate();
             customizeUpdate();
+            break;
         }
             // attack
         }
