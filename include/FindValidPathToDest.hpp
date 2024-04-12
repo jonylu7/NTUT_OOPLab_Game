@@ -10,7 +10,7 @@
 
 #include <random>
 class FindValidPathToDest {
-    enum class Side { R, L };
+
 
 private:
     glm::vec2 m_destinationCell;
@@ -42,84 +42,6 @@ protected:
     MoveDirection getCurrentDir() { return m_currentDir; }
     glm::vec2 getNextCell() { return m_nextCell; }
 
-    MoveDirection getDirIfObstacle(MoveDirection ogDir, Side side) {
-
-        // please be notice that the "Side's" R or L represent its facing
-        // direction
-        MoveDirection newdir;
-        switch (ogDir) {
-        case MoveDirection::RIGHT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::DOWN_RIGHT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::UP_RIGHT;
-            }
-        } break;
-
-        case MoveDirection::LEFT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::UP_LEFT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::DOWN_LEFT;
-            }
-            break;
-        }
-        case MoveDirection::UP: {
-            if (side == Side::R) {
-                newdir = MoveDirection::UP_RIGHT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::UP_LEFT;
-            }
-            break;
-        }
-        case MoveDirection::DOWN: {
-            if (side == Side::R) {
-                newdir = MoveDirection::DOWN_LEFT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::DOWN_RIGHT;
-            }
-            break;
-        }
-        case MoveDirection::UP_RIGHT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::RIGHT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::UP;
-            }
-            break;
-        }
-        case MoveDirection::DOWN_LEFT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::LEFT;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::DOWN;
-            }
-            break;
-        }
-        case MoveDirection::DOWN_RIGHT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::DOWN;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::RIGHT;
-            }
-            break;
-        }
-        case MoveDirection::UP_LEFT: {
-            if (side == Side::R) {
-                newdir = MoveDirection::UP;
-            } else if (side == Side::L) {
-                newdir = MoveDirection::LEFT;
-            }
-            break;
-        }
-        case MoveDirection::IDLE: {
-            printf("Direction debug didn't move\n");
-            break;
-        }
-
-            return newdir;
-        }
-    }
 
     Side randomlyChooseSide() {
         // Create a random number generator engine
@@ -146,9 +68,14 @@ protected:
 public:
     std::deque<MoveDirection> findPath(glm::vec2 currentcell,
                                        glm::vec2 destinationcell) ;
+    MoveDirection findNewDirWhenCrash(Side side, glm::vec2 currentcell,
+                                      MoveDirection currentdir) ;
+    bool isTouchedByObstacle(Side side,glm::vec2 currentcell,MoveDirection currentdir);
 
-
-
-
+    std::vector<MoveDirection>  moveAlongsideObstacle(Side side, glm::vec2 currentcell,
+                          MoveDirection currentdir,glm::vec2 destinationcell);
+    bool findStraightPath(glm::vec2 currentcell, glm::vec2 destinationcell,
+                          std::vector<MoveDirection> *path);
+   bool canResumeWalkingStraight(glm::vec2 currentcell, glm::vec2 destinationcell);
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP

@@ -95,10 +95,11 @@ set(SRC_FILES
 
         ${SRC_DIR}/Structure/WayPointStructure.cpp
 
-        ${SRC_DIR}/Unit/PathfindingUnit.cpp
+
         ${SRC_DIR}/Unit/Runner.cpp
         ${SRC_DIR}/Unit/Hunter.cpp
-
+        ${SRC_DIR}/PathUtility.cpp
+        ${SRC_DIR}/FindValidPathToDest.cpp
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
         ${SRC_DIR}/SpriteSheet.cpp
@@ -206,7 +207,6 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Core/Shader.hpp
         ${INCLUDE_DIR}/Core/Program.hpp
         ${INCLUDE_DIR}/Core/Texture.hpp
-
 
 )
 
