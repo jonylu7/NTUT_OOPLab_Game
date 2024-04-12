@@ -60,10 +60,8 @@ public:
     void SetID(GameObjectID id) { m_ID = id; };
 
     static glm::vec2 ChangeToCell(glm::vec2 location);
-    void onSelected();
-    virtual void attachmentUpdate(); // this function now will update
-                                     // attachment's location and draw as
-                                     // well
+    void onSelected() { this->SetAttachVisible(getSelected()); };
+    virtual void attachmentUpdate();
     bool getBuilt() {
         if (m_CurrentState == updateMode::Fixed) {
             return true;
@@ -71,15 +69,6 @@ public:
             return false;
         }
     }
-    /*
-    void SetElectricPower(float electricPower);
-    void SetBuildingTime(float buildingTime);
-    void SetBuildingCost(float buildingCost);
-    void SetBuildingHp(float buildingHp);
-    void DecreaseElectricPower(float Power);
-    void IncreaseBuildingTime(float Time);
-    void DecreaseBuildingCost(float Cost);
-    */
 
     float GetElectricPower() { return this->electricPower; }
     float GetBuildingTime() { return this->buildingTime; }

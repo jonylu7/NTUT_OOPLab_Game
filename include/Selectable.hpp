@@ -11,6 +11,6 @@ public:
     void setSelected(bool value) { b_Selected = value; }
 
 protected:
-    bool b_Selected;
+    bool b_Selected = false;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SELECTABLE_HPP

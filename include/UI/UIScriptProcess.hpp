@@ -50,7 +50,7 @@ private:
     bool b_isReadyToSpawn = false;
     float m_spawnCoolDownTime = 0.F;
     float m_offPowerSpawnCoolDownTime = 0.F;
-    unitType m_currentAvatarType;
+    unitType m_currentInfType;
     bool b_isSpawningInCooldown = false;
     std::deque<unitType> m_spawnQueue;
     std::chrono::time_point<std::chrono::high_resolution_clock>
@@ -94,7 +94,7 @@ public:
     float GetSpawnTime(unitType type);
 
     unitType GetCurrentStructure() { return m_currentStructureType; };
-
+    unitType GetCurrentInfType() { return m_currentInfType; };
     // spawn unit
     std::shared_ptr<Avatar> spawnAvatar();
     bool getIfReadytoSpawn() { return b_isReadyToSpawn; }

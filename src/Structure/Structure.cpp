@@ -76,9 +76,6 @@ void Structure::SetObjectLocation(glm::vec2 location) {
                     location.y + 0.5 * CELL_SIZE.y};
     m_Transform.translation = DrawLocation;
 }
-void Structure::onSelected() {
-    this->SetAttachVisible(getSelected());
-};
 
 void Structure::SetAttachVisible(bool visible) {
     m_HighLight.SetObjectLocation(this->DrawLocation);

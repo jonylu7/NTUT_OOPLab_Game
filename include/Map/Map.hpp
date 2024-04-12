@@ -27,6 +27,7 @@ public:
                                std::shared_ptr<TileClass> tile);
 
     void setGridActive(bool value) { m_Grid.SetActivate(value); }
+    
     void
     AppendSelectableObjectByCellPosition(glm::vec2 position,
                                          std::shared_ptr<Selectable> object) {

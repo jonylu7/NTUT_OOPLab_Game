@@ -7,7 +7,7 @@
 #include "Camera.hpp"
 #include "Mechanics/GameObjectID.hpp"
 #include "Mechanics/GameObjectManager.hpp"
-#include "Mechanics/Player.hpp"
+#include "Mechanics//Player.hpp"
 #include "SpriteSheet.hpp"
 #include "UI/UIScriptProcess.hpp"
 #include "imgui.h"

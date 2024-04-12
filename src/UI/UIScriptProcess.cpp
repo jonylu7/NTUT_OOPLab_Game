@@ -53,79 +53,91 @@ void UIScriptProcess::CountDown() {
     double spawnCoolDownTime = GetSpawnCountDownTime();
     m_currentCountDownTime = std::chrono::high_resolution_clock::now();
 
-    //Structure Building
-    std::chrono::duration<double> buildElapsed = m_currentCountDownTime - m_buildStartTime;
-    if(m_gameObjectManager->GetTotalCurrency()<=0 && b_isBuildingInCoolDown && buildElapsed.count() < buildCoolDownTime){
-        if(m_gameObjectManager->GetTotalPower()<=0){
-            SetBuildCountDown(buildCoolDownTime/2-buildElapsed.count());
-        }else{
-            SetBuildCountDown(buildCoolDownTime-buildElapsed.count());
+    // Structure Building
+    std::chrono::duration<double> buildElapsed =
+        m_currentCountDownTime - m_buildStartTime;
+    if (m_gameObjectManager->GetTotalCurrency() <= 0 &&
+        b_isBuildingInCoolDown && buildElapsed.count() < buildCoolDownTime) {
+        if (m_gameObjectManager->GetTotalPower() <= 0) {
+            SetBuildCountDown(buildCoolDownTime / 2 - buildElapsed.count());
+        } else {
+            SetBuildCountDown(buildCoolDownTime - buildElapsed.count());
         }
-    }else{
-        if((b_isBuildingInCoolDown && buildElapsed.count()-m_lastBuildElapsed>=1)|| buildElapsed.count()==0){//update every second
-            m_lastBuildElapsed=buildElapsed.count();
-            int buildCost= GetObjCost(m_currentStructureType)/buildCoolDownTime;
-            if(buildCost>=m_currentBuildRemainingCost){
-                buildCost=m_currentBuildRemainingCost;
+    } else {
+        if ((b_isBuildingInCoolDown &&
+             buildElapsed.count() - m_lastBuildElapsed >= 1) ||
+            buildElapsed.count() == 0) { // update every second
+            m_lastBuildElapsed = buildElapsed.count();
+            int buildCost =
+                GetObjCost(m_currentStructureType) / buildCoolDownTime;
+            if (buildCost >= m_currentBuildRemainingCost) {
+                buildCost = m_currentBuildRemainingCost;
             }
-            if(m_currentBuildRemainingCost>0){
-                m_currentBuildRemainingCost-=buildCost;
-                m_player->addCurrency(-1*buildCost);
+            if (m_currentBuildRemainingCost > 0) {
+                m_currentBuildRemainingCost -= buildCost;
+                m_player->addCurrency(-1 * buildCost);
             }
         }
         // if finish building
-        if (buildElapsed.count() >= buildCoolDownTime && b_isBuildingInCoolDown) {
+        if (buildElapsed.count() >= buildCoolDownTime &&
+            b_isBuildingInCoolDown) {
             // printf("(Button) Construction Finished\n");
             SetIfFinished(m_currentStructureType, true);
             b_isBuildingInCoolDown = false;
         }
     }
 
-    //Unit Spawning
-    std::chrono::duration<double> spawnElapsed = m_currentCountDownTime - m_SpawnStartTime;
-    if(m_gameObjectManager->GetTotalCurrency()<=0 && b_isSpawningInCooldown && spawnElapsed.count() <  spawnCoolDownTime){
-        if(m_gameObjectManager->GetTotalPower()<=0){
-            SetSpawnCountDown(spawnCoolDownTime/2-spawnElapsed.count());
-        }else{
-            SetSpawnCountDown(spawnCoolDownTime-spawnElapsed.count());
+    // Unit Spawning
+    std::chrono::duration<double> spawnElapsed =
+        m_currentCountDownTime - m_SpawnStartTime;
+    if (m_gameObjectManager->GetTotalCurrency() <= 0 &&
+        b_isSpawningInCooldown && spawnElapsed.count() < spawnCoolDownTime) {
+        if (m_gameObjectManager->GetTotalPower() <= 0) {
+            SetSpawnCountDown(spawnCoolDownTime / 2 - spawnElapsed.count());
+        } else {
+            SetSpawnCountDown(spawnCoolDownTime - spawnElapsed.count());
         }
-    }else{
-        if((b_isSpawningInCooldown && spawnElapsed.count()-m_lastSpawnElapsed>=1) || spawnElapsed.count()==0){//update every second
-            m_lastSpawnElapsed=spawnElapsed.count();
-            int spawnCost=GetObjCost(m_currentAvatarType)/spawnCoolDownTime;
-            if(spawnCost>=m_currentSpawnRemainingCost){
-                spawnCost=m_currentSpawnRemainingCost;
+    } else {
+        if ((b_isSpawningInCooldown &&
+             spawnElapsed.count() - m_lastSpawnElapsed >= 1) ||
+            spawnElapsed.count() == 0) { // update every second
+            m_lastSpawnElapsed = spawnElapsed.count();
+            int spawnCost = GetObjCost(m_currentInfType) / spawnCoolDownTime;
+            if (spawnCost >= m_currentSpawnRemainingCost) {
+                spawnCost = m_currentSpawnRemainingCost;
             }
-            if(m_currentSpawnRemainingCost>0){
-                m_currentSpawnRemainingCost-=spawnCost;
-                m_player->addCurrency(-1*spawnCost);
+            if (m_currentSpawnRemainingCost > 0) {
+                m_currentSpawnRemainingCost -= spawnCost;
+                m_player->addCurrency(-1 * spawnCost);
             }
         }
-        //if finish spawning
-        if (spawnElapsed.count() >= spawnCoolDownTime && b_isSpawningInCooldown) {
-            b_isReadyToSpawn=true;
+        // if finish spawning
+        if (spawnElapsed.count() >= spawnCoolDownTime &&
+            b_isSpawningInCooldown) {
+            b_isReadyToSpawn = true;
             b_isSpawningInCooldown = false;
             //        printf("(UISC)Unit Ready\n");
         }
     }
 
     if (b_isBuildingInCoolDown) {
-        // printf("(Button) CD: %.2f,%s\n", m_buildCoolDownTime - elapsed.count(),
-        // elapsed.count() >= m_buildCoolDownTime ? "True" : "False");
+        // printf("(Button) CD: %.2f,%s\n", m_buildCoolDownTime -
+        // elapsed.count(), elapsed.count() >= m_buildCoolDownTime ? "True" :
+        // "False");
     }
     if (b_isSpawningInCooldown) {
-//        printf("(UISC) CD: %.2f,%s\n", unitElapsed.count(),
-//        elapsed.count() >= m_spawnCooldownTime ? "True" : "False");
+        //        printf("(UISC) CD: %.2f,%s\n", unitElapsed.count(),
+        //        elapsed.count() >= m_spawnCooldownTime ? "True" : "False");
     }
 }
 void UIScriptProcess::SetBuildCountDown(float time) {
     m_buildCoolDownTime = time;
-    m_offPowerBuildCoolDownTime = time*2;
+    m_offPowerBuildCoolDownTime = time * 2;
     m_buildStartTime = std::chrono::high_resolution_clock::now();
 }
 void UIScriptProcess::SetSpawnCountDown(float time) {
     m_spawnCoolDownTime = time;
-    m_offPowerSpawnCoolDownTime = time*2;
+    m_offPowerSpawnCoolDownTime = time * 2;
     m_SpawnStartTime = std::chrono::high_resolution_clock::now();
 }
 
@@ -137,22 +149,23 @@ void UIScriptProcess::AddToBuildQueue(unitType type) {
     return;
 }
 void UIScriptProcess::Update(bool queueContinue) {
-    //(m_buildQueue.size() > 1 && queueContinue && !b_isBuildingInCoolDown) for waiting player to
-    //build strucutre, then continue operating
+    //(m_buildQueue.size() > 1 && queueContinue && !b_isBuildingInCoolDown) for
+    //waiting player to build strucutre, then continue operating
     if ((m_buildQueue.size() == 1 && !b_isBuildingInCoolDown) ||
-        ((m_buildQueue.size() > 1 && queueContinue && !b_isBuildingInCoolDown))) {
+        ((m_buildQueue.size() > 1 && queueContinue &&
+          !b_isBuildingInCoolDown))) {
         m_currentStructureType = m_buildQueue.front();
         m_buildQueue.pop_front();
         b_isBuildingInCoolDown = true;
         SetBuildCountDown(GetStructureTime(m_currentStructureType));
-        m_currentBuildRemainingCost= GetObjCost(m_currentStructureType);
+        m_currentBuildRemainingCost = GetObjCost(m_currentStructureType);
     }
-    if (m_spawnQueue.size() !=0 && !b_isSpawningInCooldown) {
-        m_currentAvatarType = m_spawnQueue.front();
+    if (m_spawnQueue.size() != 0 && !b_isSpawningInCooldown) {
+        m_currentInfType = m_spawnQueue.front();
         m_spawnQueue.pop_front();
         b_isSpawningInCooldown = true;
-        SetSpawnCountDown(GetSpawnTime(m_currentAvatarType));
-        m_currentSpawnRemainingCost=GetObjCost(m_currentAvatarType);
+        SetSpawnCountDown(GetSpawnTime(m_currentInfType));
+        m_currentSpawnRemainingCost = GetObjCost(m_currentInfType);
     }
     CountDown();
 }
@@ -199,44 +212,43 @@ void UIScriptProcess::SetIfFinished(unitType type, bool value) {
     }
 }
 
-void UIScriptProcess::AddToSpawnQueue(unitType type){
-//    printf("(UISC)Add Spawn Queue\n");
+void UIScriptProcess::AddToSpawnQueue(unitType type) {
+    //    printf("(UISC)Add Spawn Queue\n");
     m_spawnQueue.push_back(type);
     return;
-
 }
-float UIScriptProcess::GetSpawnTime(unitType type){
+float UIScriptProcess::GetSpawnTime(unitType type) {
     switch (type) {
-    case unitType::INFANTRY:{
+    case unitType::INFANTRY: {
         return 5.F;
     }
     }
 }
 
-std::shared_ptr<Avatar> UIScriptProcess::spawnAvatar(){
-//    printf("(UISC)spawnAvatar\n");
-    switch (m_currentAvatarType) {
-    case unitType::INFANTRY:{
+std::shared_ptr<Avatar> UIScriptProcess::spawnAvatar() {
+    //    printf("(UISC)spawnAvatar\n");
+    switch (m_currentInfType) {
+    case unitType::INFANTRY: {
         return std::make_unique<Infantry>();
     }
     }
 }
 
-float UIScriptProcess::GetBuildCountDownTime(){
-    if(m_gameObjectManager->GetTotalPower()<=0){
+float UIScriptProcess::GetBuildCountDownTime() {
+    if (m_gameObjectManager->GetTotalPower() <= 0) {
         return m_offPowerBuildCoolDownTime;
-    }else{
+    } else {
         return m_buildCoolDownTime;
     }
 }
-float UIScriptProcess::GetSpawnCountDownTime(){
-    if(m_gameObjectManager->GetTotalPower()<=0){
+float UIScriptProcess::GetSpawnCountDownTime() {
+    if (m_gameObjectManager->GetTotalPower() <= 0) {
         return m_offPowerSpawnCoolDownTime;
-    }else{
+    } else {
         return m_spawnCoolDownTime;
     }
 }
-int UIScriptProcess::GetObjCost(unitType type){
+int UIScriptProcess::GetObjCost(unitType type) {
     switch (type) {
     case unitType::BARRACKS:
         return barracks->GetBuildingCost();
@@ -255,5 +267,4 @@ int UIScriptProcess::GetObjCost(unitType type){
         // For example, you might throw an exception or set a default value
         break;
     }
-
 }

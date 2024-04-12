@@ -168,8 +168,6 @@ void UIClass::ShowBuildingTab() {
                 ButtonScript.AddToBuildQueue(unitType::WAR_FACT);
             }
         }
-        dl = ImGui::GetWindowDrawList();
-        p = ImGui::GetCursorScreenPos();
         p.x += 5.F;
         p.y -= 38.F;
         if (ButtonScript.GetCurrentStructure() == unitType::WAR_FACT) {
@@ -209,12 +207,19 @@ void UIClass::ShowBuildingTab() {
 };
 
 void UIClass::ShowInfantryTab() {
+    ImDrawList *dl = ImGui::GetWindowDrawList();
+    ImVec2 p = ImGui::GetCursorScreenPos();
     if (ImGui::BeginTabItem("Inf")) {
         if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 0)) {
             // rifle
             if (b_barackBuilt) {
                 ButtonScript.AddToSpawnQueue(unitType::INFANTRY);
                 setUnitConstructCount(unitType::INFANTRY, 1);
+            }
+
+            if (ButtonScript.GetCurrentInfType() == unitType::INFANTRY) {
+                dl->AddText(p, IM_COL32(2, 255, 2, 255),
+                            ButtonScript.GetFormattedCD().c_str());
             }
 
             LOG_DEBUG("TEST");
@@ -331,7 +336,6 @@ void UIClass::ShowVehTab() {
 
 bool UIClass::getImageButtonBySpriteSheetIndex(
     std::shared_ptr<SpriteSheet> spritesheet, int index) {
-    std::string Text = "test";
 
     auto uvcoord = getSpriteSheetCoordByIndex(spritesheet, index);
     return ImGui::ImageButton(
@@ -475,14 +479,7 @@ std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
 
         Avatar->Start(m_barrackCell);
         Avatar->setNewDestination(m_barrackTargetCell);
-
-    } /*else if(std::dynamic_pointer_cast< >(Avatar)){
-        Avatar->Start(m_warfactoryCell,m_Map);
-        Avatar->setNewDestination(m_warfactoryTargetCell);
-    } else if(std::dynamic_pointer_cast< >(Avatar)){
-        Avatar->Start(m_orerefineryCell,m_Map);
-        Avatar->setNewDestination(m_orerefineryTargetCell);
-    }*/
+    }
     printf("(UI)return to GOM success\n");
     return Avatar;
 }
