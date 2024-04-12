@@ -6,7 +6,7 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 
 #include "Map/MapUtility.hpp"
-#include "PathfindingUnit.hpp"
+#include "Unit/PathfindingUnit.hpp"
 #include "Unit/AttackAndDamageUnit.hpp"
 
 class Avatar : public PathfindingUnit,

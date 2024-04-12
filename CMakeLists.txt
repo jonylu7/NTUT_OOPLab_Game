@@ -98,7 +98,8 @@ set(SRC_FILES
 
         ${SRC_DIR}/Unit/Runner.cpp
         ${SRC_DIR}/Unit/Hunter.cpp
-        ${SRC_DIR}/PathUtility.cpp
+        ${SRC_DIR}/Unit/PathUtility.cpp
+        ${SRC_DIR}/Unit/PathFindingUnit.cpp
         ${SRC_DIR}/FindValidPathToDest.cpp
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp

@@ -65,7 +65,7 @@ public:
 
     MoveDirection getCurrentDir() { return m_currentDir; }
     void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
-
     bool walkTowardNextCell();
+
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
