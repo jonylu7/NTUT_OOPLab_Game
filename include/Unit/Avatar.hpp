@@ -28,7 +28,10 @@ public:
         setNextCell(destination);
 
         setMovementSpeed(4);
+        customizeStart();
     }
+    virtual void customizeStart(){};
+
     virtual void aliveUpdate() {
         if (walkTowardNextCell() || b_justStarted) {
             b_justStarted = false;

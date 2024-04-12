@@ -9,9 +9,13 @@
 
 #include "Selectable.hpp"
 
+#include "Map/Map.hpp"
+#include "Map/MapUtility.hpp"
+#include "SpriteSheet.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
+#include "Util/SpriteSheetAnimation.hpp"
 #include "Util/TransformUtils.hpp"
 #include "glm/glm.hpp"
 #define DEFAULT_ZINDEX 15
@@ -49,6 +53,7 @@ public:
     virtual void updateInvinsible();
 
     void Start() override;
+    virtual void SetSpriteSheet(){m_StructureSpriteSheet->Start("../assets/sprites/Barracks_SpriteSheet.png",48,48,13,0);}
     updateMode GetCurrentUpdateMode() const { return m_CurrentState; };
     void SetCurrentUpdateMode(updateMode mode) { m_CurrentState = mode; };
     virtual void SetObjectLocation(glm::vec2 location);
@@ -89,13 +94,21 @@ public:
     void SetBuildingIncome(float income) { buildingIncome = income; }
     float GetBuildingHp();
     GameObjectID GetID() { return m_ID; }
+    //OccupiedArea
+    glm::vec2 GetObjectCell() {return MapUtil::GlobalCoordToCellCoord(ObjectLocation);}
+    std::vector<glm::vec2> GetAbsoluteOccupiedArea();
+    bool ifBuildable();
+    void SetOccupiedAreaUnbuildable();
+    void SetRelativeOccupiedArea(std::vector<glm::vec2> Area){m_relativeOccupiedArea=Area;}
 
-//    void importMap(std::shared_ptr<MapClass> map){m_Map=map;}
+    //OccupiedArea End
+
+    void importMap(std::shared_ptr<MapClass> map){m_Map=map;}
 private:
     updateMode m_CurrentState = updateMode::Invisidable;
-    glm::vec2 ObjectLocation = {100, 100};
-    glm::vec2 DrawLocation = {ObjectLocation.x + CELL_SIZE.x,
-                              ObjectLocation.y + CELL_SIZE.y};
+//    glm::vec2 ObjectLocation = {100, 100};
+//    glm::vec2 DrawLocation = {ObjectLocation.x + CELL_SIZE.x,
+//                              ObjectLocation.y + CELL_SIZE.y};
     float electricPower;
     float buildingTime;
     float buildingCost;
@@ -106,7 +119,15 @@ private:
 
 protected:
 //    std::shared_ptr<MapClass> m_Map;
+    std::shared_ptr<MapClass> m_Map;
     bool b_selectingNewWayPoint = false;
+    std::shared_ptr<SpriteSheet> m_StructureSpriteSheet =
+        std::make_shared<SpriteSheet>();
+    std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation=std::shared_ptr<Util::SpriteSheetAnimation>();
+    glm::vec2 DrawLocation = {ObjectLocation.x + CELL_SIZE.x,
+                              ObjectLocation.y + CELL_SIZE.y};
+    glm::vec2 ObjectLocation = {100, 100};
+    std::vector<glm::vec2> m_relativeOccupiedArea={{0,0}};
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP

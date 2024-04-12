@@ -1,8 +1,9 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_BARRACKS_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_BARRACKS_HPP
 
+#include "SpriteSheet.hpp"
+#include "Util/SpriteSheetAnimation.hpp"
 #include "WayPointStructure.hpp"
-
 
 class Barracks : public WayPointStructure {
 public:
@@ -14,5 +15,12 @@ public:
                             buildingHp,
                             GameObjectID(unitType::BARRACKS, house)){};
     void Start() override;
+    void SetObjectLocation(glm::vec2 location) override{
+        location = ChangeToCell(location);
+        ObjectLocation = location;
+        DrawLocation = {location.x + 1 * CELL_SIZE.x,
+                        location.y + 1 * CELL_SIZE.y};
+        m_Transform.translation = DrawLocation;
+    }
 };
 #endif

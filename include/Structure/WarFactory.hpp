@@ -12,6 +12,13 @@ public:
                             buildingHp,
                             GameObjectID(unitType::WAR_FACT, house)){};
     void Start() override;
+    void SetObjectLocation(glm::vec2 location) override{
+        location = ChangeToCell(location);
+        ObjectLocation = location;
+        DrawLocation = {location.x + 0.5 * CELL_SIZE.x,
+                        location.y + 1 * CELL_SIZE.y};
+        m_Transform.translation = DrawLocation;
+    }
 };
 
 #endif

@@ -2,8 +2,9 @@
 
 void Barracks::Start() {
     // Set Texture----------------------------------------
-    this->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/barracks.png"));
+    //this->SetDrawable(std::make_unique<Util::Image>("../assets/sprites/barracks.png"));
+    m_StructureSpriteSheet->Start("../assets/sprites/Barracks_SpriteSheet.png",48,48,13,0);
+    SetRelativeOccupiedArea({{0,0},{0,1},{1,0},{1,1}});
     m_wayPoint->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/flagB.png"));
     m_HighLight.SetDrawable(

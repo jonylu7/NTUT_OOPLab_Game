@@ -9,9 +9,21 @@ public:
                    HouseType house = HouseType::NONE)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
                     GameObjectID(unitType::ADV_POWER_PLANT, house)) {
-        SetDrawable(
-            std::make_unique<Util::Image>("../assets/sprites/PowerPlants.png"));
+//        SetDrawable(
+//            std::make_unique<Util::Image>("../assets/sprites/PowerPlants.png"));
+
     };
+    void SetSpriteSheet()override{
+        m_StructureSpriteSheet->Start("../assets/sprites/ADVPowerPlants_SpriteSheet.png",72,72,13,0);
+        m_relativeOccupiedArea={{0,0},{0,1},{0,2},{1,0},{1,1},{1,2}};
+    }
+    void SetObjectLocation(glm::vec2 location) override{
+        location = ChangeToCell(location);
+        ObjectLocation = location;
+        DrawLocation = {location.x + 2 * CELL_SIZE.x,
+                        location.y + 2 * CELL_SIZE.y};
+        m_Transform.translation = DrawLocation;
+    }
 };
 
 #endif

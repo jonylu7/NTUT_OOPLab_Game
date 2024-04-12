@@ -11,5 +11,12 @@ public:
                             GameObjectID(unitType::ORE_REF, house)){};
     void Start() override;
     virtual float GetBuildingIncome()override{return 50.F;}//debug
+    void SetObjectLocation(glm::vec2 location) override{
+        location = ChangeToCell(location);
+        ObjectLocation = location;
+        DrawLocation = {location.x + 1 * CELL_SIZE.x,
+                        location.y + 1 * CELL_SIZE.y};
+        m_Transform.translation = DrawLocation;
+    }
 };
 #endif
