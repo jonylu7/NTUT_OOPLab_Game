@@ -145,49 +145,10 @@ protected:
 
 public:
     std::deque<MoveDirection> findPath(glm::vec2 currentcell,
-                                       glm::vec2 destination) {
-        // what if desintation is not walkable
-        setCurrentCell(currentcell);
-        setDestinationCell(destination);
-        std::deque<MoveDirection> m_dirQue;
+                                       glm::vec2 destinationcell) ;
 
-        Side whichSideToTouch = randomlyChooseSide();
-        std::shared_ptr<MoveDirection> dirToTouch = nullptr;
-        while (getCurrentCell() != getDestinationCell()) {
 
-            if (m_Map
-                    ->getTileByCellPosition(
-                        glm::vec2(getNextCell().x, getNextCell().y))
-                    ->getWalkable()) {
-                // move current to next cell
-                setCurrentCell(getNextCell());
-                m_dirQue.push_back(getCurrentDir());
-                setCurrentDir(PathUtility::PathUtility::getDirByRelativeCells(
-                    getCurrentCell(), getDestinationCell()));
 
-                // set next
-                setNextCell(PathUtility::getNextCellByCurrent(getCurrentDir(),
-                                                              getNextCell()));
 
-                whichSideToTouch = randomlyChooseSide();
-                // dirToTouch = nullptr;
-            } else {
-                if (dirToTouch == nullptr) {
-                    dirToTouch = std::make_shared<MoveDirection>(
-                        getDirIfObstacle(PathUtility::getDirByRelativeCells(
-                                             getCurrentCell(), getNextCell()),
-                                         whichSideToTouch));
-                } else {
-                    dirToTouch = std::make_shared<MoveDirection>(
-                        getDirIfObstacle(*dirToTouch, whichSideToTouch));
-                }
-
-                setCurrentDir(*dirToTouch);
-                setNextCell(PathUtility::getNextCellByCurrent(
-                    *dirToTouch, getCurrentCell()));
-            }
-        }
-        return m_dirQue;
-    }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
