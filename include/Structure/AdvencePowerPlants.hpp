@@ -1,10 +1,11 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_ADVPowerPlants_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_ADVPowerPlants_HPP
-#include "House.hpp"
+#include "Mechanics/House.hpp"
 #include "Structure.hpp"
 class ADVPowerPlants : public Structure {
 public:
-    ADVPowerPlants(float electricPower = 200.F, float buildingTime = 25.F*CHEAT,
+    ADVPowerPlants(float electricPower = 200.F,
+                   float buildingTime = 25.F * CHEAT,
                    float buildingCost = 500.F, float buildingHp = 700.F,
                    HouseType house = HouseType::NONE)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,

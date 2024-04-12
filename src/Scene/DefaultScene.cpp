@@ -6,13 +6,8 @@
 #include <iostream>
 
 void DefaultScene::Start() {
-    // image.SetImage("../assets/sprites/Shapes/B_Box.png");
-    LOG_TRACE("Start");
-    /* doing some weird stuff, fix is needed
-    std::vector<std::shared_ptr<TileClass>> maps =
-        m_Map.readMapAndTileSet(m_OgMap, m_tileSets);
-        */
 
+    LOG_TRACE("Start");
     m_Map->Init(255, 255);
     // m_Map->getTileByCellPosition(glm::vec2(5, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(6, 5))->setWalkable(0);
@@ -41,8 +36,6 @@ void DefaultScene::Start() {
 }
 
 void DefaultScene::Update() {
-    // m_dummy.Update();
-
     m_hunter->Update();
     m_runner->Update();
 

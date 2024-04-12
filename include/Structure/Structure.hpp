@@ -4,8 +4,8 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
-#include "GameObjectID.hpp"
 #include "HighLight.h"
+#include "Mechanics//GameObjectID.hpp"
 
 #include "Selectable.hpp"
 
@@ -90,7 +90,7 @@ public:
     float GetBuildingHp();
     GameObjectID GetID() { return m_ID; }
 
-//    void importMap(std::shared_ptr<MapClass> map){m_Map=map;}
+    //    void importMap(std::shared_ptr<MapClass> map){m_Map=map;}
 private:
     updateMode m_CurrentState = updateMode::Invisidable;
     glm::vec2 ObjectLocation = {100, 100};
@@ -105,7 +105,7 @@ private:
     GameObjectID m_ID;
 
 protected:
-//    std::shared_ptr<MapClass> m_Map;
+    //    std::shared_ptr<MapClass> m_Map;
     bool b_selectingNewWayPoint = false;
 };
 

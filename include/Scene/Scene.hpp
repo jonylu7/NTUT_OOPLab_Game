@@ -6,9 +6,9 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_SCENE_HPP
 #include "Camera.hpp"
 #include "Core/Context.hpp"
-#include "GameObjectManager.hpp"
 #include "Map/MapBinReader.hpp"
 #include "Map/YAMLReader.hpp"
+#include "Mechanics/GameObjectManager.hpp"
 
 #include "Camera.hpp"
 #include "DrawOverlays.hpp"

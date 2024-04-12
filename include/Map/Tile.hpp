@@ -7,7 +7,7 @@
 
 #include "Selectable.hpp"
 
-#include "GameObjectID.hpp"
+#include "Mechanics/GameObjectID.hpp"
 
 #include "SpriteSheet.hpp"
 

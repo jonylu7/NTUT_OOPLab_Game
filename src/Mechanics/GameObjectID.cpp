@@ -1,7 +1,7 @@
 //
 // Created by 盧威任 on 3/13/24.
 //
-#include "GameObjectID.hpp"
+#include "Mechanics/GameObjectID.hpp"
 std::unordered_map<unitType, unsigned int> OccupiedID::m_OccupiedID;
 
 int OccupiedID::getNewestID(unitType type) {

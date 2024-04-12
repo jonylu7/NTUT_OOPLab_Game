@@ -5,9 +5,9 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #include "Camera.hpp"
-#include "GameObjectID.hpp"
-#include "GameObjectManager.hpp"
-#include "Player.hpp"
+#include "Mechanics/GameObjectID.hpp"
+#include "Mechanics/GameObjectManager.hpp"
+#include "Mechanics/Player.hpp"
 #include "SpriteSheet.hpp"
 #include "UI/UIScriptProcess.hpp"
 #include "imgui.h"
@@ -32,22 +32,27 @@ public:
     }
 
     std::unique_ptr<Structure> getSelectedBuilding();
-    bool
-    getIfAnyBuildingReadyToBuild(); // 避免Scene收到空的getSelectedBuilding
+    bool getIfAnyBuildingReadyToBuild(); // 避免Scene收到空的getSelectedBuilding
 
     std::shared_ptr<Avatar> getUnitFromUI();
-    bool getIfUnitReadyToSpawn(){return ButtonScript.getIfReadytoSpawn();}
-    void setIfUnitReadyToSpawn(bool b){ButtonScript.setIfReadytoSpawn(b);}
+    bool getIfUnitReadyToSpawn() { return ButtonScript.getIfReadytoSpawn(); }
+    void setIfUnitReadyToSpawn(bool b) { ButtonScript.setIfReadytoSpawn(b); }
 
-    //import from scene
-    void importMap(std::shared_ptr<MapClass> m_Map){this->m_Map=m_Map;}
-    void importPlayer(std::shared_ptr<Player> m_Player){this->m_Player=m_Player; ButtonScript.importPlayer(m_Player);}
-    void importGameObjManager(std::shared_ptr<GameObjectManager> gameObjectManager){
-        m_gameObjectManager=gameObjectManager;
+    // import from scene
+    void importMap(std::shared_ptr<MapClass> m_Map) { this->m_Map = m_Map; }
+    void importPlayer(std::shared_ptr<Player> m_Player) {
+        this->m_Player = m_Player;
+        ButtonScript.importPlayer(m_Player);
+    }
+    void
+    importGameObjManager(std::shared_ptr<GameObjectManager> gameObjectManager) {
+        m_gameObjectManager = gameObjectManager;
         ButtonScript.importGameObjManager(gameObjectManager);
     }
-    //check if building has built
-    void checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList);
+    // check if building has built
+    void
+    checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList);
+
 private:
     UIScriptProcess ButtonScript;
     void InitUnitQueue();
@@ -113,7 +118,7 @@ private:
     glm::vec2 m_orerefineryCell;
     glm::vec2 m_orerefineryTargetCell;
 
-    //ptr import from scene
+    // ptr import from scene
     std::shared_ptr<MapClass> m_Map;
     std::shared_ptr<Player> m_Player;
     std::shared_ptr<GameObjectManager> m_gameObjectManager;

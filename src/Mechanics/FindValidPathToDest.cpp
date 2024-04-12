@@ -2,7 +2,7 @@
 // Created by 盧威任 on 4/12/24.
 //
 
-#include "FindValidPathToDest.hpp"
+#include "Mechanics/FindValidPathToDest.hpp"
 
 std::deque<MoveDirection>
 FindValidPathToDest::findPath(glm::vec2 currentcell,
@@ -54,10 +54,6 @@ FindValidPathToDest::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
                                            MoveDirection currentdir,
                                            glm::vec2 destinationcell) {
 
-    // side
-    //
-    // return dirque
-    // check
     std::vector<MoveDirection> path;
     while (!canResumeWalkingStraight(currentcell, destinationcell)) {
 

@@ -12,7 +12,7 @@ if (MSVC)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/build)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/build)
-else()
+else ()
     set(TARGET_COMPILE_OPTIONS
             -Wall -Wextra -pedantic
     )
@@ -77,7 +77,6 @@ set(SRC_FILES
         ${SRC_DIR}/Util/CustomizableImage.cpp
 
 
-
         ${SRC_DIR}/App.cpp
         ${SRC_DIR}/Grid.cpp
 
@@ -100,12 +99,12 @@ set(SRC_FILES
         ${SRC_DIR}/Unit/Hunter.cpp
         ${SRC_DIR}/Unit/PathUtility.cpp
         ${SRC_DIR}/Unit/PathFindingUnit.cpp
-        ${SRC_DIR}/FindValidPathToDest.cpp
+        ${SRC_DIR}/Mechanics/FindValidPathToDest.cpp
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
         ${SRC_DIR}/SpriteSheet.cpp
         ${SRC_DIR}/UI/UI.cpp
-        ${SRC_DIR}/GameObjectID.cpp
+        ${SRC_DIR}/Mechanics/GameObjectID.cpp
         ${SRC_DIR}/Map/YAMLReader.cpp
         ${SRC_DIR}/Map/TerrainConfig.cpp
         ${SRC_DIR}/Map/MapbinReader.cpp
@@ -159,8 +158,8 @@ set(INCLUDE_FILES
 
 
         ${INCLUDE_DIR}/App.hpp
-        ${INCLUDE_DIR}/GameObjectManager.hpp
-        ${INCLUDE_DIR}/GameObjectID.hpp
+        ${INCLUDE_DIR}/Mechanics/GameObjectManager.hpp
+        ${INCLUDE_DIR}/Mechanics/GameObjectID.hpp
         ${INCLUDE_DIR}/Tile.hpp
         ${INCLUDE_DIR}/config.hpp
         ${INCLUDE_DIR}/DrawOverlays.hpp

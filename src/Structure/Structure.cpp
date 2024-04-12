@@ -2,7 +2,7 @@
 // Created by 盧威任 on 1/30/24.
 //
 #include "Structure/Structure.hpp"
-#include "GameObjectManager.hpp"
+#include "Mechanics/GameObjectManager.hpp"
 #include "Util/Input.hpp"
 #include "Util/Transform.hpp"
 #include "config.hpp"
@@ -47,12 +47,14 @@ void Structure::updateMoveable() {
     this->SetVisible(true);
     this->Draw();
     glm::vec2 cellPos = MapUtil::GlobalCoordToCellCoord(location);
-//    std::shared_ptr<TileClass> tileClass = m_Map->getTileByCellPosition(cellPos);
-    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)  /*tileClass->getBuildable()*/) {
+    //    std::shared_ptr<TileClass> tileClass =
+    //    m_Map->getTileByCellPosition(cellPos);
+    if (Util::Input::IsKeyPressed(
+            Util::Keycode::MOUSE_LB) /*tileClass->getBuildable()*/) {
         this->SetObjectLocation(location);
         this->SetCurrentUpdateMode(updateMode::Fixed);
-//        tileClass->setBuildable(false);
-//        tileClass->setWalkable(false);
+        //        tileClass->setBuildable(false);
+        //        tileClass->setWalkable(false);
         // 在這裡增加設置Tile屬性
         /*
                 std::shared_ptr<TileClass>tile =

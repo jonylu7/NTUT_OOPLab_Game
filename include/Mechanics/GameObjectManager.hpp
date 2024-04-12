@@ -89,7 +89,6 @@ public:
     }
     void Append(std::shared_ptr<Avatar> newUnit) {
         m_UnitArray.push_back(newUnit);
-        printf("(GOM) push back success\n");
     }
 
     void RemoveStructByID(const GameObjectID id) {}
@@ -101,6 +100,7 @@ public:
         }
         return totalPower;
     }
+
     int GetTotalCurrency() { return m_Player->getTotalCurrency(); }
     void updateTotalCurrency() {
         int totalCurrency = m_Player->getTotalCurrency();
