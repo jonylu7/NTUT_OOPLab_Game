@@ -5,9 +5,9 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #include "Camera.hpp"
+#include "Mechanics//Player.hpp"
 #include "Mechanics/GameObjectID.hpp"
 #include "Mechanics/GameObjectManager.hpp"
-#include "Mechanics//Player.hpp"
 #include "SpriteSheet.hpp"
 #include "UI/UIScriptProcess.hpp"
 #include "imgui.h"
@@ -18,7 +18,8 @@
 
 class UIClass {
 public:
-    void Start();
+    void Start(std::shared_ptr<MapClass> map, std::shared_ptr<Player> player,
+               std::shared_ptr<GameObjectManager> gameobjectmanager);
     void Update();
 
     static unsigned int getUnitConstructCount(unitType type) {
@@ -39,6 +40,12 @@ public:
     void setIfUnitReadyToSpawn(bool b) { ButtonScript.setIfReadytoSpawn(b); }
 
     // import from scene
+
+    // check if building has built
+    void
+    checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList);
+
+protected:
     void importMap(std::shared_ptr<MapClass> m_Map) { this->m_Map = m_Map; }
     void importPlayer(std::shared_ptr<Player> m_Player) {
         this->m_Player = m_Player;
@@ -49,15 +56,11 @@ public:
         m_gameObjectManager = gameObjectManager;
         ButtonScript.importGameObjManager(gameObjectManager);
     }
-    // check if building has built
-    void
-    checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList);
 
 private:
     UIScriptProcess ButtonScript;
     void InitUnitQueue();
-    void ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
-                                   ImGuiMouseButton mouse_button);
+
     void ShowPlayerConstructionMenu();
     void ShowHeaderSection();
     void ShowBuildingTab();
@@ -94,11 +97,11 @@ private:
     ImGuiIO &io = ImGui::GetIO();
 
     ImFont *sacker_med = io.Fonts->AddFontFromFileTTF(
-        "../assets/fonts/sackersgothicstd-medium.otf", 100);
+        "../assets/fonts/sackersgothicstd-medium.otf", 11);
     ImFont *sacker_heav = io.Fonts->AddFontFromFileTTF(
-        "../assets/fonts/sackersgothicstd-heavy.otf", 100);
+        "../assets/fonts/sackersgothicstd-heavy.otf", 11);
     ImFont *sacker_light = io.Fonts->AddFontFromFileTTF(
-        "../assets/fonts/sackersgothicstd-light.otf", 100);
+        "../assets/fonts/sackersgothicstd-light.otf", 11);
 
     bool b_Baracks = false;
     bool b_OreRefinery = false;

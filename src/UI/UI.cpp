@@ -5,11 +5,11 @@
 #include "UI/UI.hpp"
 #include "Map/Map.hpp"
 
-ImVec2 start_pos;
-ImVec2 end_pos;
 std::unordered_map<unitType, unsigned int> UIClass::s_unitConstructCount;
 
-void UIClass::Start() {
+void UIClass::Start(std::shared_ptr<MapClass> map,
+                    std::shared_ptr<Player> player,
+                    std::shared_ptr<GameObjectManager> gameobjectmanager) {
     InitUnitQueue();
     m_StructureIconSpriteSheet->Start(
         "../assets/sprites/ICON_Allied_Structure.png", 64, 48, 24, 0);
@@ -17,35 +17,15 @@ void UIClass::Start() {
         "../assets/sprites/ICON_Allied_Infantry.png", 64, 48, 8, 0);
     m_VehiclesIconSpriteSheet->Start(
         "../assets/sprites/ICON_Allied_Vehicles.png", 64, 48, 12, 0);
-
-    io.FontGlobalScale *= 0.115f; // Adjust as needed
+    importMap(map);
+    importPlayer(player);
+    importGameObjManager(gameobjectmanager);
 }
 
 void UIClass::Update() {
-    ShowCursorSelectionRegion(&start_pos, &end_pos, ImGuiMouseButton_Left);
+
     ShowPlayerConstructionMenu();
     ButtonScript.Update(getIfAnyBuildingReadyToBuild());
-
-    // printf("(UI)Button Lock :
-    // %s,%s\n",selectLock()?"Unlock":"Lock",b_SelectToBuild?"True":"False");
-}
-
-void UIClass::ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
-                                        ImGuiMouseButton mouse_button) {
-    IM_ASSERT(start_pos != NULL);
-    IM_ASSERT(end_pos != NULL);
-    if (ImGui::IsMouseClicked(mouse_button))
-        *start_pos = ImGui::GetMousePos();
-    if (ImGui::IsMouseDown(mouse_button)) {
-        *end_pos = ImGui::GetMousePos();
-        ImDrawList *draw_list =
-            ImGui::GetForegroundDrawList(); // ImGui::GetWindowDrawList();
-        draw_list->AddRect(
-            *start_pos, *end_pos,
-            ImGui::GetColorU32(IM_COL32(255, 255, 255, 255))); // Border
-        // draw_list->AddRectFilled(*start_pos, *end_pos,
-        // ImGui::GetColorU32(IM_COL32(0, 130, 216, 50)));    // Background
-    }
 }
 
 void UIClass::ShowHeaderSection() {
@@ -77,8 +57,8 @@ void UIClass::ShowPlayerConstructionMenu() {
     // put the stuff in here
     ImGui::Begin("Structure Selection Menu", nullptr, windowSettings);
     ShowHeaderSection();
-    ImGui::SetWindowSize(ImVec2(250, 580));
-    ImGui::SetWindowPos(ImVec2(992, 48));
+    // ImGui::SetWindowSize(ImVec2(250, 580));
+    // ImGui::SetWindowPos(ImVec2(992, 48));
 
     // Adjust font texture size if necessary
     // Larger font texture size may improve text clarity on high DPI displays
@@ -477,7 +457,7 @@ std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
     ButtonScript.setIfReadytoSpawn(false);
     if (std::dynamic_pointer_cast<Infantry>(Avatar)) {
 
-        Avatar->Start({m_barrackCell.x+1,m_barrackCell.y+1});
+        Avatar->Start({m_barrackCell.x + 1, m_barrackCell.y + 1});
         Avatar->setNewDestination(m_barrackTargetCell);
     }
     printf("(UI)return to GOM success\n");

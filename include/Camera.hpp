@@ -8,10 +8,10 @@
 #include "Core/Drawable.hpp"
 #include "config.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-//164.F perfect for
+// 164.F perfect for
 constexpr float FOV_UPPER_LIMIT = 164.F;
 constexpr float FOV_LOWER_LIMIT = 1.F;
-class CameraClass{
+class CameraClass {
 public:
     CameraClass() { setPosition(glm::vec2(0, 0)); }
     CameraClass(glm::vec2 position) { setPosition(position); }
@@ -27,16 +27,9 @@ public:
     void setPosition(glm::vec2 position) { m_Position = position; }
 
     static glm::mat4x4 getProjectionMatrix() {
-        /*
-         * return glm::perspective(glm::radians(m_Fov),
-float(WINDOW_WIDTH) / (float(WINDOW_HEIGHT)),
-0.1F, 100.F);
-         * adjust projection matrix when window size is changing
-                                        */
 
-        return glm::ortho(0.0F, float(WINDOW_WIDTH), 0.0F,
-                          float(WINDOW_HEIGHT), 0.F, 100.F);
-
+        return glm::ortho(0.0F, float(WINDOW_WIDTH), 0.0F, float(WINDOW_HEIGHT),
+                          0.F, 100.F);
     }
 
     static glm::mat4x4 getViewMatrix() {
@@ -54,8 +47,8 @@ float(WINDOW_WIDTH) / (float(WINDOW_HEIGHT)),
     float getZoomingSpeed() { return m_ZoomingSpeed; }
     void changeFOV(float offset);
 
-    void Start() ;
-    void Update() ;
+    void Start();
+    void Update();
     void UpdateWhenCursorAtBoarder();
     void UpdateWhenCursorScroll();
 
@@ -65,6 +58,8 @@ private:
     float m_MovingSpeed = 20.F;
     float m_ZoomingSpeed = 0.1F;
     static float m_Fov;
+    static glm::vec2 s_boarderMaximum;
+    static glm::vec2 s_boarderMinimum;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP
