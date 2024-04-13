@@ -15,8 +15,6 @@ void DefaultScene::Start() {
     m_Map->getTileByCellPosition(glm::vec2(8, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(9, 5))->setWalkable(0);
     m_UI.Start();
-    m_testdraw.Start(std::vector({glm::vec2(0.F, 0.F)}),
-                     DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
 
     // m_dummy.Start({5, 5}, m_Map);
@@ -48,20 +46,13 @@ void DefaultScene::Update() {
     m_Renderer.Update();
     m_UI.Update();
 
-    Util::Transform trans2;
-    trans2.translation = Structure::ChangeToCell(
-        MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
+    m_Cursor.Update(
+        m_Map->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
+            MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()))));
 
     auto tile = m_Map->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
         MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition())));
 
-    if (tile->getWalkable()) {
-        m_testdraw.setDrawMode(DrawOverlays::OverlayShapes::B_BOXES);
-    } else {
-        m_testdraw.setDrawMode(DrawOverlays::OverlayShapes::R_CROSS);
-    }
-
-    m_testdraw.DrawUsingCamera(trans2, 1);
     //  m_GameObjectManager.Update();
 
     if (m_UI.getIfAnyBuildingReadyToBuild()) {

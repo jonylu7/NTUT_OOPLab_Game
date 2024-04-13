@@ -56,26 +56,6 @@ public:
     }
 
     void clearSelectableObjects() { m_SelectableObjects.clear(); }
-
-    /*
-    bool operator==(const TileClass &tile) const {
-        if (tile.m_Name == m_Name && m_Walkable == tile.m_Walkable &&
-            m_Buildable == tile.m_Walkable) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    bool operator<(const TileClass &tile) const {
-        if (tile.m_Name < m_Name || m_Walkable < tile.m_Walkable ||
-            m_Buildable == tile.m_Walkable) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-     */
     TileClass &operator=(const TileClass &tile) {
         this->m_Walkable = tile.m_Walkable;
         this->m_Clickable = tile.m_Clickable;

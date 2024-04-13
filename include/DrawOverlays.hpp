@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DRAWOVERLAYS_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DRAWOVERLAYS_HPP
 #include "Core/Drawable.hpp"
+#include "Util/Image.hpp"
 #include "Util/TransformUtils.hpp"
 #include "pch.hpp"
 class DrawOverlays : public Core::Drawable {

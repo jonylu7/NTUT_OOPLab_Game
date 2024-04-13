@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
 
+#include "Cursor.hpp"
 #include "Scene.hpp"
 #include "Unit/Avatar.hpp"
 #include "Unit/Hunter.hpp"
@@ -20,7 +21,7 @@ public:
 
 private:
     SpriteSheet m_SpriteSheet;
-    DrawOverlays m_testdraw;
+    CursorClass m_Cursor;
     Grid testGrid;
 
     Avatar m_dummy;

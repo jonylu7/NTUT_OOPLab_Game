@@ -11,7 +11,7 @@ void WayPoint::Update([[maybe_unused]] const Util::Transform &transsform) {
     m_Transform.scale = {0.5, 0.5};
 }
 void WayPoint::SetObjectLocation(glm::vec2 location) {
-    Structure::ChangeToCell(location);
+    Structure::PositionStickToGrid(location);
     ObjectLocation = location;
     m_Transform.translation = location;
 }
