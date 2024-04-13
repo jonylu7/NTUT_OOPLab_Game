@@ -11,7 +11,6 @@
 #include <random>
 class FindValidPathToDest {
 
-
 private:
     glm::vec2 m_destinationCell;
     glm::vec2 m_nextCell;
@@ -19,7 +18,6 @@ private:
     MoveDirection m_currentDir = MoveDirection::IDLE;
 
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
-    std::deque<MoveDirection> m_dirQue;
 
 public:
     FindValidPathToDest(){};
@@ -41,7 +39,6 @@ protected:
     glm::vec2 getCurrentCell() { return m_currentCell; }
     MoveDirection getCurrentDir() { return m_currentDir; }
     glm::vec2 getNextCell() { return m_nextCell; }
-
 
     Side randomlyChooseSide() {
         // Create a random number generator engine
@@ -67,15 +64,19 @@ protected:
 
 public:
     std::deque<MoveDirection> findPath(glm::vec2 currentcell,
-                                       glm::vec2 destinationcell) ;
+                                       glm::vec2 destinationcell);
     MoveDirection findNewDirWhenCrash(Side side, glm::vec2 currentcell,
-                                      MoveDirection currentdir) ;
-    bool isTouchedByObstacle(Side side,glm::vec2 currentcell,MoveDirection currentdir);
+                                      MoveDirection currentdir);
+    bool isTouchedByObstacle(Side side, glm::vec2 currentcell,
+                             MoveDirection currentdir);
 
-    std::vector<MoveDirection>  moveAlongsideObstacle(Side side, glm::vec2 currentcell,
-                          MoveDirection currentdir,glm::vec2 destinationcell);
+    std::vector<MoveDirection> moveAlongsideObstacle(Side side,
+                                                     glm::vec2 currentcell,
+                                                     MoveDirection currentdir,
+                                                     glm::vec2 destinationcell);
     bool findStraightPath(glm::vec2 currentcell, glm::vec2 destinationcell,
                           std::vector<MoveDirection> *path);
-   bool canResumeWalkingStraight(glm::vec2 currentcell, glm::vec2 destinationcell);
+    bool canResumeWalkingStraight(glm::vec2 currentcell,
+                                  glm::vec2 destinationcell);
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP

@@ -6,8 +6,8 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 
 #include "Map/MapUtility.hpp"
-#include "Unit/PathfindingUnit.hpp"
 #include "Unit/AttackAndDamageUnit.hpp"
+#include "Unit/PathfindingUnit.hpp"
 
 class Avatar : public PathfindingUnit,
                public AttackAndDamageUnit,
@@ -28,8 +28,8 @@ public:
         setNextCell(destination);
 
         setMovementSpeed(4);
-        m_currentMode=UnitMode::MOVE;
-        m_Transform.scale={0.5,0.5};
+        m_currentMode = UnitMode::MOVE;
+        m_Transform.scale = {0.5, 0.5};
     }
     virtual void aliveUpdate() {
         if (walkTowardNextCell() || b_justStarted) {
@@ -42,12 +42,14 @@ public:
             printf("(aliveUpdate) getting new dir\n");
         }
         // m_wayPointUnit.Update();
+
         SetVisible(true);
         m_Transform.translation = getCurrentLocation();
 
         Draw();
 
-        printf("Avatar cell={%d,%d}\n",getCurrentLocation().x,getCurrentLocation().y);
+        printf("Avatar cell={%d,%d}\n", getCurrentLocation().x,
+               getCurrentLocation().y);
         printf("-----------avatar------------------\n");
     }
 
