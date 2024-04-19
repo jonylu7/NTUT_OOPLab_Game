@@ -34,8 +34,7 @@ public:
         }
         m_StartTime = std::chrono::high_resolution_clock::now();
     }
-    glm::vec2 cursorstart;
-    glm::vec2 cursorend;
+
     void Update() {
 
         for (auto pair : m_BuiltStructure) {
@@ -178,6 +177,8 @@ private:
     std::shared_ptr<CursorClass> m_Cursor;
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
+    glm::vec2 cursorstart;
+    glm::vec2 cursorend;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP

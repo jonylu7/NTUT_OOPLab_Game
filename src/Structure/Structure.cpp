@@ -16,7 +16,6 @@ void Structure::Start() {
     m_CurrentState = updateMode::Moveable;
 }
 void Structure::Update() {
-    onSelected();
     switch (m_CurrentState) {
     case updateMode::Invisidable: {
         this->updateInvinsible();

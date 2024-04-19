@@ -5,9 +5,12 @@
 #include "Map/MapUtility.hpp"
 
 void WayPointStructure::onSelected() {
-    if (getSelected()) {
-        this->SetWayPointLocationByCellCoord(MapUtil::GlobalCoordToCellCoord(
-            MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition())));
+    if (this->getSelected() && this->getConstructed()) {
+        if (Util::Input::IsKeyPressed(Util::Keycode(Util::Keycode::MOUSE_RB))) {
+            this->SetWayPointLocationByCellCoord(
+                MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
+                    Util::Input::GetCursorPosition())));
+        }
     }
     attachmentUpdate();
     this->SetAttachVisible(getSelected());

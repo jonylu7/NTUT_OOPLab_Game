@@ -58,7 +58,7 @@ public:
     virtual void SetAttachVisible(bool visible);
     glm::vec2 GetDrawLocation() { return DrawLocation; };
     void SetID(GameObjectID id) { m_ID = id; };
-    
+
     void onSelected() { this->SetAttachVisible(getSelected()); };
     virtual void attachmentUpdate();
     bool getConstructed() {
@@ -77,7 +77,7 @@ public:
 
     void SetBuildingIncome(float income) { buildingIncome = income; }
 
-private:
+protected:
     updateMode m_CurrentState = updateMode::Invisidable;
     glm::vec2 ObjectLocation = {100, 100};
     glm::vec2 DrawLocation = {ObjectLocation.x + CELL_SIZE.x,

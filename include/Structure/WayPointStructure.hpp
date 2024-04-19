@@ -33,7 +33,25 @@ public:
 
     virtual void onSelected();
     virtual void SetAttachVisible(bool visible) override;
-
     virtual void attachmentUpdate() override;
+
+    void Update() override {
+
+        switch (m_CurrentState) {
+        case updateMode::Invisidable: {
+            this->updateInvinsible();
+            break;
+        }
+        case updateMode::Fixed: {
+            this->updateFixed();
+            onSelected();
+            break;
+        }
+        case updateMode::Moveable: {
+            this->updateMoveable();
+            break;
+        }
+        }
+    }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MOVEABLESTRUCTURE_HPP
