@@ -8,7 +8,7 @@
 void DefaultScene::Start() {
 
     LOG_TRACE("Start");
-    m_Map->Init(255, 255);
+    m_Map->Init(100, 100);
     // m_Map->getTileByCellPosition(glm::vec2(5, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(6, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(7, 5))->setWalkable(0);
@@ -18,8 +18,8 @@ void DefaultScene::Start() {
     // m_GameObjectManager.Start();
 
     // m_dummy.Start({5, 5}, m_Map);
-    m_GameObjectManager->Start(m_Map, m_Player);
-
+    m_GameObjectManager->Start(m_Map, m_Player, m_Cursor);
+    // m_Cursor.Start(m_Map);
     m_UI.Start(m_Map, m_Player, m_GameObjectManager);
     m_Player->setTotalCurrency(5000);
 
@@ -44,7 +44,7 @@ void DefaultScene::Update() {
     m_Renderer.Update();
     m_UI.Update();
 
-    m_Cursor.Update(
+    m_Cursor->Update(
         m_Map->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
             MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()))));
 
@@ -54,7 +54,8 @@ void DefaultScene::Update() {
     //  m_GameObjectManager.Update();
 
     if (m_UI.getIfAnyBuildingReadyToBuild()) {
-        m_GameObjectManager->Append(m_UI.getSelectedBuilding());
+        m_GameObjectManager->AddStructSelectingConstructionSite(
+            m_UI.getSelectedBuilding());
     }
     m_UI.checkExistBuilding(m_GameObjectManager->getStructureArray());
     if (m_UI.getIfUnitReadyToSpawn()) {

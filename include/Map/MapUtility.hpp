@@ -40,5 +40,11 @@ public:
         return glm::vec2(int(cellCoord[0] * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
                          int(cellCoord[1] * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
     }
+
+    static glm::vec2 PositionStickToGrid(glm::vec2 location) {
+        int _x = location.x / CELL_SIZE.x;
+        int _y = location.y / CELL_SIZE.y;
+        return {_x * CELL_SIZE.x, _y * CELL_SIZE.y};
+    }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAPUTILITY_HPP

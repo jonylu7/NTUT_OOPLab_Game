@@ -23,13 +23,11 @@ void UIClass::Start(std::shared_ptr<MapClass> map,
 }
 
 void UIClass::Update() {
-
     ShowPlayerConstructionMenu();
     ButtonScript.Update(getIfAnyBuildingReadyToBuild());
 }
 
-void UIClass::ShowHeaderSection() {
-
+void UIClass::ShowPlayerStatus() {
     glm::vec2 CursorGlobalPosition = MapUtil::ScreenToGlobalCoord(
         glm::vec2(Util::Input::GetCursorPosition()));
     ImGui::Text(std::string("X: " + std::to_string(CursorGlobalPosition.x) +
@@ -45,8 +43,17 @@ void UIClass::ShowHeaderSection() {
     ImGui::Text(
         fmt::format("Power {}", m_gameObjectManager->GetTotalPower()).c_str());
     ImGui::PushFont(sacker_med);
-    if (ImGui::Button("Grid")) {
+}
+
+void UIClass::ShowHeaderSection() {
+
+    if (ImGui::Button("Grid on")) {
+        m_Map->setGridActive(true);
     }
+    if (ImGui::Button("Grid off")) {
+        m_Map->setGridActive(false);
+    }
+
     ImGui::PopFont();
 }
 void UIClass::ShowPlayerConstructionMenu() {
@@ -56,9 +63,8 @@ void UIClass::ShowPlayerConstructionMenu() {
 
     // put the stuff in here
     ImGui::Begin("Structure Selection Menu", nullptr, windowSettings);
+    ShowPlayerStatus();
     ShowHeaderSection();
-    // ImGui::SetWindowSize(ImVec2(250, 580));
-    // ImGui::SetWindowPos(ImVec2(992, 48));
 
     // Adjust font texture size if necessary
     // Larger font texture size may improve text clarity on high DPI displays
@@ -93,7 +99,7 @@ void UIClass::ShowBuildingTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 7)) {
             // power plants
             if (selectLock() &&
-                ButtonScript.GetIfFinished(unitType::POWER_PLANT)) {
+                ButtonScript.GetIfFinishedBuilding(unitType::POWER_PLANT)) {
                 setSelectToBuild(unitType::POWER_PLANT);
             } else {
                 ButtonScript.AddToBuildQueue(unitType::POWER_PLANT);
@@ -113,7 +119,7 @@ void UIClass::ShowBuildingTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 22)) {
             // barracks
             if (selectLock() &&
-                ButtonScript.GetIfFinished(unitType::BARRACKS)) {
+                ButtonScript.GetIfFinishedBuilding(unitType::BARRACKS)) {
                 setSelectToBuild(unitType::BARRACKS);
             } else {
                 ButtonScript.AddToBuildQueue(unitType::BARRACKS);
@@ -127,7 +133,8 @@ void UIClass::ShowBuildingTab() {
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 8)) {
             // ore
-            if (selectLock() && ButtonScript.GetIfFinished(unitType::ORE_REF)) {
+            if (selectLock() &&
+                ButtonScript.GetIfFinishedBuilding(unitType::ORE_REF)) {
                 setSelectToBuild(unitType::ORE_REF);
             } else {
                 ButtonScript.AddToBuildQueue(unitType::ORE_REF);
@@ -142,7 +149,7 @@ void UIClass::ShowBuildingTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 20)) {
             // war factory
             if (selectLock() &&
-                ButtonScript.GetIfFinished(unitType::WAR_FACT)) {
+                ButtonScript.GetIfFinishedBuilding(unitType::WAR_FACT)) {
                 setSelectToBuild(unitType::WAR_FACT);
             } else {
                 ButtonScript.AddToBuildQueue(unitType::WAR_FACT);
@@ -158,7 +165,7 @@ void UIClass::ShowBuildingTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 1)) {
             // advance power
             if (selectLock() &&
-                ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT)) {
+                ButtonScript.GetIfFinishedBuilding(unitType::ADV_POWER_PLANT)) {
                 setSelectToBuild(unitType::ADV_POWER_PLANT);
             } else {
                 ButtonScript.AddToBuildQueue(unitType::ADV_POWER_PLANT);
@@ -409,11 +416,11 @@ bool UIClass::selectLock() {
 }
 bool UIClass::getIfAnyBuildingReadyToBuild() {
     return b_SelectToBuild &&
-           (ButtonScript.GetIfFinished(unitType::BARRACKS) ||
-            ButtonScript.GetIfFinished(unitType::POWER_PLANT) ||
-            ButtonScript.GetIfFinished(unitType::ORE_REF) ||
-            ButtonScript.GetIfFinished(unitType::WAR_FACT) ||
-            ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT));
+           (ButtonScript.GetIfFinishedBuilding(unitType::BARRACKS) ||
+            ButtonScript.GetIfFinishedBuilding(unitType::POWER_PLANT) ||
+            ButtonScript.GetIfFinishedBuilding(unitType::ORE_REF) ||
+            ButtonScript.GetIfFinishedBuilding(unitType::WAR_FACT) ||
+            ButtonScript.GetIfFinishedBuilding(unitType::ADV_POWER_PLANT));
 }
 
 void UIClass::checkExistBuilding(

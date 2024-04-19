@@ -58,11 +58,10 @@ public:
     virtual void SetAttachVisible(bool visible);
     glm::vec2 GetDrawLocation() { return DrawLocation; };
     void SetID(GameObjectID id) { m_ID = id; };
-
-    static glm::vec2 PositionStickToGrid(glm::vec2 location);
+    
     void onSelected() { this->SetAttachVisible(getSelected()); };
     virtual void attachmentUpdate();
-    bool getBuilt() {
+    bool getConstructed() {
         if (m_CurrentState == updateMode::Fixed) {
             return true;
         } else {

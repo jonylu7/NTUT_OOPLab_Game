@@ -39,9 +39,6 @@ public:
     bool getIfUnitReadyToSpawn() { return ButtonScript.getIfReadytoSpawn(); }
     void setIfUnitReadyToSpawn(bool b) { ButtonScript.setIfReadytoSpawn(b); }
 
-    // import from scene
-
-    // check if building has built
     void
     checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList);
 
@@ -62,6 +59,7 @@ private:
     void InitUnitQueue();
 
     void ShowPlayerConstructionMenu();
+    void ShowPlayerStatus();
     void ShowHeaderSection();
     void ShowBuildingTab();
     void ShowInfantryTab();

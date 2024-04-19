@@ -21,7 +21,7 @@ public:
 
 private:
     SpriteSheet m_SpriteSheet;
-    CursorClass m_Cursor;
+    std::shared_ptr<CursorClass> m_Cursor = std::make_shared<CursorClass>();
     Grid testGrid;
 
     Avatar m_dummy;

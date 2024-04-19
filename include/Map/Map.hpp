@@ -27,11 +27,13 @@ public:
                                std::shared_ptr<TileClass> tile);
 
     void setGridActive(bool value) { m_Grid.SetActivate(value); }
-    
+
     void
     AppendSelectableObjectByCellPosition(glm::vec2 position,
                                          std::shared_ptr<Selectable> object) {
-        m_Map[position.x][position.y]->pushSelectableObjects(object);
+        if (position.x < m_MapWdith && position.y < m_MapHeight) {
+            m_Map[position.x][position.y]->pushSelectableObjects(object);
+        }
     }
 
 protected:
