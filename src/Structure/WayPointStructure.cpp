@@ -4,32 +4,14 @@
 #include "Structure/WayPointStructure.hpp"
 #include "Map/MapUtility.hpp"
 
-void WayPointStructure::updateMoveable() {
-    glm::vec2 location = Util::Input::GetCursorPosition();
-    location = MapUtil::ScreenToGlobalCoord(location);
-    location = MapUtil::GlobalCoordToCellCoord(location);
-    location = MapUtil::CellCoordToGlobal(location);
-    this->SetObjectLocation(location);
-    this->SetVisible(true);
-//    this->Draw();
-    glm::vec2 cellPos = MapUtil::GlobalCoordToCellCoord(location);
-    m_StructureSpriteSheet->DrawSpriteByIndex(m_StructureSpriteSheet->getSize()-1,m_Transform,DEFAULT_ZINDEX);
-    if (Util::Input::IsKeyPressed(
-            Util::Keycode::MOUSE_LB) && ifBuildable()) {
-        this->SetObjectLocation(location);
-        this->SetWayPointLocation({GetDrawLocation().x + CELL_SIZE.x,
-                                   GetDrawLocation().y + CELL_SIZE.y});
-        onSelected();
-        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,true,INTERVAL,false);
-        SetOccupiedAreaUnbuildable();
-        this->SetCurrentUpdateMode(updateMode::Fixed);
-    }
-}
+
 void WayPointStructure::onSelected() {
-    if (getSelected()) {
-        this->SetWayPointLocation(
-            MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
-        setSelected(false);
+    if (this->getSelected() && this->getConstructed()) {
+        if (Util::Input::IsKeyPressed(Util::Keycode(Util::Keycode::MOUSE_RB))) {
+            this->SetWayPointLocationByCellCoord(
+                MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
+                    Util::Input::GetCursorPosition())));
+        }
     }
     attachmentUpdate();
     this->SetAttachVisible(getSelected());

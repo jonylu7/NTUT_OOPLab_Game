@@ -15,11 +15,18 @@ public:
                          DrawOverlays::OverlayShapes::R_CROSS);
     }
     ~CursorClass() {}
+    void Start() {}
     void Update(std::shared_ptr<TileClass> tile) {
-        DrawWalkable(tile->getWalkable());
-        ShowCursorSelectionRegion(&start_pos, &end_pos, ImGuiMouseButton_Left);
+
+        if (m_showWalkable) {
+            DrawWalkable(tile->getWalkable());
+        } else if (m_showBuildable) {
+            DrawBuildable(tile->getBuildable());
+        }
+
+        DrawCursorSelectionRegion(&start_pos, &end_pos, ImGuiMouseButton_Left);
         Util::Transform trans2;
-        trans2.translation = Structure::PositionStickToGrid(
+        trans2.translation = MapUtil::PositionStickToGrid(
             MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
         m_testdraw.DrawUsingCamera(trans2, 1);
     }
@@ -40,7 +47,7 @@ public:
         }
     }
 
-    void ShowCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
+    void DrawCursorSelectionRegion(ImVec2 *start_pos, ImVec2 *end_pos,
                                    ImGuiMouseButton mouse_button) {
         IM_ASSERT(start_pos != NULL);
         IM_ASSERT(end_pos != NULL);
@@ -56,9 +63,15 @@ public:
         }
     }
 
+    void setShowWalkable(bool value) { m_showWalkable = value; }
+    void setShowBuildable(bool value) { m_showBuildable = value; }
+
 private:
+    bool m_showWalkable = true;
+    bool m_showBuildable = false;
     DrawOverlays m_testdraw;
     ImVec2 start_pos;
     ImVec2 end_pos;
+    std::shared_ptr<MapClass> m_Map = std::shared_ptr<MapClass>();
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_CURSOR_HPP

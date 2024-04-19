@@ -63,10 +63,9 @@ public:
     glm::vec2 GetDrawLocation() { return DrawLocation; };
     void SetID(GameObjectID id) { m_ID = id; };
 
-    static glm::vec2 PositionStickToGrid(glm::vec2 location);
     void onSelected() { this->SetAttachVisible(getSelected()); };
     virtual void attachmentUpdate();
-    bool getBuilt() {
+    bool getConstructed() {
         if (m_CurrentState == updateMode::Fixed) {
             return true;
         } else {
@@ -90,7 +89,7 @@ public:
     void SetOccupiedAreaUnbuildable();
     void SetRelativeOccupiedArea(std::vector<glm::vec2> Area){m_relativeOccupiedArea=Area;}
 
-private:
+protected:
     updateMode m_CurrentState = updateMode::Invisidable;
     float electricPower;
     float buildingTime;

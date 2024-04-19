@@ -4,7 +4,7 @@
 #include "UI/UIScriptProcess.hpp"
 #include <iomanip>
 #include <sstream>
-bool UIScriptProcess::GetIfFinished(unitType type) {
+bool UIScriptProcess::GetIfFinishedBuilding(unitType type) {
     switch (type) {
     case unitType::BARRACKS:
         return b_Baracks;
@@ -126,8 +126,8 @@ void UIScriptProcess::CountDown() {
         // "False");
     }
     if (b_isSpawningInCooldown) {
-        printf("(UISC) CD: %.2f,%s\n", spawnElapsed.count(),spawnElapsed.count() >= spawnCoolDownTime ? "True" : "False");
-
+        printf("(UISC) CD: %.2f,%s\n", spawnElapsed.count(),
+               spawnElapsed.count() >= spawnCoolDownTime ? "True" : "False");
     }
 }
 void UIScriptProcess::SetBuildCountDown(float time) {
@@ -142,7 +142,7 @@ void UIScriptProcess::SetSpawnCountDown(float time) {
 }
 
 void UIScriptProcess::AddToBuildQueue(unitType type) {
-    if (GetIfFinished(type)) {
+    if (GetIfFinishedBuilding(type)) {
         return;
     }
     m_buildQueue.push_back(type);
@@ -150,7 +150,7 @@ void UIScriptProcess::AddToBuildQueue(unitType type) {
 }
 void UIScriptProcess::Update(bool queueContinue) {
     //(m_buildQueue.size() > 1 && queueContinue && !b_isBuildingInCoolDown) for
-    //waiting player to build strucutre, then continue operating
+    // waiting player to build strucutre, then continue operating
     if ((m_buildQueue.size() == 1 && !b_isBuildingInCoolDown) ||
         ((m_buildQueue.size() > 1 && queueContinue &&
           !b_isBuildingInCoolDown))) {

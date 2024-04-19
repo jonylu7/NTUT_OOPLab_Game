@@ -62,13 +62,8 @@ void Structure::updateMoveable() {
     }
 }
 
-glm::vec2 Structure::PositionStickToGrid(glm::vec2 location) {
-    int _x = location.x / CELL_SIZE.x;
-    int _y = location.y / CELL_SIZE.y;
-    return {_x * CELL_SIZE.x, _y * CELL_SIZE.y};
-}
 void Structure::SetObjectLocation(glm::vec2 location) {
-    location = PositionStickToGrid(location);
+    location = MapUtil::PositionStickToGrid(location);
     ObjectLocation = location;
     DrawLocation = {location.x + 0.5 * CELL_SIZE.x,
                     location.y + 0.5 * CELL_SIZE.y};

@@ -14,7 +14,6 @@ constexpr float FOV_LOWER_LIMIT = 1.F;
 class CameraClass {
 public:
     CameraClass() { setPosition(glm::vec2(0, 0)); }
-    CameraClass(glm::vec2 position) { setPosition(position); }
     ~CameraClass() {}
 
     static float getCameraZoom() { return m_Zoom; }
@@ -24,7 +23,7 @@ public:
 
     static glm::vec2 getPosition() { return m_Position; }
 
-    void setPosition(glm::vec2 position) { m_Position = position; }
+    void setPosition(glm::vec2 position);
 
     static glm::mat4x4 getProjectionMatrix() {
 
@@ -47,7 +46,7 @@ public:
     float getZoomingSpeed() { return m_ZoomingSpeed; }
     void changeFOV(float offset);
 
-    void Start();
+    void Start(glm::vec2 minPosition, glm::vec2 maxPosition);
     void Update();
     void UpdateWhenCursorAtBoarder();
     void UpdateWhenCursorScroll();
@@ -60,6 +59,8 @@ private:
     static float m_Fov;
     static glm::vec2 s_boarderMaximum;
     static glm::vec2 s_boarderMinimum;
+    glm::vec2 m_minPosition;
+    glm::vec2 m_maxPosition;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_CAMERA_HPP

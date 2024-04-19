@@ -18,8 +18,10 @@ public:
     };
     void Update(const Util::Transform &transform = Util::Transform()) override;
 
-    void Start() override{
-        /*SetDrawable(std::make_unique<Util::Image>("../assets/sprites/flag.png"));*/};
+    void Start() override {
+        SetDrawable(
+            std::make_unique<Util::Image>("../assets/sprites/flagB.png"));
+    };
     void SetObjectLocation(glm::vec2 location);
     glm::vec2 GetObjectLocation() { return this->ObjectLocation; }
 };

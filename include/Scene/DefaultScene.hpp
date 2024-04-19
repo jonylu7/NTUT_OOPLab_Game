@@ -4,12 +4,13 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
-
 #include "Cursor.hpp"
 #include "Scene.hpp"
 #include "Unit/Avatar.hpp"
 #include "Unit/Hunter.hpp"
 #include "Unit/Runner.hpp"
+#include <glm/glm.hpp>
+
 class DefaultScene : public Scene {
 
 public:
@@ -21,7 +22,7 @@ public:
 
 private:
     SpriteSheet m_SpriteSheet;
-    CursorClass m_Cursor;
+    std::shared_ptr<CursorClass> m_Cursor = std::make_shared<CursorClass>();
     Grid testGrid;
 
     Avatar m_dummy;

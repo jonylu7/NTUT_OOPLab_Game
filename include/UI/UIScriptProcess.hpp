@@ -65,7 +65,7 @@ public:
     ~UIScriptProcess(){};
 
     // Getter/Setter
-    bool GetIfFinished(unitType type);
+    bool GetIfFinishedBuilding(unitType type);
     int GetObjCost(unitType type);
     // if b_isBuildingInCoolDown==false not currently building
     // true currently is building

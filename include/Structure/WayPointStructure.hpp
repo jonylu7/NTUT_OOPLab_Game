@@ -7,7 +7,7 @@
 #include "Grid.hpp"
 #include "HighLight.h"
 #include "Line.hpp"
-#include "Structure/IWayPointStructure.hpp"
+#include "Structure/IWayPoint.hpp"
 #include "Structure/Structure.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
@@ -18,7 +18,6 @@ class WayPointStructure : public Structure, public IWayPointStructure {
 protected:
     std::shared_ptr<WayPoint> m_wayPoint = std::make_shared<WayPoint>();
     HighLight m_HighLight;
-    bool b_select = true;
     Grid m_Grid;
     Line m_Line;
     std::vector<Line> m_lineVector;
@@ -34,8 +33,25 @@ public:
 
     virtual void onSelected();
     virtual void SetAttachVisible(bool visible) override;
-
-    virtual void updateMoveable() override;
     virtual void attachmentUpdate() override;
+
+    void Update() override {
+
+        switch (m_CurrentState) {
+        case updateMode::Invisidable: {
+            this->updateInvinsible();
+            break;
+        }
+        case updateMode::Fixed: {
+            this->updateFixed();
+            onSelected();
+            break;
+        }
+        case updateMode::Moveable: {
+            this->updateMoveable();
+            break;
+        }
+        }
+    }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MOVEABLESTRUCTURE_HPP

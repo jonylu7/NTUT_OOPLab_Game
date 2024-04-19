@@ -5,10 +5,11 @@
 #include "DrawOverlays.hpp"
 #include <iostream>
 void MapScene::Start() {
-    // m_Map->Init(204, 161);
     m_Map->Init(
         MapBinReader::readBin("../assets/map/green-belt/map.bin", 98, 98), 98,
         98);
+    m_SceneCamera.Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
+                        MapUtil::CellCoordToGlobal(glm::vec2(98, 98)));
 }
 
 void MapScene::Update() {
