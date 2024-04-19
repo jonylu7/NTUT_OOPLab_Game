@@ -36,6 +36,7 @@ public:
     void Update() {
         for (auto pair : m_BuiltStructure) {
             pair->Update();
+            SetOccupiedAreaUnbuildable(pair);
         }
         for (auto unit : m_UnitArray) {
             unit->Update();
@@ -119,6 +120,12 @@ public:
                 MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
                     Util::Input::GetCursorPosition())));
         }
+    }
+    void SetOccupiedAreaUnbuildable(std::shared_ptr<Structure> structure){
+            for (auto i :structure->GetAbsoluteOccupiedArea()) {
+                m_Map->getTileByCellPosition(i)->setBuildable(false);
+                m_Map->getTileByCellPosition(i)->setWalkable(false);
+            }
     }
 
 private:

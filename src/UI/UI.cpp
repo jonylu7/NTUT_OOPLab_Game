@@ -92,7 +92,7 @@ void UIClass::ShowBuildingTab() {
     if (ImGui::BeginTabItem("Build")) {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 7)) {
             // power plants
-            if (selectLock() &&
+            if (m_selectedStructureType==unitType::NONE &&
                 ButtonScript.GetIfFinished(unitType::POWER_PLANT)) {
                 setSelectToBuild(unitType::POWER_PLANT);
             } else {
@@ -112,7 +112,7 @@ void UIClass::ShowBuildingTab() {
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 22)) {
             // barracks
-            if (selectLock() &&
+            if (m_selectedStructureType==unitType::NONE &&
                 ButtonScript.GetIfFinished(unitType::BARRACKS)) {
                 setSelectToBuild(unitType::BARRACKS);
             } else {
@@ -127,7 +127,7 @@ void UIClass::ShowBuildingTab() {
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 8)) {
             // ore
-            if (selectLock() && ButtonScript.GetIfFinished(unitType::ORE_REF)) {
+            if (m_selectedStructureType==unitType::NONE && ButtonScript.GetIfFinished(unitType::ORE_REF)) {
                 setSelectToBuild(unitType::ORE_REF);
             } else {
                 ButtonScript.AddToBuildQueue(unitType::ORE_REF);
@@ -141,7 +141,7 @@ void UIClass::ShowBuildingTab() {
         ImGui::NewLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 20)) {
             // war factory
-            if (selectLock() &&
+            if (m_selectedStructureType==unitType::NONE &&
                 ButtonScript.GetIfFinished(unitType::WAR_FACT)) {
                 setSelectToBuild(unitType::WAR_FACT);
             } else {
@@ -157,7 +157,7 @@ void UIClass::ShowBuildingTab() {
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 1)) {
             // advance power
-            if (selectLock() &&
+            if (m_selectedStructureType==unitType::NONE &&
                 ButtonScript.GetIfFinished(unitType::ADV_POWER_PLANT)) {
                 setSelectToBuild(unitType::ADV_POWER_PLANT);
             } else {
@@ -337,78 +337,46 @@ void UIClass::InitUnitQueue() {
     UIClass::s_unitConstructCount[unitType::TRUCK] = 0;
 }
 std::unique_ptr<Structure> UIClass::getSelectedBuilding() {
-    b_SelectToBuild = false;
-    if (getIfSelectToBuild(unitType::BARRACKS)) {
+    switch (m_selectedStructureType) {
+    case unitType::BARRACKS:{
         setUnitConstructCount(unitType::BARRACKS, 1);
-        b_Baracks = false;
+        m_selectedStructureType=unitType::NONE;
         ButtonScript.SetIfFinished(unitType::BARRACKS, false);
         return std::make_unique<Barracks>();
     }
-    if (getIfSelectToBuild(unitType::ORE_REF)) {
+    case unitType::ORE_REF:{
         setUnitConstructCount(unitType::ORE_REF, 1);
-        b_OreRefinery = false;
+        m_selectedStructureType=unitType::NONE;
         ButtonScript.SetIfFinished(unitType::ORE_REF, false);
         return std::make_unique<OreRefinery>();
     }
-    if (getIfSelectToBuild(unitType::POWER_PLANT)) {
+    case unitType::POWER_PLANT:{
         setUnitConstructCount(unitType::POWER_PLANT, 1);
-        b_PowerPlants = false;
+        m_selectedStructureType=unitType::NONE;
         ButtonScript.SetIfFinished(unitType::POWER_PLANT, false);
         return std::make_unique<PowerPlants>();
     }
-    if (getIfSelectToBuild(unitType::WAR_FACT)) {
+    case unitType::WAR_FACT:{
         setUnitConstructCount(unitType::WAR_FACT, 1);
-        b_WarFactory = false;
+        m_selectedStructureType=unitType::NONE;
         ButtonScript.SetIfFinished(unitType::WAR_FACT, false);
         return std::make_unique<WarFactory>();
     }
-    if (getIfSelectToBuild(unitType::ADV_POWER_PLANT)) {
+    case unitType::ADV_POWER_PLANT:{
         setUnitConstructCount(unitType::ADV_POWER_PLANT, 1);
-        b_ADVPowerPlant = false;
+        m_selectedStructureType=unitType::NONE;
         ButtonScript.SetIfFinished(unitType::ADV_POWER_PLANT, false);
         return std::make_unique<ADVPowerPlants>();
     }
-}
-bool UIClass::getIfSelectToBuild(unitType type) {
-    switch (type) {
-    case unitType::BARRACKS:
-        return b_Baracks;
-    case unitType::ORE_REF:
-        return b_OreRefinery;
-    case unitType::POWER_PLANT:
-        return b_PowerPlants;
-    case unitType::WAR_FACT:
-        return b_WarFactory;
-    case unitType::ADV_POWER_PLANT:
-        return b_ADVPowerPlant;
+    case unitType::NONE:{
+        printf("(UI)error! try to build when type == NONE\n");
+    }
     }
 }
-void UIClass::setSelectToBuild(unitType type) {
-    b_SelectToBuild = true;
-    switch (type) {
-    case unitType::BARRACKS:
-        b_Baracks = true;
-        break;
-    case unitType::ORE_REF:
-        b_OreRefinery = true;
-        break;
-    case unitType::POWER_PLANT:
-        b_PowerPlants = true;
-        break;
-    case unitType::WAR_FACT:
-        b_WarFactory = true;
-        break;
-    case unitType::ADV_POWER_PLANT:
-        b_ADVPowerPlant = true;
-        break;
-    }
-}
-bool UIClass::selectLock() {
-    return !(b_Baracks | b_OreRefinery | b_PowerPlants | b_WarFactory |
-             b_ADVPowerPlant);
-}
+
+
 bool UIClass::getIfAnyBuildingReadyToBuild() {
-    return b_SelectToBuild &&
+    return m_selectedStructureType!=unitType::NONE &&
            (ButtonScript.GetIfFinished(unitType::BARRACKS) ||
             ButtonScript.GetIfFinished(unitType::POWER_PLANT) ||
             ButtonScript.GetIfFinished(unitType::ORE_REF) ||

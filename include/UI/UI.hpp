@@ -90,9 +90,7 @@ private:
     glm::vec2 m_GridSize = {100, 100};
 
     // 0318
-    bool getIfSelectToBuild(unitType type);
-    void setSelectToBuild(unitType type);
-    bool selectLock();
+    void setSelectToBuild(unitType type){m_selectedStructureType = type;}
 
     ImGuiIO &io = ImGui::GetIO();
 
@@ -120,6 +118,8 @@ private:
     glm::vec2 m_warfactoryTargetCell;
     glm::vec2 m_orerefineryCell;
     glm::vec2 m_orerefineryTargetCell;
+    unitType m_selectedStructureType=unitType::NONE;
+
 
     // ptr import from scene
     std::shared_ptr<MapClass> m_Map;
