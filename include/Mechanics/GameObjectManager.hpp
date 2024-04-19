@@ -39,6 +39,7 @@ public:
 
         for (auto pair : m_BuiltStructure) {
             pair->Update();
+            SetOccupiedAreaUnbuildable(pair);
         }
         for (auto unit : m_UnitArray) {
             unit->Update();
@@ -52,7 +53,6 @@ public:
         std::chrono::duration<double> elapsed = m_currentTime - m_StartTime;
         if (elapsed.count() - m_lastElapsed >= 1) { // update every second
             m_lastElapsed = elapsed.count();
-            updateTotalCurrency();
         }
         SelectdConstructionSite();
     }
@@ -120,17 +120,9 @@ public:
         return totalPower;
     }
 
-    int GetTotalCurrency() { return m_Player->getTotalCurrency(); }
-    void updateTotalCurrency() {
-        int totalCurrency = m_Player->getTotalCurrency();
-        if (m_BuiltStructure.size() > 0) {
-            for (int i = 0; i < m_BuiltStructure.size(); i++) {
-                totalCurrency += m_BuiltStructure[i]->GetBuildingIncome();
-            }
-        }
-        m_Player->setTotalCurrency(totalCurrency);
+    float GetTotalCurrency(){
+        return m_Player->getTotalCurrency();
     }
-
     std::vector<std::shared_ptr<Structure>> getStructureArray() {
         return m_BuiltStructure;
     }
@@ -145,6 +137,12 @@ public:
                 MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
                     Util::Input::GetCursorPosition())));
         }
+    }
+    void SetOccupiedAreaUnbuildable(std::shared_ptr<Structure> structure){
+            for (auto i :structure->GetAbsoluteOccupiedArea()) {
+                m_Map->getTileByCellPosition(i)->setBuildable(false);
+                m_Map->getTileByCellPosition(i)->setWalkable(false);
+            }
     }
 
     void

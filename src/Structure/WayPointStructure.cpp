@@ -4,6 +4,7 @@
 #include "Structure/WayPointStructure.hpp"
 #include "Map/MapUtility.hpp"
 
+
 void WayPointStructure::onSelected() {
     if (this->getSelected() && this->getConstructed()) {
         if (Util::Input::IsKeyPressed(Util::Keycode(Util::Keycode::MOUSE_RB))) {

@@ -14,5 +14,12 @@ public:
                             buildingHp,
                             GameObjectID(unitType::BARRACKS, house)){};
     void Start() override;
+    void SetObjectLocation(glm::vec2 location) override{
+        location = PositionStickToGrid(location);
+        ObjectLocation = location;
+        DrawLocation = {location.x + 1 * CELL_SIZE.x,
+                        location.y + 1 * CELL_SIZE.y};
+        m_Transform.translation = DrawLocation;
+    }
 };
 #endif

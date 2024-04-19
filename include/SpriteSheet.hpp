@@ -46,6 +46,7 @@ public:
                                       glm::vec2(UV[4], UV[3])};
     }
 
+    int getSize(){return m_SpriteSheet.size();}
 private:
     std::vector<std::unique_ptr<Sprite>> m_SpriteSheet;
     std::vector<float> m_TextCoord;

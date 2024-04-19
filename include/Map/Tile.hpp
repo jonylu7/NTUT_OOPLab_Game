@@ -32,8 +32,8 @@ public:
           m_TileImagePath("") {}
     TileClass()
         : m_Id(GameObjectID(unitType::null, HouseType::NONE)),
-          m_Buildable(false),
-          m_Walkable(false),
+          m_Buildable(true),
+          m_Walkable(true),
           m_Clickable(true),
           m_TileImagePath(""){};
     ~TileClass() {}

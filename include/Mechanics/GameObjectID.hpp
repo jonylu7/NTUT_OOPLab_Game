@@ -41,7 +41,10 @@ enum class unitType {
 
     // overlays
     OVERLAY_GEMS,
-    OVERLAY_ORE
+    OVERLAY_ORE,
+
+    //NONE
+    NONE
 };
 
 class OccupiedID {
