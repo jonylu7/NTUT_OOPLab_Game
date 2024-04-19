@@ -22,6 +22,8 @@ void DefaultScene::Start() {
     // m_Cursor.Start(m_Map);
     m_UI.Start(m_Map, m_Player, m_GameObjectManager);
     m_Player->setTotalCurrency(5000);
+    m_SceneCamera.Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
+                        MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 
     //    m_hunter->setCurrentCell({20,10});
     //    m_runner->setCurrentCell({10,10});

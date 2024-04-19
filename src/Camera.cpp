@@ -8,11 +8,23 @@ glm::vec2 CameraClass::m_Position(glm::vec2(0, 0));
 float CameraClass::m_Zoom = 1.F;
 float CameraClass::m_Fov = FOV_UPPER_LIMIT;
 
-void CameraClass::Start() {}
+void CameraClass::Start(glm::vec2 minPosition, glm::vec2 maxPosition) {
+    m_minPosition = minPosition;
+    m_maxPosition = maxPosition;
+}
 
 void CameraClass::Update() {
     UpdateWhenCursorAtBoarder();
     UpdateWhenCursorScroll();
+}
+
+void CameraClass::setPosition(glm::vec2 position) {
+    if (position.x >= m_minPosition.x && position.x <= m_maxPosition.x) {
+        m_Position.x = position.x;
+    }
+    if (position.y >= m_minPosition.y && position.y <= m_maxPosition.y) {
+        m_Position.y = position.y;
+    }
 }
 
 void CameraClass::UpdateWhenCursorAtBoarder() {

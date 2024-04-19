@@ -101,14 +101,6 @@ public:
         }
     }
 
-    static bool ifObjectClicked(glm::vec2 objpos, glm::vec2 objsize,
-                                glm::vec2 mousestart, glm::vec2 mouseend) {
-        mousestart = MapUtil::GlobalCoordToCellCoord(mousestart);
-        mouseend = MapUtil::GlobalCoordToCellCoord(mouseend);
-        objpos = MapUtil::GlobalCoordToCellCoord(objpos);
-        return (mousestart == objpos);
-    }
-
     void Append(std::shared_ptr<Structure> newstruct) {
         m_BuiltStructure.push_back(newstruct);
         m_Map->AppendSelectableObjectByCellPosition(

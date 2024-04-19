@@ -15,7 +15,7 @@ public:
                          DrawOverlays::OverlayShapes::R_CROSS);
     }
     ~CursorClass() {}
-    void Start(std::shared_ptr<MapClass> map) { m_Map = map; }
+    void Start() {}
     void Update(std::shared_ptr<TileClass> tile) {
 
         if (m_showWalkable) {
@@ -61,16 +61,6 @@ public:
                 *start_pos, *end_pos,
                 ImGui::GetColorU32(IM_COL32(255, 255, 255, 255))); // Border
         }
-    }
-
-    std::vector<glm::vec2> getCursorSelectionRegionInCell() {
-        std::vector<glm::vec2> region = {
-
-            MapUtil::GlobalCoordToCellCoord(
-                glm::vec2(start_pos.x, start_pos.y)),
-            MapUtil::GlobalCoordToCellCoord(glm::vec2(end_pos.x, end_pos.y))};
-
-        return region;
     }
 
     void setShowWalkable(bool value) { m_showWalkable = value; }

@@ -4,12 +4,13 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DEFAULTSCENE_HPP
-
 #include "Cursor.hpp"
 #include "Scene.hpp"
 #include "Unit/Avatar.hpp"
 #include "Unit/Hunter.hpp"
 #include "Unit/Runner.hpp"
+#include <glm/glm.hpp>
+
 class DefaultScene : public Scene {
 
 public:
