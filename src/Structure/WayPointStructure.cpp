@@ -4,8 +4,7 @@
 #include "Structure/WayPointStructure.hpp"
 #include "Map/MapUtility.hpp"
 
-
-void WayPointStructure::onSelected() {
+void WayPointStructure::whenSelected() {
     if (this->getSelected() && this->getConstructed()) {
         if (Util::Input::IsKeyPressed(Util::Keycode(Util::Keycode::MOUSE_RB))) {
             this->SetWayPointLocationByCellCoord(

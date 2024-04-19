@@ -7,6 +7,7 @@
 #include "Grid.hpp"
 #include "HighLight.h"
 #include "Line.hpp"
+#include "Map/MapUtility.hpp"
 #include "Structure/IWayPoint.hpp"
 #include "Structure/Structure.hpp"
 #include "Util/Image.hpp"
@@ -27,11 +28,12 @@ public:
                       float buildingCost = 20.F, float buildingHp = 90.F,
                       GameObjectID id = GameObjectID(unitType::null,
                                                      HouseType::NONE))
-        : Structure(electricPower, buildingTime, buildingCost, buildingHp,
-                    id){m_Transform.scale={2.f,2.f};};
+        : Structure(electricPower, buildingTime, buildingCost, buildingHp, id) {
+        m_Transform.scale = {2.f, 2.f};
+    };
     virtual ~WayPointStructure(){};
 
-    virtual void onSelected();
+    virtual void whenSelected() override;
     virtual void SetAttachVisible(bool visible) override;
     virtual void attachmentUpdate() override;
 
@@ -44,7 +46,7 @@ public:
         }
         case updateMode::Fixed: {
             this->updateFixed();
-            onSelected();
+            whenSelected();
             break;
         }
         case updateMode::Moveable: {

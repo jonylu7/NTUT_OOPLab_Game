@@ -9,6 +9,7 @@ public:
     // virtual void onSelected() = 0;
     bool getSelected() { return b_Selected; }
     void setSelected(bool value) { b_Selected = value; }
+    virtual void whenSelected() = 0;
 
 protected:
     bool b_Selected = false;

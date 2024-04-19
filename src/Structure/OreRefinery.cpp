@@ -2,8 +2,9 @@
 #include "Structure/OreRefinery.hpp"
 void OreRefinery::Start() {
     // Set Texture----------------------------------------
-    m_StructureSpriteSheet->Start("../assets/sprites/OreRefinery_SpriteSheet.png",72,72,10,0);
-    SetRelativeOccupiedArea({{0,0},{1,0},{1,1},{1,2},{2,1}});
+    m_StructureSpriteSheet->Start(
+        "../assets/sprites/OreRefinery_SpriteSheet.png", 72, 72, 10, 0);
+    SetRelativeOccupiedArea({{0, 0}, {1, 0}, {1, 1}, {1, 2}, {2, 1}});
     m_wayPoint->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/flagB.png"));
     m_HighLight.SetDrawable(
@@ -15,7 +16,7 @@ void OreRefinery::Start() {
     // Set Attachment Scale &
     // Visibility----------------------------------------
     m_HighLight.SetHLScale(this->GetTranScale());
-    onSelected();
+    whenSelected();
     // State
     SetCurrentUpdateMode(Structure::updateMode::Moveable);
 }

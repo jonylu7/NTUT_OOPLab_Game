@@ -2,8 +2,9 @@
 
 void Barracks::Start() {
     // Set Texture----------------------------------------
-    m_StructureSpriteSheet->Start("../assets/sprites/Barracks_SpriteSheet.png",48,48,13,0);
-    SetRelativeOccupiedArea({{0,0},{0,1},{1,0},{1,1}});
+    m_StructureSpriteSheet->Start("../assets/sprites/Barracks_SpriteSheet.png",
+                                  48, 48, 13, 0);
+    SetRelativeOccupiedArea({{0, 0}, {0, 1}, {1, 0}, {1, 1}});
     m_wayPoint->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/flagB.png"));
     m_HighLight.SetDrawable(
@@ -15,7 +16,7 @@ void Barracks::Start() {
     // Set Attachment Scale &
     // Visibility----------------------------------------
     m_HighLight.SetHLScale(this->GetTranScale());
-    onSelected();
+    whenSelected();
     // State
     SetCurrentUpdateMode(Structure::updateMode::Moveable);
 }

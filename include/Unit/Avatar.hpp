@@ -105,6 +105,8 @@ public:
         }
     }
 
+    void whenSelected() override {}
+
     virtual std::shared_ptr<Util::Image> customizeImage() {
         return std::make_unique<Util::Image>("../assets/sprites/Hunter.png");
     }

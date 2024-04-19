@@ -7,7 +7,7 @@
 #include "Util/Transform.hpp"
 #include "config.hpp"
 void Structure::Start() {
-    m_Transform.scale={2.f,2.f};
+    m_Transform.scale = {2.f, 2.f};
     m_HighLight.SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/HighLightB.png"));
     m_HighLight.SetHLScale(this->GetTranScale());
@@ -18,12 +18,14 @@ void Structure::Start() {
     m_CurrentState = updateMode::Moveable;
 }
 void Structure::Update() {
+
     switch (m_CurrentState) {
     case updateMode::Invisidable: {
         this->updateInvinsible();
         break;
     }
     case updateMode::Fixed: {
+        whenSelected();
         this->updateFixed();
         break;
     }
@@ -36,10 +38,11 @@ void Structure::Update() {
 void Structure::updateFixed() {
     // Attachment and self readjust location and draw---------------
     attachmentUpdate();
-    if(m_SpriteSheetAnimation->getFinished()){
-        m_StructureSpriteSheet->DrawSpriteByIndex(m_StructureSpriteSheet->getSize()-1,m_Transform,DEFAULT_ZINDEX);
-    }else{
-        m_SpriteSheetAnimation->Draw(m_Transform,DEFAULT_ZINDEX);
+    if (m_SpriteSheetAnimation->getFinished()) {
+        m_StructureSpriteSheet->DrawSpriteByIndex(
+            m_StructureSpriteSheet->getSize() - 1, m_Transform, DEFAULT_ZINDEX);
+    } else {
+        m_SpriteSheetAnimation->Draw(m_Transform, DEFAULT_ZINDEX);
     }
     // Script when select--------------------
 }
@@ -51,12 +54,13 @@ void Structure::updateMoveable() {
     location = MapUtil::ScreenToGlobalCoord(location);
     this->SetObjectLocation(location);
     this->SetVisible(true);
-    //glm::vec2 cellPos = MapUtil::GlobalCoordToCellCoord(location);
-    m_StructureSpriteSheet->DrawSpriteByIndex(m_StructureSpriteSheet->getSize()-1,m_Transform,DEFAULT_ZINDEX);
-    if (Util::Input::IsKeyPressed(
-            Util::Keycode::MOUSE_LB) && ifBuildable()) {
+    // glm::vec2 cellPos = MapUtil::GlobalCoordToCellCoord(location);
+    m_StructureSpriteSheet->DrawSpriteByIndex(
+        m_StructureSpriteSheet->getSize() - 1, m_Transform, DEFAULT_ZINDEX);
+    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB) && ifBuildable()) {
         this->SetObjectLocation(location);
-        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,true,INTERVAL,false);
+        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                         true, INTERVAL, false);
         SetOccupiedAreaUnbuildable();
         this->SetCurrentUpdateMode(updateMode::Fixed);
     }
@@ -78,24 +82,24 @@ void Structure::attachmentUpdate() {
     m_HighLight.SetObjectLocation(this->GetDrawLocation());
     m_HighLight.Draw();
 }
-std::vector<glm::vec2> Structure::GetAbsoluteOccupiedArea(){
+std::vector<glm::vec2> Structure::GetAbsoluteOccupiedArea() {
     std::vector<glm::vec2> Area;
-    for(auto i:m_relativeOccupiedArea){
-        Area.push_back({i.x+GetObjectCell().x,i.y+GetObjectCell().y});
+    for (auto i : m_relativeOccupiedArea) {
+        Area.push_back({i.x + GetObjectCell().x, i.y + GetObjectCell().y});
     }
     return Area;
 }
-void Structure::SetOccupiedAreaUnbuildable(){
-//    for (auto i :GetAbsoluteOccupiedArea()) {
-//        m_Map->getTileByCellPosition(i)->setBuildable(false);
-//        m_Map->getTileByCellPosition(i)->setWalkable(false);
-//    }
+void Structure::SetOccupiedAreaUnbuildable() {
+    //    for (auto i :GetAbsoluteOccupiedArea()) {
+    //        m_Map->getTileByCellPosition(i)->setBuildable(false);
+    //        m_Map->getTileByCellPosition(i)->setWalkable(false);
+    //    }
 }
-bool Structure::ifBuildable(){
-//    for (auto i :GetAbsoluteOccupiedArea()) {
-//        if(m_Map->getTileByCellPosition(i)->getBuildable()== false){
-//            return false;
-//        }
-//    }
+bool Structure::ifBuildable() {
+    //    for (auto i :GetAbsoluteOccupiedArea()) {
+    //        if(m_Map->getTileByCellPosition(i)->getBuildable()== false){
+    //            return false;
+    //        }
+    //    }
     return true;
 }
