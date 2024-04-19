@@ -74,27 +74,27 @@ public:
 
             // get cursor position
             *end = Util::Input::GetCursorPosition();
-        }
-        
-        // select objects
-        auto startcell = MapUtil::GlobalCoordToCellCoord(
-            MapUtil::ScreenToGlobalCoord(*start));
-        auto endcell =
-            MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(*end));
 
-        int max_x_cell = std::max(startcell.x, endcell.x);
-        int max_y_cell = std::max(startcell.y, endcell.y);
-        int min_x_cell = std::min(startcell.x, endcell.x);
-        int min_y_cell = std::min(startcell.y, endcell.y);
+            // select objects
+            auto startcell = MapUtil::GlobalCoordToCellCoord(
+                MapUtil::ScreenToGlobalCoord(*start));
+            auto endcell = MapUtil::GlobalCoordToCellCoord(
+                MapUtil::ScreenToGlobalCoord(*end));
 
-        for (int i = min_y_cell; i <= max_y_cell; i++) {
-            for (int j = min_x_cell; j <= max_x_cell; j++) {
-                auto objects = m_Map->getTileByCellPosition(glm::vec2(i, j))
-                                   ->getSelectableObjects();
-                for (auto i : objects) {
-                    if (i->getSelected() == false) {
-                        i->setSelected(true);
-                        lastSeletctedObjects.push_back(i);
+            int max_x_cell = std::max(startcell.x, endcell.x);
+            int max_y_cell = std::max(startcell.y, endcell.y);
+            int min_x_cell = std::min(startcell.x, endcell.x);
+            int min_y_cell = std::min(startcell.y, endcell.y);
+
+            for (int i = min_y_cell; i <= max_y_cell; i++) {
+                for (int j = min_x_cell; j <= max_x_cell; j++) {
+                    auto objects = m_Map->getTileByCellPosition(glm::vec2(j, i))
+                                       ->getSelectableObjects();
+                    for (auto i : objects) {
+                        if (i->getSelected() == false) {
+                            i->setSelected(true);
+                            lastSeletctedObjects.push_back(i);
+                        }
                     }
                 }
             }
