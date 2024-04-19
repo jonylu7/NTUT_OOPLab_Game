@@ -75,6 +75,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/Util/ImageArray.cpp
         ${SRC_DIR}/Util/CustomizableImage.cpp
+        ${SRC_DIR}/Util/SpriteSheetAnimation.cpp
 
 
         ${SRC_DIR}/App.cpp
@@ -150,6 +151,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/Color.hpp
         ${INCLUDE_DIR}/Util/Animation.hpp
         ${INCLUDE_DIR}/Util/MissingTexture.hpp
+        ${INCLUDE_DIR}/Util/SpriteSheetAnimation.hpp
 
         ${INCLUDE_DIR}/Util/ImageArray.hpp
         ${INCLUDE_DIR}/Util/CustomizableImage.hpp

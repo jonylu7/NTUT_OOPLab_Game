@@ -29,7 +29,7 @@ public:
                       GameObjectID id = GameObjectID(unitType::null,
                                                      HouseType::NONE))
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
-                    id){};
+                    id){m_Transform.scale={2.f,2.f};};
     virtual ~WayPointStructure(){};
 
     virtual void onSelected();
