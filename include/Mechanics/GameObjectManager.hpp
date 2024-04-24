@@ -7,6 +7,7 @@
 #include "Cursor.hpp"
 #include "FindValidPathToDest.hpp"
 #include "GameObjectID.hpp"
+#include "Mechanics/StructureArray.hpp"
 #include "Player.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
@@ -19,7 +20,7 @@
 #include <unordered_map>
 #include <utility>
 
-class GameObjectManager {
+class GameObjectManager : public StructureArray {
 public:
     GameObjectManager() {}
     ~GameObjectManager() {}
@@ -120,9 +121,7 @@ public:
         return totalPower;
     }
 
-    float GetTotalCurrency(){
-        return m_Player->getTotalCurrency();
-    }
+    float GetTotalCurrency() { return m_Player->getTotalCurrency(); }
     std::vector<std::shared_ptr<Structure>> getStructureArray() {
         return m_BuiltStructure;
     }
@@ -138,11 +137,11 @@ public:
                     Util::Input::GetCursorPosition())));
         }
     }
-    void SetOccupiedAreaUnbuildable(std::shared_ptr<Structure> structure){
-            for (auto i :structure->GetAbsoluteOccupiedArea()) {
-                m_Map->getTileByCellPosition(i)->setBuildable(false);
-                m_Map->getTileByCellPosition(i)->setWalkable(false);
-            }
+    void SetOccupiedAreaUnbuildable(std::shared_ptr<Structure> structure) {
+        for (auto i : structure->GetAbsoluteOccupiedArea()) {
+            m_Map->getTileByCellPosition(i)->setBuildable(false);
+            m_Map->getTileByCellPosition(i)->setWalkable(false);
+        }
     }
 
     void
@@ -167,7 +166,7 @@ private:
     bool m_IsSelectingConstructionSite = false;
     std::shared_ptr<Structure> m_StructSelectingConstructionSite =
         std::make_shared<Structure>();
-    std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
+
     std::vector<std::shared_ptr<Avatar>> m_UnitArray;
     FindValidPathToDest m_wayPointUnit;
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
