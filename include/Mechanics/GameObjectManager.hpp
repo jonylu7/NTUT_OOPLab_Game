@@ -7,6 +7,7 @@
 #include "Cursor.hpp"
 #include "FindValidPathToDest.hpp"
 #include "GameObjectID.hpp"
+#include "Mechanics/Constructing.hpp"
 #include "Mechanics/StructureArray.hpp"
 #include "Player.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
@@ -20,9 +21,10 @@
 #include <unordered_map>
 #include <utility>
 
-class GameObjectManager : public StructureArray {
+class GameObjectManager : public Constructing {
 public:
-    GameObjectManager() {}
+    GameObjectManager()
+        : Constructing(m_Map) {}
     ~GameObjectManager() {}
     void Start(std::shared_ptr<MapClass> map, std::shared_ptr<Player> player,
                std::shared_ptr<CursorClass> cursor) {
@@ -101,12 +103,6 @@ public:
         }
     }
 
-    void Append(std::shared_ptr<Structure> newstruct) {
-        m_BuiltStructure.push_back(newstruct);
-        m_Map->AppendSelectableObjectByCellPosition(
-            MapUtil::GlobalCoordToCellCoord(newstruct->GetObjectLocation()),
-            newstruct);
-    }
     void Append(std::shared_ptr<Avatar> newUnit) {
         m_UnitArray.push_back(newUnit);
     }
@@ -137,39 +133,13 @@ public:
                     Util::Input::GetCursorPosition())));
         }
     }
-    void SetOccupiedAreaUnbuildable(std::shared_ptr<Structure> structure) {
-        for (auto i : structure->GetAbsoluteOccupiedArea()) {
-            m_Map->getTileByCellPosition(i)->setBuildable(false);
-            m_Map->getTileByCellPosition(i)->setWalkable(false);
-        }
-    }
-
-    void
-    AddStructSelectingConstructionSite(std::shared_ptr<Structure> newstruct) {
-        newstruct->Start();
-        m_StructSelectingConstructionSite = newstruct;
-        m_IsSelectingConstructionSite = true;
-    }
-
-    void SelectdConstructionSite() {
-        if (m_IsSelectingConstructionSite) {
-            if (m_StructSelectingConstructionSite->getConstructed()) {
-                Append(m_StructSelectingConstructionSite);
-                m_IsSelectingConstructionSite = false;
-            }
-            m_StructSelectingConstructionSite->Update();
-        }
-    }
 
 private:
     std::vector<std::shared_ptr<Selectable>> lastSeletctedObjects;
-    bool m_IsSelectingConstructionSite = false;
-    std::shared_ptr<Structure> m_StructSelectingConstructionSite =
-        std::make_shared<Structure>();
 
     std::vector<std::shared_ptr<Avatar>> m_UnitArray;
     FindValidPathToDest m_wayPointUnit;
-    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
+    // std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::shared_ptr<Player> m_Player;
     std::shared_ptr<CursorClass> m_Cursor;
     std::chrono::high_resolution_clock::time_point m_StartTime;
