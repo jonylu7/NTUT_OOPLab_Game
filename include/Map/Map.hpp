@@ -13,6 +13,8 @@
 
 class MapClass : public Core::Drawable {
 public:
+    MapClass() {}
+    ~MapClass() {}
     void Init(unsigned int width, unsigned int height);
     void Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
               unsigned int width, unsigned int height);

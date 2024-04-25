@@ -8,8 +8,7 @@
 #include "Structure/Structure.hpp"
 class Constructing : public StructureArray {
 public:
-    Constructing(std::shared_ptr<MapClass> map)
-        : StructureArray(map) {}
+    Constructing() {}
     virtual ~Constructing() {}
     void
     AddStructSelectingConstructionSite(std::shared_ptr<Structure> newstruct) {
@@ -18,16 +17,17 @@ public:
         m_IsSelectingConstructionSite = true;
     }
 
-    void SelectdConstructionSite() {
+    void SelectdConstructionSite(std::shared_ptr<MapClass> m_Map) {
         if (m_IsSelectingConstructionSite) {
             if (m_StructSelectingConstructionSite->getConstructed()) {
-                Append(m_StructSelectingConstructionSite);
+                Append(m_Map, m_StructSelectingConstructionSite);
                 m_IsSelectingConstructionSite = false;
             }
             m_StructSelectingConstructionSite->Update();
         }
     }
-    void SetOccupiedAreaUnbuildable(std::shared_ptr<Structure> structure) {
+    void SetOccupiedAreaUnbuildable(std::shared_ptr<MapClass> m_Map,
+                                    std::shared_ptr<Structure> structure) {
         for (auto i : structure->GetAbsoluteOccupiedArea()) {
             m_Map->getTileByCellPosition(i)->setBuildable(false);
             m_Map->getTileByCellPosition(i)->setWalkable(false);

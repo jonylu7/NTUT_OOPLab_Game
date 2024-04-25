@@ -8,6 +8,7 @@
 #include "FindValidPathToDest.hpp"
 #include "GameObjectID.hpp"
 #include "Mechanics/Constructing.hpp"
+#include "Mechanics/CursorSelection.hpp"
 #include "Mechanics/StructureArray.hpp"
 #include "Player.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
@@ -21,10 +22,9 @@
 #include <unordered_map>
 #include <utility>
 
-class GameObjectManager : public Constructing {
+class GameObjectManager : public Constructing, public CursorSelection {
 public:
-    GameObjectManager()
-        : Constructing(m_Map) {}
+    GameObjectManager() {}
     ~GameObjectManager() {}
     void Start(std::shared_ptr<MapClass> map, std::shared_ptr<Player> player,
                std::shared_ptr<CursorClass> cursor) {
@@ -42,13 +42,13 @@ public:
 
         for (auto pair : m_BuiltStructure) {
             pair->Update();
-            SetOccupiedAreaUnbuildable(pair);
+            SetOccupiedAreaUnbuildable(m_Map, pair);
         }
         for (auto unit : m_UnitArray) {
             unit->Update();
         }
 
-        CursorSelect(&cursorstart, &cursorend);
+        CursorSelect(m_Map, &cursorstart, &cursorend);
 
         // currency update
         std::chrono::high_resolution_clock::time_point m_currentTime =
@@ -57,51 +57,10 @@ public:
         if (elapsed.count() - m_lastElapsed >= 1) { // update every second
             m_lastElapsed = elapsed.count();
         }
-        SelectdConstructionSite();
+        SelectdConstructionSite(m_Map);
     }
 
     // Select Unit to take action
-
-    void CursorSelect(glm::vec2 *start, glm::vec2 *end) {
-
-        if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
-            *start = Util::Input::GetCursorPosition();
-        }
-        if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
-            // clear up last selected
-            for (auto i : lastSeletctedObjects) {
-                i->setSelected(false);
-            }
-            lastSeletctedObjects.clear();
-
-            // get cursor position
-            *end = Util::Input::GetCursorPosition();
-
-            // select objects
-            auto startcell = MapUtil::GlobalCoordToCellCoord(
-                MapUtil::ScreenToGlobalCoord(*start));
-            auto endcell = MapUtil::GlobalCoordToCellCoord(
-                MapUtil::ScreenToGlobalCoord(*end));
-
-            int max_x_cell = std::max(startcell.x, endcell.x);
-            int max_y_cell = std::max(startcell.y, endcell.y);
-            int min_x_cell = std::min(startcell.x, endcell.x);
-            int min_y_cell = std::min(startcell.y, endcell.y);
-
-            for (int i = min_y_cell; i <= max_y_cell; i++) {
-                for (int j = min_x_cell; j <= max_x_cell; j++) {
-                    auto objects = m_Map->getTileByCellPosition(glm::vec2(j, i))
-                                       ->getSelectableObjects();
-                    for (auto i : objects) {
-                        if (i->getSelected() == false) {
-                            i->setSelected(true);
-                            lastSeletctedObjects.push_back(i);
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     void Append(std::shared_ptr<Avatar> newUnit) {
         m_UnitArray.push_back(newUnit);
@@ -135,17 +94,12 @@ public:
     }
 
 private:
-    std::vector<std::shared_ptr<Selectable>> lastSeletctedObjects;
-
     std::vector<std::shared_ptr<Avatar>> m_UnitArray;
     FindValidPathToDest m_wayPointUnit;
-    // std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
+    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::shared_ptr<Player> m_Player;
     std::shared_ptr<CursorClass> m_Cursor;
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
-    glm::vec2 cursorstart;
-    glm::vec2 cursorend;
 };
-
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
