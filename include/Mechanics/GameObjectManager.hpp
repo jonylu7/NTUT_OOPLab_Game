@@ -9,8 +9,8 @@
 #include "GameObjectID.hpp"
 #include "Mechanics/Constructing.hpp"
 #include "Mechanics/CursorSelection.hpp"
+#include "Mechanics/Player.hpp"
 #include "Mechanics/StructureArray.hpp"
-#include "Player.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/OreRefinery.hpp"
@@ -22,15 +22,14 @@
 #include <unordered_map>
 #include <utility>
 
-class GameObjectManager : public Constructing, public CursorSelection {
+class GameObjectManager : public Constructing,
+                          public CursorSelection,
+                          public Player {
 public:
     GameObjectManager() {}
     ~GameObjectManager() {}
-    void Start(std::shared_ptr<MapClass> map, std::shared_ptr<Player> player,
-               std::shared_ptr<CursorClass> cursor) {
+    void Start(std::shared_ptr<MapClass> map) {
         m_Map = map;
-        m_Player = player;
-        m_Cursor = cursor;
 
         for (auto pair : m_BuiltStructure) {
             pair->Start();
@@ -68,15 +67,6 @@ public:
 
     void RemoveStructByID(const GameObjectID id) {}
 
-    int GetTotalPower() {
-        int totalPower = 0;
-        for (int i = 0; i < m_BuiltStructure.size(); i++) {
-            totalPower += m_BuiltStructure[i]->GetElectricPower();
-        }
-        return totalPower;
-    }
-
-    float GetTotalCurrency() { return m_Player->getTotalCurrency(); }
     std::vector<std::shared_ptr<Structure>> getStructureArray() {
         return m_BuiltStructure;
     }
@@ -93,12 +83,14 @@ public:
         }
     }
 
+    int getTotalPower() {
+        return Player::getTotalPower(this->m_BuiltStructure);
+    }
+
 private:
     std::vector<std::shared_ptr<Avatar>> m_UnitArray;
     FindValidPathToDest m_wayPointUnit;
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
-    std::shared_ptr<Player> m_Player;
-    std::shared_ptr<CursorClass> m_Cursor;
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
 };

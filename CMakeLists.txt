@@ -100,16 +100,20 @@ set(SRC_FILES
         ${SRC_DIR}/Unit/Hunter.cpp
         ${SRC_DIR}/Unit/PathUtility.cpp
         ${SRC_DIR}/Unit/PathFindingUnit.cpp
-        ${SRC_DIR}/Mechanics/FindValidPathToDest.cpp
+
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
         ${SRC_DIR}/SpriteSheet.cpp
         ${SRC_DIR}/UI/UI.cpp
-        ${SRC_DIR}/Mechanics/GameObjectID.cpp
+
         ${SRC_DIR}/Map/YAMLReader.cpp
         ${SRC_DIR}/Map/TerrainConfig.cpp
         ${SRC_DIR}/Map/MapbinReader.cpp
         ${SRC_DIR}/Map/Map.cpp
+
+        ${SRC_DIR}/Mechanics/FindValidPathToDest.cpp
+        ${SRC_DIR}/Mechanics/GameObjectID.cpp
+        ${SRC_DIR}/Mechanics/CursorSelection.cpp
 
 )
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -159,9 +163,11 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Scene/MapScene.hpp
 
 
-        ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Mechanics/GameObjectManager.hpp
         ${INCLUDE_DIR}/Mechanics/GameObjectID.hpp
+        ${INCLUDE_DIR}/Mechanics/CursorSelection.hpp
+
+        ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp
         ${INCLUDE_DIR}/config.hpp
         ${INCLUDE_DIR}/DrawOverlays.hpp

@@ -56,9 +56,9 @@ void UIScriptProcess::CountDown() {
     // Structure Building
     std::chrono::duration<double> buildElapsed =
         m_currentCountDownTime - m_buildStartTime;
-    if (m_gameObjectManager->GetTotalCurrency() <= 0 &&
+    if (m_gameObjectManager->getTotalCurrency() <= 0 &&
         b_isBuildingInCoolDown && buildElapsed.count() < buildCoolDownTime) {
-        if (m_gameObjectManager->GetTotalPower() <= 0) {
+        if (m_gameObjectManager->getTotalPower() <= 0) {
             SetBuildCountDown(buildCoolDownTime / 2 - buildElapsed.count());
         } else {
             SetBuildCountDown(buildCoolDownTime - buildElapsed.count());
@@ -90,9 +90,9 @@ void UIScriptProcess::CountDown() {
     // Unit Spawning
     std::chrono::duration<double> spawnElapsed =
         m_currentCountDownTime - m_SpawnStartTime;
-    if (m_gameObjectManager->GetTotalCurrency() <= 0 &&
+    if (m_gameObjectManager->getTotalCurrency() <= 0 &&
         b_isSpawningInCooldown && spawnElapsed.count() < spawnCoolDownTime) {
-        if (m_gameObjectManager->GetTotalPower() <= 0) {
+        if (m_gameObjectManager->getTotalPower() <= 0) {
             SetSpawnCountDown(spawnCoolDownTime / 2 - spawnElapsed.count());
         } else {
             SetSpawnCountDown(spawnCoolDownTime - spawnElapsed.count());
@@ -235,14 +235,14 @@ std::shared_ptr<Avatar> UIScriptProcess::spawnAvatar() {
 }
 
 float UIScriptProcess::GetBuildCountDownTime() {
-    if (m_gameObjectManager->GetTotalPower() <= 0) {
+    if (m_gameObjectManager->getTotalPower() <= 0) {
         return m_offPowerBuildCoolDownTime;
     } else {
         return m_buildCoolDownTime;
     }
 }
 float UIScriptProcess::GetSpawnCountDownTime() {
-    if (m_gameObjectManager->GetTotalPower() <= 0) {
+    if (m_gameObjectManager->getTotalPower() <= 0) {
         return m_offPowerSpawnCoolDownTime;
     } else {
         return m_spawnCoolDownTime;

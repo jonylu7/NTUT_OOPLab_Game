@@ -39,9 +39,10 @@ void UIClass::ShowPlayerStatus() {
                     .c_str());
     // ImGui::Text(fmt::format("Zoom: {}",
     // m_SceneCamera.getCameraZoom()).c_str());
-    ImGui::Text(fmt::format("$ {}", m_Player->getTotalCurrency()).c_str());
     ImGui::Text(
-        fmt::format("Power {}", m_gameObjectManager->GetTotalPower()).c_str());
+        fmt::format("$ {}", m_gameObjectManager->getTotalCurrency()).c_str());
+    ImGui::Text(
+        fmt::format("Power {}", m_gameObjectManager->getTotalPower()).c_str());
     ImGui::PushFont(sacker_med);
 }
 
