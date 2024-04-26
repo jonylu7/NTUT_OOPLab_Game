@@ -23,8 +23,8 @@ void DefaultScene::Start() {
     // m_dummy.Start({5, 5}, m_Map);
     m_GameObjectManager->Start(m_Map);
     // m_Cursor.Start(m_Map);
-    m_UI.Start(m_Map, m_Player, m_GameObjectManager);
-    m_Player->setTotalCurrency(5000);
+    m_UI.Start(m_Map, m_GameObjectManager);
+    m_GameObjectManager->setTotalCurrency(5000);
     m_SceneCamera.Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                         MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 

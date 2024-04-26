@@ -75,7 +75,7 @@ void UIScriptProcess::CountDown() {
             }
             if (m_currentBuildRemainingCost > 0) {
                 m_currentBuildRemainingCost -= buildCost;
-                m_player->addCurrency(-1 * buildCost);
+                m_gameObjectManager->addCurrency(-1 * buildCost);
             }
         }
         // if finish building
@@ -108,7 +108,7 @@ void UIScriptProcess::CountDown() {
             }
             if (m_currentSpawnRemainingCost > 0) {
                 m_currentSpawnRemainingCost -= spawnCost;
-                m_player->addCurrency(-1 * spawnCost);
+                m_gameObjectManager->addCurrency(-1 * spawnCost);
             }
         }
         // if finish spawning

@@ -22,7 +22,6 @@
 
 class UIScriptProcess {
 private:
-    std::shared_ptr<Player> m_player;
     std::shared_ptr<GameObjectManager> m_gameObjectManager;
 
     // building
@@ -101,7 +100,6 @@ public:
     void setIfReadytoSpawn(bool b) { b_isReadyToSpawn = b; }
 
     // import from scene
-    void importPlayer(std::shared_ptr<Player> player) { m_player = player; }
     void
     importGameObjManager(std::shared_ptr<GameObjectManager> gameObjectManager) {
         m_gameObjectManager = gameObjectManager;

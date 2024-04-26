@@ -18,7 +18,7 @@
 
 class UIClass {
 public:
-    void Start(std::shared_ptr<MapClass> map, std::shared_ptr<Player> player,
+    void Start(std::shared_ptr<MapClass> map,
                std::shared_ptr<GameObjectManager> gameobjectmanager);
     void Update();
 
@@ -44,10 +44,6 @@ public:
 
 protected:
     void importMap(std::shared_ptr<MapClass> m_Map) { this->m_Map = m_Map; }
-    void importPlayer(std::shared_ptr<Player> m_Player) {
-        this->m_Player = m_Player;
-        ButtonScript.importPlayer(m_Player);
-    }
     void
     importGameObjManager(std::shared_ptr<GameObjectManager> gameObjectManager) {
         m_gameObjectManager = gameObjectManager;
@@ -88,7 +84,7 @@ private:
     glm::vec2 m_GridSize = {100, 100};
 
     // 0318
-    void setSelectToBuild(unitType type){m_selectedStructureType = type;}
+    void setSelectToBuild(unitType type) { m_selectedStructureType = type; }
 
     ImGuiIO &io = ImGui::GetIO();
 
@@ -98,7 +94,6 @@ private:
         "../assets/fonts/sackersgothicstd-heavy.otf", 11);
     ImFont *sacker_light = io.Fonts->AddFontFromFileTTF(
         "../assets/fonts/sackersgothicstd-light.otf", 11);
-
 
     bool b_barackBuilt = false;
     bool b_warfactoryBuilt = false;
@@ -110,12 +105,10 @@ private:
     glm::vec2 m_warfactoryTargetCell;
     glm::vec2 m_orerefineryCell;
     glm::vec2 m_orerefineryTargetCell;
-    unitType m_selectedStructureType=unitType::NONE;
-
+    unitType m_selectedStructureType = unitType::NONE;
 
     // ptr import from scene
     std::shared_ptr<MapClass> m_Map;
-    std::shared_ptr<Player> m_Player;
     std::shared_ptr<GameObjectManager> m_gameObjectManager;
 };
 

@@ -8,7 +8,6 @@
 std::unordered_map<unitType, unsigned int> UIClass::s_unitConstructCount;
 
 void UIClass::Start(std::shared_ptr<MapClass> map,
-                    std::shared_ptr<Player> player,
                     std::shared_ptr<GameObjectManager> gameobjectmanager) {
     InitUnitQueue();
     m_StructureIconSpriteSheet->Start(
@@ -18,7 +17,6 @@ void UIClass::Start(std::shared_ptr<MapClass> map,
     m_VehiclesIconSpriteSheet->Start(
         "../assets/sprites/ICON_Allied_Vehicles.png", 64, 48, 12, 0);
     importMap(map);
-    importPlayer(player);
     importGameObjManager(gameobjectmanager);
 }
 
@@ -441,7 +439,6 @@ std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
     auto Avatar = ButtonScript.spawnAvatar();
     ButtonScript.setIfReadytoSpawn(false);
     if (std::dynamic_pointer_cast<Infantry>(Avatar)) {
-
 
         Avatar->Start({m_barrackCell.x + 1, m_barrackCell.y - 1});
 

@@ -48,6 +48,8 @@ public:
 
     void Start(glm::vec2 minPosition, glm::vec2 maxPosition);
     void Update();
+
+protected:
     void UpdateWhenCursorAtBoarder();
     void UpdateWhenCursorScroll();
 
