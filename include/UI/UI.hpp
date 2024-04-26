@@ -99,12 +99,6 @@ private:
     ImFont *sacker_light = io.Fonts->AddFontFromFileTTF(
         "../assets/fonts/sackersgothicstd-light.otf", 11);
 
-    bool b_Baracks = false;
-    bool b_OreRefinery = false;
-    bool b_PowerPlants = false;
-    bool b_WarFactory = false;
-    bool b_ADVPowerPlant = false;
-    bool b_SelectToBuild = false;
 
     bool b_barackBuilt = false;
     bool b_warfactoryBuilt = false;

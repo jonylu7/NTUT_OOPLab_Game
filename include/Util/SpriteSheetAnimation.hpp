@@ -47,6 +47,7 @@ public:
     SpriteSheetAnimation(std::shared_ptr<SpriteSheet> spriteSheet, bool play,std::size_t interval, bool looping=true, std::size_t cooldown=100);
 
     void initSpriteSheetAnimation(std::shared_ptr<SpriteSheet> spriteSheet, bool play,std::size_t interval, bool looping=true, std::size_t cooldown=100);
+    void setFrameRange(int start,int end){m_startFrame=start;m_endFrame=end;}
     bool getFinished(){if(m_State==State::ENDED)return true; return false;}
     /**
      * @brief Get the interval between frames.
@@ -157,6 +158,9 @@ private:
     double m_TimeBetweenFrameUpdate = 0;
 
     std::size_t m_Index = 0;
+
+    int m_startFrame=-1;
+    int m_endFrame=-1;
 };
 } // namespace Util
 

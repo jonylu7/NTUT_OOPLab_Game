@@ -8,6 +8,7 @@
 #include "Map/MapUtility.hpp"
 #include "Unit/AttackAndDamageUnit.hpp"
 #include "Unit/PathfindingUnit.hpp"
+#include "Unit/PathUtility.hpp"
 
 class Avatar : public PathfindingUnit,
                public AttackAndDamageUnit,
@@ -23,6 +24,7 @@ public:
                                                 // waypointLocation
         // setCurrentCell()  //CurrentCell = Structure's Location
         this->SetDrawable(customizeImage());
+//        setSpriteSheet();
         SetVisible(true);
         setCurrentCell(destination);
         setNextCell(destination);
@@ -47,6 +49,7 @@ public:
         m_Transform.translation = getCurrentLocation();
 
         Draw();
+//        m_SpriteSheetAnimation->Draw(m_Transform, DEFAULT_ZINDEX);
 
         printf("Avatar cell={%d,%d}\n", getCurrentLocation().x,
                getCurrentLocation().y);
@@ -56,6 +59,11 @@ public:
     float getDistance(glm::vec2 cell) {
         return sqrt(pow(cell.x - getCurrentCell().x, 2) +
                     pow(cell.y - getCurrentCell().y, 2));
+    }
+
+    void setSpriteSheet(){
+        m_AvatarSpriteSheet->Start(
+            "../assets/sprites/mech.png", 50, 39, 247, 0);
     }
 
     void DEBUG_printCurrentMoveDirection(MoveDirection Dir) {
@@ -110,6 +118,46 @@ public:
     virtual std::shared_ptr<Util::Image> customizeImage() {
         return std::make_unique<Util::Image>("../assets/sprites/Hunter.png");
     }
+    virtual void playSpriteAnimation(){
+        switch (m_currentDir) {
+        case MoveDirection::UP:{
+            m_SpriteSheetAnimation->setFrameRange(0,0);
+            break;
+        }
+        case MoveDirection::UP_RIGHT:{
+            m_SpriteSheetAnimation->setFrameRange(0,0);
+            break;
+        }
+        case MoveDirection::UP_LEFT:{
+            m_SpriteSheetAnimation->setFrameRange(9,14);
+            break;
+        }
+        case MoveDirection::RIGHT:{
+            m_SpriteSheetAnimation->setFrameRange(0,0);
+            break;
+        }
+        case MoveDirection::LEFT:{
+            m_SpriteSheetAnimation->setFrameRange(15,0);
+            break;
+        }
+        case MoveDirection::DOWN_RIGHT:{
+            m_SpriteSheetAnimation->setFrameRange(0,0);
+            break;
+        }
+        case MoveDirection::DOWN_LEFT:{
+            m_SpriteSheetAnimation->setFrameRange(0,0);
+            break;
+        }
+        case MoveDirection::DOWN:{
+            m_SpriteSheetAnimation->setFrameRange(0,0);
+            break;
+        }
+        case MoveDirection::IDLE:{
+            m_SpriteSheetAnimation->setFrameRange(0,0);
+            break;
+        }
+        }
+    }
     virtual void Update() override {
         switch (m_currentMode) {
         case (UnitMode::DEAD): {
@@ -131,7 +179,10 @@ public:
 
 protected:
     std::shared_ptr<Util::Image> m_Image;
-
+    std::shared_ptr<SpriteSheet> m_AvatarSpriteSheet =
+        std::make_shared<SpriteSheet>();
+    std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
+        std::make_shared<Util::SpriteSheetAnimation>();
 private:
     bool b_SelectedByCursor = true;
     bool b_justStarted = true;
