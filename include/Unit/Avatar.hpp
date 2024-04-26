@@ -31,7 +31,7 @@ public:
 
         setMovementSpeed(4);
         m_currentMode = UnitMode::MOVE;
-        m_Transform.scale = {0.5, 0.5};
+        m_Transform.scale = {1, 1};
     }
     virtual void aliveUpdate() {
         if (walkTowardNextCell() || b_justStarted) {
@@ -131,7 +131,8 @@ public:
     }
 
     virtual std::shared_ptr<Util::Image> customizeImage() {
-        return std::make_unique<Util::Image>("../assets/sprites/Hunter.png");
+        return std::make_unique<Util::Image>(
+            "../assets/sprites/mech_single.png");
     }
     virtual void playSpriteAnimation(){
         switch (m_currentDir) {

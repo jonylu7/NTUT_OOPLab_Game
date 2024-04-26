@@ -32,6 +32,6 @@ protected:
 protected:
     int m_maxTroopSize = 200;
     int m_totalPower = 0;
-    int m_totalCurrency = 0;
+    int m_totalCurrency = 200;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PLAYER_HPP
