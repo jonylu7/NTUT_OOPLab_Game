@@ -14,9 +14,14 @@ public:
     void Append(std::shared_ptr<MapClass> m_Map,
                 std::shared_ptr<Structure> newstruct) {
         m_BuiltStructure.push_back(newstruct);
-        m_Map->AppendSelectableObjectByCellPosition(
-            MapUtil::GlobalCoordToCellCoord(newstruct->GetObjectLocation()),
-            newstruct);
+//        m_Map->AppendSelectableObjectByCellPosition(
+//            MapUtil::GlobalCoordToCellCoord(newstruct->GetObjectLocation()),
+//            newstruct);
+        std::vector<glm::vec2> coords = newstruct->GetAbsoluteOccupiedArea();
+        for( auto i:coords){
+            m_Map->getTileByCellPosition(i)->setBuildable(false);
+            m_Map->getTileByCellPosition(i)->setWalkable(false);
+        }
     }
 
     std::vector<std::shared_ptr<Structure>> getBuiltStructureArray() {

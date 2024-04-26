@@ -38,9 +38,20 @@ void SpriteSheetAnimation::SetCurrentFrame(std::size_t index) {
 
 void SpriteSheetAnimation::Draw(const Util::Transform &transform, const float zIndex) {
 //    m_Frames[m_Index]->Draw(transform, zIndex);
-    printf("(SpriteSheetAnimation) frame now = %d\n",m_Index);
-    m_SpriteSheet->DrawSpriteByIndex(m_Index,transform,zIndex);
-    Update();
+    if(m_startFrame==-1&&m_endFrame==-1){
+        printf("(SpriteSheetAnimation) frame now = %d\n",m_Index);
+        m_SpriteSheet->DrawSpriteByIndex(m_Index,transform,zIndex);
+        Update();
+    }else{
+        if(m_Index>m_endFrame){
+            m_Index=m_startFrame;
+        }else if(m_Index<m_startFrame){
+            m_Index=m_startFrame;
+        }
+        printf("(SpriteSheetAnimation) frame now = %d\n",m_Index);
+        m_SpriteSheet->DrawSpriteByIndex(m_Index,transform,zIndex);
+        Update();
+    }
 }
 
 void SpriteSheetAnimation::Play() {
