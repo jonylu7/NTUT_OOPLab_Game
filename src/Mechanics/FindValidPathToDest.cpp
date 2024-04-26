@@ -47,6 +47,7 @@ FindValidPathToDest::findPath(glm::vec2 currentcell,
             }
         }
     }
+    return m_dirQue;
 }
 
 std::vector<MoveDirection>

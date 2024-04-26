@@ -20,9 +20,9 @@ private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
 
 public:
-    FindValidPathToDest(){};
+    FindValidPathToDest(std::shared_ptr<MapClass> map)
+        : m_Map(map){};
     ~FindValidPathToDest(){};
-    void Start(std::shared_ptr<MapClass> map) { m_Map = map; }
 
 protected:
     // set

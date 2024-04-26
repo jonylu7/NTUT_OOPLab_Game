@@ -41,7 +41,13 @@ public:
             // setCurrentDir(m_wayPointUnit.getFirstCellDir());
             setNextCell(PathUtility::getNextCellByCurrent(getCurrentDir(),
                                                           getNextCell()));
-            printf("(aliveUpdate) getting new dir\n");
+            // printf("(aliveUpdate) getting new dir\n");
+            if (m_movepath.size() >= 1) {
+                m_currentDir = m_movepath.front();
+                m_movepath.pop_front();
+            } else {
+                m_currentDir = MoveDirection::IDLE;
+            }
         }
         // m_wayPointUnit.Update();
 
@@ -113,7 +119,16 @@ public:
         }
     }
 
-    void whenSelected() override {}
+    void whenSelected() override {
+        if (b_Selected) {
+            if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_RB)) {
+                m_destinationCell = MapUtil::GlobalCoordToCellCoord(
+                    MapUtil::ScreenToGlobalCoord(
+                        Util::Input::GetCursorPosition()));
+                b_newDestinationIsSetted = true;
+            }
+        }
+    }
 
     virtual std::shared_ptr<Util::Image> customizeImage() {
         return std::make_unique<Util::Image>("../assets/sprites/Hunter.png");
@@ -159,6 +174,7 @@ public:
         }
     }
     virtual void Update() override {
+        whenSelected();
         switch (m_currentMode) {
         case (UnitMode::DEAD): {
             SetVisible(false);
@@ -184,7 +200,6 @@ protected:
     std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
         std::make_shared<Util::SpriteSheetAnimation>();
 private:
-    bool b_SelectedByCursor = true;
     bool b_justStarted = true;
     UnitMode m_currentMode;
 };
