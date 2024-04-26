@@ -43,7 +43,7 @@ enum class unitType {
     OVERLAY_GEMS,
     OVERLAY_ORE,
 
-    //NONE
+    // NONE
     NONE
 };
 
@@ -52,26 +52,26 @@ private:
     static std::unordered_map<unitType, unsigned int> m_OccupiedID;
 
 public:
-    static int getNewestID(unitType type);
+    static unsigned int getNewestID(unitType type);
 };
 
 class GameObjectID {
 public:
     GameObjectID()
         : m_unitType(unitType::null),
-          number(0) {}
+          m_number(0) {}
     GameObjectID(unitType type, HouseType house)
         : m_unitType(type),
-          number(OccupiedID::getNewestID(type)),
+          m_number(OccupiedID::getNewestID(type)),
           m_house(house) {}
     ~GameObjectID() {}
 
-    void generateID(unitType type) { m_unitType = type; }
-    int getNumber() const { return number; }
+    int getNumber() const { return m_number; }
     unitType getUnitType() const { return m_unitType; }
 
     bool operator==(const GameObjectID &id) const {
-        if (this->m_unitType == id.m_unitType && this->number == id.number) {
+        if (this->m_unitType == id.m_unitType &&
+            this->m_number == id.m_number && this->m_house == id.m_house) {
             return true;
         } else {
             return false;
@@ -79,14 +79,15 @@ public:
     };
 
     GameObjectID &operator=(const GameObjectID &id) {
-        this->number = id.number;
+        this->m_number = id.m_number;
         this->m_unitType = id.m_unitType;
+        this->m_house = id.m_house;
         return *this;
     }
 
 private:
     unitType m_unitType;
-    unsigned int number;
+    unsigned int m_number;
     HouseType m_house;
 };
 

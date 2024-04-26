@@ -8,7 +8,10 @@
 void DefaultScene::Start() {
 
     LOG_TRACE("Start");
-    m_Map->Init(100, 100);
+    m_Map->Init(98, 98);
+    // m_Map->Init(
+    //    MapBinReader::readBin("../assets/map/green-belt/map.bin", 98, 98), 98,
+    //   98);
     // m_Map->getTileByCellPosition(glm::vec2(5, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(6, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(7, 5))->setWalkable(0);
@@ -59,8 +62,8 @@ void DefaultScene::Update() {
         m_GameObjectManager->AddStructSelectingConstructionSite(
             m_UI.getSelectedBuilding());
     }
-    m_UI.checkExistBuilding(m_GameObjectManager->getStructureArray());
+    m_UI.checkExistBuilding(m_GameObjectManager->getBuiltStructureArray());
     if (m_UI.getIfUnitReadyToSpawn()) {
-        m_GameObjectManager->Append(m_UI.getUnitFromUI());
+        m_GameObjectManager->AppendUnit(m_UI.getUnitFromUI());
     }
 }

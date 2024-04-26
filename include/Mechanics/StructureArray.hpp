@@ -19,6 +19,10 @@ public:
             newstruct);
     }
 
+    std::vector<std::shared_ptr<Structure>> getBuiltStructureArray() {
+        return m_BuiltStructure;
+    }
+
 protected:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
 };

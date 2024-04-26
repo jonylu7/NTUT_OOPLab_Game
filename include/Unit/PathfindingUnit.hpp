@@ -18,6 +18,8 @@
 
 class PathfindingUnit {
 protected:
+    std::deque<MoveDirection> m_movepath;
+
     Util::Transform m_emptyTrans;
     std::vector<Line> m_lineVector;
     float defaultZIndex = 15;
@@ -32,6 +34,8 @@ protected:
     float m_MovementSpeed = 1.F;
 
     int moveDistance = 0;
+
+    bool b_newDestinationIsSetted = false;
 
 public:
     PathfindingUnit(){};
@@ -67,5 +71,15 @@ public:
     void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
     bool walkTowardNextCell();
 
+    void setMovePath(std::deque<MoveDirection> movepath) {
+        m_movepath = movepath;
+        setnewDestinationIsSetted(false);
+    }
+
+    bool getnewDestionationIsSetted() { return b_newDestinationIsSetted; }
+
+    void setnewDestinationIsSetted(bool value) {
+        b_newDestinationIsSetted = value;
+    }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
