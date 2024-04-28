@@ -286,3 +286,25 @@ bool FindValidPathToDest::canResumeWalkingStraight(glm::vec2 currentcell,
     }
     return false;
 }
+
+Side FindValidPathToDest::randomlyChooseSide() {
+    // Create a random number generator engine
+    std::random_device rd;  // Obtain a random seed from the hardware
+    std::mt19937 gen(rd()); // Initialize the Mersenne Twister
+                            // pseudo-random number generator
+
+    // Define a distribution (uniform distribution in this case)
+    std::uniform_int_distribution<int> distribution(
+        0, 1); // Uniform distribution between 1 and 6 (inclusive)
+
+    // Generate a random number
+    int random_number = distribution(gen); // Generate a random number using
+                                           // the generator and distribution
+
+    switch (random_number) {
+    case 0:
+        return Side::R;
+    case 1:
+        return Side ::L;
+    }
+}

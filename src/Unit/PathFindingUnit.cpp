@@ -64,7 +64,9 @@ bool PathfindingUnit::arrivedAtNextCell() {
     if (m_moveDistance >= 48 * SPEED) {
         m_moveDistance = 0;
         return true;
-    } else
+    } else {
         m_moveDistance += m_MovementSpeed;
+    }
+
     return false;
 }
