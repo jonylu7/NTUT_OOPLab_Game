@@ -97,6 +97,7 @@ set(SRC_FILES
 
 
         ${SRC_DIR}/Unit/Runner.cpp
+        ${SRC_DIR}/Unit/Avatar.cpp
         ${SRC_DIR}/Unit/Hunter.cpp
         ${SRC_DIR}/Unit/PathUtility.cpp
         ${SRC_DIR}/Unit/PathFindingUnit.cpp

@@ -30,12 +30,19 @@ public:
 
     void setGridActive(bool value) { m_Grid.SetActivate(value); }
 
-    void
-    AppendSelectableObjectByCellPosition(glm::vec2 position,
-                                         std::shared_ptr<Selectable> object) {
-        if (position.x < m_MapWdith && position.y < m_MapHeight) {
-            m_Map[position.x][position.y]->pushSelectableObjects(object);
+    void builtStructureByCellPosition(std::shared_ptr<Structure> structure,
+                                      std::vector<glm::vec2> coords) {
+        for (auto i : coords) {
+            getTileByCellPosition(i)->setBuildable(false);
+            getTileByCellPosition(i)->setWalkable(false);
+            getTileByCellPosition(i)->setStructure(structure);
         }
+    }
+
+    void setUnitsByCellPosition(std::shared_ptr<Avatar> avatar,
+                                glm::vec2 position) {
+        getTileByCellPosition(position)->setBuildable(false);
+        getTileByCellPosition(position)->pushAvatars(avatar);
     }
 
 protected:

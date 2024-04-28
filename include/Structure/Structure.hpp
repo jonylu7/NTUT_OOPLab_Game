@@ -27,9 +27,9 @@ class Structure : public Util::GameObject,
 public:
     enum class updateMode { Invisidable, Moveable, Fixed };
     Structure()
-        : electricPower(100.F),
-          buildingTime(100.F),
-          buildingCost(100.F),
+        : electricPower(0.F),
+          buildingTime(0.F),
+          buildingCost(0.F),
           m_ID(GameObjectID(unitType::null, HouseType::NONE)) {
         m_CurrentState = updateMode::Invisidable;
     };
@@ -67,7 +67,7 @@ public:
     virtual void SetAttachVisible(bool visible);
     glm::vec2 GetDrawLocation() { return DrawLocation; };
     void SetID(GameObjectID id) { m_ID = id; };
-    
+
     virtual void attachmentUpdate();
     bool getConstructed() {
         if (m_CurrentState == updateMode::Fixed) {
@@ -89,8 +89,6 @@ public:
 
     glm::vec2 GetObjectCell() { return GlobalCoordToCellCoord(ObjectLocation); }
     std::vector<glm::vec2> GetAbsoluteOccupiedArea();
-    bool ifBuildable();
-    void SetOccupiedAreaUnbuildable();
     void SetRelativeOccupiedArea(std::vector<glm::vec2> Area) {
         m_relativeOccupiedArea = Area;
     }

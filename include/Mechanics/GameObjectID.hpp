@@ -49,7 +49,7 @@ enum class unitType {
 
 class OccupiedID {
 private:
-    static std::unordered_map<unitType, unsigned int> m_OccupiedID;
+    static std::unordered_map<int, unsigned int> m_OccupiedID;
 
 public:
     static unsigned int getNewestID(unitType type);

@@ -8,8 +8,6 @@
 #include "Line.hpp"
 #include "Unit/PathUtility.hpp"
 
-#include "Map/Tile.hpp"
-
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
 #include "glm/glm.hpp"

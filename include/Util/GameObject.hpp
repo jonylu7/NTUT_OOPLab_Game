@@ -168,7 +168,7 @@ protected:
     std::shared_ptr<Core::Drawable> m_Drawable = nullptr;
     std::vector<std::shared_ptr<GameObject>> m_Children;
 
-    float m_ZIndex = 0;
+    float m_ZIndex = 1;
     bool m_Visible = true;
     bool m_MovingRelativeToCamera = true;
 };

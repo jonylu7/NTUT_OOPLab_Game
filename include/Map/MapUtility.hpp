@@ -4,20 +4,11 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MAPUTILITY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MAPUTILITY_HPP
-#include "Tile.hpp"
+#include "Camera.hpp"
+#include "pch.hpp"
 #include <vector>
 class MapUtil {
 public:
-    static std::vector<std::shared_ptr<TileClass>>
-    readMapAndTileSet(std::vector<int> map,
-                      std::unordered_map<int, TileClass> tileset) {
-        std::vector<std::shared_ptr<TileClass>> maps;
-        for (int i = 0; i < map.size(); i++) {
-            maps.push_back(std::make_shared<TileClass>(tileset[map[i]]));
-        }
-        return maps;
-    }
-
     static glm::vec2 ScreenToGlobalCoord(glm::vec2 screenCoord) {
         auto proj = CameraClass::getProjectionMatrix();
         auto view = CameraClass::getViewMatrix();

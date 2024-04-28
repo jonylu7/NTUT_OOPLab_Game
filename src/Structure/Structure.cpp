@@ -57,11 +57,10 @@ void Structure::updateMoveable() {
     // glm::vec2 cellPos = MapUtil::GlobalCoordToCellCoord(location);
     m_StructureSpriteSheet->DrawSpriteByIndex(
         m_StructureSpriteSheet->getSize() - 1, m_Transform, DEFAULT_ZINDEX);
-    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB) && ifBuildable()) {
+    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
         this->SetObjectLocation(location);
         m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                          true, INTERVAL, false);
-        SetOccupiedAreaUnbuildable();
         this->SetCurrentUpdateMode(updateMode::Fixed);
     }
 }
@@ -88,18 +87,4 @@ std::vector<glm::vec2> Structure::GetAbsoluteOccupiedArea() {
         Area.push_back({i.x + GetObjectCell().x, i.y + GetObjectCell().y});
     }
     return Area;
-}
-void Structure::SetOccupiedAreaUnbuildable() {
-    //    for (auto i :GetAbsoluteOccupiedArea()) {
-    //        m_Map->getTileByCellPosition(i)->setBuildable(false);
-    //        m_Map->getTileByCellPosition(i)->setWalkable(false);
-    //    }
-}
-bool Structure::ifBuildable() {
-    //    for (auto i :GetAbsoluteOccupiedArea()) {
-    //        if(m_Map->getTileByCellPosition(i)->getBuildable()== false){
-    //            return false;
-    //        }
-    //    }
-    return true;
 }

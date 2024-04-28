@@ -28,6 +28,7 @@ public:
 
         auto queue = m_wayPointUnit.findPath(unit->getCurrentCell(),
                                              unit->getDestinationCell());
+        // unit
         unit->setMovePath(queue);
         unit->setnewDestinationIsSetted(false);
     }
