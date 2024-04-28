@@ -44,6 +44,10 @@ public:
         getTileByCellPosition(position)->setBuildable(false);
         getTileByCellPosition(position)->pushAvatars(avatar);
     }
+    void removeAvatarsByCellPosition(std::shared_ptr<Avatar> avatar,
+                                     glm::vec2 position) {
+        getTileByCellPosition(position)->removeAvatar(avatar);
+    }
 
 protected:
     void InitGrid();

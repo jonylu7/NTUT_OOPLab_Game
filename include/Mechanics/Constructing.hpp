@@ -26,13 +26,6 @@ public:
             m_StructSelectingConstructionSite->Update();
         }
     }
-    void SetOccupiedAreaUnbuildable(std::shared_ptr<MapClass> m_Map,
-                                    std::shared_ptr<Structure> structure) {
-        for (auto i : structure->GetAbsoluteOccupiedArea()) {
-            m_Map->getTileByCellPosition(i)->setBuildable(false);
-            m_Map->getTileByCellPosition(i)->setWalkable(false);
-        }
-    }
 
 protected:
     std::shared_ptr<Structure> m_StructSelectingConstructionSite =

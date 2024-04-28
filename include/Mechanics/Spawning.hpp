@@ -16,14 +16,17 @@ public:
     void UpdateUnitArray() {
         for (auto unit : m_UnitArray) {
             unit->setSelected(true);
+
             unit->Update();
+
             if (unit->getnewDestionationIsSetted()) {
-                setNewDestination(unit);
+                setNewDestinationForUnit(unit);
             }
+            keepUpdatingUnitsPosition(unit);
         }
     }
 
-    void setNewDestination(std::shared_ptr<Avatar> unit) {
+    void setNewDestinationForUnit(std::shared_ptr<Avatar> unit) {
         FindValidPathToDest m_wayPointUnit(m_Map);
 
         auto queue = m_wayPointUnit.findPath(unit->getCurrentCell(),
@@ -31,6 +34,15 @@ public:
         // unit
         unit->setMovePath(queue);
         unit->setnewDestinationIsSetted(false);
+    }
+
+    void keepUpdatingUnitsPosition(std::shared_ptr<Avatar> unit) {
+        if (unit->arrivedAtNextCell()) {
+            m_Map->removeAvatarsByCellPosition(unit,
+                                               unitArrayAndLocation[unit]);
+            m_Map->setUnitsByCellPosition(unit, unit->getCurrentCell());
+            unitArrayAndLocation[unit] = unit->getCurrentCell();
+        }
     }
 
 protected:

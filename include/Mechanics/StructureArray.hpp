@@ -22,6 +22,18 @@ public:
         return m_BuiltStructure;
     }
 
+    void StartBuiltStructure() {
+        for (auto pair : m_BuiltStructure) {
+            pair->Start();
+        }
+    }
+
+    void UpdateBuiltStructure() {
+        for (auto pair : m_BuiltStructure) {
+            pair->Update();
+        }
+    }
+
 protected:
     std::vector<std::shared_ptr<Structure>> m_BuiltStructure;
 };

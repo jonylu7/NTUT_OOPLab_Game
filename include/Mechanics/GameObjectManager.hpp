@@ -25,21 +25,14 @@ public:
     ~GameObjectManager() {}
     void Start(std::shared_ptr<MapClass> map) {
         m_Map = map;
-        
+        StartBuiltStructure();
         importmap(m_Map);
 
-        for (auto pair : m_BuiltStructure) {
-            pair->Start();
-        }
         m_StartTime = std::chrono::high_resolution_clock::now();
     }
 
     void Update() {
-
-        for (auto pair : m_BuiltStructure) {
-            pair->Update();
-            SetOccupiedAreaUnbuildable(m_Map, pair);
-        }
+        UpdateBuiltStructure();
         UpdateUnitArray();
 
         CursorSelect(m_Map, &cursorstart, &cursorend);

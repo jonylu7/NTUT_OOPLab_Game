@@ -31,7 +31,7 @@ protected:
 
     float m_MovementSpeed = 1.F;
 
-    int moveDistance = 0;
+    int m_moveDistance = 0;
 
     bool b_newDestinationIsSetted = false;
 
@@ -67,7 +67,8 @@ public:
 
     MoveDirection getCurrentDir() { return m_currentDir; }
     void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
-    bool walkTowardNextCell();
+    void walkTowardNextCell();
+    bool arrivedAtNextCell();
 
     void setMovePath(std::deque<MoveDirection> movepath) {
         m_movepath = movepath;

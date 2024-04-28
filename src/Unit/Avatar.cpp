@@ -76,7 +76,8 @@ void Avatar::Update() {
 }
 
 void Avatar::aliveUpdate() {
-    if (walkTowardNextCell() || b_justStarted) {
+    if (arrivedAtNextCell() || b_justStarted) {
+        walkTowardNextCell();
         b_justStarted = false;
         setCurrentCell(MapUtil::GlobalCoordToCellCoord(getCurrentLocation()));
         // setCurrentDir(m_wayPointUnit.getFirstCellDir());

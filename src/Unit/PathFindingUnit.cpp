@@ -7,7 +7,7 @@
 //
 #include "Unit/PathfindingUnit.hpp"
 
-bool PathfindingUnit::walkTowardNextCell() {
+void PathfindingUnit::walkTowardNextCell() {
     switch (m_currentDir) {
     case MoveDirection::RIGHT: {
         m_currentLocation = {m_currentLocation.x + m_MovementSpeed,
@@ -58,10 +58,13 @@ bool PathfindingUnit::walkTowardNextCell() {
         break;
     }
     }
-    if (moveDistance >= 48 * SPEED) {
-        moveDistance = 0;
+}
+
+bool PathfindingUnit::arrivedAtNextCell() {
+    if (m_moveDistance >= 48 * SPEED) {
+        m_moveDistance = 0;
         return true;
     } else
-        moveDistance += m_MovementSpeed;
+        m_moveDistance += m_MovementSpeed;
     return false;
 }
