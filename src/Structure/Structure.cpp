@@ -15,23 +15,21 @@ void Structure::Start() {
     SetZIndex(DEFAULT_ZINDEX);
     this->SetAttachVisible(false);
     SetSpriteSheet();
-    m_CurrentState = updateMode::Moveable;
+    m_CurrentState = unitStatus::Strucutre_Moveable;
 }
 void Structure::Update() {
 
     switch (m_CurrentState) {
-    case updateMode::Invisidable: {
-        this->updateInvinsible();
-        break;
-    }
-    case updateMode::Fixed: {
+    case unitStatus::NotBornedYet {
+        this->updateInvinsible(); break;
+    } case unitStatus::Alive: {
         whenSelected();
         this->updateFixed();
         break;
     }
-    case updateMode::Moveable: {
-        this->updateMoveable();
-        break;
+    if( unitStatus::Strucutre_Moveable: {
+            this->updateMoveable();
+            break;
     }
     }
 }
@@ -39,10 +37,10 @@ void Structure::updateFixed() {
     // Attachment and self readjust location and draw---------------
     attachmentUpdate();
     if (m_SpriteSheetAnimation->getFinished()) {
-        m_StructureSpriteSheet->DrawSpriteByIndex(
-            m_StructureSpriteSheet->getSize() - 1, m_Transform, DEFAULT_ZINDEX);
+    m_StructureSpriteSheet->DrawSpriteByIndex(
+        m_StructureSpriteSheet->getSize() - 1, m_Transform, DEFAULT_ZINDEX);
     } else {
-        m_SpriteSheetAnimation->Draw(m_Transform, DEFAULT_ZINDEX);
+    m_SpriteSheetAnimation->Draw(m_Transform, DEFAULT_ZINDEX);
     }
     // Script when select--------------------
 }
@@ -58,10 +56,10 @@ void Structure::updateMoveable() {
     m_StructureSpriteSheet->DrawSpriteByIndex(
         m_StructureSpriteSheet->getSize() - 1, m_Transform, DEFAULT_ZINDEX);
     if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
-        this->SetObjectLocation(location);
-        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
-                                                         true, INTERVAL, false);
-        this->SetCurrentUpdateMode(updateMode::Fixed);
+    this->SetObjectLocation(location);
+    m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                     true, INTERVAL, false);
+    this->SetCurrentUpdateMode(updateMode::Fixed);
     }
 }
 
@@ -84,7 +82,7 @@ void Structure::attachmentUpdate() {
 std::vector<glm::vec2> Structure::GetAbsoluteOccupiedArea() {
     std::vector<glm::vec2> Area;
     for (auto i : m_relativeOccupiedArea) {
-        Area.push_back({i.x + GetObjectCell().x, i.y + GetObjectCell().y});
+    Area.push_back({i.x + GetObjectCell().x, i.y + GetObjectCell().y});
     }
     return Area;
 }

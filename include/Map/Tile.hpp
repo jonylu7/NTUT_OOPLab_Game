@@ -79,6 +79,9 @@ public:
                 if (m_Avatars.size() < 4) {
                     setWalkable(true);
                 }
+                if (m_Avatars.size() == 0) {
+                    setBuildable(true);
+                }
                 return;
             }
         }
@@ -105,6 +108,8 @@ public:
         this->m_Id = tile.m_Id;
         return *this;
     }
+
+    bool checkedEnemy() { if (m_Structure->getHouse() ==) }
 
 private:
     bool m_TerrainWalkable;

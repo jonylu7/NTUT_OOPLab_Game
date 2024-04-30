@@ -66,7 +66,6 @@ bool PathfindingUnit::arrivedAtNextCell() {
         return true;
     } else {
         m_moveDistance += m_MovementSpeed;
+        return false;
     }
-
-    return false;
 }

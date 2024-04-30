@@ -34,6 +34,10 @@ public:
         // unit
         unit->setMovePath(queue);
         unit->setnewDestinationIsSetted(false);
+
+        if (m_Map->getTileByCellPosition(unit->getDestinationCell())
+                ->checkedEnemy()) {
+        }
     }
 
     void keepUpdatingUnitsPosition(std::shared_ptr<Avatar> unit) {

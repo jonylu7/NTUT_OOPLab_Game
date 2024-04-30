@@ -8,6 +8,18 @@
 
 class AttackAndDamageUnit {
 public:
+    enum class unitStatus {
+        Death,
+        Alive,
+        NotBornedYet,
+    };
+    enum class unitOrder {
+        ATTACK,
+        NOORDER,
+        MOVE,
+        MOVE_ATTACK,
+        Struct_MOVEABLE
+    };
     AttackAndDamageUnit() {}
     virtual ~AttackAndDamageUnit() {}
 
@@ -27,7 +39,21 @@ public:
         return;
     }
 
-private:
+    void UpdateDeath() {
+        if (m_HP <= 0) {
+            m_CurrentState = unitStatus::Death;
+        }
+    }
+
+    unitStatus GetCurrentUpdateMode() const { return m_CurrentState; };
+    unitOrder GetCurrentOrder() const { return m_CurrentOrder; }
+
+    void SetCurrentUpdateMode(unitStatus mode) { m_CurrentState = mode; };
+    void SetCurrentOrder(unitOrder order) { m_CurrentOrder = order; };
+
+protected:
+    unitStatus m_CurrentState = unitStatus::NotBornedYet;
+    unitOrder m_CurrentOrder = unitOrder::NOORDER;
     int m_HP;
     Weapon m_Weapon;
     float m_ArmorRate;

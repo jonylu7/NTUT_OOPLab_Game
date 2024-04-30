@@ -17,7 +17,7 @@ public:
     HouseType getHouse() { return m_house; }
     void setHouse(HouseType house) { m_house = house; }
 
-private:
+protected:
     HouseType m_house;
 };
 

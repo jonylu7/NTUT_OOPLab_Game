@@ -57,30 +57,25 @@ void Avatar::whenSelected() {
 
 void Avatar::Update() {
     whenSelected();
-    switch (m_currentMode) {
-    case (UnitMode::DEAD): {
+    switch (m_CurrentState) {
+    case (unitStatus::Death):
         SetVisible(false);
         break;
-    }
-    case (UnitMode::MOVE): {
+
+    case (unitStatus::Alive):
         aliveUpdate();
         break;
-    }
-    case (UnitMode::MOVE_ATTACK): {
-        aliveUpdate();
-        customizeUpdate();
-        break;
-    }
+
         // attack
     }
 }
 
 void Avatar::aliveUpdate() {
+    walkTowardNextCell();
     if (arrivedAtNextCell() || b_justStarted) {
-        walkTowardNextCell();
         b_justStarted = false;
         setCurrentCell(MapUtil::GlobalCoordToCellCoord(getCurrentLocation()));
-        // setCurrentDir(m_wayPointUnit.getFirstCellDir());
+
         setNextCell(
             PathUtility::getNextCellByCurrent(getCurrentDir(), getNextCell()));
         // printf("(aliveUpdate) getting new dir\n");
@@ -91,10 +86,9 @@ void Avatar::aliveUpdate() {
             m_currentDir = MoveDirection::IDLE;
         }
     }
-    // m_wayPointUnit.Update();
 
     SetVisible(true);
-    m_Transform.translation = getCurrentLocation();
+    m_Transform.translation = m_currentLocation;
 
     Draw();
     //        m_SpriteSheetAnimation->Draw(m_Transform, DEFAULT_ZINDEX);

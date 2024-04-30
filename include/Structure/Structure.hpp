@@ -25,13 +25,12 @@ class Structure : public Util::GameObject,
                   public AttackAndDamageUnit {
 
 public:
-    enum class updateMode { Invisidable, Moveable, Fixed };
     Structure()
         : electricPower(0.F),
           buildingTime(0.F),
           buildingCost(0.F),
           m_ID(GameObjectID(unitType::null, HouseType::NONE)) {
-        m_CurrentState = updateMode::Invisidable;
+        m_CurrentState = unitStatus::NotBornedYet;
     };
 
     Structure(float electricPower, float buildingTime, float buildingCost,
@@ -58,8 +57,7 @@ public:
         m_StructureSpriteSheet->Start(
             "../assets/sprites/Barracks_SpriteSheet.png", 48, 48, 13, 0);
     }
-    updateMode GetCurrentUpdateMode() const { return m_CurrentState; };
-    void SetCurrentUpdateMode(updateMode mode) { m_CurrentState = mode; };
+
     virtual void SetObjectLocation(glm::vec2 location);
 
     glm::vec2 GetObjectLocation() { return this->ObjectLocation; }
@@ -70,7 +68,7 @@ public:
 
     virtual void attachmentUpdate();
     bool getConstructed() {
-        if (m_CurrentState == updateMode::Fixed) {
+        if (m_CurrentState == unitStatus::Alive) {
             return true;
         } else {
             return false;
@@ -94,7 +92,6 @@ public:
     }
 
 protected:
-    updateMode m_CurrentState = updateMode::Invisidable;
     float electricPower;
     float buildingTime;
     float buildingCost;

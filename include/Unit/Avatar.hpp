@@ -19,7 +19,6 @@ class Avatar : public PathfindingUnit,
                public Selectable {
 
 public:
-    enum class UnitMode { DEAD, MOVE, IDLE, MOVE_ATTACK, ALIVE };
     Avatar(){};
     ~Avatar() override{};
 
@@ -38,7 +37,6 @@ public:
 
     void DEBUG_printCurrentMoveDirection(MoveDirection Dir);
 
-    UnitMode getUnitMode() { return m_currentMode; }
     virtual void customizeUpdate() {
         if (1 == 1) {
         }
@@ -62,6 +60,5 @@ protected:
 
 private:
     bool b_justStarted = true;
-    UnitMode m_currentMode;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
