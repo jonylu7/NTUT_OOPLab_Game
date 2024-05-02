@@ -17,14 +17,14 @@ Visibility: Lobby
 Categories: Conquest
 
 Players:
-	PlayerReference@Neutral:
-		Name: Neutral
-		OwnsWorld: True
-		NonCombatant: True
-		Faction: england
-	PlayerReference@Creeps:
-		Name: Creeps
-		NonCombatant: True
-		Faction: england
+  PlayerReference@Neutral:
+    Name: Neutral
+    OwnsWorld: True
+    NonCombatant: True
+    Faction: england
+  PlayerReference@Creeps:d
+  Name: Creeps
+  NonCombatant: True
+  Faction: england
 
 Actors:

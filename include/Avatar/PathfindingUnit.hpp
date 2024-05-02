@@ -18,15 +18,14 @@ class PathfindingUnit {
 protected:
     std::deque<MoveDirection> m_MovePath;
 
-    Util::Transform m_emptyTrans;
     std::vector<Line> m_lineVector;
     float defaultZIndex = 15;
     glm::vec2 m_destinationCell;
-    glm::vec2 m_nextCell;
-    glm::vec2 m_currentCell;
-    glm::vec2 m_currentLocation;
+    glm::vec2 m_NextCell;
+    glm::vec2 m_CurrentCell;
+    glm::vec2 m_CurrentLocation;
 
-    MoveDirection m_currentDir = MoveDirection::IDLE;
+    MoveDirection m_CurrentDir = MoveDirection::IDLE;
 
     float m_MovementSpeed = 1.F;
 
@@ -53,13 +52,16 @@ public:
     glm::vec2 getDestinationCell() { return m_destinationCell; }
 
     void setCurrentCell(glm::vec2 cell) {
-        this->m_currentCell = glm::vec2(cell);
+        this->m_CurrentCell = glm::vec2(cell);
         glm::vec2 temp(
-            int(this->m_currentCell.x * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
-            int(this->m_currentCell.y * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
-        m_currentLocation = {temp.x, temp.y};
+            int(this->m_CurrentCell.x * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
+            int(this->m_CurrentCell.y * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
+        m_CurrentLocation = {temp.x, temp.y};
     }
-    glm::vec2 getCurrentCell() { return m_currentCell; }
+    glm::vec2 getCurrentCell() { return m_CurrentCell; }
+    glm::vec2 getCurrentLocation() { return m_CurrentLocation; }
+    MoveDirection getCurrentDir() { return m_CurrentDir; }
+    glm::vec2 getNextCell() { return m_NextCell; }
 
     void moveToNextCell();
     void moveToCellCorner(AvatarStandingCorner corner);

@@ -56,12 +56,12 @@ void Avatar::whenSelected() {
 }
 
 void Avatar::Update() {
-    switch (m_CurrentStatus) {
-    case (UnitStatus::DEAD):
+    switch (m_LivingStatus) {
+    case (LivingStatus::DEAD):
         SetVisible(false);
         break;
 
-    case (UnitStatus::ALIVE):
+    case (LivingStatus::ALIVE):
         whenSelected();
         aliveUpdate();
         break;
@@ -69,7 +69,7 @@ void Avatar::Update() {
 }
 
 void Avatar::aliveUpdate() {
-    walkTowardNextCell();
+    moveToNextCell();
     if (arrivedAtNextCell() || b_justStarted) {
         b_justStarted = false;
         setCurrentCell(MapUtil::GlobalCoordToCellCoord(getCurrentLocation()));
@@ -77,9 +77,9 @@ void Avatar::aliveUpdate() {
         setNextCell(
             PathUtility::getNextCellByCurrent(getCurrentDir(), getNextCell()));
         // printf("(aliveUpdate) getting new dir\n");
-        if (m_movepath.size() >= 1) {
-            m_currentDir = m_movepath.front();
-            m_movepath.pop_front();
+        if (m_MovePath.size() >= 1) {
+            m_currentDir = m_MovePath.front();
+            m_MovePath.pop_front();
         } else {
             m_currentDir = MoveDirection::IDLE;
         }

@@ -40,8 +40,8 @@ public:
         }
     }
 
-    void setUnitsByCellPosition(std::shared_ptr<Avatar> avatar,
-                                glm::vec2 position) {
+    void setAvatarByCellPosition(std::shared_ptr<Avatar> avatar,
+                                 glm::vec2 position) {
         getTileByCellPosition(position)->setBuildable(false);
         getTileByCellPosition(position)->pushAvatars(avatar);
     }

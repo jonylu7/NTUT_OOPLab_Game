@@ -47,7 +47,7 @@ public:
         if (unit->arrivedAtNextCell()) {
             m_Map->removeAvatarsByCellPosition(unit,
                                                unitArrayAndLocation[unit]);
-            m_Map->setAvatarsByCellPosition(unit, unit->getCurrentCell());
+            m_Map->setAvatarByCellPosition(unit, unit->getCurrentCell());
             unitArrayAndLocation[unit] = unit->getCurrentCell();
         }
     }

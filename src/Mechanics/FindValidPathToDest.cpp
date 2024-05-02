@@ -7,24 +7,25 @@
 std::deque<MoveDirection>
 FindValidPathToDest::findPath(glm::vec2 currentcell,
                               glm::vec2 destinationcell) {
-    std::deque<MoveDirection> m_dirQue;
+    std::deque<MoveDirection> dirQue;
     if (m_Map->getTileByCellPosition(destinationcell)->getWalkable() == false) {
-        return m_dirQue;
+        return dirQue;
     }
 
     Side whichSideToTouchObstacle = randomlyChooseSide();
 
     while (currentcell != destinationcell) {
-        std::vector<MoveDirection> newDirque;
-        bool arrived =
-            findStraightPath(currentcell, destinationcell, &newDirque);
-        for (auto i : newDirque) {
-            m_dirQue.push_back(i);
-            currentcell = PathUtility::getNextCellByCurrent(i, currentcell);
-        }
+        std::vector<MoveDirection> staightDirque;
+        bool canFindStraightPath =
+            findStraightPath(currentcell, destinationcell, &staightDirque);
+
         // push newdirque into dirque and update current cell and current dir
 
-        if (arrived) {
+        if (canFindStraightPath) {
+            for (auto i : staightDirque) {
+                dirQue.push_back(i);
+                currentcell = PathUtility::getNextCellByCurrent(i, currentcell);
+            }
             break;
         } else {
             auto facingDir = PathUtility::getDirByRelativeCells(
@@ -42,12 +43,12 @@ FindValidPathToDest::findPath(glm::vec2 currentcell,
                                       turndir, destinationcell);
 
             for (auto i : movealong) {
-                m_dirQue.push_back(i);
+                dirQue.push_back(i);
                 currentcell = PathUtility::getNextCellByCurrent(i, currentcell);
             }
         }
     }
-    return m_dirQue;
+    return dirQue;
 }
 
 std::vector<MoveDirection>
@@ -264,7 +265,7 @@ bool FindValidPathToDest::findStraightPath(glm::vec2 currentcell,
         MoveDirection followingDir =
             PathUtility::getDirByRelativeCells(currentcell, destinationcell);
 
-        if (m_Map->getWalkable(
+        if (m_Map->ifWalkable(
                 PathUtility::getNextCellByCurrent(followingDir, currentcell))) {
             path->push_back(followingDir);
             currentcell =
