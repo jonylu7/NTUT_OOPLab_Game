@@ -9,13 +9,13 @@
 #include "Selectable.hpp"
 #include "Unit/Avatar.hpp"
 
-#include "SpriteSheet.hpp"
+#include "Display/SpriteSheet.hpp"
 #include "Structure/Structure.hpp"
 #include "Unit/Avatar.hpp"
 #include <unordered_map>
 class TileClass {
 public:
-    TileClass(const unitType unittype, bool buildable, bool walkable,
+    TileClass(const UnitType unittype, bool buildable, bool walkable,
               bool clickable, std::string tileimagepath)
         : m_Id(GameObjectID(unittype, HouseType::NONE)),
           m_Clickable(clickable),
@@ -23,7 +23,7 @@ public:
           m_TerrainWalkable(walkable),
           m_TileImagePath(tileimagepath) {}
 
-    TileClass(const unitType unittype, bool buildable, bool walkable,
+    TileClass(const UnitType unittype, bool buildable, bool walkable,
               bool clickable)
         : m_Id(GameObjectID(unittype, HouseType::NONE)),
           m_TerrainBuildable(buildable),
@@ -31,7 +31,7 @@ public:
           m_Clickable(clickable),
           m_TileImagePath("") {}
     TileClass()
-        : m_Id(GameObjectID(unitType::null, HouseType::NONE)),
+        : m_Id(GameObjectID(UnitType::null, HouseType::NONE)),
           m_TerrainBuildable(true),
           m_TerrainWalkable(true),
           m_Clickable(true),
@@ -42,19 +42,6 @@ public:
     bool getBuildable() { return m_TerrainBuildable; };
     bool getClickable() { return m_Clickable; };
     std::string getTileImagePath() { return m_TileImagePath; }
-    std::vector<std::shared_ptr<Selectable>> getSelectableObjects() {
-
-        std::vector<std::shared_ptr<Selectable>> selectables;
-        if (m_Avatars.size() >= 1) {
-            for (auto i : m_Avatars) {
-                selectables.push_back(i);
-            }
-        } else {
-            selectables.push_back(m_Structure);
-        }
-        return selectables;
-    }
-
     void setWalkable(bool value) { m_TerrainWalkable = value; };
     void setBuildable(bool value) { m_TerrainBuildable = value; };
     void setClickable(bool value) { m_Clickable = value; };
@@ -71,6 +58,14 @@ public:
     }
 
     std::vector<std::shared_ptr<Avatar>> getAvatars() { return m_Avatars; }
+    std::shared_ptr<Structure> getStructure() { return m_Structure; }
+    bool ifStrucutreExists() {
+        if (m_Structure == std::make_shared<Structure>()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     void removeAvatar(std::shared_ptr<Avatar> avatar) {
         for (auto i : m_Avatars) {
@@ -109,11 +104,11 @@ public:
         return *this;
     }
 
-    bool checkedEnemy() { if (m_Structure->getHouse() ==) }
+    // bool checkedEnemy() { if (m_Structure->getHouse() ==) }
 
 private:
-    bool m_TerrainWalkable;
     bool m_TerrainBuildable;
+    bool m_TerrainWalkable;
     bool m_Clickable;
     std::shared_ptr<Structure> m_Structure = std::make_shared<Structure>();
     std::vector<std::shared_ptr<Avatar>> m_Avatars;

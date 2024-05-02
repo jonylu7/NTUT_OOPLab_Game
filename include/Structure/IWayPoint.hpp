@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_IWAYPOINT_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_IWAYPOINT_HPP
-#include "Line.hpp"
+#include "Display/Line.hpp"
 #include "Structure.hpp"
 
 class IWayPointStructure {

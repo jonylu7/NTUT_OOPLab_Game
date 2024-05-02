@@ -1,7 +1,7 @@
 //
 // Created by 盧威任 on 3/1/24.
 //
-#include "SpriteSheet.hpp"
+#include "Display/SpriteSheet.hpp"
 
 void SpriteSheet::Start(std::string filepath, int spriteWidth, int spriteHeight,
                         int numSpirtes, int spacing) {

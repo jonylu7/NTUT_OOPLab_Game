@@ -70,12 +70,13 @@ set(SRC_FILES
         ${SRC_DIR}/Util/GameObject.cpp
         ${SRC_DIR}/Util/Renderer.cpp
         ${SRC_DIR}/Util/Color.cpp
-        ${SRC_DIR}/Util/Animation.cpp
-        ${SRC_DIR}/Util/MissingTexture.cpp
 
-        ${SRC_DIR}/Util/ImageArray.cpp
-        ${SRC_DIR}/Util/CustomizableImage.cpp
-        ${SRC_DIR}/Util/SpriteSheetAnimation.cpp
+
+        ${SRC_DIR}/D/ImageArray.cpp
+        ${SRC_DIR}/Display/CustomizableImage.cpp
+        ${SRC_DIR}/Display/SpriteSheetAnimation.cpp
+        ${SRC_DIR}/Display/Animation.cpp
+        ${SRC_DIR}/Display/MissingTexture.cpp
 
 
         ${SRC_DIR}/App.cpp
@@ -96,11 +97,11 @@ set(SRC_FILES
         ${SRC_DIR}/Structure/WayPointStructure.cpp
 
 
-        ${SRC_DIR}/Unit/Runner.cpp
-        ${SRC_DIR}/Unit/Avatar.cpp
-        ${SRC_DIR}/Unit/Hunter.cpp
-        ${SRC_DIR}/Unit/PathUtility.cpp
-        ${SRC_DIR}/Unit/PathFindingUnit.cpp
+        ${SRC_DIR}/Avatar/Runner.cpp
+        ${SRC_DIR}/Avatar/Avatar.cpp
+        ${SRC_DIR}/Avatar/Hunter.cpp
+        ${SRC_DIR}/Avatar/PathUtility.cpp
+        ${SRC_DIR}/Avatar/PathFindingUnit.cpp
 
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
@@ -147,19 +148,21 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/Keycode.hpp
         ${INCLUDE_DIR}/Util/SFX.hpp
         ${INCLUDE_DIR}/Util/BGM.hpp
-        ${INCLUDE_DIR}/Util/Image.hpp
+
         ${INCLUDE_DIR}/Util/Text.hpp
         ${INCLUDE_DIR}/Util/Transform.hpp
         ${INCLUDE_DIR}/Util/TransformUtils.hpp
         ${INCLUDE_DIR}/Util/GameObject.hpp
         ${INCLUDE_DIR}/Util/Renderer.hpp
         ${INCLUDE_DIR}/Util/Color.hpp
-        ${INCLUDE_DIR}/Util/Animation.hpp
-        ${INCLUDE_DIR}/Util/MissingTexture.hpp
-        ${INCLUDE_DIR}/Util/SpriteSheetAnimation.hpp
-
-        ${INCLUDE_DIR}/Util/ImageArray.hpp
-        ${INCLUDE_DIR}/Util/CustomizableImage.hpp
+        ${INCLUDE_DIR}/Util/Image.hpp
+        
+        ${INCLUDE_DIR}/Display/Animation.hpp
+        ${INCLUDE_DIR}/Display/MissingTexture.hpp
+        ${INCLUDE_DIR}/Display/SpriteSheetAnimation.hpp
+        ${INCLUDE_DIR}/Display/ImageArray.hpp
+        ${INCLUDE_DIR}/Display/CustomizableImage.hpp
+        ${INCLUDE_DIR}/Display/DrawOverlays.hpp
 
         ${INCLUDE_DIR}/Scene/MapScene.hpp
 
@@ -171,7 +174,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp
         ${INCLUDE_DIR}/config.hpp
-        ${INCLUDE_DIR}/DrawOverlays.hpp
+
 
         ${INCLUDE_DIR}/config.hpp
 
@@ -197,11 +200,11 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/WarFactory.hpp
         ${INCLUDE_DIR}/Structure/ADVPowerPlants.hpp
 
-        ${INCLUDE_DIR}/Unit/PathfindingUnit.hpp
-        ${INCLUDE_DIR}/Unit/Avatar.hpp
-        ${INCLUDE_DIR}/Unit/WayPointUnit.hpp
-        ${INCLUDE_DIR}/Unit/Runner.hpp
-        ${INCLUDE_DIR}/Unit/Hunter.hpp
+        ${INCLUDE_DIR}/Avatar/PathfindingUnit.hpp
+        ${INCLUDE_DIR}/Avatar/Avatar.hpp
+        ${INCLUDE_DIR}/Avatar/WayPointUnit.hpp
+        ${INCLUDE_DIR}/Avatar/Runner.hpp
+        ${INCLUDE_DIR}/Avatar/Hunter.hpp
 
 
         ${INCLUDE_DIR}/Scene/Scene.hpp

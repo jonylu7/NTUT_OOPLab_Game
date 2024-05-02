@@ -12,7 +12,7 @@
 
 #include "Core/Drawable.hpp"
 
-#include "Util/Image.hpp"
+#include "Image.hpp"
 
 namespace Util {
 /**
@@ -40,34 +40,47 @@ public:
      * @param cooldown Cooldown time in milliseconds before the animation can
      * restart.
      */
-    SpriteSheetAnimation():m_State(State::PAUSE),
-        m_Interval(0),
-        m_Looping(false),
-        m_Cooldown(100){};
-    SpriteSheetAnimation(std::shared_ptr<SpriteSheet> spriteSheet, bool play,std::size_t interval, bool looping=true, std::size_t cooldown=100);
+    SpriteSheetAnimation()
+        : m_State(State::PAUSE),
+          m_Interval(0),
+          m_Looping(false),
+          m_Cooldown(100){};
+    SpriteSheetAnimation(std::shared_ptr<SpriteSheet> spriteSheet, bool play,
+                         std::size_t interval, bool looping = true,
+                         std::size_t cooldown = 100);
 
-    void initSpriteSheetAnimation(std::shared_ptr<SpriteSheet> spriteSheet, bool play,std::size_t interval, bool looping=true, std::size_t cooldown=100);
-    void setFrameRange(int start,int end){m_startFrame=start;m_endFrame=end;}
-    bool getFinished(){if(m_State==State::ENDED)return true; return false;}
+    void initSpriteSheetAnimation(std::shared_ptr<SpriteSheet> spriteSheet,
+                                  bool play, std::size_t interval,
+                                  bool looping = true,
+                                  std::size_t cooldown = 100);
+    void setFrameRange(int start, int end) {
+        m_startFrame = start;
+        m_endFrame = end;
+    }
+    bool getFinished() {
+        if (m_State == State::ENDED)
+            return true;
+        return false;
+    }
     /**
      * @brief Get the interval between frames.
      * @return Interval between frames in milliseconds.
      */
-    void setInterval(int Interval){m_Interval=Interval;}
+    void setInterval(int Interval) { m_Interval = Interval; }
     int GetInterval() const { return m_Interval; }
 
     /**
      * @brief Check if the animation loops.
      * @return True if the animation loops, false otherwise.
      */
-    void setLooping(bool Looping){m_Looping=Looping;}
+    void setLooping(bool Looping) { m_Looping = Looping; }
     bool GetLooping() const { return m_Looping; }
 
     /**
      * @brief Get the cooldown time.
      * @return Cooldown time in milliseconds.
      */
-    void setCooldown(int Cooldown){m_Cooldown=Cooldown;}
+    void setCooldown(int Cooldown) { m_Cooldown = Cooldown; }
     int GetCooldown() const { return m_Cooldown; }
 
     /**
@@ -92,7 +105,9 @@ public:
      * @brief Get the size of the current frame.
      * @return Size of the current frame.
      */
-    glm::vec2 GetSize() const override { return m_SpriteSheet->getSpriteSize(); }
+    glm::vec2 GetSize() const override {
+        return m_SpriteSheet->getSpriteSize();
+    }
 
     /**
      * @brief Set the interval between frames.
@@ -147,7 +162,8 @@ private:
 
 private:
     std::vector<std::shared_ptr<Util::Image>> m_Frames;
-    std::shared_ptr<SpriteSheet> m_SpriteSheet =std::make_shared<SpriteSheet>();
+    std::shared_ptr<SpriteSheet> m_SpriteSheet =
+        std::make_shared<SpriteSheet>();
     State m_State;
     double m_Interval;
     bool m_Looping;
@@ -159,8 +175,8 @@ private:
 
     std::size_t m_Index = 0;
 
-    int m_startFrame=-1;
-    int m_endFrame=-1;
+    int m_startFrame = -1;
+    int m_endFrame = -1;
 };
 } // namespace Util
 

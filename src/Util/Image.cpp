@@ -1,11 +1,11 @@
-#include "Util/Image.hpp"
+#include "Display/Image.hpp"
 
 #include "pch.hpp"
 
 #include "Core/Texture.hpp"
 #include "Core/TextureUtils.hpp"
 
-#include "Util/MissingTexture.hpp"
+#include "Display/MissingTexture.hpp"
 #include "Util/TransformUtils.hpp"
 
 #include "config.hpp"
@@ -57,7 +57,6 @@ Image::Image(const std::string &filepath)
         LOG_ERROR("Failed to load image: '{}'", filepath);
         LOG_ERROR("{}", IMG_GetError());
     }
-
 
     m_Texture = std::make_unique<Core::Texture>(
         Core::SdlFormatToGlFormat(surface->format->format), surface->w,
@@ -152,7 +151,6 @@ void Image::InitUniformBuffer() {
 
 std::unique_ptr<Core::Program> Image::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> Image::s_VertexArray = nullptr;
-
 
 Util::AssetStore<std::shared_ptr<SDL_Surface>> Image::s_Store(LoadSurface);
 } // namespace Util

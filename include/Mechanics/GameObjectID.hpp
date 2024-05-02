@@ -8,7 +8,7 @@
 #include <string>
 #include <unordered_map>
 
-enum class unitType {
+enum class UnitType {
     // buildings
     POWER_PLANT,
     BARRACKS,
@@ -52,26 +52,26 @@ private:
     static std::unordered_map<int, unsigned int> m_OccupiedID;
 
 public:
-    static unsigned int getNewestID(unitType type);
+    static unsigned int getNewestID(UnitType type);
 };
 
 class GameObjectID {
 public:
     GameObjectID()
-        : m_unitType(unitType::null),
-          m_number(0) {}
-    GameObjectID(unitType type, HouseType house)
-        : m_unitType(type),
-          m_number(OccupiedID::getNewestID(type)),
-          m_house(house) {}
+        : m_UnitType(UnitType::null),
+          m_Number(0) {}
+    GameObjectID(UnitType type, HouseType house)
+        : m_UnitType(type),
+          m_Number(OccupiedID::getNewestID(type)),
+          m_House(house) {}
     ~GameObjectID() {}
 
-    int getNumber() const { return m_number; }
-    unitType getUnitType() const { return m_unitType; }
+    int getNumber() const { return m_Number; }
+    UnitType getUnitType() const { return m_UnitType; }
 
     bool operator==(const GameObjectID &id) const {
-        if (this->m_unitType == id.m_unitType &&
-            this->m_number == id.m_number && this->m_house == id.m_house) {
+        if (this->m_UnitType == id.m_UnitType &&
+            this->m_Number == id.m_Number && this->m_House == id.m_House) {
             return true;
         } else {
             return false;
@@ -79,16 +79,16 @@ public:
     };
 
     GameObjectID &operator=(const GameObjectID &id) {
-        this->m_number = id.m_number;
-        this->m_unitType = id.m_unitType;
-        this->m_house = id.m_house;
+        this->m_Number = id.m_Number;
+        this->m_UnitType = id.m_UnitType;
+        this->m_House = id.m_House;
         return *this;
     }
 
 private:
-    unitType m_unitType;
-    unsigned int m_number;
-    HouseType m_house;
+    UnitType m_UnitType;
+    unsigned int m_Number;
+    HouseType m_House;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP

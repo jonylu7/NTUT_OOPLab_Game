@@ -40,14 +40,11 @@ public:
      */
     GameObject(const std::shared_ptr<Core::Drawable> &drawable,
                const float zIndex, const bool visible = true,
-               const std::vector<std::shared_ptr<GameObject>> &children =
-                   std::vector<std::shared_ptr<GameObject>>(),
                const bool movingRelativeToCamera = true)
         : m_Drawable(std::move(drawable)),
-          m_Children(children),
           m_ZIndex(zIndex),
           m_Visible(visible),
-          m_MovingRelativeToCamera(movingRelativeToCamera) {}
+          b_MovingRelativeToCamera(movingRelativeToCamera) {}
 
     /**
      * @brief Copy constructor.
@@ -99,9 +96,6 @@ public:
      *
      * @return The children of the game object.
      */
-    const std::vector<std::shared_ptr<GameObject>> &GetChildren() const {
-        return m_Children;
-    }
 
     /**
      * @brief Set the z-index of the game object.
@@ -134,28 +128,8 @@ public:
      * @param movingRelativeToCamera The new status of moving
      */
     void setMovingRelativeToCamera(const bool movingRelativeToCamera) {
-        m_MovingRelativeToCamera = movingRelativeToCamera;
+        b_MovingRelativeToCamera = movingRelativeToCamera;
     };
-
-    /**
-     * @brief Add a child to the game object.
-     *
-     * @param child The new child of the game object.
-     */
-    void AddChild(const std::shared_ptr<GameObject> &child) {
-        m_Children.push_back(child);
-    }
-
-    /**
-     * @brief Remove a child from the game object.
-     *
-     * @param child The child to be removed.
-     */
-    void RemoveChild(const std::shared_ptr<GameObject> &child) {
-        m_Children.erase(
-            std::remove(m_Children.begin(), m_Children.end(), child),
-            m_Children.end());
-    }
 
     virtual void Draw();
 
@@ -166,11 +140,10 @@ public:
 
 protected:
     std::shared_ptr<Core::Drawable> m_Drawable = nullptr;
-    std::vector<std::shared_ptr<GameObject>> m_Children;
 
     float m_ZIndex = 1;
     bool m_Visible = true;
-    bool m_MovingRelativeToCamera = true;
+    bool b_MovingRelativeToCamera = true;
 };
 } // namespace Util
 #endif

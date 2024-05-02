@@ -4,16 +4,17 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
+#include "Display/SpriteSheet.hpp"
 #include "HighLight.h"
 #include "Mechanics//GameObjectID.hpp"
 #include "Selectable.hpp"
-#include "SpriteSheet.hpp"
 
+#include "Display/Image.hpp"
+#include "Display/SpriteSheetAnimation.hpp"
+#include "Structure/StructureOrder.hpp"
 #include "Unit/AttackAndDamageUnit.hpp"
 #include "Util/GameObject.hpp"
-#include "Util/Image.hpp"
 #include "Util/Input.hpp"
-#include "Util/SpriteSheetAnimation.hpp"
 #include "Util/TransformUtils.hpp"
 #include "glm/glm.hpp"
 #define DEFAULT_ZINDEX 15
@@ -22,22 +23,25 @@
 
 class Structure : public Util::GameObject,
                   public Selectable,
+                  public StructureOrder,
                   public AttackAndDamageUnit {
 
 public:
     Structure()
-        : electricPower(0.F),
-          buildingTime(0.F),
-          buildingCost(0.F),
-          m_ID(GameObjectID(unitType::null, HouseType::NONE)) {
-        m_CurrentState = unitStatus::NotBornedYet;
+        : m_ElectricPower(0.F),
+          m_BuildingTime(0.F),
+          m_BuildingCost(0.F),
+          Selectable(),
+          m_ID(GameObjectID(UnitType::null, HouseType::NONE)) {
+        m_CurrentStatus = UnitStatus::NOT_BORN_YET;
     };
 
     Structure(float electricPower, float buildingTime, float buildingCost,
               float buildingHp, GameObjectID id)
-        : electricPower(electricPower),
-          buildingTime(buildingTime),
-          buildingCost(buildingCost),
+        : m_ElectricPower(electricPower),
+          m_BuildingTime(buildingTime),
+          m_BuildingCost(buildingCost),
+          Selectable(),
           m_ID(id) {
         m_Transform.scale = {1, 1};
         // this->SetZIndex(DEFAULT_ZINDEX);
@@ -50,7 +54,7 @@ public:
     virtual void updateMoveable();
     virtual void updateInvinsible() { this->SetAttachVisible(false); }
 
-    virtual void whenSelected() { this->SetAttachVisible(getSelected()); }
+    virtual void whenSelected() override { this->SetAttachVisible(b_Selected); }
 
     void Start() override;
     virtual void SetSpriteSheet() {
@@ -60,24 +64,17 @@ public:
 
     virtual void SetObjectLocation(glm::vec2 location);
 
-    glm::vec2 GetObjectLocation() { return this->ObjectLocation; }
+    glm::vec2 GetObjectLocation() { return this->m_ObjectLocation; }
     glm::vec2 GetTranScale() { return m_Transform.scale; };
     virtual void SetAttachVisible(bool visible);
-    glm::vec2 GetDrawLocation() { return DrawLocation; };
+    glm::vec2 GetDrawLocation() { return m_DrawLocation; };
     void SetID(GameObjectID id) { m_ID = id; };
 
     virtual void attachmentUpdate();
-    bool getConstructed() {
-        if (m_CurrentState == unitStatus::Alive) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
-    float GetElectricPower() { return this->electricPower; }
-    float GetBuildingTime() { return this->buildingTime; }
-    float GetBuildingCost() { return this->buildingCost; }
+    float GetElectricPower() { return this->m_ElectricPower; }
+    float GetBuildingTime() { return this->m_BuildingTime; }
+    float GetBuildingCost() { return this->m_BuildingCost; }
     GameObjectID GetID() { return m_ID; }
 
     glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord) {
@@ -85,17 +82,19 @@ public:
                          int(globalCoord[1] / CELL_SIZE.y));
     }
 
-    glm::vec2 GetObjectCell() { return GlobalCoordToCellCoord(ObjectLocation); }
+    glm::vec2 GetObjectCell() {
+        return GlobalCoordToCellCoord(m_ObjectLocation);
+    }
     std::vector<glm::vec2> GetAbsoluteOccupiedArea();
     void SetRelativeOccupiedArea(std::vector<glm::vec2> Area) {
-        m_relativeOccupiedArea = Area;
+        m_RelativeOccupiedArea = Area;
     }
 
 protected:
-    float electricPower;
-    float buildingTime;
-    float buildingCost;
-    float buildingIncome = 0.F;
+    float m_ElectricPower;
+    float m_BuildingTime;
+    float m_BuildingCost;
+    float m_BuildingIncome = 0.F;
     HighLight m_HighLight;
     GameObjectID m_ID;
 
@@ -104,10 +103,10 @@ protected:
         std::make_shared<SpriteSheet>();
     std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
         std::make_shared<Util::SpriteSheetAnimation>();
-    glm::vec2 DrawLocation = {ObjectLocation.x + CELL_SIZE.x,
-                              ObjectLocation.y + CELL_SIZE.y};
-    glm::vec2 ObjectLocation = {100, 100};
-    std::vector<glm::vec2> m_relativeOccupiedArea = {{0, 0}};
+    glm::vec2 m_DrawLocation = {m_ObjectLocation.x + CELL_SIZE.x,
+                                m_ObjectLocation.y + CELL_SIZE.y};
+    glm::vec2 m_ObjectLocation = {100, 100};
+    std::vector<glm::vec2> m_RelativeOccupiedArea = {{0, 0}};
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP

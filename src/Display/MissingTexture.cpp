@@ -1,8 +1,8 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <Util/Logger.hpp>
+#include "SDL.h"
+#include "SDL_image.h"
+#include "Util/Logger.hpp"
 
-#include "Util/MissingTexture.hpp"
+#include "Display/MissingTexture.hpp"
 
 SDL_Surface *GetMissingTextureSDLSurface() {
     SDL_RWops *rwop = SDL_RWFromConstMem(MISSING_TEXTURE_BASE64_DECODE.data(),

@@ -6,7 +6,12 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_SELECTABLE_HPP
 class Selectable {
 public:
-    // virtual void onSelected() = 0;
+    Selectable()
+        : b_Selected(false) {}
+
+    Selectable(bool selected)
+        : b_Selected(selected) {}
+    virtual ~Selectable() {}
     bool getSelected() { return b_Selected; }
     void setSelected(bool value) { b_Selected = value; }
     virtual void whenSelected() = 0;

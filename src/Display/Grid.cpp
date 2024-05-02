@@ -2,7 +2,7 @@
 // Created by 盧威任 on 2/16/24.
 //
 
-#include "Grid.hpp"
+#include "Display/Grid.hpp"
 #include "Core/Drawable.hpp"
 #include <iostream>
 
@@ -16,7 +16,7 @@ void Grid::Start(std::vector<Line> lineVector) {
 void Grid::queStart(std::deque<Line> lineQue) {
 
     // debug grid:
-    m_lineVector = std::vector<Line> (lineQue.begin(),lineQue.end());
+    m_lineVector = std::vector<Line>(lineQue.begin(), lineQue.end());
 
     InitVertexAndColor();
 }

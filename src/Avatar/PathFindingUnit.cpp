@@ -5,7 +5,7 @@
 //
 // Created by 盧威任 on 4/1/24.
 //
-#include "Unit/PathfindingUnit.hpp"
+#include "Avatar/PathfindingUnit.hpp"
 
 void PathfindingUnit::walkTowardNextCell() {
     switch (m_currentDir) {
@@ -61,11 +61,27 @@ void PathfindingUnit::walkTowardNextCell() {
 }
 
 bool PathfindingUnit::arrivedAtNextCell() {
+    // change this to check
     if (m_moveDistance >= 48 * SPEED) {
         m_moveDistance = 0;
         return true;
     } else {
         m_moveDistance += m_MovementSpeed;
         return false;
+    }
+}
+void PathfindingUnit::moveToCellCorner(AvatarStandingCorner corner) {
+    switch (corner) {
+    case (AvatarStandingCorner::CENTER):
+        break;
+    case (AvatarStandingCorner::UPPER_LEFT):
+
+        break;
+    case (AvatarStandingCorner::UPPER_RIGHT):
+        break;
+    case (AvatarStandingCorner::LOWER_LEFT):
+        break;
+    case (AvatarStandingCorner::LOWER_RIGHT):
+        break;
     }
 }

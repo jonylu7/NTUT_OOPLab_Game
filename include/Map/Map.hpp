@@ -4,9 +4,10 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MAP_HPP
-#include "Grid.hpp"
+#include "Avatar/Avatar.hpp"
+#include "Display/Grid.hpp"
+#include "Display/ImageArray.hpp"
 #include "Map/Tile.hpp"
-#include "Util/ImageArray.hpp"
 #include "glm/vec2.hpp"
 #include "pch.hpp"
 #include <vector>

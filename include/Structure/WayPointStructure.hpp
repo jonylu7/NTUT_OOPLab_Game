@@ -4,13 +4,13 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MOVEABLESTRUCTURE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MOVEABLESTRUCTURE_HPP
-#include "Grid.hpp"
+#include "Display/Grid.hpp"
+#include "Display/Image.hpp"
+#include "Display/Line.hpp"
 #include "HighLight.h"
-#include "Line.hpp"
 #include "Map/MapUtility.hpp"
 #include "Structure/IWayPoint.hpp"
 #include "Structure/Structure.hpp"
-#include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "WayPoint.hpp"
@@ -39,18 +39,18 @@ public:
 
     void Update() override {
 
-        switch (m_CurrentState) {
-        case updateMode::Invisidable: {
+        switch (m_CurrentStatus) {
+        case unitStatus::NOT_BORN_YET: {
             this->updateInvinsible();
             break;
         }
-        case updateMode::Fixed: {
-            this->updateFixed();
-            whenSelected();
-            break;
-        }
-        case updateMode::Moveable: {
-            this->updateMoveable();
+        case unitStatus::ALIVE: {
+            if (m_CurrentOrder == unitOrder::Struct_MOVEABLE) {
+                this->updateMoveable();
+            } else {
+                this->updateFixed();
+                whenSelected();
+            }
             break;
         }
         }

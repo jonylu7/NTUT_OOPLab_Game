@@ -7,7 +7,7 @@
 
 #include "Core/Drawable.hpp"
 
-#include "Util/Image.hpp"
+#include "Image.hpp"
 
 namespace Util {
 /**

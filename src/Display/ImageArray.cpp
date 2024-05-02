@@ -1,4 +1,4 @@
-#include "Util/ImageArray.hpp"
+#include "Display/ImageArray.hpp"
 
 #include "pch.hpp"
 

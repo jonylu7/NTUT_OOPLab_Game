@@ -5,8 +5,8 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_SPRITE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_SPRITE_HPP
 #include "Core/Drawable.hpp"
+#include "Display/Image.hpp"
 #include "Util/CustomizableImage.hpp"
-#include "Util/Image.hpp"
 #include "pch.hpp" // IWYU pragma: export
 
 class Sprite : public Core::Drawable {

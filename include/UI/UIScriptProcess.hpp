@@ -5,8 +5,8 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
 #include "Mechanics/GameObjectID.hpp"
-#include "Mechanics/GameObjectManager.hpp"
 #include "Mechanics/Player.hpp"
+#include "Mechanics/UnitManager.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/OreRefinery.hpp"

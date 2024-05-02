@@ -4,14 +4,14 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
+#include "Avatar/AttackAndDamageUnit.hpp"
+#include "Avatar/PathUtility.hpp"
+#include "Avatar/PathfindingUnit.hpp"
+#include "Display/Image.hpp"
+#include "Display/SpriteSheet.hpp"
+#include "Display/SpriteSheetAnimation.hpp"
 #include "Map/MapUtility.hpp"
 #include "Selectable.hpp"
-#include "Spritesheet.hpp"
-#include "Unit/AttackAndDamageUnit.hpp"
-#include "Unit/PathUtility.hpp"
-#include "Unit/PathfindingUnit.hpp"
-#include "Util/Image.hpp"
-#include "Util/SpriteSheetAnimation.hpp"
 
 class Avatar : public PathfindingUnit,
                public AttackAndDamageUnit,

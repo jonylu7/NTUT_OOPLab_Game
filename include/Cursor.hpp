@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_CURSOR_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_CURSOR_HPP
-#include "DrawOverlays.hpp"
+#include "Display/DrawOverlays.hpp"
 #include "Map/Map.hpp"
 #include "Map/MapUtility.hpp"
 #include "Structure/Structure.hpp"

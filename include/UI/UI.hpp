@@ -5,10 +5,10 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP
 #include "Camera.hpp"
+#include "Display/SpriteSheet.hpp"
 #include "Mechanics//Player.hpp"
 #include "Mechanics/GameObjectID.hpp"
-#include "Mechanics/GameObjectManager.hpp"
-#include "SpriteSheet.hpp"
+#include "Mechanics/UnitManager.hpp"
 #include "UI/UIScriptProcess.hpp"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"

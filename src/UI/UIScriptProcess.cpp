@@ -87,7 +87,7 @@ void UIScriptProcess::CountDown() {
         }
     }
 
-    // Unit Spawning
+    // Avatar Spawning
     std::chrono::duration<double> spawnElapsed =
         m_currentCountDownTime - m_SpawnStartTime;
     if (m_gameObjectManager->getTotalCurrency() <= 0 &&
@@ -116,7 +116,7 @@ void UIScriptProcess::CountDown() {
             b_isSpawningInCooldown) {
             b_isReadyToSpawn = true;
             b_isSpawningInCooldown = false;
-            printf("(UISC)Unit Ready\n");
+            printf("(UISC)Avatar Ready\n");
         }
     }
 

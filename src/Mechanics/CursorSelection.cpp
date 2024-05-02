@@ -30,19 +30,23 @@ void CursorSelection::CursorSelect(std::shared_ptr<MapClass> m_Map,
         int min_x_cell = std::min(startcell.x, endcell.x);
         int min_y_cell = std::min(startcell.y, endcell.y);
 
-        std::vector<std::shared_ptr<Selectable>> allWaitingToBeSelected = {};
+        std::vector<std::shared_ptr<Selectable>> selectedUnits = {};
         for (int i = min_y_cell; i <= max_y_cell; i++) {
             for (int j = min_x_cell; j <= max_x_cell; j++) {
-                auto objects = m_Map->getTileByCellPosition(glm::vec2(j, i))
-                                   ->getSelectableObjects();
-
-                allWaitingToBeSelected.insert(allWaitingToBeSelected.end(),
-                                              objects.begin(), objects.end());
-                for (auto i : objects) {
-                    if (i->getSelected() == false) {
-                        i->setSelected(true);
-                        lastSeletctedObjects.push_back(i);
+                auto tile = m_Map->getTileByCellPosition(glm::vec2(j, i));
+                if (tile->ifStrucutreExists()) {
+                    auto structure = tile->getStructure();
+                    structure->setSelected(true);
+                    lastSeletctedObjects.push_back(structure);
+                    selectedUnits.push_back(structure);
+                } else {
+                    auto avatars = tile->getAvatars();
+                    for (auto a : avatars) {
+                        a->setSelected(true);
+                        lastSeletctedObjects.push_back(a);
                     }
+                    selectedUnits.insert(selectedUnits.end(), avatars.begin(),
+                                         avatars.end());
                 }
             }
         }

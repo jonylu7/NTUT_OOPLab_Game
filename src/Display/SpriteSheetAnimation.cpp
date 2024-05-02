@@ -1,30 +1,32 @@
 //
 // Created by nudle on 2024/4/12.
 //
-#include "Util/SpriteSheetAnimation.hpp"
+#include "Display/SpriteSheetAnimation.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Time.hpp"
 
 namespace Util {
-SpriteSheetAnimation::SpriteSheetAnimation(std::shared_ptr<SpriteSheet> spriteSheet, bool play,
-                     std::size_t interval, bool looping, std::size_t cooldown)
+SpriteSheetAnimation::SpriteSheetAnimation(
+    std::shared_ptr<SpriteSheet> spriteSheet, bool play, std::size_t interval,
+    bool looping, std::size_t cooldown)
     : m_State(play ? State::PLAY : State::PAUSE),
       m_Interval(interval),
       m_Looping(looping),
       m_Cooldown(cooldown) {
 
-//    m_Frames.reserve(paths.size());
-//    for (const auto &path : paths) {
-//        m_Frames.push_back(std::make_shared<Util::Image>(path));
-//    }
-
+    //    m_Frames.reserve(paths.size());
+    //    for (const auto &path : paths) {
+    //        m_Frames.push_back(std::make_shared<Util::Image>(path));
+    //    }
 }
-void SpriteSheetAnimation::initSpriteSheetAnimation(std::shared_ptr<SpriteSheet> spriteSheet, bool play,std::size_t interval, bool looping, std::size_t cooldown){
-    m_State=play ? State::PLAY : State::PAUSE;
-    m_Interval=interval;
-    m_Looping=looping;
-    m_Cooldown=cooldown;
-    m_SpriteSheet=spriteSheet;
+void SpriteSheetAnimation::initSpriteSheetAnimation(
+    std::shared_ptr<SpriteSheet> spriteSheet, bool play, std::size_t interval,
+    bool looping, std::size_t cooldown) {
+    m_State = play ? State::PLAY : State::PAUSE;
+    m_Interval = interval;
+    m_Looping = looping;
+    m_Cooldown = cooldown;
+    m_SpriteSheet = spriteSheet;
 }
 
 void SpriteSheetAnimation::SetCurrentFrame(std::size_t index) {
@@ -36,20 +38,21 @@ void SpriteSheetAnimation::SetCurrentFrame(std::size_t index) {
     }
 }
 
-void SpriteSheetAnimation::Draw(const Util::Transform &transform, const float zIndex) {
-//    m_Frames[m_Index]->Draw(transform, zIndex);
-    if(m_startFrame==-1&&m_endFrame==-1){
-        printf("(SpriteSheetAnimation) frame now = %d\n",m_Index);
-        m_SpriteSheet->DrawSpriteByIndex(m_Index,transform,zIndex);
+void SpriteSheetAnimation::Draw(const Util::Transform &transform,
+                                const float zIndex) {
+    //    m_Frames[m_Index]->Draw(transform, zIndex);
+    if (m_startFrame == -1 && m_endFrame == -1) {
+        printf("(SpriteSheetAnimation) frame now = %d\n", m_Index);
+        m_SpriteSheet->DrawSpriteByIndex(m_Index, transform, zIndex);
         Update();
-    }else{
-        if(m_Index>m_endFrame){
-            m_Index=m_startFrame;
-        }else if(m_Index<m_startFrame){
-            m_Index=m_startFrame;
+    } else {
+        if (m_Index > m_endFrame) {
+            m_Index = m_startFrame;
+        } else if (m_Index < m_startFrame) {
+            m_Index = m_startFrame;
         }
-        printf("(SpriteSheetAnimation) frame now = %d\n",m_Index);
-        m_SpriteSheet->DrawSpriteByIndex(m_Index,transform,zIndex);
+        printf("(SpriteSheetAnimation) frame now = %d\n", m_Index);
+        m_SpriteSheet->DrawSpriteByIndex(m_Index, transform, zIndex);
         Update();
     }
 }

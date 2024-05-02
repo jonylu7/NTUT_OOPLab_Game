@@ -2,7 +2,7 @@
 // Created by 盧威任 on 4/28/24.
 //
 
-#include "Unit/Avatar.hpp"
+#include "Avatar/Avatar.hpp"
 
 void Avatar::DEBUG_printCurrentMoveDirection(MoveDirection Dir) {
     switch (Dir) {
@@ -50,23 +50,21 @@ void Avatar::whenSelected() {
         if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_RB)) {
             m_destinationCell = MapUtil::GlobalCoordToCellCoord(
                 MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
-            b_newDestinationIsSetted = true;
+            b_NewDestinationIsSetted = true;
         }
     }
 }
 
 void Avatar::Update() {
-    whenSelected();
-    switch (m_CurrentState) {
-    case (unitStatus::Death):
+    switch (m_CurrentStatus) {
+    case (UnitStatus::DEAD):
         SetVisible(false);
         break;
 
-    case (unitStatus::Alive):
+    case (UnitStatus::ALIVE):
+        whenSelected();
         aliveUpdate();
         break;
-
-        // attack
     }
 }
 
@@ -108,6 +106,6 @@ void Avatar::Start(glm::vec2 destination) { // destination = Barrack's
     setNextCell(destination);
 
     setMovementSpeed(4);
-    m_currentMode = UnitMode::MOVE;
+    m_CurrentOrder = unitOrder::MOVE;
     m_Transform.scale = {1, 1};
 }

@@ -4,9 +4,9 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
-#include "Grid.hpp"
-#include "Line.hpp"
-#include "Unit/PathUtility.hpp"
+#include "Avatar/PathUtility.hpp"
+#include "Display/Grid.hpp"
+#include "Display/Line.hpp"
 
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
@@ -16,12 +16,11 @@
 
 class PathfindingUnit {
 protected:
-    std::deque<MoveDirection> m_movepath;
+    std::deque<MoveDirection> m_MovePath;
 
     Util::Transform m_emptyTrans;
     std::vector<Line> m_lineVector;
     float defaultZIndex = 15;
-    // debug :DEAD
     glm::vec2 m_destinationCell;
     glm::vec2 m_nextCell;
     glm::vec2 m_currentCell;
@@ -31,11 +30,19 @@ protected:
 
     float m_MovementSpeed = 1.F;
 
-    int m_moveDistance = 0;
+    int m_MoveDistance = 0;
 
-    bool b_newDestinationIsSetted = false;
+    bool b_NewDestinationIsSetted = false;
 
 public:
+    enum class AvatarStandingCorner {
+        CENTER,
+        UPPER_LEFT,
+        UPPER_RIGHT,
+        LOWER_LEFT,
+        LOWER_RIGHT
+    };
+
     PathfindingUnit(){};
     virtual ~PathfindingUnit(){};
 
@@ -59,26 +66,23 @@ public:
 
     glm::vec2 getCurrentLocation() { return m_currentLocation; }
 
-    void setNewDestination(glm::vec2 destination) {}
-
-    glm::vec2 getNewDestination() { return glm::vec2(); }
-
     void setMovementSpeed(int speed) { this->m_MovementSpeed = speed; }
 
     MoveDirection getCurrentDir() { return m_currentDir; }
     void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
     void walkTowardNextCell();
+    void moveToCellCorner(AvatarStandingCorner corner);
     bool arrivedAtNextCell();
 
     void setMovePath(std::deque<MoveDirection> movepath) {
-        m_movepath = movepath;
-        setnewDestinationIsSetted(false);
+        m_MovePath = movepath;
+        setNewDestinationIsSetted(false);
     }
 
-    bool getnewDestionationIsSetted() { return b_newDestinationIsSetted; }
+    bool ifNewDestionationIsSetted() { return b_NewDestinationIsSetted; }
 
-    void setnewDestinationIsSetted(bool value) {
-        b_newDestinationIsSetted = value;
+    void setNewDestinationIsSetted(bool value) {
+        b_NewDestinationIsSetted = value;
     }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP

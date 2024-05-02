@@ -2,8 +2,8 @@
 // Created by 盧威任 on 3/11/24.
 //
 
-#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
-#define PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
 #include "Cursor.hpp"
 #include "FindValidPathToDest.hpp"
 #include "GameObjectID.hpp"
@@ -16,13 +16,13 @@
 
 #include <utility>
 
-class GameObjectManager : public Constructing,
-                          public Spawning,
-                          public CursorSelection,
-                          public Player {
+class UnitManager : public Constructing,
+                    public Spawning,
+                    public CursorSelection,
+                    public Player {
 public:
-    GameObjectManager() {}
-    ~GameObjectManager() {}
+    UnitManager() {}
+    ~UnitManager() {}
     void Start(std::shared_ptr<MapClass> map) {
         m_Map = map;
         StartBuiltStructure();
@@ -58,4 +58,4 @@ private:
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
 };
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTMANAGER_HPP
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP

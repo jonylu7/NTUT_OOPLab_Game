@@ -18,5 +18,5 @@ void OreRefinery::Start() {
     m_HighLight.SetHLScale(this->GetTranScale());
     whenSelected();
     // State
-    SetCurrentUpdateMode(Structure::updateMode::Moveable);
+    SetCurrentUpdateMode(Structure::unitStatus::Moveable);
 }
