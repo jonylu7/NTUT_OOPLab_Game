@@ -19,16 +19,16 @@
 class UIClass {
 public:
     void Start(std::shared_ptr<MapClass> map,
-               std::shared_ptr<GameObjectManager> gameobjectmanager);
+               std::shared_ptr<UnitManager> gameobjectmanager);
     void Update();
 
-    static unsigned int getUnitConstructCount(unitType type) {
+    static unsigned int getUnitConstructCount(UnitType type) {
         return s_unitConstructCount[type];
     }
-    static void setUnitConstructCount(unitType type, int value) {
+    static void setUnitConstructCount(UnitType type, int value) {
         s_unitConstructCount[type] += value;
     }
-    static void resetUnitConstructCount(unitType type) {
+    static void resetUnitConstructCount(UnitType type) {
         s_unitConstructCount[type] = 0;
     }
 
@@ -44,8 +44,7 @@ public:
 
 protected:
     void importMap(std::shared_ptr<MapClass> m_Map) { this->m_Map = m_Map; }
-    void
-    importGameObjManager(std::shared_ptr<GameObjectManager> gameObjectManager) {
+    void importGameObjManager(std::shared_ptr<UnitManager> gameObjectManager) {
         m_gameObjectManager = gameObjectManager;
         ButtonScript.importGameObjManager(gameObjectManager);
     }
@@ -79,12 +78,12 @@ private:
     std::shared_ptr<SpriteSheet> m_VehiclesIconSpriteSheet =
         std::make_shared<SpriteSheet>();
 
-    static std::unordered_map<unitType, unsigned int> s_unitConstructCount;
+    static std::unordered_map<UnitType, unsigned int> s_unitConstructCount;
     Grid m_Grid;
     glm::vec2 m_GridSize = {100, 100};
 
     // 0318
-    void setSelectToBuild(unitType type) { m_selectedStructureType = type; }
+    void setSelectToBuild(UnitType type) { m_selectedStructureType = type; }
 
     ImGuiIO &io = ImGui::GetIO();
 
@@ -105,11 +104,11 @@ private:
     glm::vec2 m_warfactoryTargetCell;
     glm::vec2 m_orerefineryCell;
     glm::vec2 m_orerefineryTargetCell;
-    unitType m_selectedStructureType = unitType::NONE;
+    UnitType m_selectedStructureType = UnitType::NONE;
 
     // ptr import from scene
     std::shared_ptr<MapClass> m_Map;
-    std::shared_ptr<GameObjectManager> m_gameObjectManager;
+    std::shared_ptr<UnitManager> m_gameObjectManager;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UI_HPP

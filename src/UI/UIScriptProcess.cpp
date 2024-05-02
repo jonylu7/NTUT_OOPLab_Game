@@ -4,17 +4,17 @@
 #include "UI/UIScriptProcess.hpp"
 #include <iomanip>
 #include <sstream>
-bool UIScriptProcess::GetIfFinishedBuilding(unitType type) {
+bool UIScriptProcess::GetIfFinishedBuilding(UnitType type) {
     switch (type) {
-    case unitType::BARRACKS:
+    case UnitType::BARRACKS:
         return b_Baracks;
-    case unitType::ORE_REF:
+    case UnitType::ORE_REF:
         return b_OreRefinery;
-    case unitType::POWER_PLANT:
+    case UnitType::POWER_PLANT:
         return b_PowerPlants;
-    case unitType::WAR_FACT:
+    case UnitType::WAR_FACT:
         return b_WarFactory;
-    case unitType::ADV_POWER_PLANT:
+    case UnitType::ADV_POWER_PLANT:
         return b_ADVPowerPlant;
     }
 }
@@ -75,7 +75,7 @@ void UIScriptProcess::CountDown() {
             }
             if (m_currentBuildRemainingCost > 0) {
                 m_currentBuildRemainingCost -= buildCost;
-                m_gameObjectManager->addCurrency(-1 * buildCost);
+                m_gameObjectManager->addTotalCurrency(-1 * buildCost);
             }
         }
         // if finish building
@@ -108,7 +108,7 @@ void UIScriptProcess::CountDown() {
             }
             if (m_currentSpawnRemainingCost > 0) {
                 m_currentSpawnRemainingCost -= spawnCost;
-                m_gameObjectManager->addCurrency(-1 * spawnCost);
+                m_gameObjectManager->addTotalCurrency(-1 * spawnCost);
             }
         }
         // if finish spawning
@@ -141,7 +141,7 @@ void UIScriptProcess::SetSpawnCountDown(float time) {
     m_SpawnStartTime = std::chrono::high_resolution_clock::now();
 }
 
-void UIScriptProcess::AddToBuildQueue(unitType type) {
+void UIScriptProcess::AddToBuildQueue(UnitType type) {
     if (GetIfFinishedBuilding(type)) {
         return;
     }
@@ -170,39 +170,39 @@ void UIScriptProcess::Update(bool queueContinue) {
     CountDown();
 }
 
-float UIScriptProcess::GetStructureTime(unitType type) {
-    if (type == unitType::POWER_PLANT) {
-        return powerPlant->GetBuildingTime();
+float UIScriptProcess::GetStructureTime(UnitType type) {
+    if (type == UnitType::POWER_PLANT) {
+        return powerPlant->getBuildingTime();
     }
-    if (type == unitType::BARRACKS) {
-        return barracks->GetBuildingTime();
+    if (type == UnitType::BARRACKS) {
+        return barracks->getBuildingTime();
     }
-    if (type == unitType::ORE_REF) {
-        return oreRefinery->GetBuildingTime();
+    if (type == UnitType::ORE_REF) {
+        return oreRefinery->getBuildingTime();
     }
-    if (type == unitType::WAR_FACT) {
-        return warFactory->GetBuildingTime();
+    if (type == UnitType::WAR_FACT) {
+        return warFactory->getBuildingTime();
     }
-    if (type == unitType::ADV_POWER_PLANT) {
-        return advPowerPlant->GetBuildingTime();
+    if (type == UnitType::ADV_POWER_PLANT) {
+        return advPowerPlant->getBuildingTime();
     }
 }
 
-void UIScriptProcess::SetIfFinished(unitType type, bool value) {
+void UIScriptProcess::SetIfFinished(UnitType type, bool value) {
     switch (type) {
-    case unitType::BARRACKS:
+    case UnitType::BARRACKS:
         b_Baracks = value;
         break;
-    case unitType::ORE_REF:
+    case UnitType::ORE_REF:
         b_OreRefinery = value;
         break;
-    case unitType::POWER_PLANT:
+    case UnitType::POWER_PLANT:
         b_PowerPlants = value;
         break;
-    case unitType::WAR_FACT:
+    case UnitType::WAR_FACT:
         b_WarFactory = value;
         break;
-    case unitType::ADV_POWER_PLANT:
+    case UnitType::ADV_POWER_PLANT:
         b_ADVPowerPlant = value;
         break;
     default:
@@ -212,14 +212,14 @@ void UIScriptProcess::SetIfFinished(unitType type, bool value) {
     }
 }
 
-void UIScriptProcess::AddToSpawnQueue(unitType type) {
+void UIScriptProcess::AddToSpawnQueue(UnitType type) {
     //    printf("(UISC)Add Spawn Queue\n");
     m_spawnQueue.push_back(type);
     return;
 }
-float UIScriptProcess::GetSpawnTime(unitType type) {
+float UIScriptProcess::GetSpawnTime(UnitType type) {
     switch (type) {
-    case unitType::INFANTRY: {
+    case UnitType::INFANTRY: {
         return 5.F;
     }
     }
@@ -228,7 +228,7 @@ float UIScriptProcess::GetSpawnTime(unitType type) {
 std::shared_ptr<Avatar> UIScriptProcess::spawnAvatar() {
     //    printf("(UISC)spawnAvatar\n");
     switch (m_currentInfType) {
-    case unitType::INFANTRY: {
+    case UnitType::INFANTRY: {
         return std::make_unique<Infantry>();
     }
     }
@@ -248,19 +248,19 @@ float UIScriptProcess::GetSpawnCountDownTime() {
         return m_spawnCoolDownTime;
     }
 }
-int UIScriptProcess::GetObjCost(unitType type) {
+int UIScriptProcess::GetObjCost(UnitType type) {
     switch (type) {
-    case unitType::BARRACKS:
-        return barracks->GetBuildingCost();
-    case unitType::ORE_REF:
-        return oreRefinery->GetBuildingCost();
-    case unitType::POWER_PLANT:
-        return powerPlant->GetBuildingCost();
-    case unitType::WAR_FACT:
-        return warFactory->GetBuildingCost();
-    case unitType::ADV_POWER_PLANT:
-        return advPowerPlant->GetBuildingCost();
-    case unitType::INFANTRY:
+    case UnitType::BARRACKS:
+        return barracks->getBuildingCost();
+    case UnitType::ORE_REF:
+        return oreRefinery->getBuildingCost();
+    case UnitType::POWER_PLANT:
+        return powerPlant->getBuildingCost();
+    case UnitType::WAR_FACT:
+        return warFactory->getBuildingCost();
+    case UnitType::ADV_POWER_PLANT:
+        return advPowerPlant->getBuildingCost();
+    case UnitType::INFANTRY:
         return 100;
     default:
         // Handle the case when type doesn't match any of the options

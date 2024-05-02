@@ -58,6 +58,7 @@ public:
     virtual void Update() override;
 
 protected:
+    std::shared_ptr<Avatar> m_Nemesis;
     std::shared_ptr<Util::Image> m_Image;
     std::shared_ptr<SpriteSheet> m_AvatarSpriteSheet =
         std::make_shared<SpriteSheet>();

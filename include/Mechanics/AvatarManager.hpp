@@ -13,7 +13,9 @@ public:
         unitArrayAndLocation[newAvatar] = newAvatar->getCurrentCell();
     }
 
-    void UpdateAvatarArray() {
+    void Start(std::shared_ptr<MapClass> map) { m_Map = map; }
+
+    void Update() {
         for (auto unit : m_AvatarArray) {
             unit->setSelected(true);
 
@@ -44,7 +46,7 @@ public:
     }
 
     void keepUpdatingAvatarsPosition(std::shared_ptr<Avatar> unit) {
-        if (unit->arrivedAtNextCell()) {
+        if (unit->ifArrivedAtNextCell()) {
             m_Map->removeAvatarsByCellPosition(unit,
                                                unitArrayAndLocation[unit]);
             m_Map->setAvatarByCellPosition(unit, unit->getCurrentCell());
@@ -53,7 +55,6 @@ public:
     }
 
 protected:
-    void importmap(std::shared_ptr<MapClass> map) { m_Map = map; }
     std::vector<std::shared_ptr<Avatar>> m_AvatarArray;
     std::unordered_map<std::shared_ptr<Avatar>, glm::vec2> unitArrayAndLocation;
 

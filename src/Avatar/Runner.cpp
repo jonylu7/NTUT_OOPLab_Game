@@ -1,15 +1,15 @@
 //
 // Created by nudle on 2024/3/29.
 //
-#include "Unit/Runner.hpp"
-#include "Unit/PathUtility.hpp"
+#include "Avatar/Runner.hpp"
+#include "Avatar/PathUtility.hpp"
 void Runner::setBeingChase(std::shared_ptr<Avatar> hunter) {
     b_beingChase = true;
     m_hunter = hunter;
     lastTargetCell = getCurrentCell();
 }
 void Runner::customizeUpdate() {
-    if (b_beingChase && m_hunter->getUnitMode() == UnitMode::ALIVE) {
+    if (b_beingChase && m_hunter->getLivingStatus() == LivingStatus::ALIVE) {
         glm::vec2 hunterCell = m_hunter->getCurrentCell();
         if (getDistance(hunterCell) <= ATTACK_RANGE - 1 &&
             lastTargetCell == getCurrentCell()) {
@@ -28,7 +28,7 @@ void Runner::customizeUpdate() {
                     getNextCellByCurrentPlus3(Dir, getCurrentCell(), 1, 3);
             }
             lastTargetCell = nextCell;
-            setNewDestination(nextCell);
+            setDestinationCell(nextCell);
         }
     } else {
         b_beingChase = false;

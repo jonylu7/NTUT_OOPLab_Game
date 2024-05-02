@@ -12,13 +12,12 @@ class CursorSelection {
 public:
     CursorSelection() {}
     virtual ~CursorSelection() {}
-    void CursorSelect(std::shared_ptr<MapClass> m_Map, glm::vec2 *start,
-                      glm::vec2 *end);
+    void CursorSelect(std::shared_ptr<MapClass> m_Map);
 
-protected:
-    std::vector<std::shared_ptr<Selectable>> lastSeletctedObjects;
-    glm::vec2 cursorstart;
-    glm::vec2 cursorend;
+private:
+    std::vector<std::shared_ptr<Selectable>> m_LastSeletctedObjects;
+    glm::vec2 m_CursorStart;
+    glm::vec2 m_CursorEnd;
 };
 
 ;

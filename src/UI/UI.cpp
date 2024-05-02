@@ -5,10 +5,10 @@
 #include "UI/UI.hpp"
 #include "Map/Map.hpp"
 
-std::unordered_map<unitType, unsigned int> UIClass::s_unitConstructCount;
+std::unordered_map<UnitType, unsigned int> UIClass::s_unitConstructCount;
 
 void UIClass::Start(std::shared_ptr<MapClass> map,
-                    std::shared_ptr<GameObjectManager> gameobjectmanager) {
+                    std::shared_ptr<UnitManager> gameobjectmanager) {
     InitUnitQueue();
     m_StructureIconSpriteSheet->Start(
         "../assets/sprites/ICON_Allied_Structure.png", 64, 48, 24, 0);
@@ -98,12 +98,12 @@ void UIClass::ShowBuildingTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 7)) {
             // power plants
 
-            if (m_selectedStructureType == unitType::NONE &&
-                ButtonScript.GetIfFinishedBuilding(unitType::POWER_PLANT)) {
+            if (m_selectedStructureType == UnitType::NONE &&
+                ButtonScript.GetIfFinishedBuilding(UnitType::POWER_PLANT)) {
 
-                setSelectToBuild(unitType::POWER_PLANT);
+                setSelectToBuild(UnitType::POWER_PLANT);
             } else {
-                ButtonScript.AddToBuildQueue(unitType::POWER_PLANT);
+                ButtonScript.AddToBuildQueue(UnitType::POWER_PLANT);
             }
         }
 
@@ -112,7 +112,7 @@ void UIClass::ShowBuildingTab() {
         p.x += 5.F;
         p.y -= 38.F;
         ImGui::PushFont(sacker_heav);
-        if (ButtonScript.GetCurrentStructure() == unitType::POWER_PLANT) {
+        if (ButtonScript.GetCurrentStructure() == UnitType::POWER_PLANT) {
             dl->AddText(p, IM_COL32(2, 255, 2, 255),
                         ButtonScript.GetFormattedCD().c_str());
         }
@@ -120,15 +120,15 @@ void UIClass::ShowBuildingTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 22)) {
             // barracks
 
-            if (m_selectedStructureType == unitType::NONE &&
-                ButtonScript.GetIfFinishedBuilding(unitType::BARRACKS)) {
-                setSelectToBuild(unitType::BARRACKS);
+            if (m_selectedStructureType == UnitType::NONE &&
+                ButtonScript.GetIfFinishedBuilding(UnitType::BARRACKS)) {
+                setSelectToBuild(UnitType::BARRACKS);
             } else {
-                ButtonScript.AddToBuildQueue(unitType::BARRACKS);
+                ButtonScript.AddToBuildQueue(UnitType::BARRACKS);
             }
         }
         p.x += 80.F;
-        if (ButtonScript.GetCurrentStructure() == unitType::BARRACKS) {
+        if (ButtonScript.GetCurrentStructure() == UnitType::BARRACKS) {
             dl->AddText(p, IM_COL32(2, 255, 2, 255),
                         ButtonScript.GetFormattedCD().c_str());
         }
@@ -136,16 +136,16 @@ void UIClass::ShowBuildingTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 8)) {
             // ore
 
-            if (m_selectedStructureType == unitType::NONE &&
-                ButtonScript.GetIfFinishedBuilding(unitType::ORE_REF)) {
+            if (m_selectedStructureType == UnitType::NONE &&
+                ButtonScript.GetIfFinishedBuilding(UnitType::ORE_REF)) {
 
-                setSelectToBuild(unitType::ORE_REF);
+                setSelectToBuild(UnitType::ORE_REF);
             } else {
-                ButtonScript.AddToBuildQueue(unitType::ORE_REF);
+                ButtonScript.AddToBuildQueue(UnitType::ORE_REF);
             }
         }
         p.x += 80.F;
-        if (ButtonScript.GetCurrentStructure() == unitType::ORE_REF) {
+        if (ButtonScript.GetCurrentStructure() == UnitType::ORE_REF) {
             dl->AddText(p, IM_COL32(2, 255, 2, 255),
                         ButtonScript.GetFormattedCD().c_str());
         }
@@ -153,17 +153,17 @@ void UIClass::ShowBuildingTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 20)) {
             // war factory
 
-            if (m_selectedStructureType == unitType::NONE &&
-                ButtonScript.GetIfFinishedBuilding(unitType::WAR_FACT)) {
+            if (m_selectedStructureType == UnitType::NONE &&
+                ButtonScript.GetIfFinishedBuilding(UnitType::WAR_FACT)) {
 
-                setSelectToBuild(unitType::WAR_FACT);
+                setSelectToBuild(UnitType::WAR_FACT);
             } else {
-                ButtonScript.AddToBuildQueue(unitType::WAR_FACT);
+                ButtonScript.AddToBuildQueue(UnitType::WAR_FACT);
             }
         }
         p.x += 5.F;
         p.y -= 38.F;
-        if (ButtonScript.GetCurrentStructure() == unitType::WAR_FACT) {
+        if (ButtonScript.GetCurrentStructure() == UnitType::WAR_FACT) {
             dl->AddText(p, IM_COL32(2, 255, 2, 255),
                         ButtonScript.GetFormattedCD().c_str());
         }
@@ -171,17 +171,17 @@ void UIClass::ShowBuildingTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 1)) {
             // advance power
 
-            if (m_selectedStructureType == unitType::NONE &&
-                ButtonScript.GetIfFinishedBuilding(unitType::ADV_POWER_PLANT)) {
+            if (m_selectedStructureType == UnitType::NONE &&
+                ButtonScript.GetIfFinishedBuilding(UnitType::ADV_POWER_PLANT)) {
 
-                setSelectToBuild(unitType::ADV_POWER_PLANT);
+                setSelectToBuild(UnitType::ADV_POWER_PLANT);
             } else {
-                ButtonScript.AddToBuildQueue(unitType::ADV_POWER_PLANT);
+                ButtonScript.AddToBuildQueue(UnitType::ADV_POWER_PLANT);
             }
             LOG_DEBUG("TEST");
         }
         p.x += 80.F;
-        if (ButtonScript.GetCurrentStructure() == unitType::ADV_POWER_PLANT) {
+        if (ButtonScript.GetCurrentStructure() == UnitType::ADV_POWER_PLANT) {
             dl->AddText(p, IM_COL32(2, 255, 2, 255),
                         ButtonScript.GetFormattedCD().c_str());
         }
@@ -208,11 +208,11 @@ void UIClass::ShowInfantryTab() {
         if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 0)) {
             // rifle
             if (b_barackBuilt) {
-                ButtonScript.AddToSpawnQueue(unitType::INFANTRY);
-                setUnitConstructCount(unitType::INFANTRY, 1);
+                ButtonScript.AddToSpawnQueue(UnitType::INFANTRY);
+                setUnitConstructCount(UnitType::INFANTRY, 1);
             }
 
-            if (ButtonScript.GetCurrentInfType() == unitType::INFANTRY) {
+            if (ButtonScript.GetCurrentInfType() == UnitType::INFANTRY) {
                 dl->AddText(p, IM_COL32(2, 255, 2, 255),
                             ButtonScript.GetFormattedCD().c_str());
             }
@@ -222,25 +222,25 @@ void UIClass::ShowInfantryTab() {
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 1)) {
             // rocket
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 2)) {
             // engineer
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::NewLine();
         if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 3)) {
             // medic
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_InfantryIconSpriteSheet, 6)) {
             // tanya
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::EndTabItem();
@@ -251,19 +251,19 @@ void UIClass::ShowDefTab() {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 18)) {
             // sandbags
 
-            setUnitConstructCount(unitType::SANDBAGS, 1);
+            setUnitConstructCount(UnitType::SANDBAGS, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 16)) {
             // pillbox
-            setUnitConstructCount(unitType::PILLBOX, 1);
+            setUnitConstructCount(UnitType::PILLBOX, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 14)) {
             // turret
-            setUnitConstructCount(unitType::TURRET, 1);
+            setUnitConstructCount(UnitType::TURRET, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::EndTabItem();
@@ -273,56 +273,56 @@ void UIClass::ShowVehTab() {
     if (ImGui::BeginTabItem("Veh")) {
         if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 0)) {
             // lightTank
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 1)) {
             // mediumTank
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 4)) {
             // Art
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::NewLine();
         if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 4)) {
             // Art
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 8)) {
 
             // OreTruck
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 4)) {
             // Art
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::NewLine();
         if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 9)) {
             // MCV
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 11)) {
             // DemoTruck
-            // setUnitConstructCount(unitType::, 1);
+            // setUnitConstructCount(UnitType::, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::SameLine();
         if (ImGui::Button("Truck")) {
             // truck
-            setUnitConstructCount(unitType::TRUCK, 1);
+            setUnitConstructCount(UnitType::TRUCK, 1);
             LOG_DEBUG("TEST");
         }
         ImGui::EndTabItem();
@@ -340,50 +340,50 @@ bool UIClass::getImageButtonBySpriteSheetIndex(
 }
 
 void UIClass::InitUnitQueue() {
-    UIClass::s_unitConstructCount[unitType::POWER_PLANT] = 0;
-    UIClass::s_unitConstructCount[unitType::BARRACKS] = 0;
-    UIClass::s_unitConstructCount[unitType::ORE_REF] = 0;
-    UIClass::s_unitConstructCount[unitType::WAR_FACT] = 0;
-    UIClass::s_unitConstructCount[unitType::ADV_POWER_PLANT] = 0;
-    UIClass::s_unitConstructCount[unitType::SANDBAGS] = 0;
-    UIClass::s_unitConstructCount[unitType::PILLBOX] = 0;
-    UIClass::s_unitConstructCount[unitType::TURRET] = 0;
-    UIClass::s_unitConstructCount[unitType::INFANTRY] = 0;
-    UIClass::s_unitConstructCount[unitType::TRUCK] = 0;
+    UIClass::s_unitConstructCount[UnitType::POWER_PLANT] = 0;
+    UIClass::s_unitConstructCount[UnitType::BARRACKS] = 0;
+    UIClass::s_unitConstructCount[UnitType::ORE_REF] = 0;
+    UIClass::s_unitConstructCount[UnitType::WAR_FACT] = 0;
+    UIClass::s_unitConstructCount[UnitType::ADV_POWER_PLANT] = 0;
+    UIClass::s_unitConstructCount[UnitType::SANDBAGS] = 0;
+    UIClass::s_unitConstructCount[UnitType::PILLBOX] = 0;
+    UIClass::s_unitConstructCount[UnitType::TURRET] = 0;
+    UIClass::s_unitConstructCount[UnitType::INFANTRY] = 0;
+    UIClass::s_unitConstructCount[UnitType::TRUCK] = 0;
 }
 std::unique_ptr<Structure> UIClass::getSelectedBuilding() {
     switch (m_selectedStructureType) {
-    case unitType::BARRACKS: {
-        setUnitConstructCount(unitType::BARRACKS, 1);
-        m_selectedStructureType = unitType::NONE;
-        ButtonScript.SetIfFinished(unitType::BARRACKS, false);
+    case UnitType::BARRACKS: {
+        setUnitConstructCount(UnitType::BARRACKS, 1);
+        m_selectedStructureType = UnitType::NONE;
+        ButtonScript.SetIfFinished(UnitType::BARRACKS, false);
         return std::make_unique<Barracks>();
     }
-    case unitType::ORE_REF: {
-        setUnitConstructCount(unitType::ORE_REF, 1);
-        m_selectedStructureType = unitType::NONE;
-        ButtonScript.SetIfFinished(unitType::ORE_REF, false);
+    case UnitType::ORE_REF: {
+        setUnitConstructCount(UnitType::ORE_REF, 1);
+        m_selectedStructureType = UnitType::NONE;
+        ButtonScript.SetIfFinished(UnitType::ORE_REF, false);
         return std::make_unique<OreRefinery>();
     }
-    case unitType::POWER_PLANT: {
-        setUnitConstructCount(unitType::POWER_PLANT, 1);
-        m_selectedStructureType = unitType::NONE;
-        ButtonScript.SetIfFinished(unitType::POWER_PLANT, false);
+    case UnitType::POWER_PLANT: {
+        setUnitConstructCount(UnitType::POWER_PLANT, 1);
+        m_selectedStructureType = UnitType::NONE;
+        ButtonScript.SetIfFinished(UnitType::POWER_PLANT, false);
         return std::make_unique<PowerPlants>();
     }
-    case unitType::WAR_FACT: {
-        setUnitConstructCount(unitType::WAR_FACT, 1);
-        m_selectedStructureType = unitType::NONE;
-        ButtonScript.SetIfFinished(unitType::WAR_FACT, false);
+    case UnitType::WAR_FACT: {
+        setUnitConstructCount(UnitType::WAR_FACT, 1);
+        m_selectedStructureType = UnitType::NONE;
+        ButtonScript.SetIfFinished(UnitType::WAR_FACT, false);
         return std::make_unique<WarFactory>();
     }
-    case unitType::ADV_POWER_PLANT: {
-        setUnitConstructCount(unitType::ADV_POWER_PLANT, 1);
-        m_selectedStructureType = unitType::NONE;
-        ButtonScript.SetIfFinished(unitType::ADV_POWER_PLANT, false);
+    case UnitType::ADV_POWER_PLANT: {
+        setUnitConstructCount(UnitType::ADV_POWER_PLANT, 1);
+        m_selectedStructureType = UnitType::NONE;
+        ButtonScript.SetIfFinished(UnitType::ADV_POWER_PLANT, false);
         return std::make_unique<ADVPowerPlants>();
     }
-    case unitType::NONE: {
+    case UnitType::NONE: {
         printf("(UI)error! try to build when type == NONE\n");
     }
     }
@@ -391,12 +391,12 @@ std::unique_ptr<Structure> UIClass::getSelectedBuilding() {
 
 bool UIClass::getIfAnyBuildingReadyToBuild() {
 
-    return m_selectedStructureType != unitType::NONE &&
-           (ButtonScript.GetIfFinishedBuilding(unitType::BARRACKS) ||
-            ButtonScript.GetIfFinishedBuilding(unitType::POWER_PLANT) ||
-            ButtonScript.GetIfFinishedBuilding(unitType::ORE_REF) ||
-            ButtonScript.GetIfFinishedBuilding(unitType::WAR_FACT) ||
-            ButtonScript.GetIfFinishedBuilding(unitType::ADV_POWER_PLANT));
+    return m_selectedStructureType != UnitType::NONE &&
+           (ButtonScript.GetIfFinishedBuilding(UnitType::BARRACKS) ||
+            ButtonScript.GetIfFinishedBuilding(UnitType::POWER_PLANT) ||
+            ButtonScript.GetIfFinishedBuilding(UnitType::ORE_REF) ||
+            ButtonScript.GetIfFinishedBuilding(UnitType::WAR_FACT) ||
+            ButtonScript.GetIfFinishedBuilding(UnitType::ADV_POWER_PLANT));
 }
 
 void UIClass::checkExistBuilding(
@@ -442,7 +442,7 @@ std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
 
         Avatar->Start({m_barrackCell.x + 1, m_barrackCell.y - 1});
 
-        Avatar->setNewDestination(m_barrackTargetCell);
+        Avatar->setDestinationCell(m_barrackTargetCell);
     }
     printf("(UI)return to GOM success\n");
     return Avatar;

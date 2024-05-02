@@ -9,28 +9,27 @@ class Player {
 public:
     Player() {}
     ~Player() {}
-    void setTotalCurrency(int value) { m_totalCurrency = value; }
-    void addCurrency(int value) { m_totalCurrency += value; };
+    void setTotalCurrency(int value) { m_TotalCurrency = value; }
+    void addTotalCurrency(int value) { m_TotalCurrency += value; };
 
-    void setTotalPower(int value) { m_totalPower = value; }
-    void addPower(int value) { m_totalPower += value; }
+    void setFixedPower(int value) { m_FixedPower = value; }
+    void addFixedPower(int value) { m_FixedPower += value; }
 
-    int getTotalCurrency() { return m_totalCurrency; }
-    int getMaxTroopSize() { return m_maxTroopSize; }
+    int getTotalCurrency() { return m_TotalCurrency; }
+    int getMaxTroopSize() { return m_MaxTroopSize; }
 
 protected:
-    int
-    getTotalPower(std::vector<std::shared_ptr<Structure>> m_BuiltStructure) {
+    int getTotalPower(std::vector<std::shared_ptr<Structure>> builtstructure) {
         int totalPower = 0;
-        for (int i = 0; i < m_BuiltStructure.size(); i++) {
-            totalPower += m_BuiltStructure[i]->getElectricPower();
+        for (int i = 0; i < builtstructure.size(); i++) {
+            totalPower += builtstructure[i]->getElectricPower();
         }
-        return totalPower;
+        return totalPower + m_FixedPower;
     }
 
 protected:
-    int m_maxTroopSize = 200;
-    int m_totalPower = 0;
-    int m_totalCurrency = 0;
+    int m_MaxTroopSize = 200;
+    int m_FixedPower = 0;
+    int m_TotalCurrency = 0;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PLAYER_HPP

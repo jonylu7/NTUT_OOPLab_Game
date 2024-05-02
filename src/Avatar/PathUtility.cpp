@@ -1,7 +1,7 @@
 //
 // Created by 盧威任 on 4/12/24.
 //
-#include "Unit/PathUtility.hpp"
+#include "Avatar/PathUtility.hpp"
 
 MoveDirection PathUtility::findNewDirWhenNotTouchedByObstacle(
     Side side, glm::vec2 currentcell, MoveDirection currentdir) {

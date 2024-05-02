@@ -48,7 +48,7 @@ void Avatar::DEBUG_printCurrentMoveDirection(MoveDirection Dir) {
 void Avatar::whenSelected() {
     if (b_Selected) {
         if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_RB)) {
-            m_destinationCell = MapUtil::GlobalCoordToCellCoord(
+            m_DestinationCell = MapUtil::GlobalCoordToCellCoord(
                 MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
             b_NewDestinationIsSetted = true;
         }
@@ -64,18 +64,27 @@ void Avatar::Update() {
     case (LivingStatus::ALIVE):
         whenSelected();
         aliveUpdate();
+
+        if (m_AvatarOrder == AvatarOrderType::MOVE_ATTACK) {
+            // if nemesis is within weapon range
+            // change move attack to
+            // if nemesis is dead
+        }
+
         break;
     }
 }
 
 void Avatar::aliveUpdate() {
     moveToNextCell();
-    if (arrivedAtNextCell() || b_justStarted) {
+    if (ifArrivedAtNextCell() || b_justStarted) {
         b_justStarted = false;
-        setCurrentCell(MapUtil::GlobalCoordToCellCoord(getCurrentLocation()));
+        // setCurrentCell(MapUtil::GlobalCoordToCellCoord(getCurrentLocation()));
 
-        setNextCell(
-            PathUtility::getNextCellByCurrent(getCurrentDir(), getNextCell()));
+        // setNextCell(
+        //    PathUtility::getNextCellByCurrent(getCurrentDir(),
+        //    getNextCell()));
+
         // printf("(aliveUpdate) getting new dir\n");
         if (m_MovePath.size() >= 1) {
             m_CurrentDir = m_MovePath.front();
@@ -102,10 +111,8 @@ void Avatar::Start(glm::vec2 destination) { // destination = Barrack's
     this->SetDrawable(customizeImage());
     //        setSpriteSheet();
     SetVisible(true);
-    setCurrentCell(destination);
-    setNextCell(destination);
 
     setMovementSpeed(4);
-    m_CurrentOrder = unitOrder::MOVE;
+    m_AvatarOrder = AvatarOrderType::MOVE;
     m_Transform.scale = {1, 1};
 }

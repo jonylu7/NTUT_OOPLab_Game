@@ -10,35 +10,34 @@ void Structure::Start() {
     m_Transform.scale = {2.f, 2.f};
     m_HighLight.SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/HighLightB.png"));
-    m_HighLight.SetHLScale(this->GetTranScale());
+    m_HighLight.SetHLScale(this->GetTransform().scale);
     m_HighLight.SetZIndex(DEFAULT_ZINDEX - 1);
     SetZIndex(DEFAULT_ZINDEX);
     this->SetAttachVisible(false);
     SetSpriteSheet();
-    m_CurrentStatus = HealthStatus::ALIVE;
-    m_StructOrder = StructOrder::NOT_CONSTRUCTED_YET;
+    m_LivingStatus = LivingStatus::ALIVE;
+    m_StructOrder = StructureOrderType::NOT_CONSTRUCTED_YET;
 }
 void Structure::Update() {
 
-    switch (m_CurrentStatus) {
-    case HealthStatus::NOT_BORN_YET: {
+    switch (m_LivingStatus) {
+    case LivingStatus::NOT_BORN_YET: {
         this->updateInvinsible();
     }
-    case HealthStatus::ALIVE: {
+    case LivingStatus::ALIVE: {
         whenSelected();
-        if (m_StructOrder == StructOrder::SELECTING_SITE) {
+        if (m_StructOrder == StructureOrderType::SELECTING_SITE) {
             this->updateMoveable();
-        } else if (m_StructOrder == StructOrder::BUILT) {
+        } else if (m_StructOrder == StructureOrderType::BUILT) {
             this->updateFixed();
         }
     }
-    case HealthStatus::DEAD: {
+    case LivingStatus::DEAD: {
         // execute something
     }
 
     break;
     }
-}
 }
 void Structure::updateFixed() {
     // Attachment and self readjust location and draw---------------
@@ -66,20 +65,20 @@ void Structure::updateMoveable() {
         this->SetObjectLocation(location);
         m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                          true, INTERVAL, false);
-        this->SetCurrentStatus(unitStatus::Alive);
+        this->setLivingStatus(LivingStatus::ALIVE);
     }
 }
 
 void Structure::SetObjectLocation(glm::vec2 location) {
     location = MapUtil::PositionStickToGrid(location);
-    ObjectLocation = location;
-    DrawLocation = {location.x + 0.5 * CELL_SIZE.x,
-                    location.y + 0.5 * CELL_SIZE.y};
-    m_Transform.translation = DrawLocation;
+    m_ObjectLocation = location;
+    m_DrawLocation = {location.x + 0.5 * CELL_SIZE.x,
+                      location.y + 0.5 * CELL_SIZE.y};
+    m_Transform.translation = m_DrawLocation;
 }
 
 void Structure::SetAttachVisible(bool visible) {
-    m_HighLight.SetObjectLocation(this->DrawLocation);
+    m_HighLight.SetObjectLocation(this->m_DrawLocation);
     m_HighLight.SetVisible(visible);
 }
 void Structure::attachmentUpdate() {
@@ -88,7 +87,7 @@ void Structure::attachmentUpdate() {
 }
 std::vector<glm::vec2> Structure::GetAbsoluteOccupiedArea() {
     std::vector<glm::vec2> Area;
-    for (auto i : m_relativeOccupiedArea) {
+    for (auto i : m_RelativeOccupiedArea) {
         Area.push_back({i.x + GetObjectCell().x, i.y + GetObjectCell().y});
     }
     return Area;

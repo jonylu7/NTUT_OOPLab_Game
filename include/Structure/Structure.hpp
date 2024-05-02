@@ -65,7 +65,6 @@ public:
     virtual void SetObjectLocation(glm::vec2 location);
 
     glm::vec2 GetObjectLocation() { return this->m_ObjectLocation; }
-    glm::vec2 GetTranScale() { return m_Transform.scale; };
     virtual void SetAttachVisible(bool visible);
     glm::vec2 GetDrawLocation() { return m_DrawLocation; };
     void SetID(GameObjectID id) { m_ID = id; };

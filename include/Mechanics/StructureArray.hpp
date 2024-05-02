@@ -11,8 +11,8 @@ public:
     StructureArray() {}
     virtual ~StructureArray() {}
 
-    void Append(std::shared_ptr<MapClass> m_Map,
-                std::shared_ptr<Structure> newstruct) {
+    void Built(std::shared_ptr<MapClass> m_Map,
+               std::shared_ptr<Structure> newstruct) {
         m_BuiltStructure.push_back(newstruct);
         std::vector<glm::vec2> coords = newstruct->GetAbsoluteOccupiedArea();
         m_Map->builtStructureByCellPosition(newstruct, coords);

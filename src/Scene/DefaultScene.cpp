@@ -59,11 +59,14 @@ void DefaultScene::Update() {
     //  m_GameObjectManager.Update();
 
     if (m_UI.getIfAnyBuildingReadyToBuild()) {
-        m_GameObjectManager->AddStructSelectingConstructionSite(
+        m_GameObjectManager->getStrucutreManager().AddStructSelectingBuiltSite(
             m_UI.getSelectedBuilding());
     }
-    m_UI.checkExistBuilding(m_GameObjectManager->getBuiltStructureArray());
+    m_UI.checkExistBuilding(m_GameObjectManager->getStrucutreManager()
+                                .getStructureArray()
+                                .getBuiltStructureArray());
     if (m_UI.getIfUnitReadyToSpawn()) {
-        m_GameObjectManager->AppendUnit(m_UI.getUnitFromUI());
+        m_GameObjectManager->getAvatarManager().AppendAvatar(
+            m_UI.getUnitFromUI());
     }
 }

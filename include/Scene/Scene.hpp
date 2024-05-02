@@ -48,8 +48,8 @@ public:
 protected:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     CameraClass m_SceneCamera;
-    std::shared_ptr<GameObjectManager> m_GameObjectManager =
-        std::make_shared<GameObjectManager>();
+    std::shared_ptr<UnitManager> m_GameObjectManager =
+        std::make_shared<UnitManager>();
     Util::Renderer m_Renderer;
     UIClass m_UI;
     std::shared_ptr<Player> m_Player = std::make_shared<Player>();

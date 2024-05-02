@@ -7,7 +7,7 @@
 #include "Avatar/PathUtility.hpp"
 #include "Display/Grid.hpp"
 #include "Display/Line.hpp"
-
+#include "Map/MapUtility.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Transform.hpp"
 #include "glm/glm.hpp"
@@ -20,15 +20,12 @@ protected:
 
     std::vector<Line> m_lineVector;
     float defaultZIndex = 15;
-    glm::vec2 m_destinationCell;
-    glm::vec2 m_NextCell;
-    glm::vec2 m_CurrentCell;
     glm::vec2 m_CurrentLocation;
+    glm::vec2 m_DestinationCell;
 
     MoveDirection m_CurrentDir = MoveDirection::IDLE;
 
     float m_MovementSpeed = 1.F;
-
     int m_MoveDistance = 0;
 
     bool b_NewDestinationIsSetted = false;
@@ -45,38 +42,32 @@ public:
     PathfindingUnit(){};
     virtual ~PathfindingUnit(){};
 
-    void setDestinationCell(int x, int y) {
-        this->m_destinationCell = {glm::vec2(x, y)};
+    glm::vec2 getCurrentCell() {
+        return MapUtil::GlobalCoordToCellCoord(getCurrentLocation());
     }
-    void setDestinationCell(glm::vec2 cell) { this->m_destinationCell = cell; }
-    glm::vec2 getDestinationCell() { return m_destinationCell; }
-
-    void setCurrentCell(glm::vec2 cell) {
-        this->m_CurrentCell = glm::vec2(cell);
-        glm::vec2 temp(
-            int(this->m_CurrentCell.x * CELL_SIZE.x) + 0.5 * CELL_SIZE.x,
-            int(this->m_CurrentCell.y * CELL_SIZE.y) + 0.5 * CELL_SIZE.y);
-        m_CurrentLocation = {temp.x, temp.y};
-    }
-    glm::vec2 getCurrentCell() { return m_CurrentCell; }
     glm::vec2 getCurrentLocation() { return m_CurrentLocation; }
     MoveDirection getCurrentDir() { return m_CurrentDir; }
-    glm::vec2 getNextCell() { return m_NextCell; }
-    void setNextCell(glm::vec2 nextcell) { m_NextCell = nextcell; }
 
     void moveToNextCell();
     void moveToCellCorner(AvatarStandingCorner corner);
-    bool arrivedAtNextCell();
+    bool ifArrivedAtNextCell();
 
     void setMovePath(std::deque<MoveDirection> movepath) {
         m_MovePath = movepath;
         setNewDestinationIsSetted(false);
     }
 
+    glm::vec2 getDestinationCell() { return m_DestinationCell; }
     bool ifNewDestionationIsSetted() { return b_NewDestinationIsSetted; }
+
+    void setMovementSpeed(float speed) { m_MovementSpeed = speed; }
 
     void setNewDestinationIsSetted(bool value) {
         b_NewDestinationIsSetted = value;
+    }
+
+    void setDestinationCell(glm::vec2 destination) {
+        m_DestinationCell = destination;
     }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP

@@ -16,26 +16,24 @@
 
 #include <utility>
 
-class UnitManager : public StructureManager,
-                    public AvatarManager,
-                    public CursorSelection,
-                    public Player {
+class UnitManager : public Player {
 public:
     UnitManager() {}
     ~UnitManager() {}
     void Start(std::shared_ptr<MapClass> map) {
         m_Map = map;
-        StartBuiltStructure();
-        importmap(m_Map);
+        m_StructureManager.Start();
+
+        m_AvatarManager.Start(m_Map);
 
         m_StartTime = std::chrono::high_resolution_clock::now();
     }
 
     void Update() {
-        UpdateBuiltStructure();
-        UpdateAvatarArray();
+        m_StructureManager.Update();
+        m_AvatarManager.Update();
 
-        CursorSelect(m_Map, &cursorstart, &cursorend);
+        m_CursorSelection.CursorSelect(m_Map);
 
         // currency update
         std::chrono::high_resolution_clock::time_point m_currentTime =
@@ -45,15 +43,21 @@ public:
             m_lastElapsed = elapsed.count();
         }
 
-        SelectdBuiltSite(m_Map);
+        m_StructureManager.SelectdBuiltSite(m_Map);
     }
 
 public:
     int getTotalPower() {
-        return Player::getTotalPower(this->m_BuiltStructure);
+        return Player::getTotalPower(
+            m_StructureManager.getStructureArray().getBuiltStructureArray());
     }
+    AvatarManager getAvatarManager() { return m_AvatarManager; }
+    StructureManager getStrucutreManager() { return m_StructureManager; }
 
 private:
+    CursorSelection m_CursorSelection;
+    StructureManager m_StructureManager;
+    AvatarManager m_AvatarManager;
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;

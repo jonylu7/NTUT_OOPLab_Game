@@ -1,7 +1,7 @@
 //
 // Created by nudle on 2024/3/22.
 //
-#include "Unit/Avatar.hpp"
+#include "Avatar/Avatar.hpp"
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_INFANTRY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_INFANTRY_HPP
 

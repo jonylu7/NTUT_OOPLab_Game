@@ -14,8 +14,8 @@ void WarFactory::Start() {
     m_HighLight.SetZIndex(DEFAULT_ZINDEX - 1);
     // Set Attachment Scale &
     // Visibility----------------------------------------
-    m_HighLight.SetHLScale(this->GetTranScale());
+    m_HighLight.SetHLScale(this->GetTransform().scale);
     whenSelected();
     // State
-    SetCurrentUpdateMode(Structure::updateMode::Moveable);
+    setLivingStatus(LivingStatus::ALIVE);
 }

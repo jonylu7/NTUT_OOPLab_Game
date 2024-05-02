@@ -4,6 +4,8 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
+#include "Avatar/Avatar.hpp"
+#include "Avatar/Infantry.hpp"
 #include "Mechanics/GameObjectID.hpp"
 #include "Mechanics/Player.hpp"
 #include "Mechanics/UnitManager.hpp"
@@ -13,8 +15,6 @@
 #include "Structure/PowerPlants.hpp"
 #include "Structure/Structure.hpp"
 #include "Structure/WarFactory.hpp"
-#include "Unit/Avatar.hpp"
-#include "Unit/Infantry.hpp"
 #include "Util/GameObject.hpp"
 #include <chrono>
 #include <future>
@@ -22,7 +22,7 @@
 
 class UIScriptProcess {
 private:
-    std::shared_ptr<GameObjectManager> m_gameObjectManager;
+    std::shared_ptr<UnitManager> m_gameObjectManager;
 
     // building
     bool b_Baracks = false;
@@ -33,9 +33,9 @@ private:
 
     float m_buildCoolDownTime = 0.F;
     float m_offPowerBuildCoolDownTime = 0.F;
-    unitType m_currentStructureType;
+    UnitType m_currentStructureType;
     bool b_isBuildingInCoolDown = false;
-    std::deque<unitType> m_buildQueue;
+    std::deque<UnitType> m_buildQueue;
     std::chrono::time_point<std::chrono::high_resolution_clock>
         m_buildStartTime;
     std::chrono::time_point<std::chrono::high_resolution_clock> m_buildTempTime;
@@ -49,9 +49,9 @@ private:
     bool b_isReadyToSpawn = false;
     float m_spawnCoolDownTime = 0.F;
     float m_offPowerSpawnCoolDownTime = 0.F;
-    unitType m_currentInfType;
+    UnitType m_currentInfType;
     bool b_isSpawningInCooldown = false;
-    std::deque<unitType> m_spawnQueue;
+    std::deque<UnitType> m_spawnQueue;
     std::chrono::time_point<std::chrono::high_resolution_clock>
         m_SpawnStartTime;
     std::chrono::time_point<std::chrono::high_resolution_clock> m_SpawnTempTime;
@@ -64,21 +64,21 @@ public:
     ~UIScriptProcess(){};
 
     // Getter/Setter
-    bool GetIfFinishedBuilding(unitType type);
-    int GetObjCost(unitType type);
+    bool GetIfFinishedBuilding(UnitType type);
+    int GetObjCost(UnitType type);
     // if b_isBuildingInCoolDown==false not currently building
     // true currently is building
     void SetSTALL(bool value) { b_isBuildingInCoolDown = value; };
     /*
      * false for used, true for finished
      */
-    void SetIfFinished(unitType type, bool value);
+    void SetIfFinished(UnitType type, bool value);
     float GetCDLeft();
     std::string GetFormattedCD();
 
     // Event
-    void AddToBuildQueue(unitType type);
-    void AddToSpawnQueue(unitType type);
+    void AddToBuildQueue(UnitType type);
+    void AddToSpawnQueue(UnitType type);
     void Update(bool queueContinue);
 
     // CountDown
@@ -89,19 +89,18 @@ public:
     void CountDown();
 
     // transform to ptr
-    float GetStructureTime(unitType type);
-    float GetSpawnTime(unitType type);
+    float GetStructureTime(UnitType type);
+    float GetSpawnTime(UnitType type);
 
-    unitType GetCurrentStructure() { return m_currentStructureType; };
-    unitType GetCurrentInfType() { return m_currentInfType; };
+    UnitType GetCurrentStructure() { return m_currentStructureType; };
+    UnitType GetCurrentInfType() { return m_currentInfType; };
     // spawn unit
     std::shared_ptr<Avatar> spawnAvatar();
     bool getIfReadytoSpawn() { return b_isReadyToSpawn; }
     void setIfReadytoSpawn(bool b) { b_isReadyToSpawn = b; }
 
     // import from scene
-    void
-    importGameObjManager(std::shared_ptr<GameObjectManager> gameObjectManager) {
+    void importGameObjManager(std::shared_ptr<UnitManager> gameObjectManager) {
         m_gameObjectManager = gameObjectManager;
     }
 
