@@ -23,7 +23,7 @@ protected:
     getTotalPower(std::vector<std::shared_ptr<Structure>> m_BuiltStructure) {
         int totalPower = 0;
         for (int i = 0; i < m_BuiltStructure.size(); i++) {
-            totalPower += m_BuiltStructure[i]->GetElectricPower();
+            totalPower += m_BuiltStructure[i]->getElectricPower();
         }
         return totalPower;
     }

@@ -62,6 +62,7 @@ public:
     glm::vec2 getCurrentLocation() { return m_CurrentLocation; }
     MoveDirection getCurrentDir() { return m_CurrentDir; }
     glm::vec2 getNextCell() { return m_NextCell; }
+    void setNextCell(glm::vec2 nextcell) { m_NextCell = nextcell; }
 
     void moveToNextCell();
     void moveToCellCorner(AvatarStandingCorner corner);

@@ -18,5 +18,5 @@ void Barracks::Start() {
     m_HighLight.SetHLScale(this->GetTranScale());
     whenSelected();
     // State
-    SetCurrentUpdateMode(Structure::updateMode::Moveable);
+    setStructOrder(StructureOrderType::NOT_CONSTRUCTED_YET);
 }

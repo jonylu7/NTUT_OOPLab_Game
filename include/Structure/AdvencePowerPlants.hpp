@@ -9,7 +9,7 @@ public:
                    float buildingCost = 500.F, float buildingHp = 700.F,
                    HouseType house = HouseType::NONE)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
-                    GameObjectID(unitType::ADV_POWER_PLANT, house)){
+                    GameObjectID(UnitType::ADV_POWER_PLANT, house)){
               //        SetDrawable(
               //            std::make_unique<Util::Image>("../assets/sprites/PowerPlants.png"));
           };

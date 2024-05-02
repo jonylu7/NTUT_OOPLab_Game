@@ -33,7 +33,7 @@ public:
           m_BuildingCost(0.F),
           Selectable(),
           m_ID(GameObjectID(UnitType::null, HouseType::NONE)) {
-        m_CurrentStatus = HealthStatus::NOT_BORN_YET;
+        m_LivingStatus = LivingStatus::NOT_BORN_YET;
     };
 
     Structure(float electricPower, float buildingTime, float buildingCost,

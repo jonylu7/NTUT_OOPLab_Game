@@ -26,7 +26,7 @@ protected:
 public:
     WayPointStructure(float electricPower = -10.F, float buildingTime = 10.F,
                       float buildingCost = 20.F, float buildingHp = 90.F,
-                      GameObjectID id = GameObjectID(unitType::null,
+                      GameObjectID id = GameObjectID(UnitType::null,
                                                      HouseType::NONE))
         : Structure(electricPower, buildingTime, buildingCost, buildingHp, id) {
         m_Transform.scale = {2.f, 2.f};
@@ -39,13 +39,13 @@ public:
 
     void Update() override {
 
-        switch (m_CurrentStatus) {
-        case unitStatus::NOT_BORN_YET: {
+        switch (m_LivingStatus) {
+        case LivingStatus::NOT_BORN_YET: {
             this->updateInvinsible();
             break;
         }
-        case unitStatus::ALIVE: {
-            if (m_CurrentOrder == unitOrder::Struct_MOVEABLE) {
+        case LivingStatus::ALIVE: {
+            if (m_StructOrder == StructureOrderType::SELECTING_SITE) {
                 this->updateMoveable();
             } else {
                 this->updateFixed();

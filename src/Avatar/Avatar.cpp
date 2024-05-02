@@ -78,15 +78,15 @@ void Avatar::aliveUpdate() {
             PathUtility::getNextCellByCurrent(getCurrentDir(), getNextCell()));
         // printf("(aliveUpdate) getting new dir\n");
         if (m_MovePath.size() >= 1) {
-            m_currentDir = m_MovePath.front();
+            m_CurrentDir = m_MovePath.front();
             m_MovePath.pop_front();
         } else {
-            m_currentDir = MoveDirection::IDLE;
+            m_CurrentDir = MoveDirection::IDLE;
         }
     }
 
     SetVisible(true);
-    m_Transform.translation = m_currentLocation;
+    m_Transform.translation = m_CurrentLocation;
 
     Draw();
     //        m_SpriteSheetAnimation->Draw(m_Transform, DEFAULT_ZINDEX);

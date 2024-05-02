@@ -33,7 +33,7 @@ public:
                                                unit->getDestinationCell());
         // unit
         unit->setMovePath(queue);
-        unit->SetNewDestinationIsSetted(false);
+        unit->setNewDestinationIsSetted(false);
 
         if (m_Map->getTileByCellPosition(unit->getDestinationCell())
                 ->ifEnemyAtTile()) {

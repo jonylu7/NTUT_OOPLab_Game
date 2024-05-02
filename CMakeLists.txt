@@ -72,15 +72,16 @@ set(SRC_FILES
         ${SRC_DIR}/Util/Color.cpp
 
 
-        ${SRC_DIR}/D/ImageArray.cpp
+        ${SRC_DIR}/Display/ImageArray.cpp
         ${SRC_DIR}/Display/CustomizableImage.cpp
         ${SRC_DIR}/Display/SpriteSheetAnimation.cpp
         ${SRC_DIR}/Display/Animation.cpp
         ${SRC_DIR}/Display/MissingTexture.cpp
+        ${SRC_DIR}/Display/Grid.cpp
+        ${SRC_DIR}/Display/SpriteSheet.cpp
 
 
         ${SRC_DIR}/App.cpp
-        ${SRC_DIR}/Grid.cpp
 
         ${SRC_DIR}/Structure/Structure.cpp
         ${SRC_DIR}/Structure/WayPoint.cpp
@@ -91,10 +92,9 @@ set(SRC_FILES
         ${SRC_DIR}/Structure/OreRefinery.cpp
         ${SRC_DIR}/Structure/PowerPlants.cpp
         ${SRC_DIR}/Structure/WarFactory.cpp
+        ${SRC_DIR}/Structure/WayPointStructure.cpp
 
         ${SRC_DIR}/Scene/MapScene.cpp
-
-        ${SRC_DIR}/Structure/WayPointStructure.cpp
 
 
         ${SRC_DIR}/Avatar/Runner.cpp
@@ -105,7 +105,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
-        ${SRC_DIR}/SpriteSheet.cpp
+
         ${SRC_DIR}/UI/UI.cpp
 
         ${SRC_DIR}/Map/YAMLReader.cpp
@@ -156,7 +156,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/Renderer.hpp
         ${INCLUDE_DIR}/Util/Color.hpp
         ${INCLUDE_DIR}/Util/Image.hpp
-        
+
         ${INCLUDE_DIR}/Display/Animation.hpp
         ${INCLUDE_DIR}/Display/MissingTexture.hpp
         ${INCLUDE_DIR}/Display/SpriteSheetAnimation.hpp
