@@ -15,16 +15,16 @@ void Structure::Start() {
     SetZIndex(DEFAULT_ZINDEX);
     this->SetAttachVisible(false);
     SetSpriteSheet();
-    m_CurrentStatus = UnitStatus::ALIVE;
+    m_CurrentStatus = HealthStatus::ALIVE;
     m_StructOrder = StructOrder::NOT_CONSTRUCTED_YET;
 }
 void Structure::Update() {
 
     switch (m_CurrentStatus) {
-    case UnitStatus::NOT_BORN_YET: {
+    case HealthStatus::NOT_BORN_YET: {
         this->updateInvinsible();
     }
-    case UnitStatus::ALIVE: {
+    case HealthStatus::ALIVE: {
         whenSelected();
         if (m_StructOrder == StructOrder::SELECTING_SITE) {
             this->updateMoveable();
@@ -32,7 +32,7 @@ void Structure::Update() {
             this->updateFixed();
         }
     }
-    case UnitStatus::DEAD: {
+    case HealthStatus::DEAD: {
         // execute something
     }
 

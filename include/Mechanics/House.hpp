@@ -9,16 +9,17 @@ enum class HouseType { ENEMY, NEUTRAL, FRIEND, MY, NONE };
 
 class House {
 public:
-    House() {}
+    House()
+        : m_House(HouseType::NONE) {}
     House(HouseType house)
-        : m_house(house) {}
+        : m_House(house) {}
     ~House() {}
 
-    HouseType getHouse() { return m_house; }
-    void setHouse(HouseType house) { m_house = house; }
+    HouseType getHouse() { return m_House; }
+    void setHouse(HouseType house) { m_House = house; }
 
 protected:
-    HouseType m_house;
+    HouseType m_House;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_HOUSE_HPP

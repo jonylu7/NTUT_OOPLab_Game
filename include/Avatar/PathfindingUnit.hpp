@@ -61,16 +61,7 @@ public:
     }
     glm::vec2 getCurrentCell() { return m_currentCell; }
 
-    void setNextCell(glm::vec2 cell) { this->m_nextCell = glm::vec2(cell); }
-    glm::vec2 getNextCell() { return m_nextCell; }
-
-    glm::vec2 getCurrentLocation() { return m_currentLocation; }
-
-    void setMovementSpeed(int speed) { this->m_MovementSpeed = speed; }
-
-    MoveDirection getCurrentDir() { return m_currentDir; }
-    void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
-    void walkTowardNextCell();
+    void moveToNextCell();
     void moveToCellCorner(AvatarStandingCorner corner);
     bool arrivedAtNextCell();
 

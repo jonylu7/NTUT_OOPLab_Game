@@ -87,7 +87,7 @@ void UIScriptProcess::CountDown() {
         }
     }
 
-    // Avatar Spawning
+    // Avatar AvatarManager
     std::chrono::duration<double> spawnElapsed =
         m_currentCountDownTime - m_SpawnStartTime;
     if (m_gameObjectManager->getTotalCurrency() <= 0 &&

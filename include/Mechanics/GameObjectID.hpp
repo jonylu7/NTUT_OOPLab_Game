@@ -55,7 +55,7 @@ public:
     static unsigned int getNewestID(UnitType type);
 };
 
-class GameObjectID {
+class GameObjectID : public House {
 public:
     GameObjectID()
         : m_UnitType(UnitType::null),
@@ -63,7 +63,7 @@ public:
     GameObjectID(UnitType type, HouseType house)
         : m_UnitType(type),
           m_Number(OccupiedID::getNewestID(type)),
-          m_House(house) {}
+          House(house) {}
     ~GameObjectID() {}
 
     int getNumber() const { return m_Number; }
@@ -88,7 +88,6 @@ public:
 private:
     UnitType m_UnitType;
     unsigned int m_Number;
-    HouseType m_House;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP

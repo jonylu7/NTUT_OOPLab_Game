@@ -5,18 +5,22 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #include "Avatar/AttackAndDamageUnit.hpp"
+#include "Avatar/AvatarOrder.hpp"
 #include "Avatar/PathUtility.hpp"
 #include "Avatar/PathfindingUnit.hpp"
 #include "Display/Image.hpp"
 #include "Display/SpriteSheet.hpp"
 #include "Display/SpriteSheetAnimation.hpp"
 #include "Map/MapUtility.hpp"
+#include "Mechanics/GameObjectID.hpp"
 #include "Selectable.hpp"
 
 class Avatar : public PathfindingUnit,
                public AttackAndDamageUnit,
                public Util::GameObject,
-               public Selectable {
+               public Selectable,
+               public GameObjectID,
+               public AvatarOrder {
 
 public:
     Avatar(){};
@@ -49,6 +53,8 @@ public:
             "../assets/sprites/mech_single.png");
     }
 
+    GameObjectID getID() { return m_ID; }
+
     virtual void Update() override;
 
 protected:
@@ -60,5 +66,6 @@ protected:
 
 private:
     bool b_justStarted = true;
+    GameObjectID m_ID;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP

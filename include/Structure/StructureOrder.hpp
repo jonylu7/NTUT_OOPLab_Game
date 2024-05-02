@@ -10,20 +10,21 @@ class StructureOrder {
 public:
     StructureOrder() {}
     virtual ~StructureOrder() {}
-    enum class StructOrder {
+    enum class StructureOrderType {
         NOT_CONSTRUCTED_YET,
         CONSTRUCTED,
         SELECTING_SITE,
-        BUILT
+        BUILT,
+        NO_ORDER
     };
-    StructOrder getStructOrder() { return m_StructOrder; }
+    StructureOrderType getStructOrder() { return m_StructOrder; }
 
-    void setStructOrder(StructOrder structorder) {
+    void setStructOrder(StructureOrderType structorder) {
         m_StructOrder = structorder;
     }
 
     bool getBuilt() {
-        if (m_StructOrder == StructOrder::BUILT) {
+        if (m_StructOrder == StructureOrderType::BUILT) {
             return true;
         } else {
             return false;
@@ -31,6 +32,6 @@ public:
     }
 
 protected:
-    StructOrder m_StructOrder;
+    StructureOrderType m_StructOrder;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTUREORDER_HPP

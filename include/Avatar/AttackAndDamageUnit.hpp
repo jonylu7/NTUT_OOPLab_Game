@@ -8,10 +8,12 @@
 
 class AttackAndDamageUnit {
 public:
-    enum class UnitStatus {
+    enum class LivingStatus {
         DEAD,
         ALIVE,
         NOT_BORN_YET,
+
+        REGRET_ABOUT_LIVING, // just a joke
     };
 
     AttackAndDamageUnit() {}
@@ -22,7 +24,7 @@ public:
     void setHP(int hp) {
         m_HP = hp;
         if (m_HP <= 0) {
-            m_CurrentStatus = UnitStatus::DEAD;
+            m_LivingStatus = LivingStatus::DEAD;
         }
     }
 
@@ -38,12 +40,12 @@ public:
         return;
     }
 
-    UnitStatus getCurrentStatus() const { return m_CurrentStatus; };
+    LivingStatus getLivingStatus() const { return m_LivingStatus; };
 
-    void setCurrentStatus(UnitStatus mode) { m_CurrentStatus = mode; };
+    void setLivingStatus(LivingStatus status) { m_LivingStatus = status; };
 
 protected:
-    UnitStatus m_CurrentStatus = UnitStatus::NOT_BORN_YET;
+    LivingStatus m_LivingStatus = LivingStatus::NOT_BORN_YET;
     int m_HP;
     Weapon m_Weapon;
     float m_ArmorRate;

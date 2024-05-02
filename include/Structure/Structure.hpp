@@ -9,10 +9,10 @@
 #include "Mechanics//GameObjectID.hpp"
 #include "Selectable.hpp"
 
+#include "Avatar/AttackAndDamageUnit.hpp"
 #include "Display/Image.hpp"
 #include "Display/SpriteSheetAnimation.hpp"
 #include "Structure/StructureOrder.hpp"
-#include "Unit/AttackAndDamageUnit.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Input.hpp"
 #include "Util/TransformUtils.hpp"
@@ -33,7 +33,7 @@ public:
           m_BuildingCost(0.F),
           Selectable(),
           m_ID(GameObjectID(UnitType::null, HouseType::NONE)) {
-        m_CurrentStatus = UnitStatus::NOT_BORN_YET;
+        m_CurrentStatus = HealthStatus::NOT_BORN_YET;
     };
 
     Structure(float electricPower, float buildingTime, float buildingCost,
@@ -72,10 +72,9 @@ public:
 
     virtual void attachmentUpdate();
 
-    float GetElectricPower() { return this->m_ElectricPower; }
-    float GetBuildingTime() { return this->m_BuildingTime; }
-    float GetBuildingCost() { return this->m_BuildingCost; }
-    GameObjectID GetID() { return m_ID; }
+    float getElectricPower() { return this->m_ElectricPower; }
+    float getBuildingTime() { return this->m_BuildingTime; }
+    float getBuildingCost() { return this->m_BuildingCost; }
 
     glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord) {
         return glm::vec2(int(globalCoord[0] / CELL_SIZE.x),
@@ -89,6 +88,8 @@ public:
     void SetRelativeOccupiedArea(std::vector<glm::vec2> Area) {
         m_RelativeOccupiedArea = Area;
     }
+
+    GameObjectID getID() { return m_ID; }
 
 protected:
     float m_ElectricPower;

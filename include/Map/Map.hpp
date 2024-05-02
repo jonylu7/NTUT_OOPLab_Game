@@ -22,7 +22,7 @@ public:
     void Draw(const Util::Transform &trans, const float zindex) override;
 
     std::shared_ptr<TileClass> getTileByCellPosition(glm::vec2 position);
-    bool getWalkable(glm::vec2 position) {
+    bool ifWalkable(glm::vec2 position) {
         return getTileByCellPosition(position)->getWalkable();
     }
 

@@ -5,18 +5,13 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
 
+#include "Avatar/PathUtility.hpp"
 #include "Map/Map.hpp"
-#include "Unit/PathUtility.hpp"
-
 #include <random>
+
 class FindValidPathToDest {
 
 private:
-    glm::vec2 m_destinationCell;
-    glm::vec2 m_nextCell;
-    glm::vec2 m_currentCell;
-    MoveDirection m_currentDir = MoveDirection::IDLE;
-
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
 
 public:
@@ -25,21 +20,6 @@ public:
     ~FindValidPathToDest(){};
 
 protected:
-    // set
-    void setDestinationCell(glm::vec2 cell) { this->m_destinationCell = cell; }
-    void setCurrentCell(glm::vec2 cell) {
-        this->m_currentCell = glm::vec2(cell);
-    }
-    void setCurrentDir(MoveDirection direction) { m_currentDir = direction; }
-    void setNextCell(glm::vec2 cell) { this->m_nextCell = glm::vec2(cell); }
-
-    // get
-    glm::vec2 getDestinationCell() { return m_destinationCell; }
-
-    glm::vec2 getCurrentCell() { return m_currentCell; }
-    MoveDirection getCurrentDir() { return m_currentDir; }
-    glm::vec2 getNextCell() { return m_nextCell; }
-
     Side randomlyChooseSide();
 
 public:

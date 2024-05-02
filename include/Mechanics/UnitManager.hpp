@@ -7,17 +7,17 @@
 #include "Cursor.hpp"
 #include "FindValidPathToDest.hpp"
 #include "GameObjectID.hpp"
-#include "Mechanics/Constructing.hpp"
+#include "Mechanics/AvatarManager.hpp"
 #include "Mechanics/CursorSelection.hpp"
 #include "Mechanics/Player.hpp"
-#include "Mechanics/Spawning.hpp"
 #include "Mechanics/StructureArray.hpp"
+#include "Mechanics/StructureManager.hpp"
 #include <chrono>
 
 #include <utility>
 
-class UnitManager : public Constructing,
-                    public Spawning,
+class UnitManager : public StructureManager,
+                    public AvatarManager,
                     public CursorSelection,
                     public Player {
 public:
@@ -33,7 +33,7 @@ public:
 
     void Update() {
         UpdateBuiltStructure();
-        UpdateUnitArray();
+        UpdateAvatarArray();
 
         CursorSelect(m_Map, &cursorstart, &cursorend);
 
@@ -45,7 +45,7 @@ public:
             m_lastElapsed = elapsed.count();
         }
 
-        SelectdConstructionSite(m_Map);
+        SelectdBuiltSite(m_Map);
     }
 
 public:

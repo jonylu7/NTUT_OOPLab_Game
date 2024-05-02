@@ -5,13 +5,12 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_TILE_HPP
 
+#include "Avatar/Avatar.hpp"
 #include "Mechanics/GameObjectID.hpp"
 #include "Selectable.hpp"
-#include "Unit/Avatar.hpp"
 
 #include "Display/SpriteSheet.hpp"
 #include "Structure/Structure.hpp"
-#include "Unit/Avatar.hpp"
 #include <unordered_map>
 class TileClass {
 public:
@@ -104,7 +103,17 @@ public:
         return *this;
     }
 
-    // bool checkedEnemy() { if (m_Structure->getHouse() ==) }
+    bool ifEnemyAtTile() {
+        if (m_Structure->getID().getHouse() == HouseType::ENEMY) {
+            return true;
+        }
+        for (auto a : m_Avatars) {
+            if (a->getID().getHouse() == HouseType::ENEMY) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 private:
     bool m_TerrainBuildable;

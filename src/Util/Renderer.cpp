@@ -8,10 +8,6 @@ namespace Util {
 Renderer::Renderer(const std::vector<std::shared_ptr<GameObject>> &children)
     : m_Children(children) {}
 
-void Renderer::AddChild(const std::shared_ptr<GameObject> &child) {
-    m_Children.push_back(child);
-}
-
 void Renderer::RemoveChild(std::shared_ptr<GameObject> child) {
     m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child),
                      m_Children.end());
@@ -47,11 +43,6 @@ void Renderer::Update() {
         auto curr = stack.back();
         stack.pop_back();
         renderQueue.push(curr);
-
-        for (const auto &child : curr.m_GameObject->GetChildren()) {
-            stack.push_back(
-                StackInfo{child, curr.m_GameObject->GetTransform()});
-        }
     }
     // draw all in render queue by order
     while (!renderQueue.empty()) {

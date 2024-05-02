@@ -31,7 +31,7 @@ FindValidPathToDest::findPath(glm::vec2 currentcell,
                 currentcell, destinationcell);
             // turn
             MoveDirection turndir;
-            if (m_Map->getWalkable(PathUtility::getNextCellByCurrent(
+            if (m_Map->ifWalkable(PathUtility::getNextCellByCurrent(
                     facingDir, currentcell)) == false) {
                 turndir = findNewDirWhenCrash(whichSideToTouchObstacle,
                                               currentcell, facingDir);
