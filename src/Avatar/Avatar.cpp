@@ -46,13 +46,7 @@ void Avatar::DEBUG_printCurrentMoveDirection(MoveDirection Dir) {
 }
 
 void Avatar::whenSelected() {
-    if (b_Selected) {
-        if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_RB)) {
-            m_DestinationCell = MapUtil::GlobalCoordToCellCoord(
-                MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
-            b_NewDestinationIsSetted = true;
-        }
-    }
+    // setAttackementVisible
 }
 
 void Avatar::Update() {
@@ -65,13 +59,12 @@ void Avatar::Update() {
         whenSelected();
         aliveUpdate();
 
-        if (m_AvatarOrder == AvatarOrderType::ATTACK) {
-            // if nemesis is within weapon range
-            // change move attack to
-            // if nemesis is dead
+        if (m_AvatarOrder == AvatarOrderType::OPEN_FIRE) {
+
         } else if (m_AvatarOrder == AvatarOrderType::MOVE) {
 
         } else if (m_AvatarOrder == AvatarOrderType::NO_ORDER) {
+        } else if (m_AvatarOrder == AvatarOrderType::TAKEN_DAMAGE) {
         }
 
         break;

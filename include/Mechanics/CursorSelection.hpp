@@ -12,10 +12,19 @@ class CursorSelection {
 public:
     CursorSelection() {}
     virtual ~CursorSelection() {}
-    void CursorSelect(std::shared_ptr<MapClass> m_Map);
+    void cursorSelect(std::shared_ptr<MapClass> m_Map);
+    void Update();
 
 private:
-    std::vector<std::shared_ptr<Selectable>> m_LastSeletctedObjects;
+    void clearAllSelectedObjects();
+    void Append(std::shared_ptr<Structure> structure);
+    void Append(std::shared_ptr<Avatar> avatar);
+
+private:
+    std::shared_ptr<Structure> m_SelectedStructure =
+        std::make_shared<Structure>();
+    std::vector<std::shared_ptr<Avatar>> m_SelectedAvatars =
+        std::vector<std::shared_ptr<Avatar>>();
     glm::vec2 m_CursorStart;
     glm::vec2 m_CursorEnd;
 };

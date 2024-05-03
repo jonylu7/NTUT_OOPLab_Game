@@ -38,7 +38,7 @@ public:
         }
     }
 
-    void attackUpdate(std::shared_ptr<AttackAndDamageUnit> target) {
+    void openFireToTarget(std::shared_ptr<AttackAndDamageUnit> target) {
         // cd time
         m_DeltaTime += m_Time.GetDeltaTime();
         if (m_Weapon.getIntervalInS() <= m_DeltaTime) {
@@ -51,6 +51,8 @@ public:
     LivingStatus getLivingStatus() const { return m_LivingStatus; };
 
     void setLivingStatus(LivingStatus status) { m_LivingStatus = status; };
+
+    Weapon getWeapon() { return m_Weapon; }
 
 private:
     float m_DeltaTime = 0;

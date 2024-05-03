@@ -16,7 +16,7 @@ void Structure::Start() {
     this->SetAttachVisible(false);
     SetSpriteSheet();
     m_LivingStatus = LivingStatus::ALIVE;
-    m_StructOrder = StructureOrderType::NOT_CONSTRUCTED_YET;
+    m_StructOrder = StructureOrderType::SELECTING_SITE;
 }
 void Structure::Update() {
 

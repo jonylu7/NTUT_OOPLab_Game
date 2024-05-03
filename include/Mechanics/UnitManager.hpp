@@ -8,9 +8,9 @@
 #include "FindValidPathToDest.hpp"
 #include "GameObjectID.hpp"
 #include "Mechanics/AvatarManager.hpp"
+#include "Mechanics/BuiltStructure.hpp"
 #include "Mechanics/CursorSelection.hpp"
 #include "Mechanics/Player.hpp"
-#include "Mechanics/StructureArray.hpp"
 #include "Mechanics/StructureManager.hpp"
 #include <chrono>
 
@@ -32,8 +32,8 @@ public:
     void Update() {
         m_StructureManager.Update();
         m_AvatarManager.Update();
-
-        m_CursorSelection.CursorSelect(m_Map);
+        m_CursorSelection.Update();
+        m_CursorSelection.cursorSelect(m_Map);
 
         // currency update
         std::chrono::high_resolution_clock::time_point m_currentTime =

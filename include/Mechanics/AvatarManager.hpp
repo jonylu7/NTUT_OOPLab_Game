@@ -5,6 +5,9 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AVATARMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_AVATARMANAGER_HPP
 #include "Avatar/Avatar.hpp"
+#include "FindValidPathToDest.hpp"
+#include "Map/Map.hpp"
+#include "NemesisManager.hpp"
 #include <unordered_map>
 class AvatarManager {
 public:
@@ -20,32 +23,16 @@ public:
             unit->setSelected(true);
 
             unit->Update();
-
-            if (unit->ifNewDestionationIsSetted()) {
-                setNewDestinationForAvatar(unit);
+            if (unit->getAvatarOrder() == AvatarOrderType::MOVE) {
+                updateTileWhileAvatarMoving(unit);
             }
-            keepUpdatingAvatarsPosition(unit);
         }
+        m_NemesisManager.Update();
     }
 
-    void setNewDestinationForAvatar(std::shared_ptr<Avatar> unit) {
-        FindValidPathToDest m_wayPointAvatar(m_Map);
+    void giveOrderToAvatar(std::shared_ptr<Avatar> unit);
 
-        auto queue = m_wayPointAvatar.findPath(unit->getCurrentCell(),
-                                               unit->getDestinationCell());
-        // unit
-        unit->setMovePath(queue);
-        unit->setNewDestinationIsSetted(false);
-
-        if (m_Map->getTileByCellPosition(unit->getDestinationCell())
-                ->ifEnemyAtTile()) {
-            unit->setAvatarOrder(AvatarOrderType::MOVE_ATTACK);
-        } else {
-            unit->setAvatarOrder(AvatarOrderType::MOVE);
-        }
-    }
-
-    void keepUpdatingAvatarsPosition(std::shared_ptr<Avatar> unit) {
+    void updateTileWhileAvatarMoving(std::shared_ptr<Avatar> unit) {
         if (unit->ifArrivedAtNextCell()) {
             m_Map->removeAvatarsByCellPosition(unit,
                                                unitArrayAndLocation[unit]);
@@ -54,7 +41,10 @@ public:
         }
     }
 
+    // if given order has enemy
+
 protected:
+    NemesisManager m_NemesisManager;
     std::vector<std::shared_ptr<Avatar>> m_AvatarArray;
     std::unordered_map<std::shared_ptr<Avatar>, glm::vec2> unitArrayAndLocation;
 

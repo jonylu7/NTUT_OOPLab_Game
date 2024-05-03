@@ -3,17 +3,14 @@
 //
 #include "Mechanics/CursorSelection.hpp"
 
-void CursorSelection::CursorSelect(std::shared_ptr<MapClass> m_Map) {
+void CursorSelection::cursorSelect(std::shared_ptr<MapClass> m_Map) {
 
     if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
         m_CursorStart = Util::Input::GetCursorPosition();
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
         // clear up last selected
-        for (auto i : m_LastSeletctedObjects) {
-            i->setSelected(false);
-        }
-        m_LastSeletctedObjects.clear();
+        clearAllSelectedObjects();
 
         // get cursor position
         m_CursorEnd = Util::Input::GetCursorPosition();
@@ -28,23 +25,42 @@ void CursorSelection::CursorSelect(std::shared_ptr<MapClass> m_Map) {
         int max_y_cell = std::max(startcell.y, endcell.y);
         int min_x_cell = std::min(startcell.x, endcell.x);
         int min_y_cell = std::min(startcell.y, endcell.y);
-        
+
         for (int i = min_y_cell; i <= max_y_cell; i++) {
             for (int j = min_x_cell; j <= max_x_cell; j++) {
                 auto tile = m_Map->getTileByCellPosition(glm::vec2(j, i));
                 if (tile->ifStrucutreExists()) {
                     auto structure = tile->getStructure();
-                    structure->setSelected(true);
-                    m_LastSeletctedObjects.push_back(structure);
+                    Append(structure);
 
                 } else {
                     auto avatars = tile->getAvatars();
                     for (auto a : avatars) {
-                        a->setSelected(true);
-                        m_LastSeletctedObjects.push_back(a);
+                        Append(a);
                     }
                 }
             }
         }
     }
+}
+
+void CursorSelection::Update() {}
+
+void CursorSelection::clearAllSelectedObjects() {
+    m_SelectedStructure->setSelected(false);
+    m_SelectedStructure = std::make_shared<Structure>();
+    for (auto a : m_SelectedAvatars) {
+        a->setSelected(false);
+    }
+    m_SelectedAvatars.clear();
+}
+
+void CursorSelection::Append(std::shared_ptr<Avatar> avatar) {
+    avatar->setSelected(true);
+    m_SelectedAvatars.push_back(avatar);
+}
+
+void CursorSelection::Append(std::shared_ptr<Structure> structure) {
+    structure->setSelected(true);
+    m_SelectedStructure = structure;
 }

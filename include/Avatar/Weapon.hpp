@@ -21,34 +21,37 @@ class Weapon {
 public:
     Weapon() {}
     Weapon(float firerate, float firerange, float softattack, float hardattack,
-           WeaponType weapon) {}
+           WeaponType weapontype)
+        : m_FireRange(firerange),
+          m_SoftAttack(softattack),
+          m_HardAttack(hardattack),
+          m_FireRateInMs(firerate),
+          m_Type(weapontype) {}
     ~Weapon() {}
     // Getter and setter methods for m_fireRate
-    static float getFireRateInM() { return m_FireRateInMs; }
+    float getFireRateInM() { return m_FireRateInMs; }
 
-    static void setFireRateInM(float fireRateInM) {
-        m_FireRateInMs = fireRateInM;
-    }
+    void setFireRateInM(float fireRateInM) { m_FireRateInMs = fireRateInM; }
 
-    static float getIntervalInS() {
+    float getIntervalInS() {
         auto r = m_FireRateInMs / 60;
         return (1 / r);
     }
 
     // Getter and setter methods for m_fireRange
-    static float getFireRange() { return m_FireRange; }
+    float getFireRange() { return m_FireRange; }
 
-    static void setFireRange(float fireRange) { m_FireRange = fireRange; }
+    void setFireRange(float fireRange) { m_FireRange = fireRange; }
 
     // Getter and setter methods for m_SoftAttack
-    static float getSoftAttack() { return m_SoftAttack; }
+    float getSoftAttack() { return m_SoftAttack; }
 
-    static void setSoftAttack(float softAttack) { m_SoftAttack = softAttack; }
+    void setSoftAttack(float softAttack) { m_SoftAttack = softAttack; }
 
     // Getter and setter methods for m_HardAttack
-    static float getHardAttack() { return m_HardAttack; }
+    float getHardAttack() { return m_HardAttack; }
 
-    static void setHardAttack(float hardAttack) { m_HardAttack = hardAttack; }
+    void setHardAttack(float hardAttack) { m_HardAttack = hardAttack; }
 
     // Getter and setter methods for m_Type
     WeaponType getType() const { return m_Type; }
@@ -56,10 +59,10 @@ public:
     void setType(WeaponType type) { m_Type = type; }
 
 private:
-    static float m_FireRateInMs;
-    static float m_FireRange;
-    static float m_SoftAttack;
-    static float m_HardAttack;
+    float m_FireRateInMs;
+    float m_FireRange;
+    float m_SoftAttack;
+    float m_HardAttack;
     WeaponType m_Type;
 };
 
