@@ -2,8 +2,8 @@
 // Created by nudle on 2024/3/15.
 //
 
-#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
-#define PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MOVING_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_MOVING_HPP
 #include "Avatar/PathUtility.hpp"
 #include "Display/Grid.hpp"
 #include "Display/Line.hpp"
@@ -14,7 +14,7 @@
 
 #define SPEED 1
 
-class PathfindingUnit {
+class Moving {
 protected:
     std::deque<MoveDirection> m_MovePath;
 
@@ -39,8 +39,8 @@ public:
         LOWER_RIGHT
     };
 
-    PathfindingUnit(){};
-    virtual ~PathfindingUnit(){};
+    Moving(){};
+    virtual ~Moving(){};
 
     glm::vec2 getCurrentCell() {
         return MapUtil::GlobalCoordToCellCoord(getCurrentLocation());
@@ -70,4 +70,4 @@ public:
         m_DestinationCell = destination;
     }
 };
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_PATHFINDINGUNIT_HPP
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_MOVING_HPP

@@ -65,10 +65,13 @@ void Avatar::Update() {
         whenSelected();
         aliveUpdate();
 
-        if (m_AvatarOrder == AvatarOrderType::MOVE_ATTACK) {
+        if (m_AvatarOrder == AvatarOrderType::ATTACK) {
             // if nemesis is within weapon range
             // change move attack to
             // if nemesis is dead
+        } else if (m_AvatarOrder == AvatarOrderType::MOVE) {
+
+        } else if (m_AvatarOrder == AvatarOrderType::NO_ORDER) {
         }
 
         break;
@@ -116,3 +119,5 @@ void Avatar::Start(glm::vec2 destination) { // destination = Barrack's
     m_AvatarOrder = AvatarOrderType::MOVE;
     m_Transform.scale = {1, 1};
 }
+
+void Avatar::deadUpdate() {}

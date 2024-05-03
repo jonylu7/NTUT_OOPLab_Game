@@ -24,9 +24,16 @@ public:
            WeaponType weapon) {}
     ~Weapon() {}
     // Getter and setter methods for m_fireRate
-    static float getFireRate() { return m_FireRate; }
+    static float getFireRateInM() { return m_FireRateInMs; }
 
-    static void setFireRate(float fireRate) { m_FireRate = fireRate; }
+    static void setFireRateInM(float fireRateInM) {
+        m_FireRateInMs = fireRateInM;
+    }
+
+    static float getIntervalInS() {
+        auto r = m_FireRateInMs / 60;
+        return (1 / r);
+    }
 
     // Getter and setter methods for m_fireRange
     static float getFireRange() { return m_FireRange; }
@@ -49,7 +56,7 @@ public:
     void setType(WeaponType type) { m_Type = type; }
 
 private:
-    static float m_FireRate;
+    static float m_FireRateInMs;
     static float m_FireRange;
     static float m_SoftAttack;
     static float m_HardAttack;

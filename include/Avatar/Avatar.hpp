@@ -6,8 +6,8 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #include "Avatar/AttackAndDamageUnit.hpp"
 #include "Avatar/AvatarOrder.hpp"
+#include "Avatar/Moving.hpp"
 #include "Avatar/PathUtility.hpp"
-#include "Avatar/PathfindingUnit.hpp"
 #include "Display/Image.hpp"
 #include "Display/SpriteSheet.hpp"
 #include "Display/SpriteSheetAnimation.hpp"
@@ -15,7 +15,7 @@
 #include "Mechanics/GameObjectID.hpp"
 #include "Selectable.hpp"
 
-class Avatar : public PathfindingUnit,
+class Avatar : public Moving,
                public AttackAndDamageUnit,
                public Util::GameObject,
                public Selectable,
@@ -27,7 +27,9 @@ public:
     ~Avatar() override{};
 
     virtual void Start(glm::vec2 destination);
-    virtual void aliveUpdate();
+    void aliveUpdate();
+    void deadUpdate();
+    void attackUpdate();
 
     float getDistance(glm::vec2 cell) {
         return sqrt(pow(cell.x - getCurrentCell().x, 2) +
@@ -58,7 +60,7 @@ public:
     virtual void Update() override;
 
 protected:
-    std::shared_ptr<Avatar> m_Nemesis;
+    // std::shared_ptr<Avatar> m_Nemesis = std::make_shared<Avatar>();
     std::shared_ptr<Util::Image> m_Image;
     std::shared_ptr<SpriteSheet> m_AvatarSpriteSheet =
         std::make_shared<SpriteSheet>();

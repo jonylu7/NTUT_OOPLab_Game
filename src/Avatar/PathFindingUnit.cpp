@@ -5,9 +5,9 @@
 //
 // Created by 盧威任 on 4/1/24.
 //
-#include "Avatar/PathfindingUnit.hpp"
+#include "Avatar/Moving.hpp"
 
-void PathfindingUnit::moveToNextCell() {
+void Moving::moveToNextCell() {
     switch (m_CurrentDir) {
     case MoveDirection::RIGHT: {
         m_CurrentLocation = {m_CurrentLocation.x + m_MovementSpeed,
@@ -60,13 +60,13 @@ void PathfindingUnit::moveToNextCell() {
     }
 }
 
-bool PathfindingUnit::ifArrivedAtNextCell() {
+bool Moving::ifArrivedAtNextCell() {
     // change this to check
     // previous cell
     // getCurrentCell() != previousCell()
     return false;
 }
-void PathfindingUnit::moveToCellCorner(AvatarStandingCorner corner) {
+void Moving::moveToCellCorner(AvatarStandingCorner corner) {
     float quaterHeight = CELL_SIZE.y / 4;
     float quaterWidth = CELL_SIZE.x / 4;
     switch (corner) {

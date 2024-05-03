@@ -32,7 +32,7 @@ public:
           m_BuildingTime(0.F),
           m_BuildingCost(0.F),
           Selectable(),
-          m_ID(GameObjectID(UnitType::null, HouseType::NONE)) {
+          m_ID(GameObjectID(UnitType::NONE, HouseType::NONE)) {
         m_LivingStatus = LivingStatus::NOT_BORN_YET;
     };
 

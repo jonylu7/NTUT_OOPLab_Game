@@ -6,65 +6,61 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP
 #include "House.hpp"
 #include <string>
-#include <unordered_map>
+#include <vector>
 
 enum class UnitType {
     // buildings
-    POWER_PLANT,
-    BARRACKS,
-    ORE_REF,
-    WAR_FACT,
-    ADV_POWER_PLANT,
+    POWER_PLANT,     // 0
+    BARRACKS,        // 1
+    ORE_REF,         // 2
+    WAR_FACT,        // 3
+    ADV_POWER_PLANT, // 4
 
     // defense
-    SANDBAGS,
-    PILLBOX,
-    TURRET,
+    SANDBAGS, // 5
+    PILLBOX,  // 6
+    TURRET,   // 7
     // Troopers
-    INFANTRY,
+    INFANTRY, // 8
 
     // Vehicles
-    TRUCK,
+    TRUCK, // 9
     // null
-    null,
+    null, // 10
 
     // tile
-    TILE_BEACH,
-    TILE_BRIDGE,
-    TILE_CLEAR,
-    TILE_RIVER,
-    TILE_ROAD,
-    TILE_ROUGH,
-    TILE_WATER,
-    TILE_ROCK,
-    TILE_TREE,
+    TILE_BEACH,  // 11
+    TILE_BRIDGE, // 12
+    TILE_CLEAR,  // 13
+    TILE_RIVER,  // 14
+    TILE_ROAD,   // 15
+    TILE_ROUGH,  // 16
+    TILE_WATER,  // 17
+    TILE_ROCK,   // 18
+    TILE_TREE,   // 19
 
     // overlays
-    OVERLAY_GEMS,
-    OVERLAY_ORE,
+    OVERLAY_GEMS, // 20
+    OVERLAY_ORE,  // 21
 
     // NONE
-    NONE
-};
-
-class OccupiedID {
-private:
-    static std::unordered_map<int, unsigned int> m_OccupiedID;
-
-public:
-    static unsigned int getNewestID(UnitType type);
+    NONE // 22
 };
 
 class GameObjectID : public House {
 public:
     GameObjectID()
-        : m_UnitType(UnitType::null),
-          m_Number(0) {}
+        : m_UnitType(UnitType::NONE) {
+        m_Number = 0;
+    }
     GameObjectID(UnitType type, HouseType house)
         : m_UnitType(type),
-          m_Number(OccupiedID::getNewestID(type)),
-          House(house) {}
+          House(house) {
+        m_Number = 0;
+    }
     ~GameObjectID() {}
+
+    int getNewestID(UnitType type) { return m_OccupiedID[int(type)]++; }
 
     int getNumber() const { return m_Number; }
     UnitType getUnitType() const { return m_UnitType; }
@@ -87,7 +83,8 @@ public:
 
 private:
     UnitType m_UnitType;
-    unsigned int m_Number;
+    int m_Number = 0;
+    static std::vector<int> m_OccupiedID;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_GAMEOBJECTID_HPP
