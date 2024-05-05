@@ -2,11 +2,10 @@
 // Created by 盧威任 on 4/12/24.
 //
 
-#include "Mechanics/FindValidPathToDest.hpp"
+#include "Mechanics/AvatarNavigator.hpp"
 
-std::deque<MoveDirection>
-FindValidPathToDest::findPath(glm::vec2 currentcell,
-                              glm::vec2 destinationcell) {
+std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
+                                                    glm::vec2 destinationcell) {
     std::deque<MoveDirection> dirQue;
     if (m_Map->getTileByCellPosition(destinationcell)->getWalkable() == false) {
         return dirQue;
@@ -52,9 +51,9 @@ FindValidPathToDest::findPath(glm::vec2 currentcell,
 }
 
 std::vector<MoveDirection>
-FindValidPathToDest::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
-                                           MoveDirection currentdir,
-                                           glm::vec2 destinationcell) {
+AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
+                                       MoveDirection currentdir,
+                                       glm::vec2 destinationcell) {
 
     std::vector<MoveDirection> path;
     while (!canResumeWalkingStraight(currentcell, destinationcell)) {
@@ -76,9 +75,9 @@ FindValidPathToDest::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
     return path;
 }
 
-MoveDirection
-FindValidPathToDest::findNewDirWhenCrash(Side side, glm::vec2 currentcell,
-                                         MoveDirection currentdir) {
+MoveDirection AvatarNavigator::findNewDirWhenCrash(Side side,
+                                                   glm::vec2 currentcell,
+                                                   MoveDirection currentdir) {
     MoveDirection newdir = currentdir;
     while (m_Map
                ->getTileByCellPosition(
@@ -158,8 +157,8 @@ FindValidPathToDest::findNewDirWhenCrash(Side side, glm::vec2 currentcell,
     return newdir;
 }
 
-bool FindValidPathToDest::isTouchedByObstacle(Side side, glm::vec2 currentcell,
-                                              MoveDirection currentdir) {
+bool AvatarNavigator::isTouchedByObstacle(Side side, glm::vec2 currentcell,
+                                          MoveDirection currentdir) {
     currentcell = PathUtility::getNextCellByCurrent(currentdir, currentcell);
     // abs
     std::shared_ptr<TileClass> upTile = m_Map->getTileByCellPosition(
@@ -258,9 +257,9 @@ bool FindValidPathToDest::isTouchedByObstacle(Side side, glm::vec2 currentcell,
     }
 }
 
-bool FindValidPathToDest::findStraightPath(glm::vec2 currentcell,
-                                           glm::vec2 destinationcell,
-                                           std::vector<MoveDirection> *path) {
+bool AvatarNavigator::findStraightPath(glm::vec2 currentcell,
+                                       glm::vec2 destinationcell,
+                                       std::vector<MoveDirection> *path) {
 
     while (currentcell != destinationcell) {
         MoveDirection followingDir =
@@ -279,8 +278,8 @@ bool FindValidPathToDest::findStraightPath(glm::vec2 currentcell,
     return true;
 }
 
-bool FindValidPathToDest::canResumeWalkingStraight(glm::vec2 currentcell,
-                                                   glm::vec2 destinationcell) {
+bool AvatarNavigator::canResumeWalkingStraight(glm::vec2 currentcell,
+                                               glm::vec2 destinationcell) {
     std::vector<MoveDirection> path;
     auto arrived = findStraightPath(currentcell, destinationcell, &path);
     if (arrived || !path.empty()) {
@@ -289,7 +288,7 @@ bool FindValidPathToDest::canResumeWalkingStraight(glm::vec2 currentcell,
     return false;
 }
 
-Side FindValidPathToDest::randomlyChooseSide() {
+Side AvatarNavigator::randomlyChooseSide() {
     // Create a random number generator engine
     std::random_device rd;  // Obtain a random seed from the hardware
     std::mt19937 gen(rd()); // Initialize the Mersenne Twister

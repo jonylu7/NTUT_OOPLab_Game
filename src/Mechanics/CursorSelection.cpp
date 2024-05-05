@@ -3,7 +3,7 @@
 //
 #include "Mechanics/CursorSelection.hpp"
 
-void CursorSelection::cursorSelect(std::shared_ptr<MapClass> m_Map) {
+void CursorSelection::cursorSelect() {
 
     if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
         m_CursorStart = Util::Input::GetCursorPosition();
@@ -11,7 +11,6 @@ void CursorSelection::cursorSelect(std::shared_ptr<MapClass> m_Map) {
     if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
         // clear up last selected
         clearAllSelectedObjects();
-
         // get cursor position
         m_CursorEnd = Util::Input::GetCursorPosition();
 
@@ -44,23 +43,24 @@ void CursorSelection::cursorSelect(std::shared_ptr<MapClass> m_Map) {
     }
 }
 
-void CursorSelection::Update() {}
+void CursorSelection::Update() {
+    cursorSelect();
+}
 
 void CursorSelection::clearAllSelectedObjects() {
-    m_SelectedStructure->setSelected(false);
-    m_SelectedStructure = std::make_shared<Structure>();
-    for (auto a : m_SelectedAvatars) {
+
+    for (auto a : m_SelectedUnits) {
         a->setSelected(false);
     }
-    m_SelectedAvatars.clear();
+    m_SelectedUnits.clear();
 }
 
 void CursorSelection::Append(std::shared_ptr<Avatar> avatar) {
     avatar->setSelected(true);
-    m_SelectedAvatars.push_back(avatar);
+    m_SelectedUnits.push_back(avatar);
 }
 
 void CursorSelection::Append(std::shared_ptr<Structure> structure) {
     structure->setSelected(true);
-    m_SelectedStructure = structure;
+    m_SelectedUnits.push_back(structure);
 }

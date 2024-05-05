@@ -5,7 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AVATARMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_AVATARMANAGER_HPP
 #include "Avatar/Avatar.hpp"
-#include "FindValidPathToDest.hpp"
+#include "AvatarNavigator.hpp"
 #include "Map/Map.hpp"
 #include "NemesisManager.hpp"
 #include <unordered_map>
@@ -16,18 +16,21 @@ public:
         unitArrayAndLocation[newAvatar] = newAvatar->getCurrentCell();
     }
 
-    void Start(std::shared_ptr<MapClass> map) { m_Map = map; }
+    void Start(std::shared_ptr<MapClass> map) {
+        m_Map = map;
+        m_Navigator->Start(m_Map);
+    }
 
     void Update() {
         for (auto unit : m_AvatarArray) {
-            unit->setSelected(true);
-
             unit->Update();
             if (unit->getAvatarOrder() == AvatarOrderType::MOVE) {
                 updateTileWhileAvatarMoving(unit);
             }
+            if (unit->getSelected()) {
+                giveOrderToAvatar(unit);
+            }
         }
-        m_NemesisManager.Update();
     }
 
     void giveOrderToAvatar(std::shared_ptr<Avatar> unit);
@@ -44,11 +47,14 @@ public:
     // if given order has enemy
 
 protected:
-    NemesisManager m_NemesisManager;
     std::vector<std::shared_ptr<Avatar>> m_AvatarArray;
     std::unordered_map<std::shared_ptr<Avatar>, glm::vec2> unitArrayAndLocation;
 
 private:
+    std::shared_ptr<NemesisManager> m_NemesisManager =
+        std::make_shared<NemesisManager>();
+    std::shared_ptr<AvatarNavigator> m_Navigator =
+        std::make_shared<AvatarNavigator>();
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_AVATARMANAGER_HPP

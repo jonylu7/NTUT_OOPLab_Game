@@ -4,8 +4,8 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
+#include "AvatarNavigator.hpp"
 #include "Cursor.hpp"
-#include "FindValidPathToDest.hpp"
 #include "GameObjectID.hpp"
 #include "Mechanics/AvatarManager.hpp"
 #include "Mechanics/BuiltStructure.hpp"
@@ -25,15 +25,14 @@ public:
         m_StructureManager->Start(m_Map);
 
         m_AvatarManager->Start(m_Map);
-
+        m_CursorSelection->Start(m_Map);
         m_StartTime = std::chrono::high_resolution_clock::now();
     }
 
     void Update() {
         m_StructureManager->Update();
         m_AvatarManager->Update();
-        m_CursorSelection.Update();
-        m_CursorSelection.cursorSelect(m_Map);
+        m_CursorSelection->Update();
 
         // currency update
         std::chrono::high_resolution_clock::time_point m_currentTime =
@@ -58,18 +57,13 @@ public:
         return m_StructureManager;
     }
 
-    std::shared_ptr<NemesisManager> getNemesisManager() {
-        return m_NemesisManager;
-    }
-
 private:
-    CursorSelection m_CursorSelection;
+    std::shared_ptr<CursorSelection> m_CursorSelection =
+        std::make_shared<CursorSelection>();
     std::shared_ptr<StructureManager> m_StructureManager =
         std::make_shared<StructureManager>();
     std::shared_ptr<AvatarManager> m_AvatarManager =
         std::make_shared<AvatarManager>();
-    std::shared_ptr<NemesisManager> m_NemesisManager =
-        std::make_shared<NemesisManager>();
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
