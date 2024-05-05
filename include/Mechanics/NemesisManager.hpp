@@ -6,8 +6,9 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_NEMESISMANAGER_HPP
 #include "Map/MapUtility.hpp"
 class NemesisManager {
-
 public:
+    NemesisManager() {}
+    ~NemesisManager() {}
     void addNemesis(std::shared_ptr<Avatar> avatar,
                     std::shared_ptr<Avatar> nemesis) {
         m_Nemesis[avatar] = nemesis;
