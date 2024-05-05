@@ -160,6 +160,7 @@ FindValidPathToDest::findNewDirWhenCrash(Side side, glm::vec2 currentcell,
 
 bool FindValidPathToDest::isTouchedByObstacle(Side side, glm::vec2 currentcell,
                                               MoveDirection currentdir) {
+    currentcell = PathUtility::getNextCellByCurrent(currentdir, currentcell);
     // abs
     std::shared_ptr<TileClass> upTile = m_Map->getTileByCellPosition(
         glm::vec2(currentcell.x, currentcell.y + 1));

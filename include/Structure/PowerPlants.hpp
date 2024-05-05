@@ -7,9 +7,11 @@ class PowerPlants : public Structure {
 public:
     PowerPlants(float electricPower = 100.F, float buildingTime = 15.F * CHEAT,
                 float buildingCost = 300.F, float buildingHp = 400.F,
-                HouseType house = HouseType::NONE)
+                HouseType house = HouseType::NONE,
+                std::shared_ptr<Health> health = std::make_shared<Health>(100,
+                                                                          0.5))
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
-                    GameObjectID(UnitType::POWER_PLANT, house)){
+                    GameObjectID(UnitType::POWER_PLANT, house), health){
 
           };
     void SetSpriteSheet() override {

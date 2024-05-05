@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
-#include "Avatar/AttackAndDamageUnit.hpp"
+#include "Avatar/AttackAndDamage.hpp"
 #include "Avatar/AvatarOrder.hpp"
 #include "Avatar/Moving.hpp"
 #include "Avatar/PathUtility.hpp"
@@ -16,11 +16,11 @@
 #include "Selectable.hpp"
 
 class Avatar : public Moving,
-               public AttackAndDamageUnit,
+               public AttackAndDamage,
                public Util::GameObject,
                public Selectable,
-               public GameObjectID,
-               public AvatarOrder {
+               public AvatarOrder,
+               public IHealthable {
 
 public:
     Avatar(){};
@@ -59,6 +59,11 @@ public:
 
     virtual void Update() override;
 
+    std::shared_ptr<Health> getHealth() override { return m_Health; }
+    void setHealth(std::shared_ptr<Health> health) override {
+        m_Health = health;
+    }
+
 protected:
     // std::shared_ptr<Avatar> m_Nemesis = std::make_shared<Avatar>();
     std::shared_ptr<Util::Image> m_Image;
@@ -66,6 +71,12 @@ protected:
         std::make_shared<SpriteSheet>();
     std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
         std::make_shared<Util::SpriteSheetAnimation>();
+    
+    // health
+    std::shared_ptr<Health> m_Health = std::make_shared<Health>();
+    // attack and damage
+    std::shared_ptr<AttackAndDamage> m_AttackAndDamage =
+        std::make_shared<AttackAndDamage>();
 
 private:
     bool b_justStarted = true;

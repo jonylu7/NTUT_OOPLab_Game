@@ -8,7 +8,8 @@
 #include "config.hpp"
 void Structure::Start() {
     if (this->m_ID.getUnitType() == UnitType::NONE) {
-        m_LivingStatus = LivingStatus::NOT_BORN_YET;
+        Structure::getHealth()->setLivingStatus(
+            std::make_shared<LivingStatus>(LivingStatus::NOT_BORN_YET));
         m_StructOrder = StructureOrderType::NO_ORDER;
     } else {
         m_Transform.scale = {2.f, 2.f};
@@ -19,13 +20,14 @@ void Structure::Start() {
         SetZIndex(DEFAULT_ZINDEX);
         this->SetAttachVisible(false);
         SetSpriteSheet();
-        m_LivingStatus = LivingStatus::ALIVE;
+        Structure::getHealth()->setLivingStatus(
+            std::make_shared<LivingStatus>(LivingStatus::ALIVE));
         m_StructOrder = StructureOrderType::SELECTING_SITE;
     }
 }
 void Structure::Update() {
 
-    switch (m_LivingStatus) {
+    switch (*getHealth()->getLivingStatus()) {
     case LivingStatus::NOT_BORN_YET:
         this->updateInvinsible();
         break;

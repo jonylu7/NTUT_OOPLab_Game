@@ -19,4 +19,6 @@ void OreRefinery::Start() {
     whenSelected();
     // State
     setStructOrder(StructureOrderType::NOT_CONSTRUCTED_YET);
+    Structure::getHealth()->setLivingStatus(
+        std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }

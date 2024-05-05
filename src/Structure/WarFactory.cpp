@@ -17,5 +17,6 @@ void WarFactory::Start() {
     m_HighLight.SetHLScale(this->GetTransform().scale);
     whenSelected();
     // State
-    setLivingStatus(LivingStatus::ALIVE);
+    Structure::getHealth()->setLivingStatus(
+        std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }

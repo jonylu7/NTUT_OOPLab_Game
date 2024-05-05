@@ -4,6 +4,8 @@ void Barracks::Start() {
     // Set Texture----------------------------------------
     m_StructureSpriteSheet->Start("../assets/sprites/Barracks_SpriteSheet.png",
                                   48, 48, 13, 0);
+    m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                     false, 1);
     SetRelativeOccupiedArea({{0, 0}, {0, 1}, {1, 0}, {1, 1}});
     m_wayPoint->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/flagB.png"));
@@ -18,5 +20,8 @@ void Barracks::Start() {
     m_HighLight.SetHLScale(this->GetTransform().scale);
     whenSelected();
     // State
-    setStructOrder(StructureOrderType::NOT_CONSTRUCTED_YET);
+    setStructOrder(StructureOrderType::CONSTRUCTED);
+    // health
+    Structure::getHealth()->setLivingStatus(
+        std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }

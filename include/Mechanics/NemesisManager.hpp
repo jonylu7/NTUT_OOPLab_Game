@@ -47,13 +47,15 @@ public:
                 pair.first->openFireToTarget(pair.second);
             }
 
-            if (pair.second->getLivingStatus() == LivingStatus::DEAD) {
+            if (*pair.second->getHealth()->getLivingStatus() ==
+                LivingStatus::DEAD) {
                 removeNemesis(pair.first);
                 pair.first->setAvatarOrder(AvatarOrderType::NO_ORDER);
                 pair.second->setAvatarOrder(AvatarOrderType::NO_ORDER);
             }
 
-            if (pair.first->getLivingStatus() == LivingStatus::DEAD) {
+            if (*pair.first->getHealth()->getLivingStatus() ==
+                LivingStatus::DEAD) {
                 removeNemesis(pair.first);
                 pair.first->setAvatarOrder(AvatarOrderType::NO_ORDER);
                 pair.second->setAvatarOrder(AvatarOrderType::NO_ORDER);

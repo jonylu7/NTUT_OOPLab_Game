@@ -50,7 +50,7 @@ void Avatar::whenSelected() {
 }
 
 void Avatar::Update() {
-    switch (m_LivingStatus) {
+    switch (*m_Health->getLivingStatus()) {
     case (LivingStatus::DEAD):
         SetVisible(false);
         break;
@@ -75,13 +75,6 @@ void Avatar::aliveUpdate() {
     moveToNextCell();
     if (ifArrivedAtNextCell() || b_justStarted) {
         b_justStarted = false;
-        // setCurrentCell(MapUtil::GlobalCoordToCellCoord(getCurrentLocation()));
-
-        // setNextCell(
-        //    PathUtility::getNextCellByCurrent(getCurrentDir(),
-        //    getNextCell()));
-
-        // printf("(aliveUpdate) getting new dir\n");
         if (m_MovePath.size() >= 1) {
             m_CurrentDir = m_MovePath.front();
             m_MovePath.pop_front();
@@ -94,7 +87,6 @@ void Avatar::aliveUpdate() {
     m_Transform.translation = m_CurrentLocation;
 
     Draw();
-    //        m_SpriteSheetAnimation->Draw(m_Transform, DEFAULT_ZINDEX);
 
     printf("Avatar cell={%d,%d}\n", getCurrentLocation().x,
            getCurrentLocation().y);
@@ -111,6 +103,8 @@ void Avatar::Start(glm::vec2 destination) { // destination = Barrack's
     setMovementSpeed(4);
     m_AvatarOrder = AvatarOrderType::MOVE;
     m_Transform.scale = {1, 1};
+    getHealth()->setLivingStatus(
+        std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }
 
 void Avatar::deadUpdate() {}

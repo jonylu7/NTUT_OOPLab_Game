@@ -9,7 +9,8 @@ void Runner::setBeingChase(std::shared_ptr<Avatar> hunter) {
     lastTargetCell = getCurrentCell();
 }
 void Runner::customizeUpdate() {
-    if (b_beingChase && m_hunter->getLivingStatus() == LivingStatus::ALIVE) {
+    if (b_beingChase &&
+        *m_hunter->getHealth()->getLivingStatus() == LivingStatus::ALIVE) {
         glm::vec2 hunterCell = m_hunter->getCurrentCell();
         if (getDistance(hunterCell) <= ATTACK_RANGE - 1 &&
             lastTargetCell == getCurrentCell()) {
