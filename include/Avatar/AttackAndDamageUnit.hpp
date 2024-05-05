@@ -33,7 +33,7 @@ public:
 
         m_HP -= (100 - m_ArmorRate) * (1 / 100) * softattack +
                 m_ArmorRate * (1 / 100) * hardattack;
-        if (m_HP <= 0) {
+        if (m_HP < 0) {
             m_LivingStatus = LivingStatus::DEAD;
         }
     }

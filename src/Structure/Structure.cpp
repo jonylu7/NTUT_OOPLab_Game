@@ -7,36 +7,39 @@
 #include "Util/Transform.hpp"
 #include "config.hpp"
 void Structure::Start() {
-    m_Transform.scale = {2.f, 2.f};
-    m_HighLight.SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/HighLightB.png"));
-    m_HighLight.SetHLScale(this->GetTransform().scale);
-    m_HighLight.SetZIndex(DEFAULT_ZINDEX - 1);
-    SetZIndex(DEFAULT_ZINDEX);
-    this->SetAttachVisible(false);
-    SetSpriteSheet();
-    m_LivingStatus = LivingStatus::ALIVE;
-    m_StructOrder = StructureOrderType::SELECTING_SITE;
+    if (this->m_ID.getUnitType() == UnitType::NONE) {
+        m_LivingStatus = LivingStatus::NOT_BORN_YET;
+        m_StructOrder = StructureOrderType::NO_ORDER;
+    } else {
+        m_Transform.scale = {2.f, 2.f};
+        m_HighLight.SetDrawable(
+            std::make_unique<Util::Image>("../assets/sprites/HighLightB.png"));
+        m_HighLight.SetHLScale(this->GetTransform().scale);
+        m_HighLight.SetZIndex(DEFAULT_ZINDEX - 1);
+        SetZIndex(DEFAULT_ZINDEX);
+        this->SetAttachVisible(false);
+        SetSpriteSheet();
+        m_LivingStatus = LivingStatus::ALIVE;
+        m_StructOrder = StructureOrderType::SELECTING_SITE;
+    }
 }
 void Structure::Update() {
 
     switch (m_LivingStatus) {
-    case LivingStatus::NOT_BORN_YET: {
+    case LivingStatus::NOT_BORN_YET:
         this->updateInvinsible();
-    }
-    case LivingStatus::ALIVE: {
+        break;
+    case LivingStatus::ALIVE:
         whenSelected();
         if (m_StructOrder == StructureOrderType::SELECTING_SITE) {
             this->updateMoveable();
         } else if (m_StructOrder == StructureOrderType::BUILT) {
             this->updateFixed();
         }
-    }
-    case LivingStatus::DEAD: {
+        break;
+    case LivingStatus::DEAD:
         // execute something
-    }
-
-    break;
+        break;
     }
 }
 void Structure::updateFixed() {
@@ -48,7 +51,6 @@ void Structure::updateFixed() {
     } else {
         m_SpriteSheetAnimation->Draw(m_Transform, DEFAULT_ZINDEX);
     }
-    // Script when select--------------------
 }
 void Structure::updateMoveable() {
     // debug
@@ -61,12 +63,6 @@ void Structure::updateMoveable() {
     // glm::vec2 cellPos = MapUtil::GlobalCoordToCellCoord(location);
     m_StructureSpriteSheet->DrawSpriteByIndex(
         m_StructureSpriteSheet->getSize() - 1, m_Transform, DEFAULT_ZINDEX);
-    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
-        this->SetObjectLocation(location);
-        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
-                                                         true, INTERVAL, false);
-        this->setLivingStatus(LivingStatus::ALIVE);
-    }
 }
 
 void Structure::SetObjectLocation(glm::vec2 location) {

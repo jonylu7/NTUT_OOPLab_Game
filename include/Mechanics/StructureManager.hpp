@@ -12,22 +12,32 @@ public:
     virtual ~StructureManager() {}
 
     void Start() { m_StructureArray.StartBuiltStructure(); }
-    void Update() { m_StructureArray.UpdateBuiltStructure(); }
+    void Update() {
 
-    void AddStructSelectingBuiltSite(std::shared_ptr<Structure> newstruct) {
-        newstruct->Start();
-        m_StructSelectingConstructionSite = newstruct;
-        // m_IsSelectingConstructionSite = true;
+        m_StructSelectingConstructionSite->Update();
+
+        m_StructureArray.UpdateBuiltStructure();
     }
 
-    void SelectdBuiltSite(std::shared_ptr<MapClass> m_Map) {
-        if (m_StructSelectingConstructionSite->getBuilt()) {
+    void AddStructSelectingBuiltSite(std::shared_ptr<Structure> newstruct) {
+        // selecting site
+        newstruct->Start();
+        m_StructSelectingConstructionSite = newstruct;
+
+        newstruct->setStructOrder(
+            StructureOrder::StructureOrderType::SELECTING_SITE);
+    }
+
+    void SelectingBuiltSite(std::shared_ptr<MapClass> m_Map) {
+        // bulit or not
+        if (m_StructSelectingConstructionSite->getStructOrder() ==
+            StructureOrder::StructureOrderType::SELECTING_SITE) {
             m_StructureArray.buildNewStructure(
                 m_Map, m_StructSelectingConstructionSite);
         }
-        m_StructSelectingConstructionSite->Update();
     }
-    BuiltStructure getStructureArray() { return m_StructureArray; }
+
+    BuiltStructure *getStructureArray() { return &m_StructureArray; }
 
 protected:
     BuiltStructure m_StructureArray;

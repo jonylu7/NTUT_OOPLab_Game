@@ -43,16 +43,16 @@ public:
             m_lastElapsed = elapsed.count();
         }
 
-        m_StructureManager.SelectdBuiltSite(m_Map);
+        m_StructureManager.SelectingBuiltSite(m_Map);
     }
 
 public:
     int getTotalPower() {
         return Player::getTotalPower(
-            m_StructureManager.getStructureArray().getBuiltStructureArray());
+            *m_StructureManager.getStructureArray()->getBuiltStructureArray());
     }
-    AvatarManager getAvatarManager() { return m_AvatarManager; }
-    StructureManager getStrucutreManager() { return m_StructureManager; }
+    AvatarManager *getAvatarManager() { return &m_AvatarManager; }
+    StructureManager *getStrucutreManager() { return &m_StructureManager; }
 
 private:
     CursorSelection m_CursorSelection;

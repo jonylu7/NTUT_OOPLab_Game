@@ -10,13 +10,14 @@ public:
                 HouseType house = HouseType::NONE)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
                     GameObjectID(UnitType::POWER_PLANT, house)){
-              //        SetDrawable(
-              //            std::make_unique<Util::Image>("../assets/sprites/PowerPlants.png"));
+
           };
     void SetSpriteSheet() override {
         m_StructureSpriteSheet->Start(
             "../assets/sprites/PowerPlants_SpriteSheet.png", 48, 48, 13, 0);
         m_RelativeOccupiedArea = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
+        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                         true, 0);
     }
     void SetObjectLocation(glm::vec2 location) override {
         location = MapUtil::PositionStickToGrid(location);

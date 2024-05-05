@@ -60,6 +60,8 @@ public:
     virtual void SetSpriteSheet() {
         m_StructureSpriteSheet->Start(
             "../assets/sprites/Barracks_SpriteSheet.png", 48, 48, 13, 0);
+        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                         false, 0);
     }
 
     virtual void SetObjectLocation(glm::vec2 location);

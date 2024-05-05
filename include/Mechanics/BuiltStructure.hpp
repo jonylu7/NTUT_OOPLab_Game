@@ -13,10 +13,15 @@ public:
 
     void buildNewStructure(std::shared_ptr<MapClass> m_Map,
                            std::shared_ptr<Structure> newstruct) {
-        m_BuiltStructure.push_back(newstruct);
         std::vector<glm::vec2> coords = newstruct->GetAbsoluteOccupiedArea();
-        if (ifCanBuildStructureAtTile(m_Map, newstruct) == true) {
-            m_Map->builtStructureByCellPosition(newstruct, coords);
+        if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
+            if (ifCanBuildStructureAtTile(m_Map, newstruct) == true) {
+                m_BuiltStructure.push_back(newstruct);
+                m_Map->builtStructureByCellPosition(newstruct, coords);
+
+                newstruct->setStructOrder(
+                    StructureOrder::StructureOrderType::BUILT);
+            }
         }
     }
 
@@ -31,8 +36,8 @@ public:
         return true;
     }
 
-    std::vector<std::shared_ptr<Structure>> getBuiltStructureArray() {
-        return m_BuiltStructure;
+    std::vector<std::shared_ptr<Structure>> *getBuiltStructureArray() {
+        return &m_BuiltStructure;
     }
 
     void StartBuiltStructure() {
@@ -45,6 +50,9 @@ public:
         for (auto pair : m_BuiltStructure) {
             pair->Update();
         }
+    }
+    void add(std::shared_ptr<Structure> structure) {
+        m_BuiltStructure.push_back(structure);
     }
 
 protected:
