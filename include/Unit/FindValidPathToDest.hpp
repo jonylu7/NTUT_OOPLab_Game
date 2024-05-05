@@ -57,7 +57,7 @@ public:
     }
 
     MoveDirection findNewDirWhenCrash(Side side, glm::vec2 currentcell,
-                                        MoveDirection currentdir) {
+                                      MoveDirection currentdir) {
 
         // please be notice that the "Side's" R or L
         // represent its facing direction
@@ -140,9 +140,10 @@ public:
         return newdir;
     }
 
-
-    bool isTouchedByObstacle(Side side,glm::vec2 currentcell,MoveDirection currentdir){
-        //abs
+    bool isTouchedByObstacle(Side side, glm::vec2 currentcell,
+                             MoveDirection currentdir) {
+        currentcell = getNextCellByCurrent(currentdir, currentcell);
+        // abs
         std::shared_ptr<TileClass> upTile = m_Map->getTileByCellPosition(
             glm::vec2(currentcell.x, currentcell.y + 1));
         std::shared_ptr<TileClass> downTile = m_Map->getTileByCellPosition(
@@ -161,93 +162,87 @@ public:
         std::shared_ptr<TileClass> downLeftTile = m_Map->getTileByCellPosition(
             glm::vec2(currentcell.x - 1, currentcell.y - 1));
 
-
-        std::shared_ptr<TileClass> checkedTile=std::make_shared<TileClass>();
+        std::shared_ptr<TileClass> checkedTile = std::make_shared<TileClass>();
         switch (currentdir) {
         case MoveDirection::RIGHT:
             if (side == Side::R) {
-               checkedTile=downTile;
+                checkedTile = downTile;
             } else if (side == Side::L) {
-                checkedTile=upTile;
+                checkedTile = upTile;
             }
-         break;
+            break;
 
         case MoveDirection::LEFT:
             if (side == Side::R) {
-                checkedTile=upTile;
+                checkedTile = upTile;
             } else if (side == Side::L) {
-               checkedTile=downTile;
+                checkedTile = downTile;
             }
             break;
 
         case MoveDirection::UP:
             if (side == Side::R) {
-               checkedTile=rightTile;
+                checkedTile = rightTile;
             } else if (side == Side::L) {
-              checkedTile=leftTile;
+                checkedTile = leftTile;
             }
             break;
 
         case MoveDirection::DOWN:
             if (side == Side::R) {
-                checkedTile=leftTile;
+                checkedTile = leftTile;
             } else if (side == Side::L) {
-               checkedTile=rightTile;
+                checkedTile = rightTile;
             }
             break;
 
         case MoveDirection::UP_RIGHT:
             if (side == Side::R) {
-                checkedTile=rightTile;
+                checkedTile = rightTile;
             } else if (side == Side::L) {
-                checkedTile=upTile;
+                checkedTile = upTile;
             }
             break;
 
         case MoveDirection::DOWN_LEFT:
             if (side == Side::R) {
-                checkedTile=leftTile;
+                checkedTile = leftTile;
             } else if (side == Side::L) {
-               checkedTile=downTile;
+                checkedTile = downTile;
             }
             break;
 
         case MoveDirection::DOWN_RIGHT:
             if (side == Side::R) {
-                checkedTile=downTile;
+                checkedTile = downTile;
             } else if (side == Side::L) {
-               checkedTile=rightTile;
+                checkedTile = rightTile;
             }
             break;
 
         case MoveDirection::UP_LEFT:
             if (side == Side::R) {
-               checkedTile=upTile;
+                checkedTile = upTile;
             } else if (side == Side::L) {
-                checkedTile=leftTile;
+                checkedTile = leftTile;
             }
             break;
 
         case MoveDirection::IDLE:
             // printf("Direction debug didn't move\n");
             break;
-
-
         }
 
-        if(checkedTile->getWalkable()== true){
+        if (checkedTile->getWalkable() == true) {
             return false;
-        }else{
+        } else {
             return true;
         }
-
-
-
     }
 
-
-    MoveDirection findNewDirWhenNotTouchedByObstacle(Side side, glm::vec2 currentcell,
-                                       MoveDirection currentdir){
+    MoveDirection findNewDirWhenNotTouchedByObstacle(Side side,
+                                                     glm::vec2 currentcell,
+                                                     MoveDirection currentdir) {
 
         MoveDirection newdir;
         switch (currentdir) {
@@ -257,7 +252,7 @@ public:
             } else if (side == Side::L) {
                 newdir = MoveDirection::UP_RIGHT;
             }
-         break;
+            break;
 
         case MoveDirection::LEFT:
             if (side == Side::R) {
@@ -318,39 +313,32 @@ public:
         case MoveDirection::IDLE:
             // printf("Direction debug didn't move\n");
             break;
-
         }
-        return newdir;}
+        return newdir;
+    }
 
+    std::vector<MoveDirection>
+    moveAlongsideObstacle(Side side, glm::vec2 currentcell,
+                          MoveDirection currentdir, glm::vec2 destinationcell) {
 
-    std::vector<MoveDirection> moveAlongsideObstacle(Side side, glm::vec2 currentcell,
-                               MoveDirection currentdir,glm::vec2 destinationcell){
+        std::vector<MoveDirection> path = {currentdir};
+        while (!canResumeWalkingStraight(currentcell, destinationcell)) {
 
-        //side
-        //
-        //return dirque
-        //check
-        std::vector<MoveDirection> path;
-        while(!canResumeWalkingStraight(currentcell,destinationcell)){
-
-            //if next is not touched by obstacle, turn
-            if(!isTouchedByObstacle(side,currentcell,currentdir)){
-                currentdir= findNewDirWhenNotTouchedByObstacle(side,currentcell,currentdir);
+            // if next is not touched by obstacle, turn
+            if (!isTouchedByObstacle(side, currentcell, currentdir)) {
+                currentdir = findNewDirWhenNotTouchedByObstacle(
+                    side, currentcell, currentdir);
             }
 
-            //if next to be obstacle, turn findNewDirWhenCrash
+            // if next to be obstacle, turn findNewDirWhenCrash
 
-            //walk along
+            // walk along
             path.push_back(currentdir);
-            currentcell= getNextCellByCurrent(currentdir,currentcell);
-
-
+            currentcell = getNextCellByCurrent(currentdir, currentcell);
         }
 
         return path;
-
     }
-
 
     void findPath(glm::vec2 destinationcell) {
         if (m_Map->getTileByCellPosition(destinationcell)->getWalkable() ==
@@ -358,50 +346,53 @@ public:
             return;
         }
 
-
         glm::vec2 currentcell = getCurrentCell();
         Side whichSideToTouchObstacle = randomlyChooseSide();
-
+        whichSideToTouchObstacle = Side::R;
 
         while (currentcell != destinationcell) {
             std::vector<MoveDirection> newDirque;
             bool arrived =
                 findStraightPath(currentcell, destinationcell, &newDirque);
-            for(auto i:newDirque){
-                m_dirQue.push_back(i);
-                currentcell= getNextCellByCurrent(i,currentcell);
+            if (newDirque.size() >= 1) {
+                for (auto i : newDirque) {
+                    m_dirQue.push_back(i);
+                    currentcell = getNextCellByCurrent(i, currentcell);
+                }
             }
-            //push newdirque into dirque and update current cell and current dir
-
+            // push newdirque into dirque and update current cell and current
+            // dir
 
             if (arrived) {
                 break;
-            }else{
-                auto facingDir=getDirByRelativeCells(currentcell, destinationcell);
-                //turn
+            } else {
+                auto facingDir =
+                    getDirByRelativeCells(currentcell, destinationcell);
+                // turn
                 MoveDirection turndir;
-                if(m_Map->getWalkable(getNextCellByCurrent(facingDir,currentcell))==false){
-                     turndir=findNewDirWhenCrash(whichSideToTouchObstacle,currentcell,facingDir);
+                if (m_Map->getWalkable(getNextCellByCurrent(
+                        facingDir, currentcell)) == false) {
+                    turndir = findNewDirWhenCrash(whichSideToTouchObstacle,
+                                                  currentcell, facingDir);
                 };
 
+                std::vector<MoveDirection> movealong =
+                    moveAlongsideObstacle(whichSideToTouchObstacle, currentcell,
+                                          turndir, destinationcell);
 
-                std::vector<MoveDirection> movealong=moveAlongsideObstacle(whichSideToTouchObstacle,currentcell,turndir,destinationcell);
-
-                for(auto i:movealong){
+                for (auto i : movealong) {
                     m_dirQue.push_back(i);
-                    currentcell= getNextCellByCurrent(i,currentcell);
+                    currentcell = getNextCellByCurrent(i, currentcell);
                 }
-
             }
         }
     }
 
-
-
-    bool canResumeWalkingStraight(glm::vec2 currentcell, glm::vec2 destinationcell){
+    bool canResumeWalkingStraight(glm::vec2 currentcell,
+                                  glm::vec2 destinationcell) {
         std::vector<MoveDirection> path;
-        auto arrived=findStraightPath(currentcell,destinationcell,&path);
-        if(arrived || !path.empty()){
+        auto arrived = findStraightPath(currentcell, destinationcell, &path);
+        if (arrived || !path.empty()) {
             return true;
         }
         return false;

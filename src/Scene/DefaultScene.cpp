@@ -24,7 +24,7 @@ void DefaultScene::Start() {
                      DrawOverlays::OverlayShapes::R_CROSS);
     // m_GameObjectManager.Start();
 
-    m_dummy.Start({8, 6}, m_Map);
+    m_dummy.Start({7, 3}, m_Map);
     m_Manager->importPlayer(m_Player);
     m_UI.importMap(m_Map);
     m_UI.importPlayer(m_Player);

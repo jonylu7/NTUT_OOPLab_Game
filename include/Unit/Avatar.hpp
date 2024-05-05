@@ -41,10 +41,10 @@ public:
             setCurrentDir(m_wayPointUnit.getFirstCellDir());
             printf("(aliveUpdate) getting new dir\n");
         }
+        cursorSetNewDest();
         m_wayPointUnit.Update();
         m_Transform.translation = getCurrentLocation();
         Draw();
-        cursorSetNewDest();
         printf("-----------------------------\n");
     }
     virtual void Update() override {
@@ -61,8 +61,9 @@ public:
         setDestinationCell(destination.x, destination.y);
         m_wayPointUnit.resetQueue();
         m_wayPointUnit.setCurrentCell(getCurrentCell());
+        m_wayPointUnit.setCurrentDir(MoveDirection::IDLE);
+        setCurrentDir(MoveDirection::IDLE);
         m_wayPointUnit.findPath(destination);
-        // setCurrentDir(m_wayPointUnit.getFirstCellDir());
     }
     void cursorSetNewDest() {
         if (b_SelectedByCursor &&
