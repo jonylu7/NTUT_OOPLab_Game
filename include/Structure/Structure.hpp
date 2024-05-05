@@ -117,7 +117,10 @@ protected:
                                 m_ObjectLocation.y + CELL_SIZE.y};
     glm::vec2 m_ObjectLocation = {100, 100};
     std::vector<glm::vec2> m_RelativeOccupiedArea = {{0, 0}};
+    
+    // health
     std::shared_ptr<Health> m_Health = std::make_shared<Health>();
+    // attack and damage
     std::shared_ptr<AttackAndDamage> m_AttackAndDamage =
         std::make_shared<AttackAndDamage>();
 };

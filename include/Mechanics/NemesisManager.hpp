@@ -27,11 +27,11 @@ public:
             return false;
         }
     }
-    bool ifNemesisWithinWeaponRange(std::shared_ptr<Avatar> avatar) {
-        if (ifAvatarHasNemesis(avatar) == false) {
+    bool ifNemesisWithinWeaponRange(std::shared_ptr<Avatar> hunter) {
+        if (ifAvatarHasNemesis(hunter) == false) {
             return false;
         }
-        if (1 == 0) // with in range
+        if (1 == 0) // check with in range
         {
             return true;
         } else {
@@ -41,24 +41,26 @@ public:
 
     void Update() {
         for (auto pair : m_Nemesis) {
-            if (ifNemesisWithinWeaponRange(pair.first)) {
-                pair.first->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
-                pair.second->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
-                pair.first->openFireToTarget(pair.second);
+            auto hunter = pair.first;
+            auto prey = pair.second;
+            if (ifNemesisWithinWeaponRange(hunter)) {
+                hunter->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
+                prey->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
+                hunter->openFireToTarget(prey);
             }
 
             if (*pair.second->getHealth()->getLivingStatus() ==
                 LivingStatus::DEAD) {
-                removeNemesis(pair.first);
-                pair.first->setAvatarOrder(AvatarOrderType::NO_ORDER);
-                pair.second->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                removeNemesis(hunter);
+                hunter->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                prey->setAvatarOrder(AvatarOrderType::NO_ORDER);
             }
 
             if (*pair.first->getHealth()->getLivingStatus() ==
                 LivingStatus::DEAD) {
-                removeNemesis(pair.first);
-                pair.first->setAvatarOrder(AvatarOrderType::NO_ORDER);
-                pair.second->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                removeNemesis(hunter);
+                hunter->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                prey->setAvatarOrder(AvatarOrderType::NO_ORDER);
             }
         }
     }

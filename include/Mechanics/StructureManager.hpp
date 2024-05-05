@@ -11,7 +11,10 @@ public:
     StructureManager() {}
     virtual ~StructureManager() {}
 
-    void Start() { m_StructureArray.StartBuiltStructure(); }
+    void Start(std::shared_ptr<MapClass> map) {
+        m_StructureArray.StartBuiltStructure();
+        m_Map = map;
+    }
     void Update() {
 
         m_StructSelectingConstructionSite->Update();
@@ -28,7 +31,7 @@ public:
             StructureOrder::StructureOrderType::SELECTING_SITE);
     }
 
-    void SelectingBuiltSite(std::shared_ptr<MapClass> m_Map) {
+    void SelectingBuildSite() {
         // bulit or not
         if (m_StructSelectingConstructionSite->getStructOrder() ==
             StructureOrder::StructureOrderType::SELECTING_SITE) {
@@ -40,6 +43,7 @@ public:
     BuiltStructure *getStructureArray() { return &m_StructureArray; }
 
 protected:
+    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     BuiltStructure m_StructureArray;
     std::shared_ptr<Structure> m_StructSelectingConstructionSite =
         std::make_shared<Structure>();

@@ -59,10 +59,10 @@ void DefaultScene::Update() {
     //  m_GameObjectManager.Update();
 
     if (m_UI.getIfAnyBuildingReadyToBuild()) {
-        m_GameObjectManager->getStrucutreManager()->AddStructSelectingBuiltSite(
+        m_GameObjectManager->getStructureManager()->AddStructSelectingBuiltSite(
             m_UI.getSelectedBuilding());
     }
-    m_UI.checkExistBuilding(*m_GameObjectManager->getStrucutreManager()
+    m_UI.checkExistBuilding(*m_GameObjectManager->getStructureManager()
                                  ->getStructureArray()
                                  ->getBuiltStructureArray());
     if (m_UI.getIfUnitReadyToSpawn()) {

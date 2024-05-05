@@ -22,16 +22,16 @@ public:
     ~UnitManager() {}
     void Start(std::shared_ptr<MapClass> map) {
         m_Map = map;
-        m_StructureManager.Start();
+        m_StructureManager->Start(m_Map);
 
-        m_AvatarManager.Start(m_Map);
+        m_AvatarManager->Start(m_Map);
 
         m_StartTime = std::chrono::high_resolution_clock::now();
     }
 
     void Update() {
-        m_StructureManager.Update();
-        m_AvatarManager.Update();
+        m_StructureManager->Update();
+        m_AvatarManager->Update();
         m_CursorSelection.Update();
         m_CursorSelection.cursorSelect(m_Map);
 
@@ -43,21 +43,33 @@ public:
             m_lastElapsed = elapsed.count();
         }
 
-        m_StructureManager.SelectingBuiltSite(m_Map);
+        m_StructureManager->SelectingBuildSite();
     }
 
 public:
     int getTotalPower() {
         return Player::getTotalPower(
-            *m_StructureManager.getStructureArray()->getBuiltStructureArray());
+            *m_StructureManager->getStructureArray()->getBuiltStructureArray());
     }
-    AvatarManager *getAvatarManager() { return &m_AvatarManager; }
-    StructureManager *getStrucutreManager() { return &m_StructureManager; }
+    std::shared_ptr<AvatarManager> getAvatarManager() {
+        return m_AvatarManager;
+    }
+    std::shared_ptr<StructureManager> getStructureManager() {
+        return m_StructureManager;
+    }
+
+    std::shared_ptr<NemesisManager> getNemesisManager() {
+        return m_NemesisManager;
+    }
 
 private:
     CursorSelection m_CursorSelection;
-    StructureManager m_StructureManager;
-    AvatarManager m_AvatarManager;
+    std::shared_ptr<StructureManager> m_StructureManager =
+        std::make_shared<StructureManager>();
+    std::shared_ptr<AvatarManager> m_AvatarManager =
+        std::make_shared<AvatarManager>();
+    std::shared_ptr<NemesisManager> m_NemesisManager =
+        std::make_shared<NemesisManager>();
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
