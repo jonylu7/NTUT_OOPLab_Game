@@ -64,7 +64,7 @@ public:
 
     int getNumber() const { return m_Number; }
     UnitType getUnitType() const { return m_UnitType; }
-
+    HouseType getHouseType() const {return m_House;}
     bool operator==(const GameObjectID &id) const {
         if (this->m_UnitType == id.m_UnitType &&
             this->m_Number == id.m_Number && this->m_House == id.m_House) {

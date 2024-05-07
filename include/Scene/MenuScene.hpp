@@ -7,6 +7,7 @@
 #include "Scene/DefaultScene.hpp"
 #include "Scene/MapScene.hpp"
 #include "Scene/Scene.hpp"
+#include "TutorialScene.hpp"
 class MenuScene : public Scene {
     enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL };
 
@@ -18,6 +19,7 @@ public:
     void Start() override {
         m_MapScene->Start();
         m_DefaultScene->Start();
+        m_TutorialScene->Start();
     }
 
     void Update() override {
@@ -36,6 +38,9 @@ public:
             if (Util::Input::IsKeyPressed(Util::Keycode::D)) {
                 m_currentMode = SceneMode::DEFAULT;
             }
+            if (Util::Input::IsKeyPressed(Util::Keycode::T)) {
+                m_currentMode = SceneMode::TUTORIAL;
+            }
         }
 
         switch (m_currentMode) {
@@ -45,11 +50,15 @@ public:
         case (SceneMode::DEFAULT):
             m_DefaultScene->Update();
             break;
+        case (SceneMode::TUTORIAL):
+            m_TutorialScene->Update();
+            break;
         }
     }
 
 private:
     SceneMode m_currentMode = SceneMode::MENU;
+    std::shared_ptr<TutorialScene> m_TutorialScene = std::make_shared<TutorialScene>();
     std::shared_ptr<MapScene> m_MapScene = std::make_shared<MapScene>();
     std::shared_ptr<DefaultScene> m_DefaultScene =
         std::make_shared<DefaultScene>();

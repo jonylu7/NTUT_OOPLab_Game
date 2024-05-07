@@ -6,6 +6,7 @@
 #include "Util/Input.hpp"
 #include "Util/Transform.hpp"
 #include "config.hpp"
+
 void Structure::Start() {
     m_Transform.scale = {2.f, 2.f};
     m_HighLight.SetDrawable(
@@ -16,13 +17,29 @@ void Structure::Start() {
     this->SetAttachVisible(false);
     SetSpriteSheet();
     m_LivingStatus = LivingStatus::ALIVE;
-    m_StructOrder = StructureOrderType::NOT_CONSTRUCTED_YET;
+    m_StructOrder = StructureOrderType::SELECTING_SITE;
+}
+void Structure::Start(glm::vec2 location) {
+    m_Transform.scale = {2.f, 2.f};
+    m_HighLight.SetDrawable(
+        std::make_unique<Util::Image>("../assets/sprites/HighLightB.png"));
+    //    m_HighLight.SetHLScale(this->GetTranScale());
+    m_HighLight.SetZIndex(DEFAULT_ZINDEX - 1);
+    SetZIndex(DEFAULT_ZINDEX);
+    this->SetAttachVisible(false);
+    SetSpriteSheet();
+    this->SetObjectLocation(location);
+    m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                     true, INTERVAL, false);
+    m_LivingStatus = LivingStatus::ALIVE;
+    m_StructOrder = StructureOrderType::BUILT;
 }
 void Structure::Update() {
 
     switch (m_LivingStatus) {
     case LivingStatus::NOT_BORN_YET: {
         this->updateInvinsible();
+        break;
     }
     case LivingStatus::ALIVE: {
         whenSelected();
@@ -31,9 +48,11 @@ void Structure::Update() {
         } else if (m_StructOrder == StructureOrderType::BUILT) {
             this->updateFixed();
         }
+        break;
     }
     case LivingStatus::DEAD: {
         // execute something
+        break;
     }
 
     break;
@@ -49,6 +68,7 @@ void Structure::updateFixed() {
         m_SpriteSheetAnimation->Draw(m_Transform, DEFAULT_ZINDEX);
     }
     // Script when select--------------------
+    //    Draw();
 }
 void Structure::updateMoveable() {
     // debug
@@ -67,6 +87,7 @@ void Structure::updateMoveable() {
                                                          true, INTERVAL, false);
         this->setLivingStatus(LivingStatus::ALIVE);
     }
+    //    Draw();
 }
 
 void Structure::SetObjectLocation(glm::vec2 location) {

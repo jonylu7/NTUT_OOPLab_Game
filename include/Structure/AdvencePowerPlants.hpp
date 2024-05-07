@@ -7,12 +7,15 @@ public:
     ADVPowerPlants(float electricPower = 200.F,
                    float buildingTime = 25.F * CHEAT,
                    float buildingCost = 500.F, float buildingHp = 700.F,
-                   HouseType house = HouseType::NONE)
+                   HouseType house = HouseType::MY)
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
                     GameObjectID(UnitType::ADV_POWER_PLANT, house)){
               //        SetDrawable(
               //            std::make_unique<Util::Image>("../assets/sprites/PowerPlants.png"));
           };
+    ADVPowerPlants(HouseType house)
+        : Structure(200.F, 25.F * CHEAT, 500.F,700.F,
+                    GameObjectID(UnitType::ADV_POWER_PLANT, house)){};
     void SetSpriteSheet() override {
         m_StructureSpriteSheet->Start(
             "../assets/sprites/ADVPowerPlants_SpriteSheet.png", 72, 72, 13, 0);

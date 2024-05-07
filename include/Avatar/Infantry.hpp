@@ -12,6 +12,11 @@ public:
         // setHp(50);
         setMovementSpeed(4);
     }
+    Infantry(HouseType house)
+        : Avatar(UnitType::INFANTRY,house){
+        // setHp(50);
+        setMovementSpeed(4);
+    }
 
 private:
 };

@@ -83,6 +83,8 @@ set(SRC_FILES
 
         ${SRC_DIR}/App.cpp
 
+        ${SRC_DIR}/Enemy/Enemy.cpp
+
         ${SRC_DIR}/Structure/Structure.cpp
         ${SRC_DIR}/Structure/WayPoint.cpp
         ${SRC_DIR}/Structure/HighLight.cpp
@@ -95,6 +97,7 @@ set(SRC_FILES
         ${SRC_DIR}/Structure/WayPointStructure.cpp
 
         ${SRC_DIR}/Scene/MapScene.cpp
+        ${SRC_DIR}/Scene/TutorialScene.cpp
 
 
         ${SRC_DIR}/Avatar/Runner.cpp
@@ -170,6 +173,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Mechanics/GameObjectManager.hpp
         ${INCLUDE_DIR}/Mechanics/GameObjectID.hpp
         ${INCLUDE_DIR}/Mechanics/CursorSelection.hpp
+        ${INCLUDE_DIR}/Mechanics/Spawn.hpp
 
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp
@@ -199,6 +203,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/PowerPlants.hpp
         ${INCLUDE_DIR}/Structure/WarFactory.hpp
         ${INCLUDE_DIR}/Structure/ADVPowerPlants.hpp
+        ${INCLUDE_DIR}/Structure/SandBag.hpp
 
         ${INCLUDE_DIR}/Avatar/PathfindingUnit.hpp
         ${INCLUDE_DIR}/Avatar/Avatar.hpp
@@ -208,6 +213,10 @@ set(INCLUDE_FILES
 
 
         ${INCLUDE_DIR}/Scene/Scene.hpp
+        ${INCLUDE_DIR}/Scene/TutorialScene.hpp
+
+        ${INCLUDE_DIR}/Enemy/Enemy.hpp
+        ${INCLUDE_DIR}/Enemy/EnemyScripts.hpp
 
         ${INCLUDE_DIR}/Core/Context.hpp
         ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp

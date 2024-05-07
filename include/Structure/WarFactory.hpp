@@ -12,7 +12,12 @@ public:
         : WayPointStructure(electricPower, buildingTime, buildingCost,
                             buildingHp,
                             GameObjectID(UnitType::WAR_FACT, house)){};
+    WarFactory(HouseType house)
+        : WayPointStructure(-30.F, 100.F * CHEAT, 2000.F,
+                            1000.F,
+                            GameObjectID(UnitType::WAR_FACT, house)){};
     void Start() override;
+    void Start(glm::vec2 location)  override;
     void SetObjectLocation(glm::vec2 location) override {
         location = MapUtil::PositionStickToGrid(location);
         m_ObjectLocation = location;

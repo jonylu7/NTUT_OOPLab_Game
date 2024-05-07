@@ -11,8 +11,13 @@ public:
     StructureManager() {}
     virtual ~StructureManager() {}
 
-    void Start() { m_StructureArray.StartBuiltStructure(); }
-    void Update() { m_StructureArray.UpdateBuiltStructure(); }
+    void Start() {
+        //        m_StructureArray.StartBuiltStructure();
+    }
+    void Update() {
+        m_StructSelectingConstructionSite->Update();
+        m_StructureArray.UpdateBuiltStructure();
+    }
 
     void AddStructSelectingBuiltSite(std::shared_ptr<Structure> newstruct) {
         newstruct->Start();
@@ -27,7 +32,6 @@ public:
                                        m_StructSelectingConstructionSite);
                 m_IsSelectingConstructionSite = false;
             }
-            m_StructSelectingConstructionSite->Update();
         }
     }
     StructureArray getStructureArray() { return m_StructureArray; }

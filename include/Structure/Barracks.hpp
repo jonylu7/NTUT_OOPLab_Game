@@ -7,12 +7,17 @@ class Barracks : public WayPointStructure {
 public:
     Barracks(float electricPower = -20.F, float buildingTime = 15.F * CHEAT,
              float buildingCost = 300.F, float buildingHp = 800.F,
-             HouseType house = HouseType::NONE)
+             HouseType house = HouseType::MY)
 
         : WayPointStructure(electricPower, buildingTime, buildingCost,
                             buildingHp,
                             GameObjectID(UnitType::BARRACKS, house)){};
+    Barracks(HouseType house)
+        : WayPointStructure(-20.F, 15.F * CHEAT, 300.F,
+                            800.F,
+                            GameObjectID(UnitType::BARRACKS, house)){};
     void Start() override;
+    void Start(glm::vec2 location)  override;
     void SetObjectLocation(glm::vec2 location) override {
         location = MapUtil::PositionStickToGrid(location);
         m_ObjectLocation = location;
