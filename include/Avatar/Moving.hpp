@@ -19,7 +19,6 @@ protected:
     std::deque<MoveDirection> m_MovePath;
 
     std::vector<Line> m_lineVector;
-    float defaultZIndex = 15;
     glm::vec2 m_CurrentLocation;
     glm::vec2 m_DestinationCell;
 

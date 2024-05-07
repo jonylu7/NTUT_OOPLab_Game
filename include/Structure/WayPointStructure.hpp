@@ -24,11 +24,13 @@ protected:
     std::vector<Line> m_lineVector;
 
 public:
-    WayPointStructure(float electricPower = -10.F, float buildingTime = 10.F,
-                      float buildingCost = 20.F, float buildingHp = 90.F,
-                      GameObjectID id = GameObjectID(UnitType::null,
-                                                     HouseType::NONE))
-        : Structure(electricPower, buildingTime, buildingCost, buildingHp, id) {
+    WayPointStructure(
+        float electricPower = -10.F, float buildingTime = 10.F,
+        float buildingCost = 20.F, float buildingHp = 90.F,
+        GameObjectID id = GameObjectID(UnitType::null, HouseType::NONE),
+        std::shared_ptr<Health> health = std::make_shared<Health>())
+        : Structure(electricPower, buildingTime, buildingCost, buildingHp, id,
+                    health) {
         m_Transform.scale = {2.f, 2.f};
     };
     virtual ~WayPointStructure(){};
@@ -39,7 +41,7 @@ public:
 
     void Update() override {
 
-        switch (m_LivingStatus) {
+        switch (*Structure::getHealth()->getLivingStatus()) {
         case LivingStatus::NOT_BORN_YET: {
             this->updateInvinsible();
             break;

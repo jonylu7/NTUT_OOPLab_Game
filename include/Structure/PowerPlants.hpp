@@ -7,11 +7,12 @@ class PowerPlants : public Structure {
 public:
     PowerPlants(float electricPower = 100.F, float buildingTime = 15.F * CHEAT,
                 float buildingCost = 300.F, float buildingHp = 400.F,
-                HouseType house = HouseType::MY)
+                HouseType house = HouseType::MY,
+                std::shared_ptr<Health> health = std::make_shared<Health>(100,
+                                                                          0.5))
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
-                    GameObjectID(UnitType::POWER_PLANT, house)){
-              //        SetDrawable(
-              //            std::make_unique<Util::Image>("../assets/sprites/PowerPlants.png"));
+                    GameObjectID(UnitType::POWER_PLANT, house), health){
+
           };
     PowerPlants(HouseType house)
         : Structure(100.F, 15.F * CHEAT, 300.F,400.F,
@@ -20,6 +21,8 @@ public:
         m_StructureSpriteSheet->Start(
             "../assets/sprites/PowerPlants_SpriteSheet.png", 48, 48, 13, 0);
         m_RelativeOccupiedArea = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
+        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                         true, 0);
     }
     void SetObjectLocation(glm::vec2 location) override {
         location = MapUtil::PositionStickToGrid(location);

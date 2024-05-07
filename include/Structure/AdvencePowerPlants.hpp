@@ -4,12 +4,13 @@
 #include "Structure.hpp"
 class ADVPowerPlants : public Structure {
 public:
-    ADVPowerPlants(float electricPower = 200.F,
-                   float buildingTime = 25.F * CHEAT,
-                   float buildingCost = 500.F, float buildingHp = 700.F,
-                   HouseType house = HouseType::MY)
+    ADVPowerPlants(
+        float electricPower = 200.F, float buildingTime = 25.F * CHEAT,
+        float buildingCost = 500.F, float buildingHp = 700.F,
+        HouseType house = HouseType::MY,
+        std::shared_ptr<Health> health = std::make_shared<Health>(100, 0.7))
         : Structure(electricPower, buildingTime, buildingCost, buildingHp,
-                    GameObjectID(UnitType::ADV_POWER_PLANT, house)){
+                    GameObjectID(UnitType::ADV_POWER_PLANT, house), health){
               //        SetDrawable(
               //            std::make_unique<Util::Image>("../assets/sprites/PowerPlants.png"));
           };

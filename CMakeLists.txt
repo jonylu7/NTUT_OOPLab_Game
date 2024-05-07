@@ -119,6 +119,7 @@ set(SRC_FILES
         ${SRC_DIR}/Mechanics/FindValidPathToDest.cpp
         ${SRC_DIR}/Mechanics/GameObjectID.cpp
         ${SRC_DIR}/Mechanics/CursorSelection.cpp
+        ${SRC_DIR}/Mechanics/AvatarManager.cpp
 
 )
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)

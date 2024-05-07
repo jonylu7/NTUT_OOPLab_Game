@@ -2,22 +2,20 @@
 // Created by nudle on 2024/3/15.
 //
 
-#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
-#define PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AVATARNAVIGATOR_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_AVATARNAVIGATOR_HPP
 
 #include "Avatar/PathUtility.hpp"
 #include "Map/Map.hpp"
 #include <random>
 
-class FindValidPathToDest {
-
-private:
-    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
+class AvatarNavigator {
 
 public:
-    FindValidPathToDest(std::shared_ptr<MapClass> map)
-        : m_Map(map){};
-    ~FindValidPathToDest(){};
+    AvatarNavigator(){};
+    ~AvatarNavigator(){};
+
+    void Start(std::shared_ptr<MapClass> map) { m_Map = map; }
 
 protected:
     Side randomlyChooseSide();
@@ -38,5 +36,8 @@ public:
                           std::vector<MoveDirection> *path);
     bool canResumeWalkingStraight(glm::vec2 currentcell,
                                   glm::vec2 destinationcell);
+
+private:
+    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
 };
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_FINDVALIDPATHTODEST_HPP
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_AVATARNAVIGATOR_HPP

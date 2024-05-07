@@ -4,15 +4,18 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
-#include "Display/SpriteSheet.hpp"
-#include "HighLight.h"
-#include "Mechanics//GameObjectID.hpp"
-#include "Selectable.hpp"
-
-#include "Avatar/AttackAndDamageUnit.hpp"
+#include "Avatar/AttackAndDamage.hpp"
 #include "Display/Image.hpp"
+#include "Display/SpriteSheet.hpp"
 #include "Display/SpriteSheetAnimation.hpp"
+#include "HighLight.h"
+#include "Mechanics/GameObjectID.hpp"
+#include "Selectable.hpp"
 #include "Structure/StructureOrder.hpp"
+
+#include "Unit/Health.hpp"
+#include "Unit/IHealthable.hpp"
+
 #include "Util/GameObject.hpp"
 #include "Util/Input.hpp"
 #include "Util/TransformUtils.hpp"
@@ -24,7 +27,7 @@
 class Structure : public Util::GameObject,
                   public Selectable,
                   public StructureOrder,
-                  public AttackAndDamageUnit {
+                  public IHealthable {
 
 public:
     Structure()
@@ -32,17 +35,16 @@ public:
           m_BuildingTime(0.F),
           m_BuildingCost(0.F),
           Selectable(),
-          m_ID(GameObjectID(UnitType::NONE, HouseType::NONE)) {
-        m_LivingStatus = LivingStatus::NOT_BORN_YET;
-    };
+          m_ID(GameObjectID(UnitType::NONE, HouseType::NONE)) {}
 
     Structure(float electricPower, float buildingTime, float buildingCost,
-              float buildingHp, GameObjectID id)
+              float buildingHp, GameObjectID id, std::shared_ptr<Health> health)
         : m_ElectricPower(electricPower),
           m_BuildingTime(buildingTime),
           m_BuildingCost(buildingCost),
           Selectable(),
-          m_ID(id) {
+          m_ID(id),
+          m_Health(health) {
         m_Transform.scale = {1, 1};
         // this->SetZIndex(DEFAULT_ZINDEX);
     };
@@ -61,6 +63,8 @@ public:
     virtual void SetSpriteSheet() {
         m_StructureSpriteSheet->Start(
             "../assets/sprites/Barracks_SpriteSheet.png", 48, 48, 13, 0);
+        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                         false, 0);
     }
 
     virtual void SetObjectLocation(glm::vec2 location);
@@ -92,6 +96,11 @@ public:
 
     GameObjectID getID() { return m_ID; }
 
+    std::shared_ptr<Health> getHealth() override { return m_Health; }
+    void setHealth(std::shared_ptr<Health> health) override {
+        m_Health = health;
+    }
+
 protected:
     float m_ElectricPower;
     float m_BuildingTime;
@@ -104,11 +113,18 @@ protected:
     std::shared_ptr<SpriteSheet> m_StructureSpriteSheet =
         std::make_shared<SpriteSheet>();
     std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
-        std::make_shared<Util::SpriteSheetAnimation>();
+        std::make_shared<Util::SpriteSheetAnimation>(m_StructureSpriteSheet,
+                                                     false, 1);
     glm::vec2 m_DrawLocation = {m_ObjectLocation.x + CELL_SIZE.x,
                                 m_ObjectLocation.y + CELL_SIZE.y};
     glm::vec2 m_ObjectLocation = {100, 100};
     std::vector<glm::vec2> m_RelativeOccupiedArea = {{0, 0}};
+    
+    // health
+    std::shared_ptr<Health> m_Health = std::make_shared<Health>();
+    // attack and damage
+    std::shared_ptr<AttackAndDamage> m_AttackAndDamage =
+        std::make_shared<AttackAndDamage>();
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP

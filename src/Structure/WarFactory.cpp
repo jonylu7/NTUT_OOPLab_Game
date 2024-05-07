@@ -17,7 +17,8 @@ void WarFactory::Start() {
     m_HighLight.SetHLScale(this->GetTransform().scale);
     whenSelected();
     // State
-    setLivingStatus(LivingStatus::ALIVE);
+    Structure::getHealth()->setLivingStatus(
+        std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }
 void WarFactory::Start(glm::vec2 location) {
     // Set Texture----------------------------------------

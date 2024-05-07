@@ -4,42 +4,48 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTUREMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTUREMANAGER_HPP
-#include "Mechanics/StructureArray.hpp"
-#include "Structure/Structure.hpp"
+#include "Mechanics/BuiltStructure.hpp"
 class StructureManager {
+#include "Structure/Structure.hpp"
 public:
     StructureManager() {}
     virtual ~StructureManager() {}
 
-    void Start() {
-        //        m_StructureArray.StartBuiltStructure();
+    void Start(std::shared_ptr<MapClass> map) {
+        m_StructureArray.StartBuiltStructure();
+        m_Map = map;
     }
     void Update() {
+
         m_StructSelectingConstructionSite->Update();
+
         m_StructureArray.UpdateBuiltStructure();
     }
 
     void AddStructSelectingBuiltSite(std::shared_ptr<Structure> newstruct) {
+        // selecting site
         newstruct->Start();
         m_StructSelectingConstructionSite = newstruct;
-        m_IsSelectingConstructionSite = true;
+
+        newstruct->setStructOrder(
+            StructureOrder::StructureOrderType::SELECTING_SITE);
     }
 
-    void SelectdBuiltSite(std::shared_ptr<MapClass> m_Map) {
-        if (m_IsSelectingConstructionSite) {
-            if (m_StructSelectingConstructionSite->getBuilt()) {
-                m_StructureArray.Built(m_Map,
-                                       m_StructSelectingConstructionSite);
-                m_IsSelectingConstructionSite = false;
-            }
+    void SelectingBuildSite() {
+        // bulit or not
+        if (m_StructSelectingConstructionSite->getStructOrder() ==
+            StructureOrder::StructureOrderType::SELECTING_SITE) {
+            m_StructureArray.buildNewStructure(
+                m_Map, m_StructSelectingConstructionSite);
         }
     }
-    StructureArray getStructureArray() { return m_StructureArray; }
+
+    BuiltStructure *getStructureArray() { return &m_StructureArray; }
 
 protected:
-    StructureArray m_StructureArray;
+    std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
+    BuiltStructure m_StructureArray;
     std::shared_ptr<Structure> m_StructSelectingConstructionSite =
         std::make_shared<Structure>();
-    bool m_IsSelectingConstructionSite = false;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTUREMANAGER_HPP
