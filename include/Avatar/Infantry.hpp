@@ -14,6 +14,11 @@ public:
                 std::make_shared<LivingStatus>(LivingStatus::NOT_BORN_YET), 100,
                 0.5);
     }
+    Infantry(HouseType house)
+        : Avatar(UnitType::INFANTRY,house){
+        // setHp(50);
+        setMovementSpeed(4);
+    }
 
 private:
 };

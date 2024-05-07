@@ -24,6 +24,7 @@ class Avatar : public Moving,
 
 public:
     Avatar(){};
+    Avatar(UnitType unit,HouseType house):m_ID(GameObjectID(UnitType::NONE, HouseType::MY)){};
     ~Avatar() override{};
 
     virtual void Start(glm::vec2 destination);
@@ -46,6 +47,9 @@ public:
     virtual void customizeUpdate() {
         if (1 == 1) {
         }
+    }
+    HouseType getHouseType(){
+        return m_ID.getHouseType();
     }
 
     void whenSelected() override;
@@ -71,6 +75,7 @@ protected:
         std::make_shared<SpriteSheet>();
     std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
         std::make_shared<Util::SpriteSheetAnimation>();
+    GameObjectID m_ID;
     
     // health
     std::shared_ptr<Health> m_Health = std::make_shared<Health>();
@@ -80,6 +85,5 @@ protected:
 
 private:
     bool b_justStarted = true;
-    GameObjectID m_ID;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
