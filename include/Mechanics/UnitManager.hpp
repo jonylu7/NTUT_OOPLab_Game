@@ -5,15 +5,13 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
 #include "Avatar/Infantry.hpp"
-#include "Cursor.hpp"
-#include "Enemy/Enemy.hpp"
 #include "AvatarNavigator.hpp"
 #include "Cursor.hpp"
+#include "Enemy/Enemy.hpp"
 #include "GameObjectID.hpp"
 #include "Mechanics/AvatarManager.hpp"
 #include "Mechanics/BuiltStructure.hpp"
 #include "Mechanics/CursorSelection.hpp"
-#include "Mechanics/Player.hpp"
 #include "Mechanics/StructureManager.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
@@ -24,41 +22,37 @@
 
 #include <utility>
 
-class UnitManager : public Player {
+class UnitManager {
 public:
     UnitManager() {}
     ~UnitManager() {}
-    void Start(std::shared_ptr<MapClass> map) {
+    void Start(std::shared_ptr<MapClass> map, HouseType housetype) {
+        m_HouseType = housetype;
         m_Map = map;
         m_StructureManager->Start(m_Map);
 
         m_AvatarManager->Start(m_Map);
         m_CursorSelection->Start(m_Map);
-        m_StartTime = std::chrono::high_resolution_clock::now();
     }
 
     void Update() {
         m_StructureManager->Update();
         m_AvatarManager->Update();
         m_CursorSelection->Update();
-
-        // currency update
-        std::chrono::high_resolution_clock::time_point m_currentTime =
-            std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = m_currentTime - m_StartTime;
-        if (elapsed.count() - m_lastElapsed >= 1) { // update every second
-            m_lastElapsed = elapsed.count();
-        }
+        /*
+                // currency update
+                std::chrono::high_resolution_clock::time_point m_currentTime =
+                    std::chrono::high_resolution_clock::now();
+                std::chrono::duration<double> elapsed = m_currentTime -
+           m_StartTime; if (elapsed.count() - m_lastElapsed >= 1) { // update
+           every second m_lastElapsed = elapsed.count();
+                }
+                */
 
         m_StructureManager->SelectingBuildSite();
     }
 
-
 public:
-    int getTotalPower() {
-        return Player::getTotalPower(
-            *m_StructureManager->getStructureArray()->getBuiltStructureArray());
-    }
     std::shared_ptr<AvatarManager> getAvatarManager() {
         return m_AvatarManager;
     }
@@ -66,98 +60,51 @@ public:
         return m_StructureManager;
     }
 
-
-    int UpdateCurrency(){
-        for(auto i: m_StructureManager.getStructureArray().getBuiltStructureArray()){
-            if(std::dynamic_pointer_cast<OreRefinery>(i)){
-                if(i->getHouseType() == HouseType::MY){
-                    addTotalCurrency(150);
-                }else{
-                    m_Enemy->addTotalCurrency(150);
-                }
-            }
-        }
-    }
-
-    void importEnemy(std::shared_ptr<EnemyPlayer> enemy){
-        m_Enemy = enemy;
-    }
-
-    void spawn(std::shared_ptr<MapClass> m_Map,UnitType unit,HouseType house){
-        if(house==HouseType::ENEMY){
-            m_Enemy->addUnitConstructCount(unit, 1);
-        }else{
-            //                m_Player->setUnitConstructCount(unit, 1);
-        }
-        switch (unit) {
-        case UnitType::INFANTRY:{
-            auto avatar = std::make_shared<Infantry>(house);
-            if(house==HouseType::ENEMY){
-//                if(m_EnemyBarrackCell.x==-1){
-//                    return;
-//                }
-//                avatar ->Start(m_EnemyBarrackCell);
-//                avatar ->setNewDestination(m_EnemyWayPointCell);
-            }else{
-                if(m_StructureManager.getStructureArray().getPlayerBarrackCell().x==-1){
-                    return;
-                }
-                avatar ->Start(m_StructureManager.getStructureArray().getPlayerBarrackCell());
-//                avatar ->setNewDestination(m_StructureManager.getStructureArray().getPlayerWayPointCell());
-            }
-            m_AvatarManager.AppendAvatar(avatar);
-            break;
-        }
-        default: {
-            printf("(GOM)error! try to spawn unknown type\n");
-            break;
-        }
-        }
-    }
-    void spawn(std::shared_ptr<MapClass> m_Map,UnitType unit,HouseType house,glm::vec2 cellPos){
+    void spawnUnit(std::shared_ptr<MapClass> m_Map, UnitType unit,
+                   glm::vec2 cellPos) {
         cellPos = MapUtil::CellCoordToGlobal(cellPos);
-        //缺檢查敵方擁有建築的位置，並重生在該處
-        if(house==HouseType::ENEMY){
-            m_Enemy->addUnitConstructCount(unit, 1);
-        }else{
-            //                m_Player->setUnitConstructCount(unit, 1);
-        }
+        // 缺檢查敵方擁有建築的位置，並重生在該處
         switch (unit) {
         case UnitType::BARRACKS: {
-            auto structure = std::make_shared<Barracks>(house);
+            auto structure = std::make_shared<Barracks>(m_HouseType);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(
+                m_Map, structure);
             break;
         }
         case UnitType::ORE_REF: {
-            auto structure = std::make_shared<OreRefinery>(house);
+            auto structure = std::make_shared<OreRefinery>(m_HouseType);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(
+                m_Map, structure);
             break;
         }
         case UnitType::POWER_PLANT: {
-            auto structure = std::make_shared<PowerPlants>(house);
+            auto structure = std::make_shared<PowerPlants>(m_HouseType);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(
+                m_Map, structure);
             break;
         }
         case UnitType::WAR_FACT: {
-            auto structure = std::make_shared<WarFactory>(house);
+            auto structure = std::make_shared<WarFactory>(m_HouseType);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(
+                m_Map, structure);
             break;
         }
         case UnitType::ADV_POWER_PLANT: {
-            auto structure = std::make_shared<ADVPowerPlants>(house);
+            auto structure = std::make_shared<ADVPowerPlants>(m_HouseType);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(
+                m_Map, structure);
             break;
         }
-        case UnitType::INFANTRY:{
-            auto avatar = std::make_shared<Infantry>(house);
-            avatar ->Start(cellPos);
-//            avatar ->setNewDestination(cellPos);
-            m_AvatarManager.AppendAvatar(avatar);
+        case UnitType::INFANTRY: {
+            auto avatar = std::make_shared<Infantry>(m_HouseType);
+            avatar->Start(cellPos);
+            //            avatar ->setNewDestination(cellPos);
+            m_AvatarManager->AppendAvatar(avatar);
             break;
         }
         case UnitType::NONE: {
@@ -170,44 +117,102 @@ public:
         }
         }
     }
+    /*
+        void spawnUnit(std::shared_ptr<MapClass> m_Map, UnitType unit,
+                       HouseType m_House) {
+            switch (unit) {
+            case UnitType::INFANTRY: {
+                auto avatar = std::make_shared<Infantry>(m_House);
+                if (m_House == HouseType::ENEMY) {
+                    //                if(m_EnemyBarrackCell.x==-1){
+                    //                    return;
+                    //                }
+                    //                avatar ->Start(m_EnemyBarrackCell);
+                    //                avatar
+                    //                ->setNewDestination(m_EnemyWayPointCell);
+                } else {
+                    if (m_StructureManager->getStructureArray()
+                            ->getPlayerBarrackCell()
+                            .x == -1) {
+                        return;
+                    }
+                    avatar->Start(m_StructureManager->getStructureArray()
+                                      ->getPlayerBarrackCell());
+                    //                avatar
+                    //
+                    ->setNewDestination(m_StructureManager.getStructureArray()
+                                            .getPlayerWayPointCell());
+                }
+                m_AvatarManager.AppendAvatar(avatar);
+                break;
+            }
+            default: {
+                printf("(GOM)error! try to spawn unknown type\n");
+                break;
+            }
+            }
+        }
+        int UpdateCurrency() {
+            for (auto i : *m_StructureManager->getStructureArray()
+                               ->getBuiltStructureArray()) {
+                if (std::dynamic_pointer_cast<OreRefinery>(i)) {
+                    if (i->getHouseType() == HouseType::MY) {
+                        addTotalCurrency(150);
+                    } else {
+                        m_Enemy->addTotalCurrency(150);
+                    }
+                }
+            }
+        }
 
-    bool ifClosestEnemyInRange(glm::vec2 cell,HouseType myHouse,int range){
-        float closestDistance=500.f;
-        if(myHouse==HouseType::MY){
-            for(auto i:m_EnemyUnitArray){
-                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
+            void importEnemy(std::shared_ptr<EnemyPlayer> enemy) { m_Enemy =
+       enemy;
+           }
+
+
+
+
+                bool ifClosestEnemyInRange(glm::vec2 cell, HouseType myHouse,
+       int range) { float closestDistance = 500.f; if (myHouse == HouseType::MY)
+       { for (auto i : m_EnemyUnitArray) { if (MapUtil::findDistance(cell,
+               i->getCurrentCell()) < closestDistance) { closestDistance =
+                                    MapUtil::findDistance(cell,
+           i->getCurrentCell());
+                            }
+                        }
+                    } else {
+                        for (auto i : m_PlayerUnitArray) {
+                            if (MapUtil::findDistance(cell, i->getCurrentCell())
+       < closestDistance) { closestDistance = MapUtil::findDistance(cell,
+           i->getCurrentCell());
+                            }
+                        }
+                    }
+                    return closestDistance <= range;
                 }
-            }
-        }else{
-            for(auto i:m_PlayerUnitArray){
-                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
+                std::shared_ptr<AttackAndDamage>
+                findInRangeEnemy(glm::vec2 cell, HouseType myHouse, int range) {
+                    float closestDistance = 500.f;
+                    std::shared_ptr<AttackAndDamage> ansUnit;
+                    if (myHouse == HouseType::MY) {
+                        for (auto i : m_EnemyUnitArray) {
+                            if (MapUtil::findDistance(cell, i->getCurrentCell())
+       < closestDistance) { closestDistance = MapUtil::findDistance(cell,
+           i->getCurrentCell()); ansUnit = i;
+                            }
+                        }
+                    } else {
+                        for (auto i : m_PlayerUnitArray) {
+                            if (MapUtil::findDistance(cell, i->getCurrentCell())
+       < closestDistance) { closestDistance = MapUtil::findDistance(cell,
+           i->getCurrentCell()); ansUnit = i;
+                            }
+                        }
+                    }
+                    return ansUnit;
                 }
-            }
-        }
-        return closestDistance<=range;
-    }
-    std::shared_ptr<AttackAndDamageUnit> findInRangeEnemy(glm::vec2 cell,HouseType myHouse,int range){
-        float closestDistance=500.f;
-        std::shared_ptr<AttackAndDamageUnit> ansUnit;
-        if(myHouse==HouseType::MY){
-            for(auto i:m_EnemyUnitArray){
-                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-                    ansUnit = i;
-                }
-            }
-        }else{
-            for(auto i:m_PlayerUnitArray){
-                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-                    ansUnit = i;
-                }
-            }
-        }
-        return ansUnit;
-    }
+                */
+
 private:
     std::shared_ptr<CursorSelection> m_CursorSelection =
         std::make_shared<CursorSelection>();
@@ -216,7 +221,6 @@ private:
     std::shared_ptr<AvatarManager> m_AvatarManager =
         std::make_shared<AvatarManager>();
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
-    std::chrono::high_resolution_clock::time_point m_StartTime;
-    double m_lastElapsed = 0.F;
+    HouseType m_HouseType;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP

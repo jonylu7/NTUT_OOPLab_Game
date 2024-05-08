@@ -25,7 +25,7 @@ class Avatar : public Moving,
 public:
     Avatar(){};
     Avatar(UnitType unit, HouseType house)
-        : m_ID(GameObjectID(UnitType::NONE, HouseType::MY)){};
+        : m_ID(GameObjectID(UnitType::NONE, HouseType::ME)){};
     ~Avatar() override{};
 
     virtual void Start(glm::vec2 spawnlocationcell);

@@ -56,9 +56,9 @@ void UIScriptProcess::CountDown() {
     // Structure Building
     std::chrono::duration<double> buildElapsed =
         m_currentCountDownTime - m_buildStartTime;
-    if (m_gameObjectManager->getTotalCurrency() <= 0 &&
-        b_isBuildingInCoolDown && buildElapsed.count() < buildCoolDownTime) {
-        if (m_gameObjectManager->getTotalPower() <= 0) {
+    if (m_Player->getToCurrency() <= 0 && b_isBuildingInCoolDown &&
+        buildElapsed.count() < buildCoolDownTime) {
+        if (m_Player->getTotalPower() <= 0) {
             SetBuildCountDown(buildCoolDownTime / 2 - buildElapsed.count());
         } else {
             SetBuildCountDown(buildCoolDownTime - buildElapsed.count());

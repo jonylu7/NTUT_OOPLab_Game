@@ -6,39 +6,22 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_ENEMY_HPP
 
 #include "Mechanics/GameObjectID.hpp"
-#include "Mechanics/Player.hpp"
-enum class EnemyMode{
-    DEFAULT,
-    ATTACK,
-    DEFENSE
-};
-enum class SceneMode{
-    TUTORIAL,
-    FREE
-};
-class EnemyPlayer:public Player{
+
+enum class EnemyMode { DEFAULT, ATTACK, DEFENSE };
+enum class SceneMode { TUTORIAL, FREE };
+class EnemyPlayer {
 private:
     int m_totalPower = 0;
     int m_totalCurrency = 0;
-    SceneMode m_SceneMode ;
-public:
-    EnemyPlayer(SceneMode sceneMode):m_SceneMode(sceneMode){};
-    void Start() ;
-    void Update() ;
-    void addUnitConstructCount(UnitType type, int value) {
-        unitCount[type] += value;
-    }
-    int getUnitConstructCount(UnitType type){
-        return unitCount[type];
-    }
-    int getAvatarCount(){
-        return unitCount[UnitType::INFANTRY];
-    }
-    void setAvatarCount(UnitType type,int value){
-        unitCount[type] += value;
-    }
-protected:
-    std::unordered_map<UnitType, unsigned int> unitCount;
+    SceneMode m_SceneMode;
 
+public:
+    EnemyPlayer(SceneMode sceneMode)
+        : m_SceneMode(sceneMode){};
+    void Start();
+    void Update();
+
+protected:
 };
+
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_ENEMY_HPP

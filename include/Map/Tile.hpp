@@ -104,11 +104,11 @@ public:
     }
 
     bool ifEnemyAtTile() {
-        if (m_Structure->getID().getHouse() == HouseType::ENEMY) {
+        if (m_Structure->getID().getHouseType() == HouseType::ENEMY) {
             return true;
         }
         for (auto a : m_Avatars) {
-            if (a->getID().getHouse() == HouseType::ENEMY) {
+            if (a->getID().getHouseType() == HouseType::ENEMY) {
                 return true;
             }
         }
