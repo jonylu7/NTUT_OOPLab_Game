@@ -21,7 +21,7 @@
 #include "Util/TransformUtils.hpp"
 #include "glm/glm.hpp"
 #define DEFAULT_ZINDEX 15
-#define CHEAT 0.01F
+#define CHEAT 0.01
 #define INTERVAL 50
 
 class Structure : public Util::GameObject,
@@ -59,6 +59,7 @@ public:
     virtual void whenSelected() override { this->SetAttachVisible(b_Selected); }
 
     void Start() override;
+    virtual void Start(glm::vec2 location);
     virtual void SetSpriteSheet() {
         m_StructureSpriteSheet->Start(
             "../assets/sprites/Barracks_SpriteSheet.png", 48, 48, 13, 0);
@@ -78,6 +79,7 @@ public:
     float getElectricPower() { return this->m_ElectricPower; }
     float getBuildingTime() { return this->m_BuildingTime; }
     float getBuildingCost() { return this->m_BuildingCost; }
+    HouseType getHouseType(){return  this->m_ID.getHouseType();}
 
     glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord) {
         return glm::vec2(int(globalCoord[0] / CELL_SIZE.x),

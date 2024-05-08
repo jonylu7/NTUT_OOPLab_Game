@@ -6,6 +6,7 @@
 #include "Util/Input.hpp"
 #include "Util/Transform.hpp"
 #include "config.hpp"
+
 void Structure::Start() {
     if (this->m_ID.getUnitType() == UnitType::NONE) {
         Structure::getHealth()->setLivingStatus(
@@ -25,6 +26,28 @@ void Structure::Start() {
         m_StructOrder = StructureOrderType::SELECTING_SITE;
     }
 }
+void Structure::Start(glm::vec2 location) {
+    if (this->m_ID.getUnitType() == UnitType::NONE) {
+        Structure::getHealth()->setLivingStatus(
+            std::make_shared<LivingStatus>(LivingStatus::NOT_BORN_YET));
+        m_StructOrder = StructureOrderType::NO_ORDER;
+    } else {
+        m_Transform.scale = {2.f, 2.f};
+        m_HighLight.SetDrawable(
+            std::make_unique<Util::Image>("../assets/sprites/HighLightB.png"));
+        m_HighLight.SetHLScale(this->GetTransform().scale);
+        m_HighLight.SetZIndex(DEFAULT_ZINDEX - 1);
+        SetZIndex(DEFAULT_ZINDEX);
+        this->SetAttachVisible(false);
+        SetSpriteSheet();
+        Structure::getHealth()->setLivingStatus(
+            std::make_shared<LivingStatus>(LivingStatus::ALIVE));
+        m_StructOrder = StructureOrderType::SELECTING_SITE;
+    }
+    this->SetObjectLocation(location);
+    m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                     true, INTERVAL, false);
+    }
 void Structure::Update() {
 
     switch (*getHealth()->getLivingStatus()) {
