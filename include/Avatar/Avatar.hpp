@@ -26,7 +26,7 @@ public:
     Avatar(){};
     ~Avatar() override{};
 
-    virtual void Start(glm::vec2 destination);
+    virtual void Start(glm::vec2 spawnlocationcell);
     void aliveUpdate();
     void deadUpdate();
     void attackUpdate();
@@ -65,13 +65,11 @@ public:
     }
 
 protected:
-    // std::shared_ptr<Avatar> m_Nemesis = std::make_shared<Avatar>();
-    std::shared_ptr<Util::Image> m_Image;
     std::shared_ptr<SpriteSheet> m_AvatarSpriteSheet =
         std::make_shared<SpriteSheet>();
     std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
         std::make_shared<Util::SpriteSheetAnimation>();
-    
+
     // health
     std::shared_ptr<Health> m_Health = std::make_shared<Health>();
     // attack and damage
@@ -79,7 +77,6 @@ protected:
         std::make_shared<AttackAndDamage>();
 
 private:
-    bool b_justStarted = true;
     GameObjectID m_ID;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP

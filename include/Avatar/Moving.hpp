@@ -20,7 +20,7 @@ protected:
 
     std::vector<Line> m_lineVector;
     glm::vec2 m_CurrentLocation;
-    glm::vec2 m_DestinationCell;
+    glm::vec2 m_DestinationLocation;
 
     MoveDirection m_CurrentDir = MoveDirection::IDLE;
 
@@ -45,6 +45,9 @@ public:
         return MapUtil::GlobalCoordToCellCoord(getCurrentLocation());
     }
     glm::vec2 getCurrentLocation() { return m_CurrentLocation; }
+    void setCurrentLocation(glm::vec2 location) {
+        m_CurrentLocation = location;
+    }
     MoveDirection getCurrentDir() { return m_CurrentDir; }
 
     void moveToNextCell();
@@ -56,7 +59,6 @@ public:
         setNewDestinationIsSetted(false);
     }
 
-    glm::vec2 getDestinationCell() { return m_DestinationCell; }
     bool ifNewDestionationIsSetted() { return b_NewDestinationIsSetted; }
 
     void setMovementSpeed(float speed) { m_MovementSpeed = speed; }
@@ -64,9 +66,11 @@ public:
     void setNewDestinationIsSetted(bool value) {
         b_NewDestinationIsSetted = value;
     }
-
+    glm::vec2 getDestinationCell() {
+        return MapUtil::CellCoordToGlobal(m_DestinationLocation);
+    }
     void setDestinationCell(glm::vec2 destination) {
-        m_DestinationCell = destination;
+        m_DestinationLocation = MapUtil::GlobalCoordToCellCoord(destination);
     }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MOVING_HPP
