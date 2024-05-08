@@ -34,15 +34,18 @@ void AvatarManager::giveOrderToAvatar(std::shared_ptr<Avatar> unit) {
     }
 }
 
-void AvatarManager::updateTileWhileAvatarMoving(std::shared_ptr<Avatar> unit) {
-    if (unit->ifArrivedAtNextCell()) {
-        m_Map->removeAvatarsByCellPosition(unit, unitArrayAndLocation[unit]);
-        m_Map->setAvatarByCellPosition(unit, unit->getCurrentCell());
-        unitArrayAndLocation[unit] = unit->getCurrentCell();
+void AvatarManager::updateTileWhileAvatarMoving(
+    std::shared_ptr<Avatar> avatar) {
+    if (avatar->ifArrivedAtNextCell()) {
+        m_Map->removeAvatarsByCellPosition(avatar,
+                                           unitArrayAndLocation[avatar]);
+        m_Map->setAvatarByCellPosition(avatar, avatar->getCurrentCell());
+        unitArrayAndLocation[avatar] = avatar->getCurrentCell();
     }
 }
 
 void AvatarManager::AppendAvatar(std::shared_ptr<Avatar> newAvatar) {
     m_AvatarArray.push_back(newAvatar);
     unitArrayAndLocation[newAvatar] = newAvatar->getCurrentCell();
+    m_Map->setAvatarByCellPosition(newAvatar, newAvatar->getCurrentCell());
 }
