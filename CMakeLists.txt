@@ -113,7 +113,7 @@ set(SRC_FILES
         ${SRC_DIR}/Map/MapbinReader.cpp
         ${SRC_DIR}/Map/Map.cpp
 
-        ${SRC_DIR}/Mechanics/FindValidPathToDest.cpp
+        ${SRC_DIR}/Mechanics/AvatarNavigator.cpp
         ${SRC_DIR}/Mechanics/GameObjectID.cpp
         ${SRC_DIR}/Mechanics/CursorSelection.cpp
         ${SRC_DIR}/Mechanics/AvatarManager.cpp
