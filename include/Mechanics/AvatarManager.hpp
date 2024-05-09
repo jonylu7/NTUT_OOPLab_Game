@@ -46,6 +46,9 @@ public:
 
     // if given order has enemy
 
+    std::vector<std::shared_ptr<Avatar>> getAvatarArray(){
+        return m_AvatarArray;
+    }
 protected:
     std::vector<std::shared_ptr<Avatar>> m_AvatarArray;
     std::unordered_map<std::shared_ptr<Avatar>, glm::vec2> unitArrayAndLocation;

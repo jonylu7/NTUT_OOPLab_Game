@@ -5,7 +5,7 @@ void Barracks::Start() {
     m_StructureSpriteSheet->Start("../assets/sprites/Barracks_SpriteSheet.png",
                                   48, 48, 13, 0);
     m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
-                                                     false, 1);
+                                                     false, INTERVAL, false);
     SetRelativeOccupiedArea({{0, 0}, {0, 1}, {1, 0}, {1, 1}});
     m_wayPoint->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/flagB.png"));
@@ -44,8 +44,10 @@ void Barracks::Start(glm::vec2 location) {
     whenSelected();
     // State
     this->SetObjectLocation(location);
+    SetVisible(true);
     m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
-                                                     true, INTERVAL, false);
-    m_LivingStatus = LivingStatus::ALIVE;
-    m_StructOrder = StructureOrderType::BUILT;
+                                                     false, INTERVAL, false);
+    setStructOrder(StructureOrderType::BUILT);
+    Structure::getHealth()->setLivingStatus(
+        std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }

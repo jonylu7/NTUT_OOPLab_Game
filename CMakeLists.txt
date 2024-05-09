@@ -116,7 +116,7 @@ set(SRC_FILES
         ${SRC_DIR}/Map/MapbinReader.cpp
         ${SRC_DIR}/Map/Map.cpp
 
-        ${SRC_DIR}/Mechanics/FindValidPathToDest.cpp
+        ${SRC_DIR}/Mechanics/AvatarNavigator.cpp
         ${SRC_DIR}/Mechanics/GameObjectID.cpp
         ${SRC_DIR}/Mechanics/CursorSelection.cpp
         ${SRC_DIR}/Mechanics/AvatarManager.cpp
@@ -175,6 +175,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Mechanics/GameObjectID.hpp
         ${INCLUDE_DIR}/Mechanics/CursorSelection.hpp
         ${INCLUDE_DIR}/Mechanics/Spawn.hpp
+        ${INCLUDE_DIR}/Mechanics/AvatarNavigator.hpp
 
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp
@@ -188,6 +189,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Settings.hpp
         ${INCLUDE_DIR}/Camera.hpp
         ${INCLUDE_DIR}/DrawOverlays.hpp
+        ${INCLUDE_DIR}/Task.hpp
 
         ${INCLUDE_DIR}/Structure/Structure.hpp
         ${INCLUDE_DIR}/Structure/WayPoint.hpp
