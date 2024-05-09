@@ -57,14 +57,18 @@ void Moving::moveToNextCell() {
 
         break;
     }
+    case MoveDirection::IDLE: {
+        return;
+    }
     }
 }
 
 bool Moving::ifArrivedAtNextCell() {
-    // change this to check
-    // previous cell
-    // getCurrentCell() != previousCell()
-    return false;
+    if (m_PrevCell != getCurrentCell()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 void Moving::moveToCellCorner(AvatarStandingCorner corner) {
     float quaterHeight = CELL_SIZE.y / 4;

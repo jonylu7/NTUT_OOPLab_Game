@@ -25,9 +25,7 @@ protected:
     MoveDirection m_CurrentDir = MoveDirection::IDLE;
 
     float m_MovementSpeed = 1.F;
-    int m_MoveDistance = 0;
-
-    bool b_NewDestinationIsSetted = false;
+    glm::vec2 m_PrevCell;
 
 public:
     enum class AvatarStandingCorner {
@@ -56,16 +54,13 @@ public:
 
     void setMovePath(std::deque<MoveDirection> movepath) {
         m_MovePath = movepath;
-        setNewDestinationIsSetted(false);
+        m_CurrentDir = m_MovePath.front();
+        m_MovePath.pop_front();
+        m_PrevCell = getCurrentCell();
     }
-
-    bool ifNewDestionationIsSetted() { return b_NewDestinationIsSetted; }
 
     void setMovementSpeed(float speed) { m_MovementSpeed = speed; }
 
-    void setNewDestinationIsSetted(bool value) {
-        b_NewDestinationIsSetted = value;
-    }
     glm::vec2 getDestinationCell() {
         return MapUtil::CellCoordToGlobal(m_DestinationLocation);
     }
