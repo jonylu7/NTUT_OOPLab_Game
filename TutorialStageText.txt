@@ -1,3 +1,7 @@
+Segoe UI
+Prop.size  = 20 (192*48 pixel)
+Text.size = 26 (1920*1080 pixel)
+------------
 
   任務:
     -按住左鍵拉取要選擇的單位
