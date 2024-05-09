@@ -46,14 +46,14 @@ std::shared_ptr<TileClass> MapClass::getTileByCellPosition(glm::vec2 position) {
 }
 
 void MapClass::Draw(const Util::Transform &trans, const float zindex) {
+    auto maptrans = trans;
+    maptrans.translation.x += m_MapTransShift.x;
+    maptrans.translation.y += m_MapTransShift.y;
 
-    Util::Transform mapTrans;
-
-    mapTrans.translation = m_MapPosition;
     for (auto i : m_Images) {
-        i->DrawUsingCamera(mapTrans, 1);
+        i->DrawUsingCamera(maptrans, zindex);
     }
-    m_Grid.DrawUsingCamera(mapTrans, zindex);
+    m_Grid.DrawUsingCamera(trans, zindex - 0.2);
 }
 
 void MapClass::Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
