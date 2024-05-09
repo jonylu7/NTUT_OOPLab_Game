@@ -16,39 +16,53 @@ void Avatar::Update() {
 
     case (LivingStatus::ALIVE):
         whenSelected();
-        aliveUpdate();
 
         if (m_AvatarOrder == AvatarOrderType::OPEN_FIRE) {
 
         } else if (m_AvatarOrder == AvatarOrderType::MOVE) {
-
+            moveUpdate();
         } else if (m_AvatarOrder == AvatarOrderType::NO_ORDER) {
+            noOrderUpdate();
         } else if (m_AvatarOrder == AvatarOrderType::TAKEN_DAMAGE) {
+        } else if (m_AvatarOrder == AvatarOrderType::SPAWNED) {
+            spawnedUpdate();
         }
 
         break;
     }
 }
 
-void Avatar::aliveUpdate() {
-    moveToNextCell();
+void Avatar::noOrderUpdate() {
+    m_CurrentDir = MoveDirection::IDLE;
+    SetVisible(true);
+    m_Transform.translation = getCurrentLocation();
+
+    Draw();
+}
+
+void Avatar::spawnedUpdate() {
+    SetVisible(true);
+    m_Transform.translation = getCurrentLocation();
+
+    Draw();
+}
+void Avatar::moveUpdate() {
+
     if (ifArrivedAtNextCell()) {
         if (m_MovePath.size() >= 1) {
             m_CurrentDir = m_MovePath.front();
             m_MovePath.pop_front();
         } else {
             m_CurrentDir = MoveDirection::IDLE;
+            m_AvatarOrder = AvatarOrderType::NO_ORDER;
         }
     }
+    moveToNextCell();
 
     SetVisible(true);
     m_Transform.translation = getCurrentLocation();
 
     Draw();
-
-    printf("Avatar cell={%d,%d}\n", getCurrentLocation().x,
-           getCurrentLocation().y);
-    printf("-----------avatar------------------\n");
 }
 
 void Avatar::Start(glm::vec2 spawnlocationcell) { // destination = Barrack's
@@ -58,7 +72,7 @@ void Avatar::Start(glm::vec2 spawnlocationcell) { // destination = Barrack's
     //        setSpriteSheet();
     SetVisible(true);
     setMovementSpeed(4);
-    m_AvatarOrder = AvatarOrderType::MOVE;
+    m_AvatarOrder = AvatarOrderType::SPAWNED;
     m_CurrentLocation = MapUtil::CellCoordToGlobal(spawnlocationcell);
     m_Transform.scale = {1, 1};
     getHealth()->setLivingStatus(

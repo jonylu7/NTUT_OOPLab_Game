@@ -27,7 +27,9 @@ public:
     ~Avatar() override{};
 
     virtual void Start(glm::vec2 spawnlocationcell);
-    void aliveUpdate();
+    void noOrderUpdate();
+    void spawnedUpdate();
+    void moveUpdate();
     void deadUpdate();
     void attackUpdate();
 

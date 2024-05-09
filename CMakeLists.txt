@@ -101,7 +101,7 @@ set(SRC_FILES
         ${SRC_DIR}/Avatar/Avatar.cpp
         ${SRC_DIR}/Avatar/Hunter.cpp
         ${SRC_DIR}/Avatar/PathUtility.cpp
-        ${SRC_DIR}/Avatar/PathFindingUnit.cpp
+        ${SRC_DIR}/Avatar/Moving.cpp
 
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
@@ -201,7 +201,7 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/WarFactory.hpp
         ${INCLUDE_DIR}/Structure/ADVPowerPlants.hpp
 
-        ${INCLUDE_DIR}/Avatar/PathfindingUnit.hpp
+        ${INCLUDE_DIR}/Avatar/Moving.hpp
         ${INCLUDE_DIR}/Avatar/Avatar.hpp
         ${INCLUDE_DIR}/Avatar/WayPointUnit.hpp
         ${INCLUDE_DIR}/Avatar/Runner.hpp

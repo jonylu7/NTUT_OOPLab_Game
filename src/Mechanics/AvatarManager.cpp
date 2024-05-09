@@ -17,20 +17,22 @@ void AvatarManager::Update() {
 }
 
 void AvatarManager::giveOrderToAvatar(std::shared_ptr<Avatar> unit) {
+    if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_RB)) {
+        auto dest = Util::Input::GetCursorPosition();
+        auto queue = m_Navigator->findPath(
+            unit->getCurrentCell(), MapUtil::GlobalCoordToCellCoord(
+                                        MapUtil::ScreenToGlobalCoord(dest)));
+        // unit
+        unit->setMovePath(queue);
 
-    auto queue = m_Navigator->findPath(unit->getCurrentCell(),
-                                       unit->getDestinationCell());
-    // unit
-    unit->setMovePath(queue);
-    unit->setNewDestinationIsSetted(false);
-
-    if (m_Map->getTileByCellPosition(unit->getDestinationCell())
-            ->ifEnemyAtTile()) {
-        m_NemesisManager->addNemesis(
-            unit, m_Map->getTileByCellPosition(unit->getDestinationCell())
-                      ->getAvatars()[0]);
-    } else {
-        unit->setAvatarOrder(AvatarOrderType::MOVE);
+        if (m_Map->getTileByCellPosition(unit->getDestinationCell())
+                ->ifEnemyAtTile()) {
+            m_NemesisManager->addNemesis(
+                unit, m_Map->getTileByCellPosition(unit->getDestinationCell())
+                          ->getAvatars()[0]);
+        } else {
+            unit->setAvatarOrder(AvatarOrderType::MOVE);
+        }
     }
 }
 
