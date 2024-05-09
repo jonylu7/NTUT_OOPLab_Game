@@ -19,6 +19,16 @@ void DefaultScene::Start() {
     m_Map->getTileByCellPosition(glm::vec2(7, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(8, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(9, 5))->setWalkable(0);
+
+    m_Map->getTileByCellPosition(glm::vec2(6, 6))->setWalkable(0);
+    m_Map->getTileByCellPosition(glm::vec2(7, 6))->setWalkable(0);
+    m_Map->getTileByCellPosition(glm::vec2(8, 6))->setWalkable(0);
+    m_Map->getTileByCellPosition(glm::vec2(9, 6))->setWalkable(0);
+
+    m_Map->getTileByCellPosition(glm::vec2(6, 7))->setWalkable(0);
+    m_Map->getTileByCellPosition(glm::vec2(7, 7))->setWalkable(0);
+    m_Map->getTileByCellPosition(glm::vec2(8, 7))->setWalkable(0);
+    m_Map->getTileByCellPosition(glm::vec2(9, 7))->setWalkable(0);
     m_UI.Start();
     m_testdraw.Start(std::vector({glm::vec2(0.F, 0.F)}),
                      DrawOverlays::OverlayShapes::R_CROSS);
