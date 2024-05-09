@@ -15,12 +15,10 @@ void DefaultScene::Start() {
 
     m_Map->Init(255, 255);
     // m_Map->getTileByCellPosition(glm::vec2(5, 5))->setWalkable(0);
-    m_Map->getTileByCellPosition(glm::vec2(6, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(7, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(8, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(9, 5))->setWalkable(0);
 
-    m_Map->getTileByCellPosition(glm::vec2(6, 6))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(7, 6))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(8, 6))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(9, 6))->setWalkable(0);
