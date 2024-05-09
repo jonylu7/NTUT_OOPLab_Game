@@ -38,8 +38,9 @@ std::shared_ptr<TileClass> MapClass::getTileByCellPosition(glm::vec2 position) {
 
     if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
         position.x < 0 || position.y < 0) {
-        LOG_DEBUG("False Position Getting");
-        return std::make_shared<TileClass>(UnitType::null, 0, 0, 0, "");
+        std::cerr << "False Position Getting" << position.x << position.y
+                  << std::endl;
+        return nullptr;
     }
     return m_Map[position.x][position.y];
 }

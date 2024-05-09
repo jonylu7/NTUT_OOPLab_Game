@@ -49,7 +49,8 @@ void Avatar::spawnedUpdate() {
 void Avatar::moveUpdate() {
 
     if (ifArrivedAtNextCell()) {
-        if (m_MovePath.size() >= 1) {
+        m_PrevCell = getCurrentCell();
+        if (!m_MovePath.empty()) {
             m_CurrentDir = m_MovePath.front();
             m_MovePath.pop_front();
         } else {
