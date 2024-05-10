@@ -35,6 +35,11 @@ void AvatarManager::giveOrderToAvatar(std::shared_ptr<Avatar> unit) {
         }
     }
 }
+void AvatarManager::forceMove(std::shared_ptr<Avatar> unit,glm::vec2 cell){
+        unit->setAvatarOrder(AvatarOrderType::MOVE);
+        auto queue = m_Navigator->findPath(unit->getCurrentCell(), cell);
+        unit->setMovePath(queue);
+    }
 
 void AvatarManager::updateTileWhileAvatarMoving(
     std::shared_ptr<Avatar> avatar) {
