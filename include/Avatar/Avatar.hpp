@@ -69,6 +69,10 @@ public:
         m_Health = health;
     }
 
+    std::shared_ptr<AttackAndDamage> getAttackAndDamager() {
+        return m_AttackAndDamage;
+    }
+
 protected:
     std::shared_ptr<SpriteSheet> m_AvatarSpriteSheet =
         std::make_shared<SpriteSheet>();
