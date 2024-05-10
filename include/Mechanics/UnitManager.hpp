@@ -68,7 +68,7 @@ public:
 
 
     int UpdateCurrency(){
-        for(auto i: m_StructureManager.getStructureArray().getBuiltStructureArray()){
+        for(auto i: *m_StructureManager->getStructureArray()->getBuiltStructureArray()){
             if(std::dynamic_pointer_cast<OreRefinery>(i)){
                 if(i->getHouseType() == HouseType::MY){
                     addTotalCurrency(150);
@@ -99,13 +99,13 @@ public:
 //                avatar ->Start(m_EnemyBarrackCell);
 //                avatar ->setNewDestination(m_EnemyWayPointCell);
             }else{
-                if(m_StructureManager.getStructureArray().getPlayerBarrackCell().x==-1){
+                if(m_StructureManager->getStructureArray()->getPlayerBarrackCell().x==-1){
                     return;
                 }
-                avatar ->Start(m_StructureManager.getStructureArray().getPlayerBarrackCell());
+                avatar ->Start(m_StructureManager->getStructureArray()->getPlayerBarrackCell());
 //                avatar ->setNewDestination(m_StructureManager.getStructureArray().getPlayerWayPointCell());
             }
-            m_AvatarManager.AppendAvatar(avatar);
+            m_AvatarManager->AppendAvatar(avatar);
             break;
         }
         default: {
@@ -126,38 +126,38 @@ public:
         case UnitType::BARRACKS: {
             auto structure = std::make_shared<Barracks>(house);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(m_Map,structure, true);
             break;
         }
         case UnitType::ORE_REF: {
             auto structure = std::make_shared<OreRefinery>(house);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(m_Map,structure, true);
             break;
         }
         case UnitType::POWER_PLANT: {
             auto structure = std::make_shared<PowerPlants>(house);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(m_Map,structure, true);
             break;
         }
         case UnitType::WAR_FACT: {
             auto structure = std::make_shared<WarFactory>(house);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(m_Map,structure, true);
             break;
         }
         case UnitType::ADV_POWER_PLANT: {
             auto structure = std::make_shared<ADVPowerPlants>(house);
             structure->Start(cellPos);
-            m_StructureManager.getStructureArray().Built(m_Map,structure);
+            m_StructureManager->getStructureArray()->buildNewStructure(m_Map,structure, true);
             break;
         }
         case UnitType::INFANTRY:{
             auto avatar = std::make_shared<Infantry>(house);
             avatar ->Start(cellPos);
 //            avatar ->setNewDestination(cellPos);
-            m_AvatarManager.AppendAvatar(avatar);
+            m_AvatarManager->AppendAvatar(avatar);
             break;
         }
         case UnitType::NONE: {
@@ -171,43 +171,44 @@ public:
         }
     }
 
-    bool ifClosestEnemyInRange(glm::vec2 cell,HouseType myHouse,int range){
-        float closestDistance=500.f;
-        if(myHouse==HouseType::MY){
-            for(auto i:m_EnemyUnitArray){
-                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-                }
-            }
-        }else{
-            for(auto i:m_PlayerUnitArray){
-                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-                }
-            }
-        }
-        return closestDistance<=range;
-    }
-    std::shared_ptr<AttackAndDamageUnit> findInRangeEnemy(glm::vec2 cell,HouseType myHouse,int range){
-        float closestDistance=500.f;
-        std::shared_ptr<AttackAndDamageUnit> ansUnit;
-        if(myHouse==HouseType::MY){
-            for(auto i:m_EnemyUnitArray){
-                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-                    ansUnit = i;
-                }
-            }
-        }else{
-            for(auto i:m_PlayerUnitArray){
-                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-                    ansUnit = i;
-                }
-            }
-        }
-        return ansUnit;
-    }
+//    bool ifClosestEnemyInRange(glm::vec2 cell,HouseType myHouse,int range){
+//        float closestDistance=500.f;
+//        if(myHouse==HouseType::MY){
+//            for(auto i:m_EnemyUnitArray){
+//                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
+//                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
+//                }
+//            }
+//        }else{
+//            for(auto i:m_PlayerUnitArray){
+//                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
+//                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
+//                }
+//            }
+//        }
+//        return closestDistance<=range;
+//    }
+//
+//    std::shared_ptr<AttackAndDamage> findInRangeEnemy(glm::vec2 cell,HouseType myHouse,int range){
+//        float closestDistance=500.f;
+//        std::shared_ptr<AttackAndDamage> ansUnit;
+//        if(myHouse==HouseType::MY){
+//            for(auto i:m_EnemyUnitArray){
+//                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
+//                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
+//                    ansUnit = i;
+//                }
+//            }
+//        }else{
+//            for(auto i:m_PlayerUnitArray){
+//                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
+//                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
+//                    ansUnit = i;
+//                }
+//            }
+//        }
+//        return ansUnit;
+//    }
 private:
     std::shared_ptr<CursorSelection> m_CursorSelection =
         std::make_shared<CursorSelection>();
@@ -218,5 +219,7 @@ private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
+
+    std::shared_ptr<EnemyPlayer> m_Enemy;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP

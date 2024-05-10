@@ -16,10 +16,12 @@ public:
           };
     ADVPowerPlants(HouseType house)
         : Structure(200.F, 25.F * CHEAT, 500.F,700.F,
-                    GameObjectID(UnitType::ADV_POWER_PLANT, house)){};
+                    GameObjectID(UnitType::ADV_POWER_PLANT, house),std::make_shared<Health>(100, 0.7)){};
     void SetSpriteSheet() override {
         m_StructureSpriteSheet->Start(
             "../assets/sprites/ADVPowerPlants_SpriteSheet.png", 72, 72, 13, 0);
+        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
+                                                         false, INTERVAL, false);
         m_RelativeOccupiedArea = {{0, 0}, {0, 1}, {0, 2},
                                   {1, 0}, {1, 1}, {1, 2}};
     }

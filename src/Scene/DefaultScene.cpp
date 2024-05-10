@@ -25,7 +25,7 @@ void DefaultScene::Start() {
     // m_Cursor.Start(m_Map);
     m_UI.Start(m_Map, m_GameObjectManager);
     m_GameObjectManager->setTotalCurrency(5000);
-    m_SceneCamera.Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
+    m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                         MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 
     //    m_hunter->setCurrentCell({20,10});
@@ -45,7 +45,7 @@ void DefaultScene::Update() {
 
     Util::Transform trans;
     m_Map->Draw(trans, 0);
-    m_SceneCamera.Update();
+    m_SceneCamera->Update();
     m_Renderer.Update();
     m_UI.Update();
 

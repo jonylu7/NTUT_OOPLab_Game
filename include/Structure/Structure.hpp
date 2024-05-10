@@ -49,6 +49,13 @@ public:
         // this->SetZIndex(DEFAULT_ZINDEX);
     };
 
+    Structure(bool selectable)
+        : m_ElectricPower(0.F),
+          m_BuildingTime(0.F),
+          m_BuildingCost(0.F),
+          Selectable(selectable),
+          m_ID(GameObjectID(UnitType::NONE, HouseType::NONE)) {}
+
     ~Structure(){};
 
     void Update() override;
@@ -64,7 +71,7 @@ public:
         m_StructureSpriteSheet->Start(
             "../assets/sprites/Barracks_SpriteSheet.png", 48, 48, 13, 0);
         m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
-                                                         false, 0);
+                                                         false, INTERVAL, false);
     }
 
     virtual void SetObjectLocation(glm::vec2 location);

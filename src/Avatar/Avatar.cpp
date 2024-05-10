@@ -54,6 +54,7 @@ void Avatar::aliveUpdate() {
 void Avatar::Start(glm::vec2 spawnlocationcell) { // destination = Barrack's
                                                   // waypointLocation
     // setCurrentCell()  //CurrentCell = Structure's Location
+    m_CurrentLocation=destination;
     this->SetDrawable(customizeImage());
     //        setSpriteSheet();
     SetVisible(true);
