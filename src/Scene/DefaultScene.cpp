@@ -26,7 +26,7 @@ void DefaultScene::Start() {
     m_UI.Start(m_Map, m_GameObjectManager);
     m_GameObjectManager->setTotalCurrency(5000);
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
-                        MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
+                         MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 
     //    m_hunter->setCurrentCell({20,10});
     //    m_runner->setCurrentCell({10,10});
@@ -49,9 +49,11 @@ void DefaultScene::Update() {
     m_Renderer.Update();
     m_UI.Update();
 
-    m_Cursor->Update(
-        m_Map->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
-            MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()))));
+    auto tileLocation = MapUtil::GlobalCoordToCellCoord(
+        MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
+    if (tileLocation.x >= 0 && tileLocation.y >= 0) {
+        m_Cursor->Update(m_Map->getTileByCellPosition(tileLocation));
+    }
 
     auto tile = m_Map->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
         MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition())));
