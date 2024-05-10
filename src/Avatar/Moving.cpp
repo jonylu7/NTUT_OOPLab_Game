@@ -67,7 +67,7 @@ bool Moving::ifArrivedAtNextCell() {
     if (m_CurrentDir == MoveDirection::DOWN_RIGHT ||
         m_CurrentDir == MoveDirection::DOWN_LEFT ||
         m_CurrentDir == MoveDirection::UP_RIGHT ||
-        m_CurrentDir == MoveDirection::DOWN_RIGHT) {
+        m_CurrentDir == MoveDirection::UP_LEFT) {
         if (m_PrevCell.x != getCurrentCell().x &&
             m_PrevCell.y != getCurrentCell().y) {
             return true;
