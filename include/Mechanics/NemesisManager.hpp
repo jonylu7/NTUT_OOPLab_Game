@@ -46,7 +46,7 @@ public:
             if (ifNemesisWithinWeaponRange(hunter)) {
                 hunter->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
                 prey->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
-                hunter->openFireToTarget(prey);
+                hunter->getAttackAndDamager()->openFireToTarget(prey);
             }
 
             if (*pair.second->getHealth()->getLivingStatus() ==
