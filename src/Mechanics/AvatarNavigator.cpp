@@ -282,7 +282,7 @@ bool AvatarNavigator::canResumeWalkingStraight(glm::vec2 currentcell,
                                                glm::vec2 destinationcell) {
     std::vector<MoveDirection> path;
     auto arrived = findStraightPath(currentcell, destinationcell, &path);
-    if (arrived || !path.empty()) {
+    if (arrived) {
         return true;
     }
     return false;

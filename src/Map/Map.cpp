@@ -38,21 +38,22 @@ std::shared_ptr<TileClass> MapClass::getTileByCellPosition(glm::vec2 position) {
 
     if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
         position.x < 0 || position.y < 0) {
-        LOG_DEBUG("False Position Getting");
-        return std::make_shared<TileClass>(UnitType::null, 0, 0, 0, "");
+        std::cerr << "False Position Getting" << position.x << position.y
+                  << std::endl;
+        return nullptr;
     }
     return m_Map[position.x][position.y];
 }
 
 void MapClass::Draw(const Util::Transform &trans, const float zindex) {
+    auto maptrans = trans;
+    maptrans.translation.x += m_MapTransShift.x;
+    maptrans.translation.y += m_MapTransShift.y;
 
-    Util::Transform mapTrans;
-
-    mapTrans.translation = m_MapPosition;
     for (auto i : m_Images) {
-        i->DrawUsingCamera(mapTrans, 1);
+        i->DrawUsingCamera(maptrans, zindex);
     }
-    m_Grid.DrawUsingCamera(mapTrans, zindex);
+    m_Grid.DrawUsingCamera(trans, zindex - 0.2);
 }
 
 void MapClass::Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,

@@ -68,19 +68,20 @@ public:
     }
 
     void removeAvatar(std::shared_ptr<Avatar> avatar) {
-        for (auto i : m_Avatars) {
-            if (i == avatar) {
-                std::remove(m_Avatars.begin(), m_Avatars.end(), i);
+        for (int i = 0; i < m_Avatars.size(); i++) {
+            if (m_Avatars[i] == avatar) {
+                auto it = m_Avatars.begin() + i;
+                m_Avatars.erase(it);
+                i--;
+
                 if (m_Avatars.size() < 4) {
                     setWalkable(true);
                 }
                 if (m_Avatars.size() == 0) {
                     setBuildable(true);
                 }
-                return;
             }
         }
-        LOG_DEBUG("Remove Avatar Failed");
     }
 
     void removeStructure() {

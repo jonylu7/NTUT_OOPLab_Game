@@ -17,5 +17,5 @@ void MapScene::Update() {
     Util::Transform trans;
     trans.scale = {1, 1};
     trans.translation = {0, 0};
-    m_Map->Draw(trans, 0);
+    m_Map->Draw(trans, -0.1);
 }
