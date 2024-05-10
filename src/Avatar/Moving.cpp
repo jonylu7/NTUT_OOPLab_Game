@@ -64,10 +64,22 @@ void Moving::moveToNextCell() {
 }
 
 bool Moving::ifArrivedAtNextCell() {
-    if (m_PrevCell != getCurrentCell()) {
-        return true;
+    if (m_CurrentDir == MoveDirection::DOWN_RIGHT ||
+        m_CurrentDir == MoveDirection::DOWN_LEFT ||
+        m_CurrentDir == MoveDirection::UP_RIGHT ||
+        m_CurrentDir == MoveDirection::DOWN_RIGHT) {
+        if (m_PrevCell.x != getCurrentCell().x &&
+            m_PrevCell.y != getCurrentCell().y) {
+            return true;
+        } else {
+            return false;
+        }
     } else {
-        return false;
+        if (m_PrevCell != getCurrentCell()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 void Moving::moveToCellCorner(AvatarStandingCorner corner) {
@@ -75,6 +87,8 @@ void Moving::moveToCellCorner(AvatarStandingCorner corner) {
     float quaterWidth = CELL_SIZE.x / 4;
     switch (corner) {
     case (AvatarStandingCorner::CENTER):
+        m_CurrentLocation = MapUtil::CellCoordToGlobal(
+            MapUtil::GlobalCoordToCellCoord(m_CurrentLocation));
         break;
     case (AvatarStandingCorner::UPPER_LEFT):
         m_CurrentLocation = {m_CurrentLocation.x - quaterWidth,

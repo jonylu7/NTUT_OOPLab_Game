@@ -31,6 +31,7 @@ public:
     virtual void Start(glm::vec2 spawnlocationcell);
     void noOrderUpdate();
     void spawnedUpdate();
+    void finishedmovingUpdate();
     void moveUpdate();
     void deadUpdate();
     void attackUpdate();

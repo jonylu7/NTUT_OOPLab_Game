@@ -54,6 +54,7 @@ void Avatar::moveUpdate() {
             m_CurrentDir = m_MovePath.front();
             m_MovePath.pop_front();
         } else {
+            finishedmovingUpdate();
             m_CurrentDir = MoveDirection::IDLE;
             m_AvatarOrder = AvatarOrderType::NO_ORDER;
         }
@@ -121,4 +122,11 @@ void Avatar::DEBUG_printCurrentMoveDirection(MoveDirection Dir) {
         break;
     }
     }
+}
+
+void Avatar::finishedmovingUpdate() {
+    Moving::moveToCellCorner(AvatarStandingCorner::CENTER);
+    m_Transform.translation = getCurrentLocation();
+
+    Draw();
 }
