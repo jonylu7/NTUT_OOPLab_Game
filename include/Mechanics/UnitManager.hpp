@@ -7,7 +7,6 @@
 #include "Avatar/Infantry.hpp"
 #include "AvatarNavigator.hpp"
 #include "Cursor.hpp"
-#include "Enemy/Enemy.hpp"
 #include "GameObjectID.hpp"
 #include "Mechanics/AvatarManager.hpp"
 #include "Mechanics/BuiltStructure.hpp"
@@ -68,36 +67,23 @@ public:
         for (auto i : *m_StructureManager->getStructureArray()
                            ->getBuiltStructureArray()) {
             if (std::dynamic_pointer_cast<OreRefinery>(i)) {
-                if (i->getHouseType() == HouseType::MY) {
-                    addTotalCurrency(150);
-                } else {
-                    m_Enemy->addTotalCurrency(150);
-                }
+               addTotalCurrency(150);
             }
         }
     }
 
-    void importEnemy(std::shared_ptr<EnemyPlayer> enemy) { m_Enemy = enemy; }
 
     void spawn(std::shared_ptr<MapClass> m_Map, UnitType unit,
                HouseType house) {
         if (house == HouseType::ENEMY) {
-            m_Enemy->addUnitConstructCount(unit, 1);
+            //m_Enemy->addUnitConstructCount(unit, 1);
         } else {
             //                m_Player->setUnitConstructCount(unit, 1);
         }
         switch (unit) {
         case UnitType::INFANTRY: {
             auto avatar = std::make_shared<Infantry>(house);
-            if (house == HouseType::ENEMY) {
-                //                if(m_EnemyBarrackCell.x==-1){
-                //                    return;
-                //                }
-                //                avatar ->Start(m_EnemyBarrackCell);
-                //                avatar
-                //                ->setNewDestination(m_EnemyWayPointCell);
-            } else {
-                if (m_StructureManager->getStructureArray()
+            if (m_StructureManager->getStructureArray()
                         ->getPlayerBarrackCell()
                         .x == -1) {
                     return;
@@ -120,7 +106,7 @@ public:
                glm::vec2 cellPos) {
         // 缺檢查敵方擁有建築的位置，並重生在該處
         if (house == HouseType::ENEMY) {
-            m_Enemy->addUnitConstructCount(unit, 1);
+            //m_Enemy->addUnitConstructCount(unit, 1);
         } else {
             //                m_Player->setUnitConstructCount(unit, 1);
         }
@@ -229,6 +215,5 @@ private:
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
 
-    std::shared_ptr<EnemyPlayer> m_Enemy;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
