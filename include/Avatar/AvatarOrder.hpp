@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AVATARORDER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_AVATARORDER_HPP
-enum class AvatarOrderType { OPEN_FIRE, MOVE, NO_ORDER, TAKEN_DAMAGE };
+enum class AvatarOrderType { SPAWNED, OPEN_FIRE, MOVE, NO_ORDER, TAKEN_DAMAGE };
 class AvatarOrder {
 public:
     AvatarOrder() {}

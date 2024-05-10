@@ -11,40 +11,24 @@
 #include <unordered_map>
 class AvatarManager {
 public:
-    void AppendAvatar(std::shared_ptr<Avatar> newAvatar) {
-        m_AvatarArray.push_back(newAvatar);
-        unitArrayAndLocation[newAvatar] = newAvatar->getCurrentCell();
-    }
-
+    /*
+     * Start AvatagManager, initlize map and navigator
+     */
     void Start(std::shared_ptr<MapClass> map) {
         m_Map = map;
         m_Navigator->Start(m_Map);
     }
 
-    void Update() {
-        for (auto unit : m_AvatarArray) {
-            unit->Update();
-            if (unit->getAvatarOrder() == AvatarOrderType::MOVE) {
-                updateTileWhileAvatarMoving(unit);
-            }
-            if (unit->getSelected()) {
-                giveOrderToAvatar(unit);
-            }
-        }
-    }
+    /*
+     *  Update Manager, call giveordertoavatar and update while avatarmoving"
+     */
+    void Update();
+    void AppendAvatar(std::shared_ptr<Avatar> newAvatar);
 
+protected:
     void giveOrderToAvatar(std::shared_ptr<Avatar> unit);
 
-    void updateTileWhileAvatarMoving(std::shared_ptr<Avatar> unit) {
-        if (unit->ifArrivedAtNextCell()) {
-            m_Map->removeAvatarsByCellPosition(unit,
-                                               unitArrayAndLocation[unit]);
-            m_Map->setAvatarByCellPosition(unit, unit->getCurrentCell());
-            unitArrayAndLocation[unit] = unit->getCurrentCell();
-        }
-    }
-
-    // if given order has enemy
+    void updateTileWhileAvatarMoving(std::shared_ptr<Avatar> unit);
 
     std::vector<std::shared_ptr<Avatar>> getAvatarArray(){
         return m_AvatarArray;
