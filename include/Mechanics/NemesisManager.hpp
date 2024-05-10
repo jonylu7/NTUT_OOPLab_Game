@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_NEMESISMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_NEMESISMANAGER_HPP
 #include "Map/MapUtility.hpp"
+#define ATTACK_RANGE 5
 class NemesisManager {
 public:
     NemesisManager() {}
@@ -31,10 +32,11 @@ public:
         if (ifAvatarHasNemesis(hunter) == false) {
             return false;
         }
-        if (1 == 0) // check with in range
+        if (hunter.getDistance(m_Nemesis[hunter].getCurrentCell()) <= ATTACK_RANGE) // check with in range
         {
             return true;
         } else {
+            forceMove(hunter,m_Nemesis[hunter].getCurrentCell());//向目標移動
             return false;
         }
     }
@@ -47,6 +49,10 @@ public:
                 hunter->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
                 prey->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
                 hunter->getAttackAndDamager()->openFireToTarget(prey);
+                //反擊
+                prey->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
+                hunter->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
+                prey->getAttackAndDamager()->openFireToTarget(prey);
             }
 
             if (*pair.second->getHealth()->getLivingStatus() ==
