@@ -13,22 +13,23 @@ void TutorialScene::Start() {
     m_Enemy->setTotalCurrency(5000);
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                          MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
-    m_GameObjectManager->importEnemy(m_Enemy);
-    m_EnemyScripts->Start(m_Enemy, m_GameObjectManager, m_Map);
+    m_EnemyScripts->Start(m_Enemy, m_EnemyObjectManager, m_Map);
 
     /*
-        m_GameObjectManager->spawn(m_Map, UnitType::BARRACKS, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(m_Map, UnitType::BARRACKS, HouseType::ENEMY,
                                    {20, 20});
-        m_GameObjectManager->spawn(m_Map, UnitType::POWER_PLANT,
+        m_EnemyObjectManager->spawn(m_Map, UnitType::POWER_PLANT,
        HouseType::ENEMY, {25, 25}); m_GameObjectManager->spawn(m_Map,
        UnitType::ORE_REF, HouseType::ENEMY, {25, 20});
                                    */
     m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
                                {5, 5});
+    
     stageStart();
 }
 void TutorialScene::Update() {
     m_GameObjectManager->Update();
+    m_EnemyObjectManager->Update();
 
     stageUpdate();
     Util::Transform trans;
@@ -60,6 +61,7 @@ void TutorialScene::Update() {
     }
 }
 void TutorialScene::stageStart() {
+    m_stage = Stages::STAGE1;
     m_Text->importCamera(m_SceneCamera);
     m_Text->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/Task/Task1.png"));
@@ -75,6 +77,9 @@ void TutorialScene::stageStart() {
     m_cellProp->setObjectLocation({750, 750}, 0);
 }
 void TutorialScene::stageUpdate() {
+    if(Util::Input::IsKeyPressed(Util::Keycode::R)){
+        stageStart();
+    }
     switch (m_stage) {
     case Stages::STAGE1: {
         m_Text->Draw();
@@ -148,11 +153,11 @@ void TutorialScene::stageUpdate() {
             m_cellProp->setScale({4, 3});
             m_cellProp->setObjectLocation({1200, 850}, 0);
             m_cellProp->Start({8, 6});
-            m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY,
+            m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY,
                                        HouseType::ENEMY, {24, 17});
-            m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY,
+            m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY,
                                        HouseType::ENEMY, {26, 18});
-            m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY,
+            m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY,
                                        HouseType::ENEMY, {25, 17});
             m_stage = Stages::STAGE4;
         }
@@ -161,6 +166,15 @@ void TutorialScene::stageUpdate() {
     case Stages::STAGE4: {
         m_Text->Draw();
         m_cellProp->Update();
+        int enemy_count=0;
+        for(auto i:m_EnemyObjectManager->getAvatarManager()->getAvatarArray()){
+            if(i.getLivingStatus()==LivingStatus::DEAD){
+                enemy_count++;
+            }
+        }
+        if(enemy_count>=3){
+            //End?
+        }
         break;
     }
     }
