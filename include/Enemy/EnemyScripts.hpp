@@ -73,6 +73,15 @@ public:
         }
         offensiveUpdate();
     }
+    void  offensiveUpdate(){
+//        if(m_EnemyObjectManager->getOffensiveTroopSize()>0){
+//            m_EnemyObjectManager->setOffensiveTroopAttack(m_GameObjectManager->getMostValuableTarget());
+//        }
+    }
+    void attackModeUpdate(){
+//        m_EnemyObjectManager->setAllTroopToAttackMode();
+//        m_EnemyObjectManager->setDefensiveTroopSize(0);
+    }
 
     void setCDTime(float time,bool cheat = true){
         if(m_Enemy->getTotalPower()<=0){
