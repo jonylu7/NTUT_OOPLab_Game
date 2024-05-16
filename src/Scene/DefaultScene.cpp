@@ -35,6 +35,9 @@ void DefaultScene::Start() {
     //    m_runner->Start({9, 10});
     //    m_hunter->setTarget(m_runner);
     //    m_runner->setBeingChase(m_hunter);
+
+    m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
+                               {5, 5});
 }
 
 void DefaultScene::Update() {

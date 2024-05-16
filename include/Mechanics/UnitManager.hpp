@@ -67,35 +67,36 @@ public:
         for (auto i : *m_StructureManager->getStructureArray()
                            ->getBuiltStructureArray()) {
             if (std::dynamic_pointer_cast<OreRefinery>(i)) {
-               addTotalCurrency(150);
+                addTotalCurrency(150);
             }
         }
     }
 
-
     void spawn(std::shared_ptr<MapClass> m_Map, UnitType unit,
                HouseType house) {
         if (house == HouseType::ENEMY) {
-            //m_Enemy->addUnitConstructCount(unit, 1);
+            // m_Enemy->addUnitConstructCount(unit, 1);
         } else {
             //                m_Player->setUnitConstructCount(unit, 1);
         }
         switch (unit) {
         case UnitType::INFANTRY: {
             auto avatar = std::make_shared<Infantry>(house);
+
             if (m_StructureManager->getStructureArray()
-                        ->getPlayerBarrackCell()
-                        .x == -1) {
-                    return;
-                }
-                avatar->Start(m_StructureManager->getStructureArray()
-                                  ->getPlayerBarrackCell());
-                //                avatar
-                //                ->setNewDestination(m_StructureManager.getStructureArray().getPlayerWayPointCell());
+                    ->getPlayerBarrackCell()
+                    .x == -1) {
+                return;
             }
+
+            avatar->Start(m_StructureManager->getStructureArray()
+                              ->getPlayerBarrackCell());
+            //                avatar
+            //                ->setNewDestination(m_StructureManager.getStructureArray().getPlayerWayPointCell());
             m_AvatarManager->AppendAvatar(avatar);
             break;
         }
+
         default: {
             printf("(GOM)error! try to spawn unknown type\n");
             break;
@@ -106,7 +107,7 @@ public:
                glm::vec2 cellPos) {
         // 缺檢查敵方擁有建築的位置，並重生在該處
         if (house == HouseType::ENEMY) {
-            //m_Enemy->addUnitConstructCount(unit, 1);
+            // m_Enemy->addUnitConstructCount(unit, 1);
         } else {
             //                m_Player->setUnitConstructCount(unit, 1);
         }
@@ -214,6 +215,5 @@ private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
-
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
