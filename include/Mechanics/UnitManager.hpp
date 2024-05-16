@@ -74,20 +74,32 @@ public:
 
     void spawn(std::shared_ptr<MapClass> m_Map, UnitType unit,
                HouseType house) {
+
+        if (house == HouseType::ENEMY) {
+            // m_Enemy->addUnitConstructCount(unit, 1);
+        } else {
+            //                m_Player->setUnitConstructCount(unit, 1);
+        }
+
         switch (unit) {
         case UnitType::INFANTRY: {
             auto avatar = std::make_shared<Infantry>(house);
+
             if (m_StructureManager->getStructureArray()
                     ->getPlayerBarrackCell()
                     .x == -1) {
                 return;
             }
+
+
+
             avatar->Start(m_StructureManager->getStructureArray()
                               ->getPlayerBarrackCell());
             //                avatar
             //                ->setNewDestination(m_StructureManager.getStructureArray().getPlayerWayPointCell());
             m_AvatarManager->AppendAvatar(avatar);
         }
+
         default: {
             printf("(GOM)error! try to spawn unknown type\n");
             break;

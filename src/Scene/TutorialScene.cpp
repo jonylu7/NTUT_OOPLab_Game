@@ -13,6 +13,7 @@ void TutorialScene::Start() {
     m_Enemy->setTotalCurrency(5000);
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                          MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
+
     m_EnemyScripts->Start(m_Enemy, m_EnemyObjectManager, m_Map);
 
     /*
