@@ -8,12 +8,12 @@
 #include "Avatar/AvatarOrder.hpp"
 #include "Avatar/Moving.hpp"
 #include "Avatar/PathUtility.hpp"
-#include "Display/Image.hpp"
 #include "Display/SpriteSheet.hpp"
 #include "Display/SpriteSheetAnimation.hpp"
 #include "Map/MapUtility.hpp"
 #include "Mechanics/GameObjectID.hpp"
 #include "Selectable.hpp"
+#include "Util/Image.hpp"
 
 class Avatar : public Moving,
                public AttackAndDamage,

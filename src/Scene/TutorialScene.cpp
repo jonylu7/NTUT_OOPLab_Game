@@ -24,7 +24,7 @@ void TutorialScene::Start() {
                                    */
     m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
                                {5, 5});
-    
+
     stageStart();
 }
 void TutorialScene::Update() {
@@ -77,7 +77,7 @@ void TutorialScene::stageStart() {
     m_cellProp->setObjectLocation({750, 750}, 0);
 }
 void TutorialScene::stageUpdate() {
-    if(Util::Input::IsKeyPressed(Util::Keycode::R)){
+    if (Util::Input::IsKeyPressed(Util::Keycode::R)) {
         stageStart();
     }
     switch (m_stage) {
@@ -154,11 +154,11 @@ void TutorialScene::stageUpdate() {
             m_cellProp->setObjectLocation({1200, 850}, 0);
             m_cellProp->Start({8, 6});
             m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY,
-                                       HouseType::ENEMY, {24, 17});
+                                        HouseType::ENEMY, {24, 17});
             m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY,
-                                       HouseType::ENEMY, {26, 18});
+                                        HouseType::ENEMY, {26, 18});
             m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY,
-                                       HouseType::ENEMY, {25, 17});
+                                        HouseType::ENEMY, {25, 17});
             m_stage = Stages::STAGE4;
         }
         break;
@@ -166,14 +166,15 @@ void TutorialScene::stageUpdate() {
     case Stages::STAGE4: {
         m_Text->Draw();
         m_cellProp->Update();
-        int enemy_count=0;
-        for(auto i:m_EnemyObjectManager->getAvatarManager()->getAvatarArray()){
-            if(i.getLivingStatus()==LivingStatus::DEAD){
+        int enemy_count = 0;
+        for (auto i :
+             m_EnemyObjectManager->getAvatarManager()->getAvatarArray()) {
+            if (*i->getHealth()->getLivingStatus() == LivingStatus::DEAD) {
                 enemy_count++;
             }
         }
-        if(enemy_count>=3){
-            //End?
+        if (enemy_count >= 3) {
+            // End?
         }
         break;
     }

@@ -4,9 +4,9 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_YAMLREADER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_YAMLREADER_HPP
-#include "Display/Image.hpp"
 #include "TerrainConfig.hpp"
 #include "Tile.hpp"
+#include "Util/Image.hpp"
 #include <fstream>
 #include <iostream>
 #include <yaml-cpp/yaml.h>

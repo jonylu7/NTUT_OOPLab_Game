@@ -13,7 +13,6 @@
 #include "Camera.hpp"
 #include "Display/DrawOverlays.hpp"
 #include "Display/Grid.hpp"
-#include "Display/Image.hpp"
 #include "Display/SpriteSheet.hpp"
 #include "Map/Map.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
@@ -24,6 +23,7 @@
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
 #include "UI/UI.hpp"
+#include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
@@ -47,7 +47,8 @@ public:
 
 protected:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
-    std::shared_ptr<CameraClass> m_SceneCamera  = std::make_shared<CameraClass>();
+    std::shared_ptr<CameraClass> m_SceneCamera =
+        std::make_shared<CameraClass>();
     std::shared_ptr<UnitManager> m_GameObjectManager =
         std::make_shared<UnitManager>();
     std::shared_ptr<UnitManager> m_EnemyObjectManager =
