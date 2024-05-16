@@ -8,6 +8,7 @@ void TutorialScene::Start() {
     LOG_TRACE("Start");
     m_Map->Init(100, 100);
     m_GameObjectManager->Start(m_Map);
+    m_EnemyObjectManager->Start(m_Map);
     m_UI.Start(m_Map, m_GameObjectManager);
     m_Player->setTotalCurrency(5000);
     m_Enemy->setTotalCurrency(5000);
