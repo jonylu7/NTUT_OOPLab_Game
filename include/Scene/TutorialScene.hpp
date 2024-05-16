@@ -31,6 +31,6 @@ private:
     std::shared_ptr<EnemyScripts> m_EnemyScripts = std::make_shared<EnemyScripts>();
     std::shared_ptr<Task> m_Text = std::make_shared<Task>();
     std::shared_ptr<Prop> m_cellProp = std::make_shared<Prop>();
-    Stages m_stage = Stages::STAGE1;
+    Stages m_stage;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_TUTORIALSCENE_HPP

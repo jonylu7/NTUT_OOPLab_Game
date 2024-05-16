@@ -50,6 +50,8 @@ protected:
     std::shared_ptr<CameraClass> m_SceneCamera  = std::make_shared<CameraClass>();
     std::shared_ptr<UnitManager> m_GameObjectManager =
         std::make_shared<UnitManager>();
+    std::shared_ptr<UnitManager> m_EnemyObjectManager =
+        std::make_shared<UnitManager>();
     Util::Renderer m_Renderer;
     UIClass m_UI;
     std::shared_ptr<Player> m_Player = std::make_shared<Player>();
