@@ -2,8 +2,8 @@
 // Created by nudle on 2024/3/15.
 //
 
-#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
-#define PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AVATAR_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_AVATAR_HPP
 #include "Avatar/AttackAndDamage.hpp"
 #include "Avatar/AvatarOrder.hpp"
 #include "Avatar/Moving.hpp"
@@ -89,4 +89,4 @@ protected:
 private:
     GameObjectID m_ID;
 };
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_DUMMY_HPP
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_AVATAR_HPP

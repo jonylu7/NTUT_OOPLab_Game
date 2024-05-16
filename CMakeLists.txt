@@ -173,10 +173,12 @@ set(INCLUDE_FILES
 
 
         ${INCLUDE_DIR}/Mechanics/GameObjectManager.hpp
+        ${INCLUDE_DIR}/Mechanics/NemesisManager.hpp
         ${INCLUDE_DIR}/Mechanics/GameObjectID.hpp
         ${INCLUDE_DIR}/Mechanics/CursorSelection.hpp
         ${INCLUDE_DIR}/Mechanics/Spawn.hpp
         ${INCLUDE_DIR}/Mechanics/AvatarNavigator.hpp
+
 
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp

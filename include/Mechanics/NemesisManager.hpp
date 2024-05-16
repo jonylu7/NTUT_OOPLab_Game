@@ -4,6 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_NEMESISMANAGER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_NEMESISMANAGER_HPP
+#include "Avatar/Avatar.hpp"
 #include "Map/MapUtility.hpp"
 
 class NemesisManager {
@@ -37,8 +38,7 @@ public:
         {
             return true;
         } else {
-            // forceMove(hunter,
-            //           m_Nemesis[hunter]->getCurrentCell()); // 向目標移動
+
             return false;
         }
     }
