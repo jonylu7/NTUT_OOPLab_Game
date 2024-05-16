@@ -4,8 +4,8 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_WAYPOINT_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_WAYPOINT_HPP
-#include "Display/Image.hpp"
 #include "Util/GameObject.hpp"
+#include "Util/Image.hpp"
 #include "Util/TransformUtils.hpp"
 class WayPoint : public Util::GameObject {
 private:

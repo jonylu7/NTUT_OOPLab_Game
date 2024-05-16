@@ -70,13 +70,14 @@ set(SRC_FILES
         ${SRC_DIR}/Util/GameObject.cpp
         ${SRC_DIR}/Util/Renderer.cpp
         ${SRC_DIR}/Util/Color.cpp
+        ${SRC_DIR}/Util/Animation.cpp
+        ${SRC_DIR}/Util/MissingTexture.cpp
 
 
         ${SRC_DIR}/Display/ImageArray.cpp
         ${SRC_DIR}/Display/CustomizableImage.cpp
         ${SRC_DIR}/Display/SpriteSheetAnimation.cpp
-        ${SRC_DIR}/Display/Animation.cpp
-        ${SRC_DIR}/Display/MissingTexture.cpp
+
         ${SRC_DIR}/Display/Grid.cpp
         ${SRC_DIR}/Display/SpriteSheet.cpp
 
@@ -152,7 +153,6 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/Keycode.hpp
         ${INCLUDE_DIR}/Util/SFX.hpp
         ${INCLUDE_DIR}/Util/BGM.hpp
-
         ${INCLUDE_DIR}/Util/Text.hpp
         ${INCLUDE_DIR}/Util/Transform.hpp
         ${INCLUDE_DIR}/Util/TransformUtils.hpp
@@ -160,9 +160,10 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Util/Renderer.hpp
         ${INCLUDE_DIR}/Util/Color.hpp
         ${INCLUDE_DIR}/Util/Image.hpp
+        ${INCLUDE_DIR}/Util/Animation.hpp
+        ${INCLUDE_DIR}/Util/MissingTexture.hpp
 
-        ${INCLUDE_DIR}/Display/Animation.hpp
-        ${INCLUDE_DIR}/Display/MissingTexture.hpp
+
         ${INCLUDE_DIR}/Display/SpriteSheetAnimation.hpp
         ${INCLUDE_DIR}/Display/ImageArray.hpp
         ${INCLUDE_DIR}/Display/CustomizableImage.hpp

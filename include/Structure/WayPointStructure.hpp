@@ -5,12 +5,12 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MOVEABLESTRUCTURE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MOVEABLESTRUCTURE_HPP
 #include "Display/Grid.hpp"
-#include "Display/Image.hpp"
 #include "Display/Line.hpp"
 #include "HighLight.h"
 #include "Map/MapUtility.hpp"
 #include "Structure/IWayPoint.hpp"
 #include "Structure/Structure.hpp"
+#include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "WayPoint.hpp"

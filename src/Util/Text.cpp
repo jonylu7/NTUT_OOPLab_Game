@@ -3,8 +3,8 @@
 #include "Core/Texture.hpp"
 #include "Core/TextureUtils.hpp"
 
-#include "Display/Text.hpp"
 #include "Util/Logger.hpp"
+#include "Util/Text.hpp"
 #include "Util/TransformUtils.hpp"
 
 #include "config.hpp"

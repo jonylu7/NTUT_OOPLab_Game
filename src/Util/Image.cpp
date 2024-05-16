@@ -1,11 +1,11 @@
-#include "Display/Image.hpp"
+#include "Util/Image.hpp"
 
 #include "pch.hpp"
 
 #include "Core/Texture.hpp"
 #include "Core/TextureUtils.hpp"
 
-#include "Display/MissingTexture.hpp"
+#include "Util/MissingTexture.hpp"
 #include "Util/TransformUtils.hpp"
 
 #include "config.hpp"

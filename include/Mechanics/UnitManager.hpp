@@ -74,11 +74,13 @@ public:
 
     void spawn(std::shared_ptr<MapClass> m_Map, UnitType unit,
                HouseType house) {
+
         if (house == HouseType::ENEMY) {
             // m_Enemy->addUnitConstructCount(unit, 1);
         } else {
             //                m_Player->setUnitConstructCount(unit, 1);
         }
+
         switch (unit) {
         case UnitType::INFANTRY: {
             auto avatar = std::make_shared<Infantry>(house);
@@ -89,12 +91,13 @@ public:
                 return;
             }
 
+
+
             avatar->Start(m_StructureManager->getStructureArray()
                               ->getPlayerBarrackCell());
             //                avatar
             //                ->setNewDestination(m_StructureManager.getStructureArray().getPlayerWayPointCell());
             m_AvatarManager->AppendAvatar(avatar);
-            break;
         }
 
         default: {
@@ -216,4 +219,5 @@ private:
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
 };
+
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP

@@ -5,13 +5,13 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP
 #include "Avatar/AttackAndDamage.hpp"
-#include "Display/Image.hpp"
 #include "Display/SpriteSheet.hpp"
 #include "Display/SpriteSheetAnimation.hpp"
 #include "HighLight.h"
 #include "Mechanics/GameObjectID.hpp"
 #include "Selectable.hpp"
 #include "Structure/StructureOrder.hpp"
+#include "Util/Image.hpp"
 
 #include "Unit/Health.hpp"
 #include "Unit/IHealthable.hpp"
@@ -70,8 +70,8 @@ public:
     virtual void SetSpriteSheet() {
         m_StructureSpriteSheet->Start(
             "../assets/sprites/Barracks_SpriteSheet.png", 48, 48, 13, 0);
-        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
-                                                         false, INTERVAL, false);
+        m_SpriteSheetAnimation->initSpriteSheetAnimation(
+            m_StructureSpriteSheet, false, INTERVAL, false);
     }
 
     virtual void SetObjectLocation(glm::vec2 location);
@@ -86,7 +86,7 @@ public:
     float getElectricPower() { return this->m_ElectricPower; }
     float getBuildingTime() { return this->m_BuildingTime; }
     float getBuildingCost() { return this->m_BuildingCost; }
-    HouseType getHouseType(){return  this->m_ID.getHouseType();}
+    HouseType getHouseType() { return this->m_ID.getHouseType(); }
 
     glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord) {
         return glm::vec2(int(globalCoord[0] / CELL_SIZE.x),
@@ -126,7 +126,7 @@ protected:
                                 m_ObjectLocation.y + CELL_SIZE.y};
     glm::vec2 m_ObjectLocation = {100, 100};
     std::vector<glm::vec2> m_RelativeOccupiedArea = {{0, 0}};
-    
+
     // health
     std::shared_ptr<Health> m_Health = std::make_shared<Health>();
     // attack and damage
