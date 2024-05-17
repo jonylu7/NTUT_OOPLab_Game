@@ -15,11 +15,7 @@
 #include "Selectable.hpp"
 #include "Util/Image.hpp"
 
-class Avatar : public AttackAndDamage,
-               public AvatarOrder,
-               public Util::GameObject,
-               public Selectable,
-               public IHealthable {
+class Avatar : public Util::GameObject, public Selectable, public IHealthable {
 
 public:
     Avatar(){};
@@ -59,22 +55,24 @@ public:
             "../assets/sprites/mech_single.png");
     }
 
-    GameObjectID getID() { return m_ID; }
-
     virtual void Update() override;
-
-    std::shared_ptr<Health> getHealth() override { return m_Health; }
-    void setHealth(std::shared_ptr<Health> health) override {
-        m_Health = health;
-    }
 
     void DrawAvatar();
 
 public:
-    std::shared_ptr<AttackAndDamage> getAttackAndDamager() {
+    GameObjectID getID() { return m_ID; }
+
+    std::shared_ptr<AttackAndDamage> getAttackAndDamage() {
         return m_AttackAndDamage;
     }
     std::shared_ptr<Moving> getMoving() { return m_Moving; }
+    std::shared_ptr<AvatarOrder> getAvatarOrder() { return m_Order; }
+
+    std::shared_ptr<Health> getHealth() override { return m_Health; }
+
+    void setHealth(std::shared_ptr<Health> health) override {
+        m_Health = health;
+    }
 
 protected:
     std::shared_ptr<SpriteSheet> m_AvatarSpriteSheet =
@@ -82,6 +80,8 @@ protected:
     std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
         std::make_shared<Util::SpriteSheetAnimation>();
 
+    // order
+    std::shared_ptr<AvatarOrder> m_Order = std::make_shared<AvatarOrder>();
     // moving
     std::shared_ptr<Moving> m_Moving = std::make_shared<Moving>();
     // health

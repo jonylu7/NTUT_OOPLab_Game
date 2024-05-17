@@ -5,7 +5,7 @@
 #include "Map/MapUtility.hpp"
 
 void WayPointStructure::whenSelected() {
-    if (this->getSelected() && this->getBuilt()) {
+    if (this->getSelected() && this->getStructureOrder()->getBuilt()) {
         if (Util::Input::IsKeyPressed(Util::Keycode(Util::Keycode::MOUSE_RB))) {
             this->SetWayPointLocationByCellCoord(
                 MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(

@@ -47,7 +47,8 @@ public:
             break;
         }
         case LivingStatus::ALIVE: {
-            if (m_StructOrder == StructureOrderType::SELECTING_SITE) {
+            if (getStructureOrder()->getStructureOrderType() ==
+                StructureOrderType::SELECTING_SITE) {
                 this->updateMoveable();
             } else {
                 this->updateFixed();

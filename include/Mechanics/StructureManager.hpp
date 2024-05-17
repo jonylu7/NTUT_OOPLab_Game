@@ -27,14 +27,15 @@ public:
         newstruct->Start();
         m_StructSelectingConstructionSite = newstruct;
 
-        newstruct->setStructOrder(
-            StructureOrder::StructureOrderType::SELECTING_SITE);
+        newstruct->getStructureOrder()->setStructOrder(
+            StructureOrderType::SELECTING_SITE);
     }
 
     void SelectingBuildSite() {
         // bulit or not
-        if (m_StructSelectingConstructionSite->getStructOrder() ==
-            StructureOrder::StructureOrderType::SELECTING_SITE) {
+        if (m_StructSelectingConstructionSite->getStructureOrder()
+                ->getStructureOrderType() ==
+            StructureOrderType::SELECTING_SITE) {
             m_StructureArray.buildNewStructure(
                 m_Map, m_StructSelectingConstructionSite);
         }

@@ -8,7 +8,7 @@ void AvatarManager::Update() {
     m_NemesisManager->Update();
     for (auto unit : m_AvatarArray) {
         unit->Update();
-        if (unit->getAvatarOrder() == AvatarOrderType::MOVE) {
+        if (unit->getAvatarOrder()->getAvatarOrder() == AvatarOrderType::MOVE) {
             updateTileWhileAvatarMoving(unit);
         }
         if (unit->getSelected()) {
@@ -32,7 +32,7 @@ void AvatarManager::giveOrderToMyAvatar(std::shared_ptr<Avatar> unit) {
                     ->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
                         MapUtil::ScreenToGlobalCoord(dest)))
                     ->ifEnemyAtTile()) {
-                unit->setAvatarOrder(AvatarOrderType::MOVE);
+                unit->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
                 m_NemesisManager->addNemesis(
                     unit,
                     m_Map
@@ -40,13 +40,13 @@ void AvatarManager::giveOrderToMyAvatar(std::shared_ptr<Avatar> unit) {
                             MapUtil::ScreenToGlobalCoord(dest)))
                         ->getAvatars()[0]);
             } else {
-                unit->setAvatarOrder(AvatarOrderType::MOVE);
+                unit->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
             }
         }
     }
 }
 void AvatarManager::forceMove(std::shared_ptr<Avatar> unit, glm::vec2 cell) {
-    unit->setAvatarOrder(AvatarOrderType::MOVE);
+    unit->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
     auto queue =
         m_Navigator->findPath(unit->getMoving()->getCurrentCell(), cell);
     unit->getMoving()->setMovePath(queue);

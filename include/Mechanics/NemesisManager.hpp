@@ -35,7 +35,7 @@ public:
         }
         if (hunter->getDistance(
                 m_Nemesis[hunter]->getMoving()->getCurrentCell()) <=
-            hunter->getWeapon()->getFireRange() *
+            hunter->getAttackAndDamage()->getWeapon()->getFireRange() *
                 CELL_SIZE.x) // check with in range
         {
             return true;
@@ -50,24 +50,30 @@ public:
             auto hunter = pair.first;
             auto prey = pair.second;
             if (ifNemesisWithinWeaponRange(hunter)) {
-                hunter->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
-                prey->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
-                hunter->getAttackAndDamager()->openFireToTarget(prey);
+                hunter->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::OPEN_FIRE);
+                prey->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::TAKEN_DAMAGE);
+                hunter->getAttackAndDamage()->openFireToTarget(prey);
             }
 
             if (*pair.second->getHealth()->getLivingStatus() ==
                 LivingStatus::DEAD) {
                 removeNemesis(hunter);
-                hunter->setAvatarOrder(AvatarOrderType::NO_ORDER);
-                prey->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                hunter->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
+                prey->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
                 break;
             }
 
             if (*pair.first->getHealth()->getLivingStatus() ==
                 LivingStatus::DEAD) {
                 removeNemesis(hunter);
-                hunter->setAvatarOrder(AvatarOrderType::NO_ORDER);
-                prey->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                hunter->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
+                prey->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
                 break;
             }
         }
