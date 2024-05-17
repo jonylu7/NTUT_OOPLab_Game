@@ -24,7 +24,7 @@ public:
         : m_FireRange(1),
           m_SoftAttack(10),
           m_HardAttack(10),
-          m_FireRateInMs(10),
+          m_FireRateInMs(180),
           m_Type(WeaponType::NONE) {}
     Weapon(float firerate, float firerange, float softattack, float hardattack,
            WeaponType weapontype)

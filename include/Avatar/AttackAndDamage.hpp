@@ -16,10 +16,10 @@ public:
     void damageTargetWithWeapon(std::shared_ptr<IHealthable> target,
                                 std::shared_ptr<Weapon> weapon) {
         auto targethealth = target->getHealth();
-        targethealth->addHP(-1 * (100 - targethealth->getArmorRate()) *
-                                (1 / 100) * m_Weapon->getSoftAttack() +
-                            targethealth->getArmorRate() * (1 / 100) *
-                                m_Weapon->getHardAttack());
+        auto damage =
+            ((1 - targethealth->getArmorRate()) * m_Weapon->getSoftAttack()) +
+            (targethealth->getArmorRate() * m_Weapon->getHardAttack());
+        targethealth->addHP(-1 * damage);
     }
 
     void openFireToTarget(std::shared_ptr<IHealthable> target) {

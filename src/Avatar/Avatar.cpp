@@ -9,12 +9,12 @@ void Avatar::whenSelected() {
 }
 
 void Avatar::Update() {
-
+    DrawAvatar();
     if (getMoving()->ifMovePathEmpty()) {
         m_AvatarOrder = AvatarOrderType::NO_ORDER;
     }
     switch (*m_Health->getLivingStatus()) {
-        DrawAvatar();
+
     case (LivingStatus::DEAD):
         SetVisible(false);
         break;
@@ -58,8 +58,8 @@ void Avatar::Start(glm::vec2 spawnlocationcell) { // destination = Barrack's
     SetVisible(true);
     getMoving()->setMovementSpeed(4);
     m_AvatarOrder = AvatarOrderType::SPAWNED;
-    getMoving()->getCurrentLocation() =
-        MapUtil::CellCoordToGlobal(spawnlocationcell);
+    getMoving()->setCurrentLocation(
+        MapUtil::CellCoordToGlobal(spawnlocationcell));
     m_Transform.scale = {1, 1};
     getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
@@ -110,15 +110,22 @@ void Avatar::DEBUG_printCurrentMoveDirection(MoveDirection Dir) {
 
 void Avatar::DrawAvatar() {
     m_Transform.translation = getMoving()->getCurrentLocation();
-    if (m_AvatarOrder == AvatarOrderType::OPEN_FIRE) {
-        this->SetDrawable(std::make_shared<Util::Image>(
-            "../assets/sprites/mech_open_fire.png"));
-    } else if (m_AvatarOrder == AvatarOrderType::TAKEN_DAMAGE) {
-        this->SetDrawable(std::make_shared<Util::Image>(
-            "../assets/sprites/mech_taken_damage.png"));
-    } else {
+    SetVisible(true);
+    if (getHealth()->getHP() < 50) {
         this->SetDrawable(
-            std::make_shared<Util::Image>("../assets/sprites/mech_single.png"));
+            std::make_shared<Util::Image>("../assets/sprites/mech_dead.png"));
+    } else {
+        
+        if (m_AvatarOrder == AvatarOrderType::OPEN_FIRE) {
+            this->SetDrawable(std::make_shared<Util::Image>(
+                "../assets/sprites/mech_open_fire.png"));
+        } else if (m_AvatarOrder == AvatarOrderType::TAKEN_DAMAGE) {
+            this->SetDrawable(std::make_shared<Util::Image>(
+                "../assets/sprites/mech_taken_damage.png"));
+        } else {
+            this->SetDrawable(std::make_shared<Util::Image>(
+                "../assets/sprites/mech_single.png"));
+        }
     }
     Draw();
 }

@@ -53,10 +53,6 @@ public:
                 hunter->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
                 prey->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
                 hunter->getAttackAndDamager()->openFireToTarget(prey);
-                // 反擊
-                prey->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
-                hunter->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
-                prey->getAttackAndDamager()->openFireToTarget(prey);
             }
 
             if (*pair.second->getHealth()->getLivingStatus() ==
@@ -64,6 +60,7 @@ public:
                 removeNemesis(hunter);
                 hunter->setAvatarOrder(AvatarOrderType::NO_ORDER);
                 prey->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                break;
             }
 
             if (*pair.first->getHealth()->getLivingStatus() ==
@@ -71,6 +68,7 @@ public:
                 removeNemesis(hunter);
                 hunter->setAvatarOrder(AvatarOrderType::NO_ORDER);
                 prey->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                break;
             }
         }
     }
