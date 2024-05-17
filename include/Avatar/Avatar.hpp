@@ -15,30 +15,28 @@
 #include "Selectable.hpp"
 #include "Util/Image.hpp"
 
-class Avatar : public Moving,
-               public AttackAndDamage,
+class Avatar : public AttackAndDamage,
+               public AvatarOrder,
                public Util::GameObject,
                public Selectable,
-               public AvatarOrder,
                public IHealthable {
 
 public:
     Avatar(){};
     Avatar(UnitType unit, HouseType house)
-        : m_ID(GameObjectID(UnitType::NONE, HouseType::MY)){};
+        : m_ID(GameObjectID(UnitType::NONE, house)){};
     ~Avatar() override{};
 
     virtual void Start(glm::vec2 spawnlocationcell);
-    void noOrderUpdate();
+    void noorderUpdate();
     void spawnedUpdate();
-    void finishedmovingUpdate();
     void moveUpdate();
     void deadUpdate();
     void attackUpdate();
 
     float getDistance(glm::vec2 cell) {
-        return sqrt(pow(cell.x - getCurrentCell().x, 2) +
-                    pow(cell.y - getCurrentCell().y, 2));
+        return sqrt(pow(cell.x - m_Moving->getCurrentCell().x, 2) +
+                    pow(cell.y - m_Moving->getCurrentCell().y, 2));
     }
 
     void setSpriteSheet() {
@@ -70,9 +68,13 @@ public:
         m_Health = health;
     }
 
+    void DrawAvatar();
+
+public:
     std::shared_ptr<AttackAndDamage> getAttackAndDamager() {
         return m_AttackAndDamage;
     }
+    std::shared_ptr<Moving> getMoving() { return m_Moving; }
 
 protected:
     std::shared_ptr<SpriteSheet> m_AvatarSpriteSheet =
@@ -80,6 +82,8 @@ protected:
     std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
         std::make_shared<Util::SpriteSheetAnimation>();
 
+    // moving
+    std::shared_ptr<Moving> m_Moving = std::make_shared<Moving>();
     // health
     std::shared_ptr<Health> m_Health = std::make_shared<Health>();
     // attack and damage

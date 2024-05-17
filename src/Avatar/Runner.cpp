@@ -6,30 +6,30 @@
 void Runner::setBeingChase(std::shared_ptr<Avatar> hunter) {
     b_beingChase = true;
     m_hunter = hunter;
-    lastTargetCell = getCurrentCell();
+    lastTargetCell = m_Moving->getCurrentCell();
 }
 void Runner::customizeUpdate() {
     if (b_beingChase &&
         *m_hunter->getHealth()->getLivingStatus() == LivingStatus::ALIVE) {
-        glm::vec2 hunterCell = m_hunter->getCurrentCell();
+        glm::vec2 hunterCell = m_hunter->getMoving()->getCurrentCell();
         if (getDistance(hunterCell) <= ATTACK_RANGE - 1 &&
-            lastTargetCell == getCurrentCell()) {
+            lastTargetCell == getMoving()->getCurrentCell()) {
             edgeCount = 0;
-            MoveDirection Dir = oppositeDir(PathUtility::getDirByRelativeCells(
-                                                getCurrentCell(), hunterCell),
-                                            runMode::LIDL_RANDOM);
+            MoveDirection Dir =
+                oppositeDir(PathUtility::getDirByRelativeCells(
+                                getMoving()->getCurrentCell(), hunterCell),
+                            runMode::LIDL_RANDOM);
             DEBUG_printCurrentMoveDirection(Dir);
-            glm::vec2 nextCell =
-                getNextCellByCurrentPlus3(Dir, getCurrentCell(), 3, 1);
+            glm::vec2 nextCell = getNextCellByCurrentPlus3(
+                Dir, getMoving()->getCurrentCell(), 3, 1);
             while (nextCell.x < 0 || nextCell.y < 0) {
                 edgeCount += rand() % 2 + 1;
                 Dir = findNewDir(Dir, edgeCount);
                 DEBUG_printCurrentMoveDirection(Dir);
-                nextCell =
-                    getNextCellByCurrentPlus3(Dir, getCurrentCell(), 1, 3);
+                nextCell = getNextCellByCurrentPlus3(
+                    Dir, getMoving()->getCurrentCell(), 1, 3);
             }
             lastTargetCell = nextCell;
-            setDestinationCell(nextCell);
         }
     } else {
         b_beingChase = false;

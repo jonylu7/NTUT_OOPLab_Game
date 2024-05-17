@@ -29,9 +29,10 @@ public:
     std::vector<std::shared_ptr<Avatar>> getAvatarArray() {
         return m_AvatarArray;
     }
-    void forceMove(std::shared_ptr<Avatar> unit,glm::vec2 cell);
+    void forceMove(std::shared_ptr<Avatar> unit, glm::vec2 cell);
+
 protected:
-    void giveOrderToAvatar(std::shared_ptr<Avatar> unit);
+    void giveOrderToMyAvatar(std::shared_ptr<Avatar> unit);
 
     void updateTileWhileAvatarMoving(std::shared_ptr<Avatar> unit);
 

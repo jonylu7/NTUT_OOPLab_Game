@@ -442,7 +442,7 @@ std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
 
         Avatar->Start({m_barrackCell.x + 1, m_barrackCell.y - 1});
 
-        Avatar->setDestinationCell(m_barrackTargetCell);
+        // Avatar->setDestinationCell(m_barrackTargetCell);
     }
     printf("(UI)return to GOM success\n");
     return Avatar;

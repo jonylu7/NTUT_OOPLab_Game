@@ -91,8 +91,6 @@ public:
                 return;
             }
 
-
-
             avatar->Start(m_StructureManager->getStructureArray()
                               ->getPlayerBarrackCell());
             //                avatar
@@ -109,11 +107,6 @@ public:
     void spawn(std::shared_ptr<MapClass> m_Map, UnitType unit, HouseType house,
                glm::vec2 cellPos) {
         // 缺檢查敵方擁有建築的位置，並重生在該處
-        if (house == HouseType::ENEMY) {
-            // m_Enemy->addUnitConstructCount(unit, 1);
-        } else {
-            //                m_Player->setUnitConstructCount(unit, 1);
-        }
         switch (unit) {
         case UnitType::BARRACKS: {
             auto structure = std::make_shared<Barracks>(house);

@@ -20,7 +20,6 @@ protected:
 
     std::vector<Line> m_lineVector;
     glm::vec2 m_CurrentLocation;
-    glm::vec2 m_DestinationLocation;
 
     MoveDirection m_CurrentDir = MoveDirection::IDLE;
 
@@ -37,7 +36,7 @@ public:
     };
 
     Moving(){};
-    virtual ~Moving(){};
+    ~Moving(){};
 
     glm::vec2 getCurrentCell() {
         return MapUtil::GlobalCoordToCellCoord(getCurrentLocation());
@@ -47,6 +46,25 @@ public:
         m_CurrentLocation = location;
     }
     MoveDirection getCurrentDir() { return m_CurrentDir; }
+    void setCurrentDir(MoveDirection dir) { m_CurrentDir = dir; }
+
+    void moveUpdate() {
+        if (ifArrivedAtNextCell()) {
+            m_PrevCell = getCurrentCell();
+            if (!m_MovePath.empty()) {
+                setCurrentDir(m_MovePath.front());
+                m_MovePath.pop_front();
+            } else {
+                finishedmovingUpdate();
+            }
+        }
+        moveToNextCell();
+    }
+
+    void finishedmovingUpdate() {
+        moveToCellCorner(AvatarStandingCorner::CENTER);
+        setCurrentDir(MoveDirection::IDLE);
+    }
 
     void moveToNextCell();
     void moveToCellCorner(AvatarStandingCorner corner);
@@ -59,13 +77,14 @@ public:
         m_PrevCell = getCurrentCell();
     }
 
-    void setMovementSpeed(float speed) { m_MovementSpeed = speed; }
+    bool ifMovePathEmpty() {
+        if (m_MovePath.empty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    glm::vec2 getDestinationCell() {
-        return MapUtil::CellCoordToGlobal(m_DestinationLocation);
-    }
-    void setDestinationCell(glm::vec2 destination) {
-        m_DestinationLocation = MapUtil::GlobalCoordToCellCoord(destination);
-    }
+    void setMovementSpeed(float speed) { m_MovementSpeed = speed; }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MOVING_HPP

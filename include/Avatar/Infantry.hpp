@@ -9,15 +9,15 @@ class Infantry : public Avatar {
 public:
     Infantry()
         : Avatar() {
-        setMovementSpeed(4),
+        getMoving()->setMovementSpeed(4),
             m_Health = std::make_shared<Health>(
                 std::make_shared<LivingStatus>(LivingStatus::NOT_BORN_YET), 100,
                 0.5);
     }
     Infantry(HouseType house)
-        : Avatar(UnitType::INFANTRY,house){
+        : Avatar(UnitType::INFANTRY, house) {
         // setHp(50);
-        setMovementSpeed(4);
+        getMoving()->setMovementSpeed(4);
     }
 
 private:

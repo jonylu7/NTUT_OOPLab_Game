@@ -33,8 +33,10 @@ public:
         if (ifAvatarHasNemesis(hunter) == false) {
             return false;
         }
-        if (hunter->getDistance(m_Nemesis[hunter]->getCurrentCell()) <=
-            hunter->getWeapon()->getFireRange()) // check with in range
+        if (hunter->getDistance(
+                m_Nemesis[hunter]->getMoving()->getCurrentCell()) <=
+            hunter->getWeapon()->getFireRange() *
+                CELL_SIZE.x) // check with in range
         {
             return true;
         } else {
