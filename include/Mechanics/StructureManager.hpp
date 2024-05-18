@@ -12,7 +12,7 @@ public:
     virtual ~StructureManager() {}
 
     void Start(std::shared_ptr<MapClass> map) {
-        m_StructureArray.StartBuiltStructure();
+        m_StructureArray.Start(map);
         m_Map = map;
     }
     void Update() {
@@ -37,7 +37,7 @@ public:
                 ->getStructureOrderType() ==
             StructureOrderType::SELECTING_SITE) {
             m_StructureArray.buildNewStructure(
-                m_Map, m_StructSelectingConstructionSite);
+                m_StructSelectingConstructionSite);
         }
     }
 

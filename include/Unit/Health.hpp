@@ -40,21 +40,25 @@ public:
 
     void setHP(int hp) {
         m_HP = hp;
-        if (m_HP <= 0) {
-            m_LivingStatus = std::make_shared<LivingStatus>(LivingStatus::DEAD);
-        }
+        ifDead();
     }
 
     void addHP(int value) {
         m_HP += value;
-        if (m_HP <= 0) {
-            m_LivingStatus = std::make_shared<LivingStatus>(LivingStatus::DEAD);
-        }
+        ifDead();
     }
 
     int getHP() { return m_HP; }
     void setArmorRate(float armorrate) { m_ArmorRate = armorrate; }
     float getArmorRate() { return m_ArmorRate; }
+    bool ifDead() {
+        if (m_HP <= 0) {
+            m_LivingStatus = std::make_shared<LivingStatus>(LivingStatus::DEAD);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 private:
     std::shared_ptr<LivingStatus> m_LivingStatus =

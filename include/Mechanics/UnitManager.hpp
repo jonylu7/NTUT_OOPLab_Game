@@ -112,35 +112,35 @@ public:
             auto structure = std::make_shared<Barracks>(house);
             structure->Start(cellPos);
             m_StructureManager->getStructureArray()->buildNewStructure(
-                m_Map, structure, true);
+                structure, true);
             break;
         }
         case UnitType::ORE_REF: {
             auto structure = std::make_shared<OreRefinery>(house);
             structure->Start(cellPos);
             m_StructureManager->getStructureArray()->buildNewStructure(
-                m_Map, structure, true);
+                structure, true);
             break;
         }
         case UnitType::POWER_PLANT: {
             auto structure = std::make_shared<PowerPlants>(house);
             structure->Start(cellPos);
             m_StructureManager->getStructureArray()->buildNewStructure(
-                m_Map, structure, true);
+                structure, true);
             break;
         }
         case UnitType::WAR_FACT: {
             auto structure = std::make_shared<WarFactory>(house);
             structure->Start(cellPos);
             m_StructureManager->getStructureArray()->buildNewStructure(
-                m_Map, structure, true);
+                structure, true);
             break;
         }
         case UnitType::ADV_POWER_PLANT: {
             auto structure = std::make_shared<ADVPowerPlants>(house);
             structure->Start(cellPos);
             m_StructureManager->getStructureArray()->buildNewStructure(
-                m_Map, structure, true);
+                structure, true);
             break;
         }
         case UnitType::INFANTRY: {

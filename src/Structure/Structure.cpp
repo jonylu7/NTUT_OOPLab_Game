@@ -108,7 +108,7 @@ void Structure::attachmentUpdate() {
     m_HighLight.SetObjectLocation(this->GetDrawLocation());
     m_HighLight.Draw();
 }
-std::vector<glm::vec2> Structure::GetAbsoluteOccupiedArea() {
+std::vector<glm::vec2> Structure::getAbsoluteOccupiedArea() {
     std::vector<glm::vec2> Area;
     for (auto i : m_RelativeOccupiedArea) {
         Area.push_back({i.x + getLocationCell().x, i.y + getLocationCell().y});

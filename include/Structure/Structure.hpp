@@ -90,7 +90,7 @@ public:
     glm::vec2 getLocationCell() {
         return MapUtil::GlobalCoordToCellCoord(m_ObjectLocation);
     }
-    std::vector<glm::vec2> GetAbsoluteOccupiedArea();
+    std::vector<glm::vec2> getAbsoluteOccupiedArea();
     void SetRelativeOccupiedArea(std::vector<glm::vec2> Area) {
         m_RelativeOccupiedArea = Area;
     }

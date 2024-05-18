@@ -6,13 +6,29 @@
 
 void AvatarManager::Update() {
     m_NemesisManager->Update();
-    for (auto unit : m_AvatarArray) {
-        unit->Update();
-        if (unit->getAvatarOrder()->getAvatarOrder() == AvatarOrderType::MOVE) {
-            updateTileWhileAvatarMoving(unit);
-        }
-        if (unit->getSelected()) {
-            giveOrderToMyAvatar(unit);
+    for (int i = 0; i < m_AvatarArray.size(); i++) {
+        // if dead remove, else update it
+        if (m_AvatarArray[i]->getHealth()->ifDead()) {
+            // remove from map
+            m_Map->removeAvatarByCellPosition(
+                m_AvatarArray[i],
+                m_AvatarArray[i]->getMoving()->getCurrentCell());
+            // remove from array
+            m_AvatarArray.erase(m_AvatarArray.begin() + i);
+            i--;
+        } else {
+            m_AvatarArray[i]->Update();
+
+            // update tile while avatar is moving
+            if (m_AvatarArray[i]->getAvatarOrder()->getAvatarOrder() ==
+                AvatarOrderType::MOVE) {
+                updateTileWhileAvatarMoving(m_AvatarArray[i]);
+            }
+
+            // give order to avatar
+            if (m_AvatarArray[i]->getSelected()) {
+                giveOrderToMyAvatar(m_AvatarArray[i]);
+            }
         }
     }
 }
@@ -55,8 +71,7 @@ void AvatarManager::forceMove(std::shared_ptr<Avatar> unit, glm::vec2 cell) {
 void AvatarManager::updateTileWhileAvatarMoving(
     std::shared_ptr<Avatar> avatar) {
     if (avatar->getMoving()->ifArrivedAtNextCell()) {
-        m_Map->removeAvatarsByCellPosition(avatar,
-                                           unitArrayAndLocation[avatar]);
+        m_Map->removeAvatarByCellPosition(avatar, unitArrayAndLocation[avatar]);
         m_Map->setAvatarByCellPosition(avatar,
                                        avatar->getMoving()->getCurrentCell());
         unitArrayAndLocation[avatar] = avatar->getMoving()->getCurrentCell();
