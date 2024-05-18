@@ -50,10 +50,10 @@ public:
 
     void moveUpdate() {
         if (ifArrivedAtNextCell()) {
+            m_MovePath.pop_front();
             m_PrevCell = getCurrentCell();
             if (!m_MovePath.empty()) {
                 setCurrentDir(m_MovePath.front());
-                m_MovePath.pop_front();
             } else {
                 finishedmovingUpdate();
             }
@@ -73,7 +73,6 @@ public:
     void setMovePath(std::deque<MoveDirection> movepath) {
         m_MovePath = movepath;
         m_CurrentDir = m_MovePath.front();
-        m_MovePath.pop_front();
         m_PrevCell = getCurrentCell();
     }
 
