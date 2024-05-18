@@ -20,7 +20,8 @@ void OreRefinery::Start() {
     m_HighLight.SetHLScale(this->GetTransform().scale);
     whenSelected();
     // State
-    setStructOrder(StructureOrderType::NOT_CONSTRUCTED_YET);
+    getStructureOrder()->setStructOrder(
+        StructureOrderType::NOT_CONSTRUCTED_YET);
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }
@@ -46,7 +47,7 @@ void OreRefinery::Start(glm::vec2 location) {
     SetVisible(true);
     m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                      false, INTERVAL, false);
-    setStructOrder(StructureOrderType::BUILT);
+    getStructureOrder()->setStructOrder(StructureOrderType::BUILT);
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }

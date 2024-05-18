@@ -9,22 +9,37 @@ void Avatar::whenSelected() {
 }
 
 void Avatar::Update() {
+    DrawAvatar();
+    if (getMoving()->ifMovePathEmpty()) {
+        getAvatarOrder()->setAvatarOrder(AvatarOrderType::NO_ORDER);
+    }
     switch (*m_Health->getLivingStatus()) {
+
     case (LivingStatus::DEAD):
         SetVisible(false);
         break;
 
     case (LivingStatus::ALIVE):
+        SetVisible(true);
         whenSelected();
 
-        if (m_AvatarOrder == AvatarOrderType::OPEN_FIRE) {
+        if (getAvatarOrder()->getAvatarOrder() == AvatarOrderType::OPEN_FIRE) {
+            // open fire
+        } else if (getAvatarOrder()->getAvatarOrder() ==
+                   AvatarOrderType::MOVE) {
+            m_Moving->moveUpdate();
+            if (getMoving()->getCurrentDir() == MoveDirection::IDLE) {
+                getAvatarOrder()->setAvatarOrder(AvatarOrderType::NO_ORDER);
+            }
+        } else if (getAvatarOrder()->getAvatarOrder() ==
+                   AvatarOrderType::NO_ORDER) {
+            noorderUpdate();
+        } else if (getAvatarOrder()->getAvatarOrder() ==
+                   AvatarOrderType::TAKEN_DAMAGE) {
 
-        } else if (m_AvatarOrder == AvatarOrderType::MOVE) {
-            moveUpdate();
-        } else if (m_AvatarOrder == AvatarOrderType::NO_ORDER) {
-            noOrderUpdate();
-        } else if (m_AvatarOrder == AvatarOrderType::TAKEN_DAMAGE) {
-        } else if (m_AvatarOrder == AvatarOrderType::SPAWNED) {
+            // takendamage
+        } else if (getAvatarOrder()->getAvatarOrder() ==
+                   AvatarOrderType::SPAWNED) {
             spawnedUpdate();
         }
 
@@ -32,39 +47,13 @@ void Avatar::Update() {
     }
 }
 
-void Avatar::noOrderUpdate() {
-    m_CurrentDir = MoveDirection::IDLE;
-    SetVisible(true);
-    m_Transform.translation = getCurrentLocation();
-
-    Draw();
+void Avatar::noorderUpdate() {
+    getMoving()->setCurrentDir(MoveDirection::IDLE);
+    m_Transform.translation = getMoving()->getCurrentLocation();
 }
 
 void Avatar::spawnedUpdate() {
-    SetVisible(true);
-    m_Transform.translation = getCurrentLocation();
-
-    Draw();
-}
-void Avatar::moveUpdate() {
-
-    if (ifArrivedAtNextCell()) {
-        m_PrevCell = getCurrentCell();
-        if (!m_MovePath.empty()) {
-            m_CurrentDir = m_MovePath.front();
-            m_MovePath.pop_front();
-        } else {
-            finishedmovingUpdate();
-            m_CurrentDir = MoveDirection::IDLE;
-            m_AvatarOrder = AvatarOrderType::NO_ORDER;
-        }
-    }
-    moveToNextCell();
-
-    SetVisible(true);
-    m_Transform.translation = getCurrentLocation();
-
-    Draw();
+    m_Transform.translation = getMoving()->getCurrentLocation();
 }
 
 void Avatar::Start(glm::vec2 spawnlocationcell) { // destination = Barrack's
@@ -72,10 +61,10 @@ void Avatar::Start(glm::vec2 spawnlocationcell) { // destination = Barrack's
     // setCurrentCell()  //CurrentCell = Structure's Location
     this->SetDrawable(customizeImage());
     //        setSpriteSheet();
-    SetVisible(true);
-    setMovementSpeed(4);
-    m_AvatarOrder = AvatarOrderType::SPAWNED;
-    m_CurrentLocation = MapUtil::CellCoordToGlobal(spawnlocationcell);
+    getMoving()->setMovementSpeed(4);
+    getAvatarOrder()->setAvatarOrder(AvatarOrderType::SPAWNED);
+    getMoving()->setCurrentLocation(
+        MapUtil::CellCoordToGlobal(spawnlocationcell));
     m_Transform.scale = {1, 1};
     getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
@@ -124,9 +113,25 @@ void Avatar::DEBUG_printCurrentMoveDirection(MoveDirection Dir) {
     }
 }
 
-void Avatar::finishedmovingUpdate() {
-    Moving::moveToCellCorner(AvatarStandingCorner::CENTER);
-    m_Transform.translation = getCurrentLocation();
+void Avatar::DrawAvatar() {
+    m_Transform.translation = getMoving()->getCurrentLocation();
+
+    if (getAvatarOrder()->getAvatarOrder() == AvatarOrderType::OPEN_FIRE) {
+        this->SetDrawable(std::make_shared<Util::Image>(
+            "../assets/sprites/mech_open_fire.png"));
+    } else if (getAvatarOrder()->getAvatarOrder() ==
+               AvatarOrderType::TAKEN_DAMAGE) {
+        if (getHealth()->getHP() < 50) {
+            this->SetDrawable(std::make_shared<Util::Image>(
+                "../assets/sprites/mech_dead.png"));
+        } else {
+            this->SetDrawable(std::make_shared<Util::Image>(
+                "../assets/sprites/mech_taken_damage.png"));
+        }
+    } else {
+        this->SetDrawable(
+            std::make_shared<Util::Image>("../assets/sprites/mech_single.png"));
+    }
 
     Draw();
 }

@@ -4,20 +4,19 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTUREORDER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTUREORDER_HPP
-
+enum class StructureOrderType {
+    NOT_CONSTRUCTED_YET,
+    CONSTRUCTED,
+    SELECTING_SITE,
+    BUILT,
+    NO_ORDER
+};
 class StructureOrder {
-
 public:
     StructureOrder() {}
     virtual ~StructureOrder() {}
-    enum class StructureOrderType {
-        NOT_CONSTRUCTED_YET,
-        CONSTRUCTED,
-        SELECTING_SITE,
-        BUILT,
-        NO_ORDER
-    };
-    StructureOrderType getStructOrder() { return m_StructOrder; }
+
+    StructureOrderType getStructureOrderType() { return m_StructOrder; }
 
     void setStructOrder(StructureOrderType structorder) {
         m_StructOrder = structorder;

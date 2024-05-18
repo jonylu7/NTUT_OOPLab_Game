@@ -8,13 +8,13 @@
 #include "Display/SpriteSheet.hpp"
 #include "Display/SpriteSheetAnimation.hpp"
 #include "HighLight.h"
+#include "Map/MapUtility.hpp"
 #include "Mechanics/GameObjectID.hpp"
 #include "Selectable.hpp"
 #include "Structure/StructureOrder.hpp"
-#include "Util/Image.hpp"
-
 #include "Unit/Health.hpp"
 #include "Unit/IHealthable.hpp"
+#include "Util/Image.hpp"
 
 #include "Util/GameObject.hpp"
 #include "Util/Input.hpp"
@@ -26,7 +26,6 @@
 
 class Structure : public Util::GameObject,
                   public Selectable,
-                  public StructureOrder,
                   public IHealthable {
 
 public:
@@ -79,33 +78,33 @@ public:
     glm::vec2 GetObjectLocation() { return this->m_ObjectLocation; }
     virtual void SetAttachVisible(bool visible);
     glm::vec2 GetDrawLocation() { return m_DrawLocation; };
-    void SetID(GameObjectID id) { m_ID = id; };
 
     virtual void attachmentUpdate();
 
     float getElectricPower() { return this->m_ElectricPower; }
     float getBuildingTime() { return this->m_BuildingTime; }
     float getBuildingCost() { return this->m_BuildingCost; }
+
     HouseType getHouseType() { return this->m_ID.getHouseType(); }
 
-    glm::vec2 GlobalCoordToCellCoord(glm::vec2 globalCoord) {
-        return glm::vec2(int(globalCoord[0] / CELL_SIZE.x),
-                         int(globalCoord[1] / CELL_SIZE.y));
+    glm::vec2 getLocationCell() {
+        return MapUtil::GlobalCoordToCellCoord(m_ObjectLocation);
     }
-
-    glm::vec2 GetObjectCell() {
-        return GlobalCoordToCellCoord(m_ObjectLocation);
-    }
-    std::vector<glm::vec2> GetAbsoluteOccupiedArea();
+    std::vector<glm::vec2> getAbsoluteOccupiedArea();
     void SetRelativeOccupiedArea(std::vector<glm::vec2> Area) {
         m_RelativeOccupiedArea = Area;
     }
 
+public:
     GameObjectID getID() { return m_ID; }
-
     std::shared_ptr<Health> getHealth() override { return m_Health; }
     void setHealth(std::shared_ptr<Health> health) override {
         m_Health = health;
+    }
+    std::shared_ptr<StructureOrder> getStructureOrder() { return m_Order; }
+
+    std::shared_ptr<AttackAndDamage> getAttackAndDamage() {
+        return m_AttackAndDamage;
     }
 
 protected:
@@ -127,6 +126,9 @@ protected:
     glm::vec2 m_ObjectLocation = {100, 100};
     std::vector<glm::vec2> m_RelativeOccupiedArea = {{0, 0}};
 
+    // structure order
+    std::shared_ptr<StructureOrder> m_Order =
+        std::make_shared<StructureOrder>();
     // health
     std::shared_ptr<Health> m_Health = std::make_shared<Health>();
     // attack and damage

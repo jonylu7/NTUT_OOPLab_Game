@@ -33,8 +33,10 @@ public:
         if (ifAvatarHasNemesis(hunter) == false) {
             return false;
         }
-        if (hunter->getDistance(m_Nemesis[hunter]->getCurrentCell()) <=
-            hunter->getWeapon()->getFireRange()) // check with in range
+        if (hunter->getDistance(
+                m_Nemesis[hunter]->getMoving()->getCurrentCell()) <=
+            hunter->getAttackAndDamage()->getWeapon()->getFireRange() *
+                CELL_SIZE.x) // check with in range
         {
             return true;
         } else {
@@ -48,27 +50,31 @@ public:
             auto hunter = pair.first;
             auto prey = pair.second;
             if (ifNemesisWithinWeaponRange(hunter)) {
-                hunter->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
-                prey->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
-                hunter->getAttackAndDamager()->openFireToTarget(prey);
-                // 反擊
-                prey->setAvatarOrder(AvatarOrderType::OPEN_FIRE);
-                hunter->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
-                prey->getAttackAndDamager()->openFireToTarget(prey);
+                hunter->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::OPEN_FIRE);
+                prey->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::TAKEN_DAMAGE);
+                hunter->getAttackAndDamage()->openFireToTarget(prey);
             }
 
             if (*pair.second->getHealth()->getLivingStatus() ==
                 LivingStatus::DEAD) {
                 removeNemesis(hunter);
-                hunter->setAvatarOrder(AvatarOrderType::NO_ORDER);
-                prey->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                hunter->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
+                prey->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
+                break;
             }
 
             if (*pair.first->getHealth()->getLivingStatus() ==
                 LivingStatus::DEAD) {
                 removeNemesis(hunter);
-                hunter->setAvatarOrder(AvatarOrderType::NO_ORDER);
-                prey->setAvatarOrder(AvatarOrderType::NO_ORDER);
+                hunter->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
+                prey->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
+                break;
             }
         }
     }

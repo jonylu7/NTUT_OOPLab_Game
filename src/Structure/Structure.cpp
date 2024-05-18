@@ -11,7 +11,7 @@ void Structure::Start() {
     if (this->m_ID.getUnitType() == UnitType::NONE) {
         Structure::getHealth()->setLivingStatus(
             std::make_shared<LivingStatus>(LivingStatus::NOT_BORN_YET));
-        m_StructOrder = StructureOrderType::NO_ORDER;
+        getStructureOrder()->setStructOrder(StructureOrderType::NO_ORDER);
     } else {
         m_Transform.scale = {2.f, 2.f};
         m_HighLight.SetDrawable(
@@ -23,7 +23,7 @@ void Structure::Start() {
         SetSpriteSheet();
         Structure::getHealth()->setLivingStatus(
             std::make_shared<LivingStatus>(LivingStatus::ALIVE));
-        m_StructOrder = StructureOrderType::SELECTING_SITE;
+        getStructureOrder()->setStructOrder(StructureOrderType::SELECTING_SITE);
     }
 }
 void Structure::Start(glm::vec2 location) {
@@ -37,15 +37,15 @@ void Structure::Start(glm::vec2 location) {
     SetSpriteSheet();
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
-    m_StructOrder = StructureOrderType::SELECTING_SITE;
+    getStructureOrder()->setStructOrder(StructureOrderType::SELECTING_SITE);
     this->SetObjectLocation(location);
     SetVisible(true);
     m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                      false, INTERVAL, false);
-    setStructOrder(StructureOrderType::BUILT);
+    getStructureOrder()->setStructOrder(StructureOrderType::BUILT);
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
-    }
+}
 void Structure::Update() {
 
     switch (*getHealth()->getLivingStatus()) {
@@ -54,9 +54,12 @@ void Structure::Update() {
         break;
     case LivingStatus::ALIVE:
         whenSelected();
-        if (m_StructOrder == StructureOrderType::SELECTING_SITE) {
+
+        if (getStructureOrder()->getStructureOrderType() ==
+            StructureOrderType::SELECTING_SITE) {
             this->updateMoveable();
-        } else if (m_StructOrder == StructureOrderType::BUILT) {
+        } else if (getStructureOrder()->getStructureOrderType() ==
+                   StructureOrderType::BUILT) {
             this->updateFixed();
         }
         break;
@@ -105,10 +108,10 @@ void Structure::attachmentUpdate() {
     m_HighLight.SetObjectLocation(this->GetDrawLocation());
     m_HighLight.Draw();
 }
-std::vector<glm::vec2> Structure::GetAbsoluteOccupiedArea() {
+std::vector<glm::vec2> Structure::getAbsoluteOccupiedArea() {
     std::vector<glm::vec2> Area;
     for (auto i : m_RelativeOccupiedArea) {
-        Area.push_back({i.x + GetObjectCell().x, i.y + GetObjectCell().y});
+        Area.push_back({i.x + getLocationCell().x, i.y + getLocationCell().y});
     }
     return Area;
 }

@@ -12,7 +12,7 @@ public:
     virtual ~StructureManager() {}
 
     void Start(std::shared_ptr<MapClass> map) {
-        m_StructureArray.StartBuiltStructure();
+        m_StructureArray.Start(map);
         m_Map = map;
     }
     void Update() {
@@ -27,16 +27,17 @@ public:
         newstruct->Start();
         m_StructSelectingConstructionSite = newstruct;
 
-        newstruct->setStructOrder(
-            StructureOrder::StructureOrderType::SELECTING_SITE);
+        newstruct->getStructureOrder()->setStructOrder(
+            StructureOrderType::SELECTING_SITE);
     }
 
     void SelectingBuildSite() {
         // bulit or not
-        if (m_StructSelectingConstructionSite->getStructOrder() ==
-            StructureOrder::StructureOrderType::SELECTING_SITE) {
+        if (m_StructSelectingConstructionSite->getStructureOrder()
+                ->getStructureOrderType() ==
+            StructureOrderType::SELECTING_SITE) {
             m_StructureArray.buildNewStructure(
-                m_Map, m_StructSelectingConstructionSite);
+                m_StructSelectingConstructionSite);
         }
     }
 

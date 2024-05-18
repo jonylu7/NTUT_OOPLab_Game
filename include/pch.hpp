@@ -19,8 +19,8 @@
 
 #include <GL/glew.h>
 
-//suppose to be "GL/glut", yet GLUT/glut on mac
-//#include <GLUT/glut.h>
+// suppose to be "GL/glut", yet GLUT/glut on mac
+// #include <GLUT/glut.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtx/matrix_transform_2d.hpp>

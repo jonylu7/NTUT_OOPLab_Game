@@ -8,6 +8,7 @@ void TutorialScene::Start() {
     LOG_TRACE("Start");
     m_Map->Init(100, 100);
     m_GameObjectManager->Start(m_Map);
+    m_EnemyObjectManager->Start(m_Map);
     m_UI.Start(m_Map, m_GameObjectManager);
     m_Player->setTotalCurrency(5000);
     m_Enemy->setTotalCurrency(5000);
@@ -25,6 +26,9 @@ void TutorialScene::Start() {
                                    */
     m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
                                {5, 5});
+    // combat test
+    m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+                                {6, 6});
 
     stageStart();
 }
@@ -88,7 +92,7 @@ void TutorialScene::stageUpdate() {
         for (auto i :
              m_GameObjectManager->getAvatarManager()->getAvatarArray()) {
             if (i->getHouseType() == HouseType::MY) {
-                if (m_cellProp->isOverlaps(i->getCurrentCell()) ||
+                if (m_cellProp->isOverlaps(i->getMoving()->getCurrentCell()) ||
                     Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
                     // change next stage's text&prop here
                     m_Text->SetDrawable(std::make_unique<Util::Image>(
@@ -138,7 +142,7 @@ void TutorialScene::stageUpdate() {
         for (auto i :
              m_GameObjectManager->getAvatarManager()->getAvatarArray()) {
             if (i->getHouseType() == HouseType::MY) {
-                if (m_cellProp->isOverlaps(i->getCurrentCell())) {
+                if (m_cellProp->isOverlaps(i->getMoving()->getCurrentCell())) {
                     avatarCount++;
                 }
             }

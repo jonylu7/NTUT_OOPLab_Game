@@ -15,30 +15,24 @@
 #include "Selectable.hpp"
 #include "Util/Image.hpp"
 
-class Avatar : public Moving,
-               public AttackAndDamage,
-               public Util::GameObject,
-               public Selectable,
-               public AvatarOrder,
-               public IHealthable {
+class Avatar : public Util::GameObject, public Selectable, public IHealthable {
 
 public:
     Avatar(){};
     Avatar(UnitType unit, HouseType house)
-        : m_ID(GameObjectID(UnitType::NONE, HouseType::MY)){};
+        : m_ID(GameObjectID(UnitType::NONE, house)){};
     ~Avatar() override{};
 
     virtual void Start(glm::vec2 spawnlocationcell);
-    void noOrderUpdate();
+    void noorderUpdate();
     void spawnedUpdate();
-    void finishedmovingUpdate();
     void moveUpdate();
     void deadUpdate();
     void attackUpdate();
 
     float getDistance(glm::vec2 cell) {
-        return sqrt(pow(cell.x - getCurrentCell().x, 2) +
-                    pow(cell.y - getCurrentCell().y, 2));
+        return sqrt(pow(cell.x - m_Moving->getCurrentCell().x, 2) +
+                    pow(cell.y - m_Moving->getCurrentCell().y, 2));
     }
 
     void setSpriteSheet() {
@@ -61,17 +55,23 @@ public:
             "../assets/sprites/mech_single.png");
     }
 
-    GameObjectID getID() { return m_ID; }
-
     virtual void Update() override;
 
+    void DrawAvatar();
+
+public:
+    GameObjectID getID() { return m_ID; }
+
+    std::shared_ptr<AttackAndDamage> getAttackAndDamage() {
+        return m_AttackAndDamage;
+    }
+    std::shared_ptr<Moving> getMoving() { return m_Moving; }
+    std::shared_ptr<AvatarOrder> getAvatarOrder() { return m_Order; }
+
     std::shared_ptr<Health> getHealth() override { return m_Health; }
+
     void setHealth(std::shared_ptr<Health> health) override {
         m_Health = health;
-    }
-
-    std::shared_ptr<AttackAndDamage> getAttackAndDamager() {
-        return m_AttackAndDamage;
     }
 
 protected:
@@ -80,6 +80,10 @@ protected:
     std::shared_ptr<Util::SpriteSheetAnimation> m_SpriteSheetAnimation =
         std::make_shared<Util::SpriteSheetAnimation>();
 
+    // order
+    std::shared_ptr<AvatarOrder> m_Order = std::make_shared<AvatarOrder>();
+    // moving
+    std::shared_ptr<Moving> m_Moving = std::make_shared<Moving>();
     // health
     std::shared_ptr<Health> m_Health = std::make_shared<Health>();
     // attack and damage

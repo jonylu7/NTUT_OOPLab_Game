@@ -14,12 +14,18 @@ enum class WeaponType {
     Art_105mm,
     Art_120mm,
     Nuke,
-    Grenade
+    Grenade,
+    NONE
 };
 
 class Weapon {
 public:
-    Weapon() {}
+    Weapon()
+        : m_FireRange(1),
+          m_SoftAttack(10),
+          m_HardAttack(10),
+          m_FireRateInMs(180),
+          m_Type(WeaponType::NONE) {}
     Weapon(float firerate, float firerange, float softattack, float hardattack,
            WeaponType weapontype)
         : m_FireRange(firerange),
