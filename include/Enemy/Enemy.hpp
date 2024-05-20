@@ -25,6 +25,7 @@ public:
     EnemyPlayer(SceneMode sceneMode):m_SceneMode(sceneMode){};
     void Start() ;
     void Update() ;
+
     void addUnitConstructCount(UnitType type, int value) {
         unitCount[type] += value;
     }
@@ -33,6 +34,9 @@ public:
     }
     int getAvatarCount(){
         return unitCount[UnitType::INFANTRY];
+    }
+    int getTotalPower(){
+        return m_totalPower;
     }
     void setAvatarCount(UnitType type,int value){
         unitCount[type] += value;
