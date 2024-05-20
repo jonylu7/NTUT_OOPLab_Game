@@ -12,7 +12,7 @@ public:
     NemesisManager() {}
     ~NemesisManager() {}
     void addNemesis(std::shared_ptr<Avatar> avatar,
-                    std::shared_ptr<Huntable> nemesis) {
+                    std::shared_ptr<Avatar> nemesis) {
         m_Nemesis[avatar] = nemesis;
     }
 
@@ -34,7 +34,7 @@ public:
             return false;
         }
         if (hunter->getDistance(
-                m_Nemesis[hunter]->getCurrentLocationInCell()) <=
+                m_Nemesis[hunter]->getMoving()->getCurrentCell()) <=
             hunter->getAttackAndDamage()->getWeapon()->getFireRange() *
                 CELL_SIZE.x) // check with in range
         {
@@ -52,16 +52,18 @@ public:
             if (ifNemesisWithinWeaponRange(hunter)) {
                 hunter->getAvatarOrder()->setAvatarOrder(
                     AvatarOrderType::OPEN_FIRE);
-                prey->setOrderTakenDamage();
+                prey->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::TAKEN_DAMAGE);
                 hunter->getAttackAndDamage()->openFireToTarget(prey);
             }
 
-            if (pair.second->getHealth()->ifDead()) {
+            if (*pair.second->getHealth()->getLivingStatus() ==
+                LivingStatus::DEAD) {
                 removeNemesis(hunter);
                 hunter->getAvatarOrder()->setAvatarOrder(
                     AvatarOrderType::NO_ORDER);
-                prey->setOrderNoOrder();
-
+                prey->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
                 break;
             }
 
@@ -70,14 +72,15 @@ public:
                 removeNemesis(hunter);
                 hunter->getAvatarOrder()->setAvatarOrder(
                     AvatarOrderType::NO_ORDER);
-                prey->setOrderNoOrder();
+                prey->getAvatarOrder()->setAvatarOrder(
+                    AvatarOrderType::NO_ORDER);
                 break;
             }
         }
     }
 
 private:
-    std::unordered_map<std::shared_ptr<Avatar>, std::shared_ptr<Huntable>>
+    std::unordered_map<std::shared_ptr<Avatar>, std::shared_ptr<Avatar>>
         m_Nemesis;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_NEMESISMANAGER_HPP

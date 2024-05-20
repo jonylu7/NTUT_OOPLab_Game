@@ -71,13 +71,8 @@ public:
     bool ifArrivedAtNextCell();
 
     void setMovePath(std::deque<MoveDirection> movepath) {
-        if (movepath.empty()) {
-            m_MovePath = {MoveDirection::IDLE};
-            m_CurrentDir = MoveDirection::IDLE;
-        } else {
-            m_MovePath = movepath;
-            m_CurrentDir = m_MovePath.front();
-        }
+        m_MovePath = movepath;
+        m_CurrentDir = m_MovePath.front();
         m_PrevCell = getCurrentCell();
     }
 

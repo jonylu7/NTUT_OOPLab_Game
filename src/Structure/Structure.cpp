@@ -11,7 +11,7 @@ void Structure::Start() {
     if (this->m_ID.getUnitType() == UnitType::NONE) {
         Structure::getHealth()->setLivingStatus(
             std::make_shared<LivingStatus>(LivingStatus::NOT_BORN_YET));
-        getStructureOrder()->setStructureOrder(StructureOrderType::NO_ORDER);
+        getStructureOrder()->setStructOrder(StructureOrderType::NO_ORDER);
     } else {
         m_Transform.scale = {2.f, 2.f};
         m_HighLight.SetDrawable(
@@ -23,8 +23,7 @@ void Structure::Start() {
         SetSpriteSheet();
         Structure::getHealth()->setLivingStatus(
             std::make_shared<LivingStatus>(LivingStatus::ALIVE));
-        getStructureOrder()->setStructureOrder(
-            StructureOrderType::SELECTING_SITE);
+        getStructureOrder()->setStructOrder(StructureOrderType::SELECTING_SITE);
     }
 }
 void Structure::Start(glm::vec2 location) {
@@ -38,12 +37,12 @@ void Structure::Start(glm::vec2 location) {
     SetSpriteSheet();
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
-    getStructureOrder()->setStructureOrder(StructureOrderType::SELECTING_SITE);
+    getStructureOrder()->setStructOrder(StructureOrderType::SELECTING_SITE);
     this->SetObjectLocation(location);
     SetVisible(true);
     m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                      false, INTERVAL, false);
-    getStructureOrder()->setStructureOrder(StructureOrderType::BUILT);
+    getStructureOrder()->setStructOrder(StructureOrderType::BUILT);
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }
@@ -61,9 +60,6 @@ void Structure::Update() {
             this->updateMoveable();
         } else if (getStructureOrder()->getStructureOrderType() ==
                    StructureOrderType::BUILT) {
-            this->updateFixed();
-        } else if (getStructureOrder()->getStructureOrderType() ==
-                   StructureOrderType::TAKEN_DAMAGE) {
             this->updateFixed();
         }
         break;
