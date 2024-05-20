@@ -58,7 +58,7 @@ public:
 
     std::vector<std::shared_ptr<Avatar>> getAvatars() { return m_Avatars; }
     std::shared_ptr<Structure> getStructure() { return m_Structure; }
-    bool ifStructureExists() {
+    bool ifStrucutreExists() {
         if (*m_Structure->getHealth()->getLivingStatus() ==
             LivingStatus::NOT_BORN_YET) {
             return false;

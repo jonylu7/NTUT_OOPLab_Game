@@ -13,9 +13,10 @@
 #include "Selectable.hpp"
 #include "Structure/StructureOrder.hpp"
 #include "Unit/Health.hpp"
-#include "Unit/Huntable.hpp"
-#include "Util/GameObject.hpp"
+#include "Unit/IHealthable.hpp"
 #include "Util/Image.hpp"
+
+#include "Util/GameObject.hpp"
 #include "Util/Input.hpp"
 #include "Util/TransformUtils.hpp"
 #include "glm/glm.hpp"
@@ -23,7 +24,9 @@
 #define CHEAT 0.01
 #define INTERVAL 50
 
-class Structure : public Util::GameObject, public Selectable, public Huntable {
+class Structure : public Util::GameObject,
+                  public Selectable,
+                  public IHealthable {
 
 public:
     Structure()
@@ -94,24 +97,15 @@ public:
 
 public:
     GameObjectID getID() { return m_ID; }
-    void setHealth(std::shared_ptr<Health> health) { m_Health = health; }
+    std::shared_ptr<Health> getHealth() override { return m_Health; }
+    void setHealth(std::shared_ptr<Health> health) override {
+        m_Health = health;
+    }
     std::shared_ptr<StructureOrder> getStructureOrder() { return m_Order; }
+
     std::shared_ptr<AttackAndDamage> getAttackAndDamage() {
         return m_AttackAndDamage;
     }
-
-public:
-    // huntable
-    std::shared_ptr<Health> getHealth() override { return m_Health; }
-    void setOrderNoOrder() override {
-        m_Order->setStructureOrder(StructureOrderType::NO_ORDER);
-    };
-    void setOrderTakenDamage() override {
-        m_Order->setStructureOrder(StructureOrderType::TAKEN_DAMAGE);
-    };
-    glm::vec2 getCurrentLocationInCell() override {
-        return getAbsoluteOccupiedArea()[0];
-    };
 
 protected:
     float m_ElectricPower;

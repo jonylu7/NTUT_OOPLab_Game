@@ -44,7 +44,7 @@ void WarFactory::Start(glm::vec2 location) {
     SetVisible(true);
     m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                      false, INTERVAL, false);
-    getStructureOrder()->setStructureOrder(StructureOrderType::BUILT);
+    getStructureOrder()->setStructOrder(StructureOrderType::BUILT);
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }
