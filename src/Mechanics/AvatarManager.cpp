@@ -56,6 +56,7 @@ void AvatarManager::giveOrderToMyAvatar(std::shared_ptr<Avatar> unit) {
                             MapUtil::ScreenToGlobalCoord(dest)))
                         ->getAvatars()[0]);
             } else {
+                m_NemesisManager->removeNemesis(unit);
                 unit->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
             }
         }
