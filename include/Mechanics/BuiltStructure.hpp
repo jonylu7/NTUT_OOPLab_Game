@@ -25,14 +25,14 @@ public:
                 if (ifCanBuildStructureAtTile(newstruct) == true) {
                     m_BuiltStructure.push_back(newstruct);
                     m_Map->builtStructureByCellPosition(newstruct, coords);
-                    newstruct->getStructureOrder()->setStructureOrder(
+                    newstruct->getStructureOrder()->setStructOrder(
                         StructureOrderType::BUILT);
                 }
             }
         } else {
             m_BuiltStructure.push_back(newstruct);
             m_Map->builtStructureByCellPosition(newstruct, coords);
-            newstruct->getStructureOrder()->setStructureOrder(
+            newstruct->getStructureOrder()->setStructOrder(
                 StructureOrderType::BUILT);
         }
     }

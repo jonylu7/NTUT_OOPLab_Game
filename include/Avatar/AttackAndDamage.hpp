@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_ATTACKANDDAMAGE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_ATTACKANDDAMAGE_HPP
-#include "Unit/Huntable.hpp"
+#include "Unit/IHealthable.hpp"
 #include "Util/Time.hpp"
 #include "Weapon.hpp"
 
@@ -13,7 +13,7 @@ public:
     AttackAndDamage() {}
     virtual ~AttackAndDamage() {}
 
-    void damageTargetWithWeapon(std::shared_ptr<Huntable> target,
+    void damageTargetWithWeapon(std::shared_ptr<IHealthable> target,
                                 std::shared_ptr<Weapon> weapon) {
         auto targethealth = target->getHealth();
         auto damage =
@@ -22,7 +22,7 @@ public:
         targethealth->addHP(-1 * damage);
     }
 
-    void openFireToTarget(std::shared_ptr<Huntable> target) {
+    void openFireToTarget(std::shared_ptr<IHealthable> target) {
         // cd time
         m_DeltaTime += m_Time.GetDeltaTime();
         if (m_Weapon->getIntervalInS() <= m_DeltaTime) {

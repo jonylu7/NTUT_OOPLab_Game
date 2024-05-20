@@ -13,10 +13,9 @@
 #include "Map/MapUtility.hpp"
 #include "Mechanics/GameObjectID.hpp"
 #include "Selectable.hpp"
-#include "Unit/Huntable.hpp"
 #include "Util/Image.hpp"
 
-class Avatar : public Util::GameObject, public Selectable, public Huntable {
+class Avatar : public Util::GameObject, public Selectable, public IHealthable {
 
 public:
     Avatar(){};
@@ -69,20 +68,11 @@ public:
     std::shared_ptr<Moving> getMoving() { return m_Moving; }
     std::shared_ptr<AvatarOrder> getAvatarOrder() { return m_Order; }
 
-    void setHealth(std::shared_ptr<Health> health) { m_Health = health; }
-
-public:
-    // huntable
     std::shared_ptr<Health> getHealth() override { return m_Health; }
-    void setOrderNoOrder() override {
-        m_Order->setAvatarOrder(AvatarOrderType::NO_ORDER);
-    };
-    void setOrderTakenDamage() override {
-        m_Order->setAvatarOrder(AvatarOrderType::TAKEN_DAMAGE);
-    };
-    glm::vec2 getCurrentLocationInCell() override {
-        return getMoving()->getCurrentCell();
-    };
+
+    void setHealth(std::shared_ptr<Health> health) override {
+        m_Health = health;
+    }
 
 protected:
     std::shared_ptr<SpriteSheet> m_AvatarSpriteSheet =

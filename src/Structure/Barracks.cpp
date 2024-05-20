@@ -20,7 +20,7 @@ void Barracks::Start() {
     m_HighLight.SetHLScale(this->GetTransform().scale);
     whenSelected();
     // State
-    getStructureOrder()->setStructureOrder(StructureOrderType::CONSTRUCTED);
+    getStructureOrder()->setStructOrder(StructureOrderType::CONSTRUCTED);
     // health
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
@@ -47,7 +47,7 @@ void Barracks::Start(glm::vec2 location) {
     SetVisible(true);
     m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                      false, INTERVAL, false);
-    getStructureOrder()->setStructureOrder(StructureOrderType::BUILT);
+    getStructureOrder()->setStructOrder(StructureOrderType::BUILT);
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }

@@ -28,7 +28,7 @@ void CursorSelection::cursorSelect() {
         for (int i = min_y_cell; i <= max_y_cell; i++) {
             for (int j = min_x_cell; j <= max_x_cell; j++) {
                 auto tile = m_Map->getTileByCellPosition(glm::vec2(j, i));
-                if (tile->ifStructureExists()) {
+                if (tile->ifStrucutreExists()) {
                     auto structure = tile->getStructure();
                     Append(structure);
 

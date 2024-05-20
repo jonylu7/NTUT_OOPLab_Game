@@ -49,27 +49,13 @@ void AvatarManager::giveOrderToMyAvatar(std::shared_ptr<Avatar> unit) {
                         MapUtil::ScreenToGlobalCoord(dest)))
                     ->ifEnemyAtTile()) {
                 unit->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
-                if (m_Map
+                m_NemesisManager->addNemesis(
+                    unit,
+                    m_Map
                         ->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
                             MapUtil::ScreenToGlobalCoord(dest)))
-                        ->ifStructureExists()) {
-                    m_NemesisManager->addNemesis(
-                        unit, m_Map
-                                  ->getTileByCellPosition(
-                                      MapUtil::GlobalCoordToCellCoord(
-                                          MapUtil::ScreenToGlobalCoord(dest)))
-                                  ->getStructure());
-                } else {
-                    m_NemesisManager->addNemesis(
-                        unit, m_Map
-                                  ->getTileByCellPosition(
-                                      MapUtil::GlobalCoordToCellCoord(
-                                          MapUtil::ScreenToGlobalCoord(dest)))
-                                  ->getAvatars()[0]);
-                }
-
+                        ->getAvatars()[0]);
             } else {
-                m_NemesisManager->removeNemesis(unit);
                 unit->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
             }
         }

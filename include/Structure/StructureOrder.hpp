@@ -9,8 +9,7 @@ enum class StructureOrderType {
     CONSTRUCTED,
     SELECTING_SITE,
     BUILT,
-    NO_ORDER,
-    TAKEN_DAMAGE
+    NO_ORDER
 };
 class StructureOrder {
 public:
@@ -19,7 +18,7 @@ public:
 
     StructureOrderType getStructureOrderType() { return m_StructOrder; }
 
-    void setStructureOrder(StructureOrderType structorder) {
+    void setStructOrder(StructureOrderType structorder) {
         m_StructOrder = structorder;
     }
 
