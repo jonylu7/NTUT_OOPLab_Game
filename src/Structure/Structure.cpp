@@ -62,6 +62,9 @@ void Structure::Update() {
         } else if (getStructureOrder()->getStructureOrderType() ==
                    StructureOrderType::BUILT) {
             this->updateFixed();
+        } else if (getStructureOrder()->getStructureOrderType() ==
+                   StructureOrderType::TAKEN_DAMAGE) {
+            this->updateFixed();
         }
         break;
     case LivingStatus::DEAD:
