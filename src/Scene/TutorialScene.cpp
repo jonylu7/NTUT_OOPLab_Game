@@ -29,6 +29,8 @@ void TutorialScene::Start() {
     // combat test
     m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
                                 {6, 6});
+    m_EnemyObjectManager->spawn(m_Map, UnitType::BARRACKS, HouseType::ENEMY,
+                                {10, 10});
 
     stageStart();
 }

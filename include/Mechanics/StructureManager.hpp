@@ -27,7 +27,7 @@ public:
         newstruct->Start();
         m_StructSelectingConstructionSite = newstruct;
 
-        newstruct->getStructureOrder()->setStructOrder(
+        newstruct->getStructureOrder()->setStructureOrder(
             StructureOrderType::SELECTING_SITE);
     }
 
