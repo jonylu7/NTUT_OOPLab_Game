@@ -11,7 +11,7 @@ void Structure::Start() {
     if (this->m_ID.getUnitType() == UnitType::NONE) {
         Structure::getHealth()->setLivingStatus(
             std::make_shared<LivingStatus>(LivingStatus::NOT_BORN_YET));
-        getStructureOrder()->setStructOrder(StructureOrderType::NO_ORDER);
+        getStructureOrder()->setStructureOrder(StructureOrderType::NO_ORDER);
     } else {
         m_Transform.scale = {2.f, 2.f};
         m_HighLight.SetDrawable(
@@ -23,7 +23,8 @@ void Structure::Start() {
         SetSpriteSheet();
         Structure::getHealth()->setLivingStatus(
             std::make_shared<LivingStatus>(LivingStatus::ALIVE));
-        getStructureOrder()->setStructOrder(StructureOrderType::SELECTING_SITE);
+        getStructureOrder()->setStructureOrder(
+            StructureOrderType::SELECTING_SITE);
     }
 }
 void Structure::Start(glm::vec2 location) {
@@ -37,12 +38,12 @@ void Structure::Start(glm::vec2 location) {
     SetSpriteSheet();
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
-    getStructureOrder()->setStructOrder(StructureOrderType::SELECTING_SITE);
+    getStructureOrder()->setStructureOrder(StructureOrderType::SELECTING_SITE);
     this->SetObjectLocation(location);
     SetVisible(true);
     m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                      false, INTERVAL, false);
-    getStructureOrder()->setStructOrder(StructureOrderType::BUILT);
+    getStructureOrder()->setStructureOrder(StructureOrderType::BUILT);
     Structure::getHealth()->setLivingStatus(
         std::make_shared<LivingStatus>(LivingStatus::ALIVE));
 }
