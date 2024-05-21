@@ -172,19 +172,19 @@ void UIScriptProcess::Update(bool queueContinue) {
 
 float UIScriptProcess::GetStructureTime(UnitType type) {
     if (type == UnitType::POWER_PLANT) {
-        return powerPlant->getBuildingTime();
+        return std::make_shared<PowerPlants>()->getBuildingTime();
     }
     if (type == UnitType::BARRACKS) {
-        return barracks->getBuildingTime();
+        return std::make_shared<Barracks>()->getBuildingTime();
     }
     if (type == UnitType::ORE_REF) {
-        return oreRefinery->getBuildingTime();
+        return std::make_shared<OreRefinery>()->getBuildingTime();
     }
     if (type == UnitType::WAR_FACT) {
-        return warFactory->getBuildingTime();
+        return std::make_shared<WarFactory>()->getBuildingTime();
     }
     if (type == UnitType::ADV_POWER_PLANT) {
-        return advPowerPlant->getBuildingTime();
+        return std::make_shared<ADVPowerPlants>()->getBuildingTime();
     }
 }
 
@@ -251,15 +251,15 @@ float UIScriptProcess::GetSpawnCountDownTime() {
 int UIScriptProcess::GetObjCost(UnitType type) {
     switch (type) {
     case UnitType::BARRACKS:
-        return barracks->getBuildingCost();
+        return std::make_shared<Barracks>()->getBuildingCost();
     case UnitType::ORE_REF:
-        return oreRefinery->getBuildingCost();
+        return std::make_shared<OreRefinery>()->getBuildingCost();
     case UnitType::POWER_PLANT:
-        return powerPlant->getBuildingCost();
+        return std::make_shared<PowerPlants>()->getBuildingCost();
     case UnitType::WAR_FACT:
-        return warFactory->getBuildingCost();
+        return std::make_shared<WarFactory>()->getBuildingCost();
     case UnitType::ADV_POWER_PLANT:
-        return advPowerPlant->getBuildingCost();
+        return std::make_shared<ADVPowerPlants>()->getBuildingCost();
     case UnitType::INFANTRY:
         return 100;
     default:
