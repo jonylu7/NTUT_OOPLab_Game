@@ -29,18 +29,20 @@ public:
     std::vector<std::shared_ptr<Avatar>> getAvatarArray() {
         return m_AvatarArray;
     }
-    void forceMove(std::shared_ptr<Avatar> unit, glm::vec2 cell);
+
+    void assignMoveOrderToAvatar(std::shared_ptr<Avatar> unit,
+                                 glm::vec2 destcell);
+
+    void assignAttackOrderToAvatar(std::shared_ptr<Avatar> unit,
+                                   glm::vec2 destcell);
 
 protected:
-    void giveOrderToMyAvatar(std::shared_ptr<Avatar> unit);
-
+    void assignOrderToMyAvatar(std::shared_ptr<Avatar> unit);
     void updateTileWhileAvatarMoving(std::shared_ptr<Avatar> unit);
 
-protected:
+private:
     std::vector<std::shared_ptr<Avatar>> m_AvatarArray;
     std::unordered_map<std::shared_ptr<Avatar>, glm::vec2> unitArrayAndLocation;
-
-private:
     std::shared_ptr<NemesisManager> m_NemesisManager =
         std::make_shared<NemesisManager>();
     std::shared_ptr<AvatarNavigator> m_Navigator =

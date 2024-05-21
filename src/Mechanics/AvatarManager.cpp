@@ -27,59 +27,46 @@ void AvatarManager::Update() {
 
             // give order to avatar
             if (m_AvatarArray[i]->getSelected()) {
-                giveOrderToMyAvatar(m_AvatarArray[i]);
+                assignOrderToMyAvatar(m_AvatarArray[i]);
             }
         }
     }
 }
 
-void AvatarManager::giveOrderToMyAvatar(std::shared_ptr<Avatar> unit) {
-    if (unit->getID().getHouseType() == HouseType::MY) {
-        if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_RB)) {
-            auto dest = Util::Input::GetCursorPosition();
-            auto queue =
-                m_Navigator->findPath(unit->getMoving()->getCurrentCell(),
-                                      MapUtil::GlobalCoordToCellCoord(
-                                          MapUtil::ScreenToGlobalCoord(dest)));
-            // unit
-            unit->getMoving()->setMovePath(queue);
-
-            if (m_Map
-                    ->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
-                        MapUtil::ScreenToGlobalCoord(dest)))
-                    ->ifEnemyAtTile()) {
-                unit->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
-                if (m_Map
-                        ->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
-                            MapUtil::ScreenToGlobalCoord(dest)))
-                        ->ifStructureExists()) {
-                    m_NemesisManager->addNemesis(
-                        unit, m_Map
-                                  ->getTileByCellPosition(
-                                      MapUtil::GlobalCoordToCellCoord(
-                                          MapUtil::ScreenToGlobalCoord(dest)))
-                                  ->getStructure());
-                } else {
-                    m_NemesisManager->addNemesis(
-                        unit, m_Map
-                                  ->getTileByCellPosition(
-                                      MapUtil::GlobalCoordToCellCoord(
-                                          MapUtil::ScreenToGlobalCoord(dest)))
-                                  ->getAvatars()[0]);
-                }
-
-            } else {
-                m_NemesisManager->removeNemesis(unit);
-                unit->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
-            }
-        }
-    }
-}
-void AvatarManager::forceMove(std::shared_ptr<Avatar> unit, glm::vec2 cell) {
-    unit->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
+void AvatarManager::assignMoveOrderToAvatar(std::shared_ptr<Avatar> avatar,
+                                            glm::vec2 destcell) {
     auto queue =
-        m_Navigator->findPath(unit->getMoving()->getCurrentCell(), cell);
-    unit->getMoving()->setMovePath(queue);
+        m_Navigator->findPath(avatar->getMoving()->getCurrentCell(), destcell);
+    avatar->getMoving()->setMovePath(queue);
+    avatar->getAvatarOrder()->setAvatarOrder(AvatarOrderType::MOVE);
+}
+
+void AvatarManager::assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
+                                              glm::vec2 destcell) {
+    m_NemesisManager->removeNemesis(avatar);
+    if (m_Map->getTileByCellPosition(destcell)->ifEnemyAtTile()) {
+        if (m_Map->getTileByCellPosition(destcell)->ifStructureExists()) {
+            m_NemesisManager->addNemesis(
+                avatar, m_Map->getTileByCellPosition(destcell)->getStructure());
+        } else {
+            m_NemesisManager->addNemesis(
+                avatar,
+                m_Map->getTileByCellPosition(destcell)->getAvatars()[0]);
+        }
+    }
+}
+
+void AvatarManager::assignOrderToMyAvatar(std::shared_ptr<Avatar> avatar) {
+    if (avatar->getID().getHouseType() == HouseType::MY) {
+        if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_RB)) {
+
+            auto destcell = MapUtil::GlobalCoordToCellCoord(
+                MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
+
+            assignMoveOrderToAvatar(avatar, destcell);
+            assignAttackOrderToAvatar(avatar, destcell);
+        }
+    }
 }
 
 void AvatarManager::updateTileWhileAvatarMoving(

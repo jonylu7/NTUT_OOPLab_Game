@@ -1,11 +1,7 @@
 //
 // Created by nudle on 2024/4/28.
 //
-#include "Enemy/Enemy.hpp"
+#include "AI/Enemy.hpp"
 
-void EnemyPlayer::Start(){
-
-}
-void EnemyPlayer::Update(){
-
-}
+void EnemyPlayer::Start() {}
+void EnemyPlayer::Update() {}
