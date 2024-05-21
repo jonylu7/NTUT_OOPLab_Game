@@ -36,21 +36,20 @@ public:
     bool getIfAnyBuildingReadyToBuild(); // 避免Scene收到空的getSelectedBuilding
 
     std::shared_ptr<Avatar> getUnitFromUI();
-    bool getIfUnitReadyToSpawn() { return ButtonScript.getIfReadytoSpawn(); }
-    void setIfUnitReadyToSpawn(bool b) { ButtonScript.setIfReadytoSpawn(b); }
+    bool getIfUnitReadyToSpawn() {
+        return m_UIScriptProcess->getIfReadytoSpawn();
+    }
+    void setIfUnitReadyToSpawn(bool b) {
+        m_UIScriptProcess->setIfReadytoSpawn(b);
+    }
 
     void
     checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList);
 
-protected:
-    void importMap(std::shared_ptr<MapClass> m_Map) { this->m_Map = m_Map; }
-    void importGameObjManager(std::shared_ptr<UnitManager> gameObjectManager) {
-        m_gameObjectManager = gameObjectManager;
-        ButtonScript.importGameObjManager(gameObjectManager);
-    }
-
 private:
-    UIScriptProcess ButtonScript;
+    std::shared_ptr<UIScriptProcess> m_UIScriptProcess =
+        std::make_shared<UIScriptProcess>();
+
     void InitUnitQueue();
 
     void ShowPlayerConstructionMenu();

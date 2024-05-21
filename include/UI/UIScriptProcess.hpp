@@ -63,6 +63,10 @@ public:
     UIScriptProcess(){};
     ~UIScriptProcess(){};
 
+    void Start(std::shared_ptr<UnitManager> gameObjectManager) {
+        m_gameObjectManager = gameObjectManager;
+    }
+
     // Getter/Setter
     bool GetIfFinishedBuilding(UnitType type);
     int GetObjCost(UnitType type);
@@ -100,19 +104,5 @@ public:
     void setIfReadytoSpawn(bool b) { b_isReadyToSpawn = b; }
 
     // import from scene
-    void importGameObjManager(std::shared_ptr<UnitManager> gameObjectManager) {
-        m_gameObjectManager = gameObjectManager;
-    }
-
-private:
-    std::shared_ptr<Structure> barracks = std::make_shared<Barracks>();
-    std::shared_ptr<Structure> oreRefinery = std::make_shared<OreRefinery>();
-    std::shared_ptr<Structure> powerPlant = std::make_shared<PowerPlants>();
-    std::shared_ptr<Structure> warFactory = std::make_shared<WarFactory>();
-    std::shared_ptr<Structure> advPowerPlant =
-        std::make_shared<ADVPowerPlants>();
-    std::vector<std::shared_ptr<Structure>> StructureArray = {
-        barracks, oreRefinery, powerPlant, warFactory, advPowerPlant,
-    };
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP
