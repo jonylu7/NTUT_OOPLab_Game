@@ -52,9 +52,9 @@ void TutorialScene::Update() {
         m_GameObjectManager->getStructureManager()->AddStructSelectingBuiltSite(
             m_UI->getSelectedBuilding());
     }
-    m_UI->checkExistBuilding(*m_GameObjectManager->getStructureManager()
-                                  ->getStructureArray()
-                                  ->getBuiltStructureArray());
+    m_UI->checkExistBuilding(m_GameObjectManager->getStructureManager()
+                                 ->getStructureArray()
+                                 ->getBuiltStructureArray());
     if (m_UI->getIfUnitReadyToSpawn()) {
         m_GameObjectManager->getAvatarManager()->AppendAvatar(
             m_UI->getUnitFromUI());
@@ -129,9 +129,9 @@ void TutorialScene::stage2Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
     int structCount = 0;
-    for (auto i : *(m_GameObjectManager->getStructureManager()
-                        ->getStructureArray()
-                        ->getBuiltStructureArray())) {
+    for (auto i : (m_GameObjectManager->getStructureManager()
+                       ->getStructureArray()
+                       ->getBuiltStructureArray())) {
         if (i->getHouseType() == HouseType::MY) {
             structCount++;
         }

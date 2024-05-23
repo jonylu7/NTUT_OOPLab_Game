@@ -54,7 +54,7 @@ public:
 public:
     int getTotalPower() {
         return Player::getTotalPower(
-            *m_StructureManager->getStructureArray()->getBuiltStructureArray());
+            m_StructureManager->getStructureArray()->getBuiltStructureArray());
     }
     std::shared_ptr<AvatarManager> getAvatarManager() {
         return m_AvatarManager;
@@ -64,8 +64,8 @@ public:
     }
 
     int UpdateCurrency() {
-        for (auto i : *m_StructureManager->getStructureArray()
-                           ->getBuiltStructureArray()) {
+        for (auto i : m_StructureManager->getStructureArray()
+                          ->getBuiltStructureArray()) {
             if (std::dynamic_pointer_cast<OreRefinery>(i)) {
                 addTotalCurrency(150);
             }

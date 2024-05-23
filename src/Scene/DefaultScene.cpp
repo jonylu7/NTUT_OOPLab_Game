@@ -50,9 +50,9 @@ void DefaultScene::Update() {
         m_GameObjectManager->getStructureManager()->AddStructSelectingBuiltSite(
             m_UI->getSelectedBuilding());
     }
-    m_UI->checkExistBuilding(*m_GameObjectManager->getStructureManager()
-                                  ->getStructureArray()
-                                  ->getBuiltStructureArray());
+    m_UI->checkExistBuilding(m_GameObjectManager->getStructureManager()
+                                 ->getStructureArray()
+                                 ->getBuiltStructureArray());
     if (m_UI->getIfUnitReadyToSpawn()) {
         // what the fuck
         m_GameObjectManager->getAvatarManager()->AppendAvatar(
