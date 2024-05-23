@@ -87,10 +87,11 @@ public:
 
             avatar->Start(m_StructureManager->getStructureArray()
                               ->getPlayerBarrackCell());
-            
+
             // assign order
-            m_AvatarManager->assignMoveOrderToAvatar(avatar,
-                                                     getPlayerWayPointCell);
+            m_AvatarManager->assignMoveOrderToAvatar(
+                avatar, m_StructureManager->getStructureArray()
+                            ->getPlayerWayPointCell());
             m_AvatarManager->AppendAvatar(avatar);
         }
 

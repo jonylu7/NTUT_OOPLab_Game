@@ -20,7 +20,7 @@ void DefaultScene::Start() {
 
     // start
     m_GameObjectManager->Start(m_Map);
-    m_UI.Start(m_Map, m_GameObjectManager);
+    m_UI->Start(m_Map, m_GameObjectManager);
     m_GameObjectManager->setTotalCurrency(5000);
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                          MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
@@ -36,7 +36,7 @@ void DefaultScene::Update() {
     m_Map->Draw(trans, 0);
     m_SceneCamera->Update();
     m_Renderer.Update();
-    m_UI.Update();
+    m_UI->Update();
 
     auto tileLocation = MapUtil::GlobalCoordToCellCoord(
         MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
@@ -46,16 +46,16 @@ void DefaultScene::Update() {
 
     // build and spawn stuff
 
-    if (m_UI.getIfAnyBuildingReadyToBuild()) {
+    if (m_UI->getIfAnyBuildingReadyToBuild()) {
         m_GameObjectManager->getStructureManager()->AddStructSelectingBuiltSite(
-            m_UI.getSelectedBuilding());
+            m_UI->getSelectedBuilding());
     }
-    m_UI.checkExistBuilding(*m_GameObjectManager->getStructureManager()
-                                 ->getStructureArray()
-                                 ->getBuiltStructureArray());
-    if (m_UI.getIfUnitReadyToSpawn()) {
+    m_UI->checkExistBuilding(*m_GameObjectManager->getStructureManager()
+                                  ->getStructureArray()
+                                  ->getBuiltStructureArray());
+    if (m_UI->getIfUnitReadyToSpawn()) {
         // what the fuck
         m_GameObjectManager->getAvatarManager()->AppendAvatar(
-            m_UI.getUnitFromUI());
+            m_UI->getUnitFromUI());
     }
 }
