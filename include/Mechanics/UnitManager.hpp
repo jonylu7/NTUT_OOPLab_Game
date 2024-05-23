@@ -72,14 +72,8 @@ public:
         }
     }
 
-    void spawn(std::shared_ptr<MapClass> m_Map, UnitType unit,
-               HouseType house) {
-
-        if (house == HouseType::ENEMY) {
-            // m_Enemy->addUnitConstructCount(unit, 1);
-        } else {
-            //                m_Player->setUnitConstructCount(unit, 1);
-        }
+    void spawnToWayPoint(std::shared_ptr<MapClass> m_Map, UnitType unit,
+                         HouseType house) {
 
         switch (unit) {
         case UnitType::INFANTRY: {
@@ -93,8 +87,10 @@ public:
 
             avatar->Start(m_StructureManager->getStructureArray()
                               ->getPlayerBarrackCell());
-            //                avatar
-            //                ->setNewDestination(m_StructureManager.getStructureArray().getPlayerWayPointCell());
+            
+            // assign order
+            m_AvatarManager->assignMoveOrderToAvatar(avatar,
+                                                     getPlayerWayPointCell);
             m_AvatarManager->AppendAvatar(avatar);
         }
 
