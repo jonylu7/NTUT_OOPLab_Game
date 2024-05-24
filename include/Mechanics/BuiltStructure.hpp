@@ -47,8 +47,8 @@ public:
         return true;
     }
 
-    std::vector<std::shared_ptr<Structure>> *getBuiltStructureArray() {
-        return &m_BuiltStructure;
+    std::vector<std::shared_ptr<Structure>> getBuiltStructureArray() {
+        return m_BuiltStructure;
     }
 
     void StartBuiltStructure() {
@@ -90,6 +90,38 @@ public:
 
     glm::vec2 getPlayerBarrackCell() { return {m_PlayerBarrackCell.x-1,m_PlayerBarrackCell.y-1}; }
     glm::vec2 getPlayerWayPointCell() { return m_PlayerWayPointCell; }
+
+public:
+    glm::vec2 getEnemyBarrackCell() { return m_EnemyBarrackCell; }
+    glm::vec2 getEnemyWayPointCell() { return m_EnemyWayPointCell; }
+    glm::vec2 getPlayerBarrackSpawnCell() { return m_PlayerBarrackCell; }
+    glm::vec2 getPlayerBarrackWayPointCell() { return m_PlayerWayPointCell; }
+
+    bool ifBarracksBuilt() {
+        for (auto i : m_BuiltStructure) {
+            if (i->getID().getUnitType() == UnitType::BARRACKS) {
+                return true;
+            }
+        }
+        return false;
+    }
+    bool ifPowerPlantsBuilt() {
+        for (auto i : m_BuiltStructure) {
+            if (i->getID().getUnitType() == UnitType::POWER_PLANT) {
+                return true;
+            }
+        }
+        return false;
+    }
+    bool ifWarFactoryBuilt() {
+        for (auto i : m_BuiltStructure) {
+            if (i->getID().getUnitType() == UnitType::WAR_FACT) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();

@@ -450,6 +450,7 @@ void UIClass::checkExistBuilding(
 }
 
 std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
+    // what the fuck???
     printf("(UI)return to GOM\n");
     auto Avatar = m_UIScriptProcess->spawnAvatar();
     m_UIScriptProcess->setIfReadytoSpawn(false);

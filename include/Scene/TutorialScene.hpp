@@ -8,12 +8,13 @@
 #include "Cursor.hpp"
 #include "Scene.hpp"
 // #include "Mechanics/GameObjectID.hpp"
-#include "Task.hpp"
 #include "Util/Prop.hpp"
-#include <glm/glm.hpp>
+#include "pch.hpp"
 
 #define DEBUG_KEY P
 
+
+enum class TutorialStages { STAGE1, STAGE2, STAGE3, STAGE4 };
 
 class TutorialScene : public Scene {
     enum class Stages { STAGE1, STAGE2, STAGE3, STAGE4 };
@@ -22,8 +23,14 @@ public:
     ~TutorialScene(){};
     void Start() override;
     void Update() override;
+
+private:
     void stageStart();
     void stageUpdate();
+    void stage1Update();
+    void stage2Update();
+    void stage3Update();
+    void stage4Update();
 
 private:
     SpriteSheet m_SpriteSheet;
@@ -33,8 +40,9 @@ private:
         std::make_shared<EnemyPlayer>(SceneMode::TUTORIAL);
     std::shared_ptr<EnemyScripts> m_EnemyScripts =
         std::make_shared<EnemyScripts>();
-    std::shared_ptr<Task> m_Text = std::make_shared<Task>();
+    std::shared_ptr<Util::GameObject> m_PlayerObjectivesText =
+        std::make_shared<Util::GameObject>();
     std::shared_ptr<Prop> m_cellProp = std::make_shared<Prop>();
-    Stages m_stage;
+    TutorialStages m_stage;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_TUTORIALSCENE_HPP

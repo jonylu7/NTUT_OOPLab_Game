@@ -54,7 +54,7 @@ public:
 public:
     int getTotalPower() {
         return Player::getTotalPower(
-            *m_StructureManager->getStructureArray()->getBuiltStructureArray());
+            m_StructureManager->getStructureArray()->getBuiltStructureArray());
     }
     std::shared_ptr<AvatarManager> getAvatarManager() {
         return m_AvatarManager;
@@ -64,22 +64,16 @@ public:
     }
 
     int UpdateCurrency() {
-        for (auto i : *m_StructureManager->getStructureArray()
-                           ->getBuiltStructureArray()) {
+        for (auto i : m_StructureManager->getStructureArray()
+                          ->getBuiltStructureArray()) {
             if (std::dynamic_pointer_cast<OreRefinery>(i)) {
                 addTotalCurrency(150);
             }
         }
     }
 
-    void spawn(std::shared_ptr<MapClass> m_Map, UnitType unit,
-               HouseType house) {
-
-        if (house == HouseType::ENEMY) {
-            // m_Enemy->addUnitConstructCount(unit, 1);
-        } else {
-            //                m_Player->setUnitConstructCount(unit, 1);
-        }
+    void spawnToWayPoint(std::shared_ptr<MapClass> m_Map, UnitType unit,
+                         HouseType house) {
 
         switch (unit) {
         case UnitType::INFANTRY: {
@@ -93,7 +87,12 @@ public:
 
             avatar->Start(m_StructureManager->getStructureArray()
                               ->getPlayerBarrackCell());
+
             m_AvatarManager->assignMoveOrderToAvatar(avatar,{m_StructureManager->getStructureArray()->getPlayerWayPointCell()});
+            // assign order
+            m_AvatarManager->assignMoveOrderToAvatar(
+                avatar, m_StructureManager->getStructureArray()
+                            ->getPlayerWayPointCell());
             m_AvatarManager->AppendAvatar(avatar);
             m_troopSize+=1;
         }
