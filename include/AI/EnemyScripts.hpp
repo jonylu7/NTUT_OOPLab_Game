@@ -10,6 +10,7 @@
 #define SPACE 4
 
 enum class SpawnMode { BUILDINGS, AVATAR };
+
 class EnemyScripts {
 private:
     std::shared_ptr<EnemyPlayer> m_Enemy;
@@ -20,7 +21,17 @@ private:
     glm::vec2 m_baseCell = {20, 20};
     int constructCountX = 0;
     int constructCountY = 0;
-    
+
+    float CDTime = 0;
+    std::chrono::high_resolution_clock::time_point m_StartTime;
+    double m_lastElapsed = 0.F;
+    float m_cost = 0.F;
+    int timeStamp = 0;
+
+<<<<<<< HEAD
+    UnitType m_selectedUnitType = UnitType::NONE;
+
+=======
     float CDTime = 0;
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
@@ -28,6 +39,8 @@ private:
     int timeStamp = 0;
 
     UnitType m_selectedUnitType = UnitType::NONE;
+
+>>>>>>> bb96505 (merge)
 
 public:
     EnemyScripts(){};
@@ -54,6 +67,7 @@ public:
             m_Enemy->addTotalCurrency(m_cost / CDTime * (-1));
         }
         modeUpdate();
+<<<<<<< HEAD
     }
     void modeUpdate() {
         if (!isBuiltBasic()) {
@@ -90,6 +104,35 @@ public:
     void attackModeUpdate() {
         //        m_EnemyObjectManager->setAllTroopToAttackMode();
         //        m_EnemyObjectManager->setDefensiveTroopSize(0);
+=======
+    }
+    void modeUpdate() {
+        if (!isBuiltBasic()) {
+            buildBasic();
+        } else {
+            if (/*m_GameObjectManager->getTroopSize()/m_EnemyObjectManager->getTroopSize()>=2*/
+                0) {
+                // Defense mode , spawn Troop only
+                spawnUnit();
+            } else {
+                if (/*m_GameObjectManager->getTroopSize()/m_EnemyObjectManager->getTroopSize()>=0.5*/
+                    0) {
+                    // Attack , set all troop to attack mode , set defensive
+                    // Troop = 0
+                    attackModeUpdate();
+                } else {
+                    // Safe now , build adv or spawn troop
+                    if (!isBuiltADV()) {
+                        buildADV();
+                        spawnUnit();
+                    } else {
+                        spawnUnit();
+                    }
+                }
+            }
+        }
+        offensiveUpdate();
+>>>>>>> bb96505 (merge)
     }
 
     void setCDTime(float time, bool cheat = true) {
@@ -103,6 +146,7 @@ public:
         }
     }
     void setCost(float cost) { m_cost = cost; }
+<<<<<<< HEAD
 
     bool isBuiltBasic() {
         return m_Enemy->getUnitConstructCount(UnitType::POWER_PLANT) >= 1 &&
@@ -189,11 +233,94 @@ public:
                 constructCountX = 0;
             }
         }
+=======
+
+    bool isBuiltBasic() {
+        return m_Enemy->getUnitConstructCount(UnitType::POWER_PLANT) >= 1 &&
+               m_Enemy->getUnitConstructCount(UnitType::ORE_REF) >= 1 &&
+               m_Enemy->getUnitConstructCount(UnitType::BARRACKS) >= 1;
+    }
+    bool isBuiltADV() {
+        return m_Enemy->getUnitConstructCount(UnitType::WAR_FACT) >= 1 &&
+               m_Enemy->getUnitConstructCount(UnitType::ADV_POWER_PLANT) >= 1;
+>>>>>>> bb96505 (merge)
     }
 
-    void buildBasic();
-    void buildADV();
-    void spawnUnit();
-    void UpdateSpawnScript(SpawnMode spawnMode);
+    void buildBasic() {
+        if (m_selectedUnitType != UnitType::NONE) {
+            return;
+        }
+        if (m_Enemy->getUnitConstructCount(UnitType::POWER_PLANT) < 1 &&
+            m_Enemy->getTotalCurrency() > 300) {
+            setCDTime(15.f);
+            setCost(300);
+            m_selectedUnitType = UnitType::POWER_PLANT;
+        } else if (m_Enemy->getUnitConstructCount(UnitType::ORE_REF) < 1 &&
+                   m_Enemy->getTotalCurrency() > 2000) {
+            setCDTime(100.f);
+            setCost(2000);
+            m_selectedUnitType = UnitType::ORE_REF;
+        } else if (m_Enemy->getUnitConstructCount(UnitType::BARRACKS) < 1 &&
+                   m_Enemy->getTotalCurrency() > 300) {
+            setCDTime(15.f);
+            setCost(300);
+            m_selectedUnitType = UnitType::BARRACKS;
+        }
+    }
+    void buildADV() {
+        if (m_selectedUnitType != UnitType::NONE) {
+            return;
+        }
+        if (m_Enemy->getUnitConstructCount(UnitType::WAR_FACT) < 1 &&
+            m_Enemy->getTotalCurrency() > 2000) {
+            setCDTime(100.f);
+            setCost(2000);
+            m_selectedUnitType = UnitType::WAR_FACT;
+        } else if (m_Enemy->getUnitConstructCount(UnitType::ADV_POWER_PLANT) <
+                       1 &&
+                   m_Enemy->getTotalCurrency() > 500) {
+            setCDTime(25.f);
+            setCost(500);
+            m_selectedUnitType = UnitType::ADV_POWER_PLANT;
+        }
+    }
+    void spawnUnit() {
+        if (m_selectedUnitType != UnitType::NONE) {
+            return;
+        }
+        if (m_Enemy->getAvatarCount() <= 25 &&
+            m_Enemy->getTotalCurrency() > 100) {
+            setCDTime(5.f);
+            setCost(100);
+            m_selectedUnitType = UnitType::INFANTRY;
+        }
+    }
+    void UpdateSpawnScript() {
+        // issue , avatar spawn and structure spawn should be separated CD time
+        // , so can spawn avatar and structure same time
+        if (m_selectedUnitType == UnitType::NONE) {
+            return;
+        } else if (m_selectedUnitType == UnitType::INFANTRY) {
+            m_GameObjectManager->spawn(m_Map, m_selectedUnitType,
+                                       HouseType::ENEMY);
+            setCost(0);
+            setCDTime(0.f);
+            m_selectedUnitType = UnitType::NONE;
+        } else {
+            m_GameObjectManager->spawn(m_Map, m_selectedUnitType,
+                                       HouseType::ENEMY,
+                                       {m_baseCell.x + constructCountX,
+                                        m_baseCell.y + constructCountY});
+            setCost(0);
+            setCDTime(0.f);
+            m_selectedUnitType = UnitType::NONE;
+            if (constructCountX > 10) {
+                constructCountY += 3;
+                constructCountX = 0;
+            } else {
+                constructCountX = 0;
+            }
+        }
+    }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_ENEMYSCRIPTS_HPP

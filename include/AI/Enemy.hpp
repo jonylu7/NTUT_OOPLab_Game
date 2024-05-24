@@ -26,6 +26,7 @@ public:
     }
     int getUnitConstructCount(UnitType type) { return unitCount[type]; }
     int getAvatarCount() { return unitCount[UnitType::INFANTRY]; }
+
     void addAvatarCount(UnitType type, int value) { unitCount[type] += value; }
 
 protected:
