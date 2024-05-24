@@ -86,6 +86,8 @@ set(SRC_FILES
 
         ${SRC_DIR}/Enemy/Enemy.cpp
 
+        ${SRC_DIR}/AI/EnemyScripts.cpp
+
         ${SRC_DIR}/Structure/Structure.cpp
         ${SRC_DIR}/Structure/WayPoint.cpp
         ${SRC_DIR}/Structure/HighLight.cpp
@@ -99,7 +101,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/Scene/MapScene.cpp
         ${SRC_DIR}/Scene/TutorialScene.cpp
-
+        ${SRC_DIR}/Scene/SandboxScene.cpp
 
         ${SRC_DIR}/Avatar/Runner.cpp
         ${SRC_DIR}/Avatar/Avatar.cpp
@@ -220,6 +222,8 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/Scene/Scene.hpp
         ${INCLUDE_DIR}/Scene/TutorialScene.hpp
+        ${INCLUDE_DIR}/Scene/SandboxScene.hpp
+
 
         ${INCLUDE_DIR}/Enemy/Enemy.hpp
         ${INCLUDE_DIR}/Enemy/EnemyScripts.hpp
