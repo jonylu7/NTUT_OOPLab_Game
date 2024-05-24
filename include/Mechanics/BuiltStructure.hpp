@@ -100,7 +100,7 @@ public:
     glm::vec2 getPlayerBarrackSpawnCell() { return m_PlayerBarrackCell; }
     glm::vec2 getPlayerBarrackWayPointCell() { return m_PlayerWayPointCell; }
 
-    bool ifBarracksBuilt() {
+    bool ifBarrackBuilt() {
         for (auto i : m_BuiltStructure) {
             if (i->getID().getUnitType() == UnitType::BARRACKS) {
                 return true;
@@ -108,7 +108,7 @@ public:
         }
         return false;
     }
-    bool ifPowerPlantsBuilt() {
+    bool ifPowerPlantBuilt() {
         for (auto i : m_BuiltStructure) {
             if (i->getID().getUnitType() == UnitType::POWER_PLANT) {
                 return true;

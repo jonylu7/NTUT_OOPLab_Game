@@ -9,7 +9,7 @@ void DefaultScene::Start() {
 
     LOG_TRACE("Start");
     // create map
-    m_Map->Init(98, 98);
+    m_Map->Init(60, 60);
 
     /*
     m_Map->getTileByCellPosition(glm::vec2(6, 5))->setWalkable(0);
@@ -22,13 +22,11 @@ void DefaultScene::Start() {
     m_GameObjectManager->Start(m_Map);
     m_UI->Start(m_Map, m_GameObjectManager);
     m_GameObjectManager->setTotalCurrency(5000);
-    m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
-                         MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
+    m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-5, -5)),
+                         MapUtil::CellCoordToGlobal(glm::vec2(70, 70)));
 }
 
 void DefaultScene::Update() {
-    //    m_hunter->Update();
-    //    m_runner->Update();
 
     m_GameObjectManager->Update();
 

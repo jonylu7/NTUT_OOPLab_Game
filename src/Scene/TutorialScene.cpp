@@ -15,7 +15,8 @@ void TutorialScene::Start() {
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                          MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 
-//    m_EnemyScripts->Start(m_Enemy,m_GameObjectManager, m_EnemyObjectManager, m_Map);
+    //    m_EnemyScripts->Start(m_Enemy,m_GameObjectManager,
+    //    m_EnemyObjectManager, m_Map);
 
     m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
                                {5, 5});
@@ -136,7 +137,15 @@ void TutorialScene::stage2Update() {
             structCount++;
         }
     }
-    if (structCount >= 3 ||
+    if (m_GameObjectManager->getStructureManager()
+                ->getStructureArray()
+                ->ifBarrackBuilt() &&
+            m_GameObjectManager->getStructureManager()
+                ->getStructureArray()
+                ->ifPowerPlantBuilt() &&
+            m_GameObjectManager->getStructureManager()
+                ->getStructureArray()
+                ->ifWarFactoryBuilt() ||
         Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
         // change next stage's text&prop here
         m_PlayerObjectivesText->SetDrawable(
