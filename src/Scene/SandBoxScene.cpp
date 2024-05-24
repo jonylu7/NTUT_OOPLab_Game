@@ -6,7 +6,12 @@
 void SandBoxScene::Start() {
 
     LOG_TRACE("Start");
-    m_Map->Init(100, 100);
+    // m_Map->Init(MapBinReader::readBin("../assets/map/ore-lord/map.bin", 64,
+    // 64),
+    //             64, 64);
+    m_Map->Init(
+        MapBinReader::readBin("../assets/map/green-belt/map.bin", 98, 98), 98,
+        98);
     m_GameObjectManager->Start(m_Map);
     m_EnemyObjectManager->Start(m_Map);
     m_UI->Start(m_Map, m_GameObjectManager);
