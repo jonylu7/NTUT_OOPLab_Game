@@ -10,7 +10,10 @@
 #define SPACE 4
 
 enum class SpawnMode { BUILDINGS, AVATAR };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8575025 (merge ai)
 class EnemyScripts {
 private:
     std::shared_ptr<EnemyPlayer> m_Enemy;
@@ -22,12 +25,15 @@ private:
     int constructCountX = 0;
     int constructCountY = 0;
 
-    float CDTime = 0;
-    std::chrono::high_resolution_clock::time_point m_StartTime;
-    double m_lastElapsed = 0.F;
-    float m_cost = 0.F;
-    int timeStamp = 0;
+    float m_buildingCDTime = 0;
+    float m_AvatarCDTime = 0;
+    float m_buildingCost = 0.F;
+    float m_avatarCost = 0.F;
 
+    UnitType m_selectedBuildingType = UnitType::NONE;
+    UnitType m_selectedAvatarType = UnitType::NONE;
+
+<<<<<<< HEAD
 <<<<<<< HEAD
     UnitType m_selectedUnitType = UnitType::NONE;
 
@@ -39,6 +45,12 @@ private:
     int timeStamp = 0;
 
     UnitType m_selectedUnitType = UnitType::NONE;
+=======
+    float m_buildDeltaTime = 0;
+    float m_avatarDeltaTime = 0;
+    float m_mainDeltaTime = 0;
+    Util::Time m_Time;
+>>>>>>> 8575025 (merge ai)
 
 >>>>>>> bb96505 (merge)
 
@@ -48,13 +60,15 @@ public:
     void Start(std::shared_ptr<EnemyPlayer> enemyPlayer,
                std::shared_ptr<UnitManager> GameObjectManager,
                std::shared_ptr<UnitManager> EnemyObjectManager,
-               std::shared_ptr<MapClass> map) {
-        m_StartTime = std::chrono::high_resolution_clock::now();
-        m_Enemy = enemyPlayer;
-        m_GameObjectManager = GameObjectManager;
-        m_EnemyObjectManager = EnemyObjectManager;
-        m_Map = map;
+               std::shared_ptr<MapClass> map);
+    void Update();
+    void modeUpdate();
+    void offensiveUpdate() {
+        //        if(m_EnemyObjectManager->getOffensiveTroopSize()>0){
+        //            m_EnemyObjectManager->setOffensiveTroopAttack(m_GameObjectManager->getMostValuableTarget());
+        //        }
     }
+<<<<<<< HEAD
     void Update() {
         std::chrono::high_resolution_clock::time_point m_currentTime =
             std::chrono::high_resolution_clock::now();
@@ -95,6 +109,11 @@ public:
             }
         }
         offensiveUpdate();
+=======
+    void updateAllTroopStates() {
+        //        m_EnemyObjectManager->setAllTroopToAttackMode();
+        //        m_EnemyObjectManager->setDefensiveTroopSize(0);
+>>>>>>> 8575025 (merge ai)
     }
     void offensiveUpdate() {
         //        if(m_EnemyObjectManager->getOffensiveTroopSize()>0){
@@ -135,6 +154,7 @@ public:
 >>>>>>> bb96505 (merge)
     }
 
+<<<<<<< HEAD
     void setCDTime(float time, bool cheat = true) {
         if (m_Enemy->getTotalPower() <= 0) {
             CDTime = time * 2;
@@ -234,93 +254,25 @@ public:
             }
         }
 =======
+=======
+    void setCDTime(float time, SpawnMode spawnMode, bool cheat = true);
+    void setCost(float cost, SpawnMode spawnMode);
+>>>>>>> 8575025 (merge ai)
 
-    bool isBuiltBasic() {
+    bool ifBuiltBasic() {
         return m_Enemy->getUnitConstructCount(UnitType::POWER_PLANT) >= 1 &&
                m_Enemy->getUnitConstructCount(UnitType::ORE_REF) >= 1 &&
                m_Enemy->getUnitConstructCount(UnitType::BARRACKS) >= 1;
     }
-    bool isBuiltADV() {
+    bool ifBuiltADV() {
         return m_Enemy->getUnitConstructCount(UnitType::WAR_FACT) >= 1 &&
                m_Enemy->getUnitConstructCount(UnitType::ADV_POWER_PLANT) >= 1;
 >>>>>>> bb96505 (merge)
     }
 
-    void buildBasic() {
-        if (m_selectedUnitType != UnitType::NONE) {
-            return;
-        }
-        if (m_Enemy->getUnitConstructCount(UnitType::POWER_PLANT) < 1 &&
-            m_Enemy->getTotalCurrency() > 300) {
-            setCDTime(15.f);
-            setCost(300);
-            m_selectedUnitType = UnitType::POWER_PLANT;
-        } else if (m_Enemy->getUnitConstructCount(UnitType::ORE_REF) < 1 &&
-                   m_Enemy->getTotalCurrency() > 2000) {
-            setCDTime(100.f);
-            setCost(2000);
-            m_selectedUnitType = UnitType::ORE_REF;
-        } else if (m_Enemy->getUnitConstructCount(UnitType::BARRACKS) < 1 &&
-                   m_Enemy->getTotalCurrency() > 300) {
-            setCDTime(15.f);
-            setCost(300);
-            m_selectedUnitType = UnitType::BARRACKS;
-        }
-    }
-    void buildADV() {
-        if (m_selectedUnitType != UnitType::NONE) {
-            return;
-        }
-        if (m_Enemy->getUnitConstructCount(UnitType::WAR_FACT) < 1 &&
-            m_Enemy->getTotalCurrency() > 2000) {
-            setCDTime(100.f);
-            setCost(2000);
-            m_selectedUnitType = UnitType::WAR_FACT;
-        } else if (m_Enemy->getUnitConstructCount(UnitType::ADV_POWER_PLANT) <
-                       1 &&
-                   m_Enemy->getTotalCurrency() > 500) {
-            setCDTime(25.f);
-            setCost(500);
-            m_selectedUnitType = UnitType::ADV_POWER_PLANT;
-        }
-    }
-    void spawnUnit() {
-        if (m_selectedUnitType != UnitType::NONE) {
-            return;
-        }
-        if (m_Enemy->getAvatarCount() <= 25 &&
-            m_Enemy->getTotalCurrency() > 100) {
-            setCDTime(5.f);
-            setCost(100);
-            m_selectedUnitType = UnitType::INFANTRY;
-        }
-    }
-    void UpdateSpawnScript() {
-        // issue , avatar spawn and structure spawn should be separated CD time
-        // , so can spawn avatar and structure same time
-        if (m_selectedUnitType == UnitType::NONE) {
-            return;
-        } else if (m_selectedUnitType == UnitType::INFANTRY) {
-            m_GameObjectManager->spawn(m_Map, m_selectedUnitType,
-                                       HouseType::ENEMY);
-            setCost(0);
-            setCDTime(0.f);
-            m_selectedUnitType = UnitType::NONE;
-        } else {
-            m_GameObjectManager->spawn(m_Map, m_selectedUnitType,
-                                       HouseType::ENEMY,
-                                       {m_baseCell.x + constructCountX,
-                                        m_baseCell.y + constructCountY});
-            setCost(0);
-            setCDTime(0.f);
-            m_selectedUnitType = UnitType::NONE;
-            if (constructCountX > 10) {
-                constructCountY += 3;
-                constructCountX = 0;
-            } else {
-                constructCountX = 0;
-            }
-        }
-    }
+    void buildBasic();
+    void buildADV();
+    void spawnUnit();
+    void UpdateSpawnScript(SpawnMode spawnMode);
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_ENEMYSCRIPTS_HPP
