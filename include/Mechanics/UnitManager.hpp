@@ -170,11 +170,21 @@ public:
         }
     }
 
-    int getTroopSize(){
-        return m_troopSize;
+    void addUnitConstructCount(UnitType type, int value) {
+        unitCount[type] += value;
+    }
+    int getUnitConstructCount(UnitType type){
+        return unitCount[type];
+    }
+    int getAvatarCount(){
+        return unitCount[UnitType::INFANTRY];
+    }
+    void addAvatarCount(UnitType type,int value){
+        unitCount[type] += value;
     }
 
 private:
+    std::unordered_map<UnitType, unsigned int> unitCount;
     std::shared_ptr<CursorSelection> m_CursorSelection =
         std::make_shared<CursorSelection>();
     std::shared_ptr<StructureManager> m_StructureManager =

@@ -10,8 +10,8 @@ void SandBoxScene::Start() {
     m_GameObjectManager->Start(m_Map);
     m_EnemyObjectManager->Start(m_Map);
     m_UI.Start(m_Map, m_GameObjectManager);
-    m_Player->setTotalCurrency(5000);
-    m_Enemy->setTotalCurrency(5000);
+    m_GameObjectManager->setTotalCurrency(5000);
+    m_EnemyObjectManager->setTotalCurrency(5000);
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                          MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 
@@ -107,6 +107,10 @@ void SandBoxScene::stageStart() {
         break;
     }
     case Stages::STAGE4: {
+        for(int i=0;i<50;i++){
+            m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+                                        {30+i/5, 5+i%5});
+        }
         m_stage = Stages::END;
         break;
     }
@@ -116,22 +120,22 @@ void SandBoxScene::stageUpdate() {
     if(m_stage == Stages::START){
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_1 )) {
             m_stage = Stages::STAGE1;
-            m_EnemyScripts->Start(m_Enemy,m_GameObjectManager, m_EnemyObjectManager, m_Map);
+            m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager, m_Map);
             stageStart();
         }
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_2 )) {
             m_stage = Stages::STAGE2;
-            m_EnemyScripts->Start(m_Enemy,m_GameObjectManager, m_EnemyObjectManager, m_Map);
+            m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager, m_Map);
             stageStart();
         }
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_3 )) {
             m_stage = Stages::STAGE3;
-            m_EnemyScripts->Start(m_Enemy,m_GameObjectManager, m_EnemyObjectManager, m_Map);
+            m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager, m_Map);
             stageStart();
         }
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_4 )) {
             m_stage = Stages::STAGE4;
-            m_EnemyScripts->Start(m_Enemy,m_GameObjectManager, m_EnemyObjectManager, m_Map);
+            m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager, m_Map, false);
             stageStart();
         }
     }

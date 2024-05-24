@@ -12,7 +12,6 @@
 enum class SpawnMode { BUILDINGS,AVATAR};
 class EnemyScripts{
 private:
-    std::shared_ptr<EnemyPlayer> m_Enemy;
     std::shared_ptr<UnitManager> m_GameObjectManager;
     std::shared_ptr<UnitManager> m_EnemyObjectManager;
     std::shared_ptr<MapClass> m_Map;
@@ -33,10 +32,12 @@ private:
     float m_avatarDeltaTime = 0;
     float m_mainDeltaTime = 0;
     Util::Time m_Time;
+
+    bool m_active;
 public:
     EnemyScripts(){};
     ~EnemyScripts(){};
-    void Start(std::shared_ptr<EnemyPlayer> enemyPlayer,std::shared_ptr<UnitManager> GameObjectManager,std::shared_ptr<UnitManager> EnemyObjectManager,std::shared_ptr<MapClass> map);
+    void Start(std::shared_ptr<UnitManager> GameObjectManager,std::shared_ptr<UnitManager> EnemyObjectManager,std::shared_ptr<MapClass> map,bool active = true);
     void Update();
     void modeUpdate();
     void  offensiveUpdate(){
@@ -53,10 +54,10 @@ public:
     void setCost(float cost,SpawnMode spawnMode);
 
     bool ifBuiltBasic(){
-        return m_Enemy->getUnitConstructCount(UnitType::POWER_PLANT)>=1 && m_Enemy->getUnitConstructCount(UnitType::ORE_REF)>=1 && m_Enemy->getUnitConstructCount(UnitType::BARRACKS)>=1 ;
+        return m_EnemyObjectManager->getUnitConstructCount(UnitType::POWER_PLANT)>=1 && m_EnemyObjectManager->getUnitConstructCount(UnitType::ORE_REF)>=1 && m_EnemyObjectManager->getUnitConstructCount(UnitType::BARRACKS)>=1 ;
     }
     bool ifBuiltADV(){
-        return m_Enemy->getUnitConstructCount(UnitType::WAR_FACT)>=1 && m_Enemy->getUnitConstructCount(UnitType::ADV_POWER_PLANT)>=1 ;
+        return m_EnemyObjectManager->getUnitConstructCount(UnitType::WAR_FACT)>=1 && m_EnemyObjectManager->getUnitConstructCount(UnitType::ADV_POWER_PLANT)>=1 ;
     }
 
     void buildBasic();
