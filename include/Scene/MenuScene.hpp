@@ -6,10 +6,12 @@
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP
 #include "Scene/DefaultScene.hpp"
 #include "Scene/MapScene.hpp"
+#include "SandBoxScene.hpp"
 #include "Scene/Scene.hpp"
 #include "TutorialScene.hpp"
+
 class MenuScene : public Scene {
-    enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL };
+    enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL, SANDBOX};
 
 public:
     MenuScene()
@@ -20,6 +22,7 @@ public:
         m_MapScene->Start();
         m_DefaultScene->Start();
         m_TutorialScene->Start();
+        m_SandBoxScene->Start();
     }
 
     void Update() override {
@@ -41,6 +44,9 @@ public:
             if (Util::Input::IsKeyPressed(Util::Keycode::T)) {
                 m_currentMode = SceneMode::TUTORIAL;
             }
+            if (Util::Input::IsKeyPressed(Util::Keycode::S)) {
+                m_currentMode = SceneMode::SANDBOX;
+            }
         }
 
         switch (m_currentMode) {
@@ -53,6 +59,9 @@ public:
         case (SceneMode::TUTORIAL):
             m_TutorialScene->Update();
             break;
+        case (SceneMode::SANDBOX):
+            m_SandBoxScene->Update();
+            break;
         }
     }
 
@@ -62,6 +71,7 @@ private:
     std::shared_ptr<MapScene> m_MapScene = std::make_shared<MapScene>();
     std::shared_ptr<DefaultScene> m_DefaultScene =
         std::make_shared<DefaultScene>();
+    std::shared_ptr<SandBoxScene> m_SandBoxScene = std::make_shared<SandBoxScene>();
     Util::BGM m_BGM;
     std::shared_ptr<Util::Image> m_ButtonSinglePlayer =
         std::make_shared<Util::Image>(

@@ -84,7 +84,7 @@ public:
         switch (unit) {
         case UnitType::INFANTRY: {
             auto avatar = std::make_shared<Infantry>(house);
-
+            m_StructureManager->getStructureArray()->updateAvatarSpawnLocation();
             if (m_StructureManager->getStructureArray()
                     ->getPlayerBarrackCell()
                     .x == -1) {
@@ -93,9 +93,9 @@ public:
 
             avatar->Start(m_StructureManager->getStructureArray()
                               ->getPlayerBarrackCell());
-            //                avatar
-            //                ->setNewDestination(m_StructureManager.getStructureArray().getPlayerWayPointCell());
+            m_AvatarManager->assignMoveOrderToAvatar(avatar,{m_StructureManager->getStructureArray()->getPlayerWayPointCell()});
             m_AvatarManager->AppendAvatar(avatar);
+            m_troopSize+=1;
         }
 
         default: {
@@ -112,6 +112,7 @@ public:
             auto structure = std::make_shared<Barracks>(house);
             auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
             structure->Start(globalPos);
+            structure->SetWayPointLocationByCellCoord({cellPos.x+2,cellPos.y-2});
             m_StructureManager->getStructureArray()->buildNewStructure(
                 structure, true);
             break;
@@ -136,6 +137,7 @@ public:
             auto structure = std::make_shared<WarFactory>(house);
             auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
             structure->Start(globalPos);
+            structure->SetWayPointLocationByCellCoord({cellPos.x+2,cellPos.y-2});
             m_StructureManager->getStructureArray()->buildNewStructure(
                 structure, true);
             break;
@@ -152,7 +154,9 @@ public:
             auto avatar = std::make_shared<Infantry>(house);
             avatar->Start(cellPos);
             //            avatar ->setNewDestination(cellPos);
+            m_AvatarManager->assignMoveOrderToAvatar(avatar,{cellPos.x+1,cellPos.y+1});
             m_AvatarManager->AppendAvatar(avatar);
+            m_troopSize+=1;
             break;
         }
         case UnitType::NONE: {
@@ -166,46 +170,10 @@ public:
         }
     }
 
-    //    bool ifClosestEnemyInRange(glm::vec2 cell,HouseType myHouse,int
-    //    range){
-    //        float closestDistance=500.f;
-    //        if(myHouse==HouseType::MY){
-    //            for(auto i:m_EnemyUnitArray){
-    //                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-    //                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-    //                }
-    //            }
-    //        }else{
-    //            for(auto i:m_PlayerUnitArray){
-    //                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-    //                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-    //                }
-    //            }
-    //        }
-    //        return closestDistance<=range;
-    //    }
-    //
-    //    std::shared_ptr<AttackAndDamage> findInRangeEnemy(glm::vec2
-    //    cell,HouseType myHouse,int range){
-    //        float closestDistance=500.f;
-    //        std::shared_ptr<AttackAndDamage> ansUnit;
-    //        if(myHouse==HouseType::MY){
-    //            for(auto i:m_EnemyUnitArray){
-    //                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-    //                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-    //                    ansUnit = i;
-    //                }
-    //            }
-    //        }else{
-    //            for(auto i:m_PlayerUnitArray){
-    //                if(MapUtil::findDistance(cell,i->getCurrentCell())<closestDistance){
-    //                    closestDistance=MapUtil::findDistance(cell,i->getCurrentCell());
-    //                    ansUnit = i;
-    //                }
-    //            }
-    //        }
-    //        return ansUnit;
-    //    }
+    int getTroopSize(){
+        return m_troopSize;
+    }
+
 private:
     std::shared_ptr<CursorSelection> m_CursorSelection =
         std::make_shared<CursorSelection>();
@@ -216,6 +184,7 @@ private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
+    int m_troopSize = 0;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
