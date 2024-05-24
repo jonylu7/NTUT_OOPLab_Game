@@ -85,8 +85,8 @@ void EnemyScripts::setCDTime(float time,SpawnMode spawnMode,bool cheat){
     }
 
     if(cheat){
-        m_AvatarCDTime*=CHEAT;
-        m_buildingCDTime*=CHEAT;
+        m_AvatarCDTime*=0.1;
+        m_buildingCDTime*=0.1;
     }
 }
 
@@ -134,7 +134,7 @@ void EnemyScripts::buildADV(){
 }
 
 void EnemyScripts::spawnUnit(){
-    if(m_selectedAvatarType!=UnitType::NONE||m_EnemyObjectManager->getAvatarCount()>50){
+    if(m_selectedAvatarType!=UnitType::NONE||m_EnemyObjectManager->getAvatarCount()>20){
         return;
     }
     if(m_EnemyObjectManager->getAvatarCount()<=25 && m_EnemyObjectManager->getTotalCurrency()> 100){

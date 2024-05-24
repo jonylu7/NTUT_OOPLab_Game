@@ -154,7 +154,7 @@ public:
             auto avatar = std::make_shared<Infantry>(house);
             avatar->Start(cellPos);
             //            avatar ->setNewDestination(cellPos);
-            m_AvatarManager->assignMoveOrderToAvatar(avatar,{cellPos.x+1,cellPos.y+1});
+//            m_AvatarManager->assignMoveOrderToAvatar(avatar,{cellPos.x+1,cellPos.y+1});
             m_AvatarManager->AppendAvatar(avatar);
             m_troopSize+=1;
             break;
