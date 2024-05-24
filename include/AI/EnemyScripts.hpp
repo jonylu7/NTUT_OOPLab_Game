@@ -10,10 +10,6 @@
 #define SPACE 4
 
 enum class SpawnMode { BUILDINGS, AVATAR };
-<<<<<<< HEAD
-
-=======
->>>>>>> 8575025 (merge ai)
 class EnemyScripts {
 private:
     std::shared_ptr<EnemyPlayer> m_Enemy;
@@ -110,9 +106,9 @@ public:
         }
         offensiveUpdate();
 =======
-    void updateAllTroopStates() {
-        //        m_EnemyObjectManager->setAllTroopToAttackMode();
-        //        m_EnemyObjectManager->setDefensiveTroopSize(0);
+        void updateAllTroopStates() {
+            //        m_EnemyObjectManager->setAllTroopToAttackMode();
+            //        m_EnemyObjectManager->setDefensiveTroopSize(0);
 >>>>>>> 8575025 (merge ai)
     }
     void offensiveUpdate() {
@@ -124,33 +120,32 @@ public:
         //        m_EnemyObjectManager->setAllTroopToAttackMode();
         //        m_EnemyObjectManager->setDefensiveTroopSize(0);
 =======
-    }
-    void modeUpdate() {
-        if (!isBuiltBasic()) {
-            buildBasic();
+} void modeUpdate() {
+    if (!isBuiltBasic()) {
+        buildBasic();
+    } else {
+        if (/*m_GameObjectManager->getTroopSize()/m_EnemyObjectManager->getTroopSize()>=2*/
+            0) {
+            // Defense mode , spawn Troop only
+            spawnUnit();
         } else {
-            if (/*m_GameObjectManager->getTroopSize()/m_EnemyObjectManager->getTroopSize()>=2*/
+            if (/*m_GameObjectManager->getTroopSize()/m_EnemyObjectManager->getTroopSize()>=0.5*/
                 0) {
-                // Defense mode , spawn Troop only
-                spawnUnit();
+                // Attack , set all troop to attack mode , set defensive
+                // Troop = 0
+                attackModeUpdate();
             } else {
-                if (/*m_GameObjectManager->getTroopSize()/m_EnemyObjectManager->getTroopSize()>=0.5*/
-                    0) {
-                    // Attack , set all troop to attack mode , set defensive
-                    // Troop = 0
-                    attackModeUpdate();
+                // Safe now , build adv or spawn troop
+                if (!isBuiltADV()) {
+                    buildADV();
+                    spawnUnit();
                 } else {
-                    // Safe now , build adv or spawn troop
-                    if (!isBuiltADV()) {
-                        buildADV();
-                        spawnUnit();
-                    } else {
-                        spawnUnit();
-                    }
+                    spawnUnit();
                 }
             }
         }
-        offensiveUpdate();
+    }
+    offensiveUpdate();
 >>>>>>> bb96505 (merge)
     }
 
@@ -259,20 +254,21 @@ public:
     void setCost(float cost, SpawnMode spawnMode);
 >>>>>>> 8575025 (merge ai)
 
-    bool ifBuiltBasic() {
-        return m_Enemy->getUnitConstructCount(UnitType::POWER_PLANT) >= 1 &&
-               m_Enemy->getUnitConstructCount(UnitType::ORE_REF) >= 1 &&
-               m_Enemy->getUnitConstructCount(UnitType::BARRACKS) >= 1;
-    }
-    bool ifBuiltADV() {
-        return m_Enemy->getUnitConstructCount(UnitType::WAR_FACT) >= 1 &&
-               m_Enemy->getUnitConstructCount(UnitType::ADV_POWER_PLANT) >= 1;
+        bool ifBuiltBasic() {
+            return m_Enemy->getUnitConstructCount(UnitType::POWER_PLANT) >= 1 &&
+                   m_Enemy->getUnitConstructCount(UnitType::ORE_REF) >= 1 &&
+                   m_Enemy->getUnitConstructCount(UnitType::BARRACKS) >= 1;
+        }
+        bool ifBuiltADV() {
+            return m_Enemy->getUnitConstructCount(UnitType::WAR_FACT) >= 1 &&
+                   m_Enemy->getUnitConstructCount(UnitType::ADV_POWER_PLANT) >=
+                       1;
 >>>>>>> bb96505 (merge)
-    }
+        }
 
-    void buildBasic();
-    void buildADV();
-    void spawnUnit();
-    void UpdateSpawnScript(SpawnMode spawnMode);
-};
+        void buildBasic();
+        void buildADV();
+        void spawnUnit();
+        void UpdateSpawnScript(SpawnMode spawnMode);
+    };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_ENEMYSCRIPTS_HPP
