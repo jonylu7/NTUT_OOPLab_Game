@@ -98,8 +98,8 @@ public:
 public:
     glm::vec2 getEnemyBarrackCell() { return m_EnemyBarrackCell; }
     glm::vec2 getEnemyWayPointCell() { return m_EnemyWayPointCell; }
-    glm::vec2 getPlayerBarrackCell() { return m_PlayerBarrackCell; }
-    glm::vec2 getPlayerWayPointCell() { return m_PlayerWayPointCell; }
+    glm::vec2 getPlayerBarrackSpawnCell() { return m_PlayerBarrackCell; }
+    glm::vec2 getPlayerBarrackWayPointCell() { return m_PlayerWayPointCell; }
 
     bool ifBarracksBuilt() {
         for (auto i : m_BuiltStructure) {
