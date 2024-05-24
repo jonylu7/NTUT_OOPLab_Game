@@ -13,8 +13,11 @@
 
 #define DEBUG_KEY P
 
+
 enum class TutorialStages { STAGE1, STAGE2, STAGE3, STAGE4 };
+
 class TutorialScene : public Scene {
+    enum class Stages { STAGE1, STAGE2, STAGE3, STAGE4 };
 public:
     TutorialScene(){};
     ~TutorialScene(){};

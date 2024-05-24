@@ -10,7 +10,7 @@ public:
     Player() {}
     ~Player() {}
     void setTotalCurrency(int value) { m_TotalCurrency = value; }
-    void addTotalCurrency(int value) { m_TotalCurrency += value; };
+    void addTotalCurrency(float value) { m_TotalCurrency += value; };
 
     void setFixedPower(int value) { m_FixedPower = value; }
     void addFixedPower(int value) { m_FixedPower += value; }
@@ -33,6 +33,6 @@ protected:
 protected:
     int m_MaxTroopSize = 200;
     int m_FixedPower = 0;
-    int m_TotalCurrency = 0;
+    float m_TotalCurrency = 0;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PLAYER_HPP

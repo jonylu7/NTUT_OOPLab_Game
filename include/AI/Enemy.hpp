@@ -5,7 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_ENEMY_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_ENEMY_HPP
 
-#include "Mechanics/GameObjectID.hpp"
+//#include "Mechanics/GameObjectID.hpp"
 #include "Mechanics/Player.hpp"
 enum class EnemyMode{
     DEFAULT,
@@ -34,7 +34,7 @@ public:
     int getAvatarCount(){
         return unitCount[UnitType::INFANTRY];
     }
-    void setAvatarCount(UnitType type,int value){
+    void addAvatarCount(UnitType type,int value){
         unitCount[type] += value;
     }
 protected:
