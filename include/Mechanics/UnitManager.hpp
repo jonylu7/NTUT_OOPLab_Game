@@ -78,7 +78,8 @@ public:
         switch (unit) {
         case UnitType::INFANTRY: {
             auto avatar = std::make_shared<Infantry>(house);
-            m_StructureManager->getStructureArray()->updateAvatarSpawnLocation();
+            m_StructureManager->getStructureArray()
+                ->updateAvatarSpawnLocation();
             if (m_StructureManager->getStructureArray()
                     ->getPlayerBarrackCell()
                     .x == -1) {
@@ -88,13 +89,15 @@ public:
             avatar->Start(m_StructureManager->getStructureArray()
                               ->getPlayerBarrackCell());
 
-            m_AvatarManager->assignMoveOrderToAvatar(avatar,{m_StructureManager->getStructureArray()->getPlayerWayPointCell()});
+            m_AvatarManager->assignMoveOrderToAvatar(
+                avatar, {m_StructureManager->getStructureArray()
+                             ->getPlayerBarrackWayPointCell()});
             // assign order
             m_AvatarManager->assignMoveOrderToAvatar(
                 avatar, m_StructureManager->getStructureArray()
-                            ->getPlayerWayPointCell());
+                            ->getPlayerBarrackWayPointCell());
             m_AvatarManager->AppendAvatar(avatar);
-            m_troopSize+=1;
+            m_troopSize += 1;
         }
 
         default: {
@@ -111,7 +114,8 @@ public:
             auto structure = std::make_shared<Barracks>(house);
             auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
             structure->Start(globalPos);
-            structure->SetWayPointLocationByCellCoord({cellPos.x+2,cellPos.y-2});
+            structure->SetWayPointLocationByCellCoord(
+                {cellPos.x + 2, cellPos.y - 2});
             m_StructureManager->getStructureArray()->buildNewStructure(
                 structure, true);
             break;
@@ -136,7 +140,8 @@ public:
             auto structure = std::make_shared<WarFactory>(house);
             auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
             structure->Start(globalPos);
-            structure->SetWayPointLocationByCellCoord({cellPos.x+2,cellPos.y-2});
+            structure->SetWayPointLocationByCellCoord(
+                {cellPos.x + 2, cellPos.y - 2});
             m_StructureManager->getStructureArray()->buildNewStructure(
                 structure, true);
             break;
@@ -153,9 +158,10 @@ public:
             auto avatar = std::make_shared<Infantry>(house);
             avatar->Start(cellPos);
             //            avatar ->setNewDestination(cellPos);
-            m_AvatarManager->assignMoveOrderToAvatar(avatar,{cellPos.x+1,cellPos.y+1});
+            m_AvatarManager->assignMoveOrderToAvatar(
+                avatar, {cellPos.x + 1, cellPos.y + 1});
             m_AvatarManager->AppendAvatar(avatar);
-            m_troopSize+=1;
+            m_troopSize += 1;
             break;
         }
         case UnitType::NONE: {
@@ -172,15 +178,9 @@ public:
     void addUnitConstructCount(UnitType type, int value) {
         unitCount[type] += value;
     }
-    int getUnitConstructCount(UnitType type){
-        return unitCount[type];
-    }
-    int getAvatarCount(){
-        return unitCount[UnitType::INFANTRY];
-    }
-    void addAvatarCount(UnitType type,int value){
-        unitCount[type] += value;
-    }
+    int getUnitConstructCount(UnitType type) { return unitCount[type]; }
+    int getAvatarCount() { return unitCount[UnitType::INFANTRY]; }
+    void addAvatarCount(UnitType type, int value) { unitCount[type] += value; }
 
 private:
     std::unordered_map<UnitType, unsigned int> unitCount;

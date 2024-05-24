@@ -101,7 +101,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/Scene/MapScene.cpp
         ${SRC_DIR}/Scene/TutorialScene.cpp
-        ${SRC_DIR}/Scene/SandboxScene.cpp
+        ${SRC_DIR}/Scene/SandBoxScene.cpp
 
         ${SRC_DIR}/Avatar/Runner.cpp
         ${SRC_DIR}/Avatar/Avatar.cpp
@@ -222,7 +222,7 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/Scene/Scene.hpp
         ${INCLUDE_DIR}/Scene/TutorialScene.hpp
-        ${INCLUDE_DIR}/Scene/SandboxScene.hpp
+        ${INCLUDE_DIR}/Scene/SandBoxScene.hpp
 
 
         ${INCLUDE_DIR}/Enemy/Enemy.hpp

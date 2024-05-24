@@ -7,15 +7,14 @@
 #include "AI/EnemyScripts.hpp"
 #include "Cursor.hpp"
 #include "Scene.hpp"
-#include "Task.hpp"
 #include "Util/Prop.hpp"
 #include <glm/glm.hpp>
 
 #define DEBUG_KEY P
 
-
 class SandBoxScene : public Scene {
-    enum class Stages { STAGE1, STAGE2, STAGE3, STAGE4 ,START ,END};
+    enum class Stages { STAGE1, STAGE2, STAGE3, STAGE4, START, END };
+
 public:
     SandBoxScene(){};
     ~SandBoxScene(){};
