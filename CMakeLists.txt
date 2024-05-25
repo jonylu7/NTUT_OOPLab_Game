@@ -200,9 +200,9 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
         ${INCLUDE_DIR}/House.hpp
-        ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
+
         ${INCLUDE_DIR}/DrawOverlays.hpp
-        ${INCLUDE_DIR}/UI/UI.hpp
+
         ${INCLUDE_DIR}/Player.hpp
 
         ${INCLUDE_DIR}/Structure/Barracks.hpp
@@ -217,6 +217,10 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Avatar/WayPointUnit.hpp
         ${INCLUDE_DIR}/Avatar/Runner.hpp
         ${INCLUDE_DIR}/Avatar/Hunter.hpp
+
+        ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
+        ${INCLUDE_DIR}/UI/UI.hpp
+        ${INCLUDE_DIR}/UI/UIStatus.hpp
 
 
         ${INCLUDE_DIR}/Scene/Scene.hpp

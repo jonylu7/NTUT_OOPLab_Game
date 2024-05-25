@@ -4,14 +4,14 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP
+#include "SandBoxScene.hpp"
 #include "Scene/DefaultScene.hpp"
 #include "Scene/MapScene.hpp"
-#include "SandBoxScene.hpp"
 #include "Scene/Scene.hpp"
 #include "TutorialScene.hpp"
 
 class MenuScene : public Scene {
-    enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL, SANDBOX};
+    enum class SceneMode { DEFAULT, PAUSED, MAP, MENU, TUTORIAL, SANDBOX };
 
 public:
     MenuScene()
@@ -50,6 +50,9 @@ public:
         }
 
         switch (m_currentMode) {
+        case (SceneMode::PAUSED):
+            pausedUpdate();
+            break;
         case (SceneMode::MAP):
             m_MapScene->Update();
             break;
@@ -65,13 +68,27 @@ public:
         }
     }
 
+    void pausedUpdate() {
+        m_PausedUI.Update();
+        if (m_PausedUI.getUIStatus()->getUIStatusType() ==
+            UIStatusType::UI_EXIT) {
+            m_CurrentState = State::END;
+        }
+        if (m_PausedUI.getUIStatus()->getUIStatusType() ==
+            UIStatusType::UI_CONTINUE) {
+            m_CurrentState = State::UPDATE;
+        }
+    }
+
 private:
     SceneMode m_currentMode = SceneMode::MENU;
-    std::shared_ptr<TutorialScene> m_TutorialScene = std::make_shared<TutorialScene>();
+    std::shared_ptr<TutorialScene> m_TutorialScene =
+        std::make_shared<TutorialScene>();
     std::shared_ptr<MapScene> m_MapScene = std::make_shared<MapScene>();
     std::shared_ptr<DefaultScene> m_DefaultScene =
         std::make_shared<DefaultScene>();
-    std::shared_ptr<SandBoxScene> m_SandBoxScene = std::make_shared<SandBoxScene>();
+    std::shared_ptr<SandBoxScene> m_SandBoxScene =
+        std::make_shared<SandBoxScene>();
     Util::BGM m_BGM;
     std::shared_ptr<Util::Image> m_ButtonSinglePlayer =
         std::make_shared<Util::Image>(
@@ -83,5 +100,6 @@ private:
 
     std::shared_ptr<Util::Image> m_ButtonExtra =
         std::make_shared<Util::Image>("../assets/Button/Button_Extras.png");
+    PausedUI m_PausedUI;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP
