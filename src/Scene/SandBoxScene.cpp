@@ -58,61 +58,51 @@ void SandBoxScene::Update() {
 void SandBoxScene::stageStart() {
     switch (m_stage) {
     case Stages::STAGE1: {
-        m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                                   {5, 5});
-        m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                                   {5, 6});
-        m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                                   {5, 7});
-        m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                                   {5, 8});
-        m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                                   {5, 9});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 5});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 6});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 7});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 8});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 9});
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 5});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 6});
         m_stage = Stages::END;
         break;
     }
     case Stages::STAGE2: {
-        m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                                   {5, 5});
-        m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                                   {5, 6});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 5});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 6});
 
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 5});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 6});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 7});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 8});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 9});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 10});
         m_stage = Stages::END;
         break;
     }
     case Stages::STAGE3: {
-        m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                                   {5, 5});
-        m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                                   {5, 6});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 5});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 6});
 
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 5});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                     {10, 6});
         m_stage = Stages::END;
         break;
     }
     case Stages::STAGE4: {
         for (int i = 0; i < 50; i++) {
-            m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY,
-                                        HouseType::ENEMY,
+            m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
                                         {30 + i / 5, 5 + i % 5});
         }
         m_stage = Stages::END;

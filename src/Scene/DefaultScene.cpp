@@ -52,8 +52,7 @@ void DefaultScene::Update() {
                                  ->getStructureArray()
                                  ->getBuiltStructureArray());
     if (m_UI->getIfUnitReadyToSpawn()) {
-        // what the fuck
-        m_GameObjectManager->getAvatarManager()->AppendAvatar(
-            m_UI->getUnitFromUI());
+        m_GameObjectManager->spawnToWayPoint(
+            m_UI->getUnitFromUI()->getID().getUnitType(), HouseType::MY);
     }
 }

@@ -77,28 +77,31 @@ public:
         m_BuiltStructure.push_back(structure);
     }
 
-    void updateAvatarSpawnLocation() {
+public:
+    // glm::vec2 getEnemyBarrackCell() { return m_EnemyBarrackCell; }
+    // glm::vec2 getEnemyWayPointCell() { return m_EnemyWayPointCell; }
+    glm::vec2 getPlayerBarrackSpawnCell() {
         for (auto i : m_BuiltStructure) {
             if (std::dynamic_pointer_cast<Barracks>(i)) {
-                m_PlayerBarrackCell =
-                    MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
-                m_PlayerWayPointCell = MapUtil::GlobalCoordToCellCoord(
+                glm::vec2 ogSpawnPoint = i->GetObjectLocation();
+                while (!m_Map->getTileByCellPosition(ogSpawnPoint)
+                            ->getWalkable()) {
+                    ogSpawnPoint.x -= 1;
+                }
+                return ogSpawnPoint;
+            }
+        }
+    }
+    glm::vec2 getPlayerBarrackWayPointCell() {
+        for (auto i : m_BuiltStructure) {
+            if (std::dynamic_pointer_cast<Barracks>(i)) {
+                return MapUtil::GlobalCoordToCellCoord(
                     std::dynamic_pointer_cast<Barracks>(i)
                         ->GetWayPointLocation());
             }
         }
+        return m_PlayerWayPointCell;
     }
-
-    glm::vec2 getPlayerBarrackCell() {
-        return {m_PlayerBarrackCell.x - 1, m_PlayerBarrackCell.y - 1};
-    }
-    // glm::vec2 getPlayerWayPointCell() { return m_PlayerWayPointCell; }
-
-public:
-    // glm::vec2 getEnemyBarrackCell() { return m_EnemyBarrackCell; }
-    // glm::vec2 getEnemyWayPointCell() { return m_EnemyWayPointCell; }
-    glm::vec2 getPlayerBarrackSpawnCell() { return m_PlayerBarrackCell; }
-    glm::vec2 getPlayerBarrackWayPointCell() { return m_PlayerWayPointCell; }
 
     bool ifBarrackBuilt() {
         for (auto i : m_BuiltStructure) {
@@ -119,6 +122,15 @@ public:
     bool ifWarFactoryBuilt() {
         for (auto i : m_BuiltStructure) {
             if (i->getID().getUnitType() == UnitType::WAR_FACT) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool ifOreRefinaryBuilt() {
+        for (auto i : m_BuiltStructure) {
+            if (i->getID().getUnitType() == UnitType::ORE_REF) {
                 return true;
             }
         }

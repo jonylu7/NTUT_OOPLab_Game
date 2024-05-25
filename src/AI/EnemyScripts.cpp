@@ -174,7 +174,7 @@ void EnemyScripts::UpdateSpawnScript(SpawnMode spawnMode) {
             return;
         }
         m_GameObjectManager->spawn(
-            m_Map, m_selectedBuildingType, HouseType::ENEMY,
+            m_selectedBuildingType, HouseType::ENEMY,
             {m_baseCell.x + constructCountX, m_baseCell.y + constructCountY});
         m_EnemyObjectManager->addUnitConstructCount(m_selectedBuildingType, 1);
         setCost(0, SpawnMode::BUILDINGS);
@@ -193,7 +193,7 @@ void EnemyScripts::UpdateSpawnScript(SpawnMode spawnMode) {
             return;
         }
         if (m_selectedAvatarType == UnitType::INFANTRY) {
-            m_GameObjectManager->spawnToWayPoint(m_Map, m_selectedAvatarType,
+            m_GameObjectManager->spawnToWayPoint(m_selectedAvatarType,
                                                  HouseType::ENEMY);
             setCost(0, SpawnMode::AVATAR);
             setCDTime(0.f, SpawnMode::AVATAR);

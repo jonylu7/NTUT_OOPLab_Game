@@ -18,8 +18,7 @@ void TutorialScene::Start() {
     //    m_EnemyScripts->Start(m_Enemy,m_GameObjectManager,
     //    m_EnemyObjectManager, m_Map);
 
-    m_GameObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::MY,
-                               {5, 5});
+    m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 5});
     // combat test
     // m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
     //                            {6, 6});
@@ -62,7 +61,6 @@ void TutorialScene::Update() {
     }
 }
 void TutorialScene::stageStart() {
-    m_stage = TutorialStages::STAGE1;
     m_PlayerObjectivesText->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/Task/Task1.png"));
     m_PlayerObjectivesText->SetVisible(true);
@@ -78,14 +76,16 @@ void TutorialScene::stageStart() {
     m_cellProp->setHighLightOffset({-100, 0});
     m_cellProp->Start({2, 2});
     m_cellProp->setObjectLocation({750, 750}, 0);
+    m_stage = TutorialStages::STAGE1;
 }
 void TutorialScene::stageUpdate() {
-    if (Util::Input::IsKeyPressed(Util::Keycode::R)) {
+    if (Util::Input::IsKeyDown(Util::Keycode::R)) {
         stageStart();
     }
     switch (m_stage) {
     case TutorialStages::STAGE1: {
         stage1Update();
+        break;
     }
     case TutorialStages::STAGE2: {
         stage2Update();
@@ -106,25 +106,26 @@ void TutorialScene::stage1Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
     for (auto i : m_GameObjectManager->getAvatarManager()->getAvatarArray()) {
-        if (i->getSelected()) {
-            if (m_cellProp->ifOverlaps(i->getMoving()->getCurrentCell()) ||
-                Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
-                // change next stage's text&prop here
-                m_PlayerObjectivesText->SetDrawable(
-                    std::make_unique<Util::Image>(
-                        "../assets/sprites/Task/Task2.png"));
 
-                m_cellProp->setHighLightImage(
-                    "../assets/sprites/Task/Task_Cell_Text2.png");
-                m_cellProp->setScale({6, 4});
-                m_cellProp->setObjectLocation({600, 1000}, 0);
-                m_cellProp->Start({12, 8});
-                m_stage = TutorialStages::STAGE2;
-                break;
-            }
+        if ((i->getSelected() &&
+             m_cellProp->ifOverlaps(i->getMoving()->getCurrentCell())) ||
+            Util::Input::IsKeyDown(Util::Keycode::DEBUG_KEY)) {
+            initStage2();
+            break;
         }
     }
 }
+
+void TutorialScene::initStage2() {
+    m_PlayerObjectivesText->SetDrawable(
+        std::make_unique<Util::Image>("../assets/sprites/Task/Task2.png"));
+
+    m_cellProp->setHighLightImage("../assets/sprites/Task/Task_Cell_Text2.png");
+    m_cellProp->setScale({6, 4});
+    m_cellProp->setObjectLocation({600, 1000}, 0);
+    m_cellProp->Start({12, 8});
+    m_stage = TutorialStages::STAGE2;
+};
 
 void TutorialScene::stage2Update() {
     m_PlayerObjectivesText->Draw();
@@ -145,20 +146,24 @@ void TutorialScene::stage2Update() {
                 ->ifPowerPlantBuilt() &&
             m_GameObjectManager->getStructureManager()
                 ->getStructureArray()
-                ->ifWarFactoryBuilt() ||
-        Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
+                ->ifOreRefinaryBuilt() ||
+        Util::Input::IsKeyDown(Util::Keycode::DEBUG_KEY)) {
         // change next stage's text&prop here
-        m_PlayerObjectivesText->SetDrawable(
-            std::make_unique<Util::Image>("../assets/sprites/Task/Task3.png"));
-
-        m_cellProp->setHighLightImage(
-            "../assets/sprites/Task/Task_Cell_Text3.png");
-        m_cellProp->setScale({2, 2});
-        m_cellProp->setObjectLocation({850, 850}, 0);
-        m_cellProp->Start({4, 4});
-        m_stage = TutorialStages::STAGE3;
+        initStage3();
     }
 }
+
+void TutorialScene::initStage3() {
+    m_PlayerObjectivesText->SetDrawable(
+        std::make_unique<Util::Image>("../assets/sprites/Task/Task3.png"));
+
+    m_cellProp->setHighLightImage("../assets/sprites/Task/Task_Cell_Text3.png");
+    m_cellProp->setScale({2, 2});
+    m_cellProp->setObjectLocation({850, 850}, 0);
+    m_cellProp->Start({4, 4});
+    m_stage = TutorialStages::STAGE3;
+}
+
 void TutorialScene::stage3Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
@@ -170,26 +175,25 @@ void TutorialScene::stage3Update() {
             }
         }
     }
-    if (avatarCount >= 4 ||
-        Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
+    if (avatarCount >= 4 || Util::Input::IsKeyDown(Util::Keycode::DEBUG_KEY)) {
         // change next stage's text&prop here
-        m_PlayerObjectivesText->SetDrawable(
-            std::make_unique<Util::Image>("../assets/sprites/Task/Task4.png"));
-
-        m_cellProp->setHighLightImage(
-            "../assets/sprites/Task/Task_Cell_Text4.png");
-        m_cellProp->setScale({4, 3});
-        m_cellProp->setObjectLocation({1200, 850}, 0);
-        m_cellProp->Start({8, 6});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
-                                    {24, 17});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
-                                    {26, 18});
-        m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
-                                    {25, 17});
-        m_stage = TutorialStages::STAGE4;
+        initStage4();
     }
 }
+void TutorialScene::initStage4() {
+    m_PlayerObjectivesText->SetDrawable(
+        std::make_unique<Util::Image>("../assets/sprites/Task/Task4.png"));
+
+    m_cellProp->setHighLightImage("../assets/sprites/Task/Task_Cell_Text4.png");
+    m_cellProp->setScale({4, 3});
+    m_cellProp->setObjectLocation({1200, 850}, 0);
+    m_cellProp->Start({8, 6});
+    m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {24, 17});
+    m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {26, 18});
+    m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {25, 17});
+    m_stage = TutorialStages::STAGE4;
+}
+
 void TutorialScene::stage4Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
@@ -201,5 +205,8 @@ void TutorialScene::stage4Update() {
     }
     if (enemy_count >= 3) {
         // End?
+        initFinalStage();
     }
 }
+
+void TutorialScene::initFinalStage() {}

@@ -72,22 +72,19 @@ public:
         }
     }
 
-    void spawnToWayPoint(std::shared_ptr<MapClass> m_Map, UnitType unit,
-                         HouseType house) {
+    void spawnToWayPoint(UnitType unit, HouseType house) {
 
         switch (unit) {
         case UnitType::INFANTRY: {
             auto avatar = std::make_shared<Infantry>(house);
-            m_StructureManager->getStructureArray()
-                ->updateAvatarSpawnLocation();
             if (m_StructureManager->getStructureArray()
-                    ->getPlayerBarrackCell()
+                    ->getPlayerBarrackSpawnCell()
                     .x == -1) {
                 return;
             }
 
             avatar->Start(m_StructureManager->getStructureArray()
-                              ->getPlayerBarrackCell());
+                              ->getPlayerBarrackSpawnCell());
 
             m_AvatarManager->assignMoveOrderToAvatar(
                 avatar, {m_StructureManager->getStructureArray()
@@ -106,8 +103,7 @@ public:
         }
         }
     }
-    void spawn(std::shared_ptr<MapClass> m_Map, UnitType unit, HouseType house,
-               glm::vec2 cellPos) {
+    void spawn(UnitType unit, HouseType house, glm::vec2 cellPos) {
         // 缺檢查敵方擁有建築的位置，並重生在該處
         switch (unit) {
         case UnitType::BARRACKS: {

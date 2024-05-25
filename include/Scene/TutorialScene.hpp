@@ -13,11 +13,11 @@
 
 #define DEBUG_KEY P
 
-
 enum class TutorialStages { STAGE1, STAGE2, STAGE3, STAGE4 };
 
 class TutorialScene : public Scene {
     enum class Stages { STAGE1, STAGE2, STAGE3, STAGE4 };
+
 public:
     TutorialScene(){};
     ~TutorialScene(){};
@@ -31,6 +31,10 @@ private:
     void stage2Update();
     void stage3Update();
     void stage4Update();
+    void initStage2();
+    void initStage3();
+    void initStage4();
+    void initFinalStage();
 
 private:
     SpriteSheet m_SpriteSheet;
