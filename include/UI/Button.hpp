@@ -24,7 +24,7 @@ public:
             float miny = m_Transform.translation.y -
                          (m_Drawable->GetSize().y * (m_Transform.scale.y)) / 2;
             if ((Util::Input::GetCursorPosition().x <= maxx &&
-                 Util::Input::GetCursorPosition().x >= minx) ||
+                 Util::Input::GetCursorPosition().x >= minx) &&
                 (Util::Input::GetCursorPosition().y <= maxy &&
                  Util::Input::GetCursorPosition().y >= miny)) {
                 return true;

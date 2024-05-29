@@ -11,7 +11,7 @@
 #include "TutorialScene.hpp"
 
 class MenuScene : public Scene {
-    enum class SceneMode { DEFAULT, PAUSED, MAP, MENU, TUTORIAL, SANDBOX };
+    enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL, SANDBOX };
 
 public:
     MenuScene()
@@ -50,9 +50,6 @@ public:
         }
 
         switch (m_currentMode) {
-        case (SceneMode::PAUSED):
-            pausedUpdate();
-            break;
         case (SceneMode::MAP):
             m_MapScene->Update();
             break;
@@ -65,18 +62,6 @@ public:
         case (SceneMode::SANDBOX):
             m_SandBoxScene->Update();
             break;
-        }
-    }
-
-    void pausedUpdate() {
-        m_PausedUI.Update();
-        if (m_PausedUI.getUIStatus()->getUIStatusType() ==
-            UIStatusType::UI_EXIT) {
-            m_CurrentState = State::END;
-        }
-        if (m_PausedUI.getUIStatus()->getUIStatusType() ==
-            UIStatusType::UI_CONTINUE) {
-            m_CurrentState = State::UPDATE;
         }
     }
 
@@ -100,6 +85,5 @@ private:
 
     std::shared_ptr<Util::Image> m_ButtonExtra =
         std::make_shared<Util::Image>("../assets/Button/Button_Extras.png");
-    PausedUI m_PausedUI;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP

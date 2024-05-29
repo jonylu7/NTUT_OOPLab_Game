@@ -10,11 +10,7 @@
 
 class App {
 public:
-    enum class State {
-        START,
-        UPDATE,
-        END,
-    };
+    enum class State { START, UPDATE, END };
     State GetCurrentState() const { return m_CurrentState; }
     void Start();
     void Update();
@@ -25,6 +21,8 @@ private:
     State m_CurrentState = State::START;
 
     MenuScene menuScene;
+    PausedUI m_PausedUI;
+    bool m_Paused = false;
 };
 
 #endif
