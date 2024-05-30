@@ -4,14 +4,16 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP
+#include "SandBoxScene.hpp"
 #include "Scene/DefaultScene.hpp"
 #include "Scene/MapScene.hpp"
-#include "SandBoxScene.hpp"
 #include "Scene/Scene.hpp"
 #include "TutorialScene.hpp"
+#include "UI/MenuUI.hpp"
 
 class MenuScene : public Scene {
-    enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL, SANDBOX};
+public:
+    enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL, SANDBOX };
 
 public:
     MenuScene()
@@ -26,8 +28,7 @@ public:
     }
 
     void Update() override {
-
-        if (m_currentMode == SceneMode::MENU) {
+        if (m_CurrentMode == SceneMode::MENU) {
             if (Util::Input::IsKeyPressed(Util::Keycode::P)) {
                 m_BGM.Play();
             }
@@ -36,20 +37,24 @@ public:
                 m_BGM.Play();
             }
             if (Util::Input::IsKeyPressed(Util::Keycode::M)) {
-                m_currentMode = SceneMode::MAP;
+                m_CurrentMode = SceneMode::MAP;
             }
             if (Util::Input::IsKeyPressed(Util::Keycode::D)) {
-                m_currentMode = SceneMode::DEFAULT;
+                m_CurrentMode = SceneMode::DEFAULT;
             }
-            if (Util::Input::IsKeyPressed(Util::Keycode::T)) {
-                m_currentMode = SceneMode::TUTORIAL;
+            if (Util::Input::IsKeyPressed(Util::Keycode::T) ||
+                m_MenuUI.getUIStatus()->getUIStatusType() ==
+                    UIStatusType::UI_START) {
+                m_MenuUI.getUIStatus()->setUIStatusType(
+                    UIStatusType::UI_DEFAULT);
+                m_CurrentMode = SceneMode::TUTORIAL;
             }
             if (Util::Input::IsKeyPressed(Util::Keycode::S)) {
-                m_currentMode = SceneMode::SANDBOX;
+                m_CurrentMode = SceneMode::SANDBOX;
             }
         }
 
-        switch (m_currentMode) {
+        switch (m_CurrentMode) {
         case (SceneMode::MAP):
             m_MapScene->Update();
             break;
@@ -62,26 +67,33 @@ public:
         case (SceneMode::SANDBOX):
             m_SandBoxScene->Update();
             break;
+        case (SceneMode::MENU):
+            m_MenuUI.Update();
+            break;
         }
     }
 
+    SceneMode getSceneMode() { return m_CurrentMode; }
+
+    bool ifExit() {
+        if (m_MenuUI.getUIStatus()->getUIStatusType() ==
+            UIStatusType::UI_EXIT) {
+            return true;
+        }
+        return false;
+    }
+
 private:
-    SceneMode m_currentMode = SceneMode::MENU;
-    std::shared_ptr<TutorialScene> m_TutorialScene = std::make_shared<TutorialScene>();
+    SceneMode m_CurrentMode = SceneMode::MENU;
+    std::shared_ptr<TutorialScene> m_TutorialScene =
+        std::make_shared<TutorialScene>();
     std::shared_ptr<MapScene> m_MapScene = std::make_shared<MapScene>();
     std::shared_ptr<DefaultScene> m_DefaultScene =
         std::make_shared<DefaultScene>();
-    std::shared_ptr<SandBoxScene> m_SandBoxScene = std::make_shared<SandBoxScene>();
+    std::shared_ptr<SandBoxScene> m_SandBoxScene =
+        std::make_shared<SandBoxScene>();
     Util::BGM m_BGM;
-    std::shared_ptr<Util::Image> m_ButtonSinglePlayer =
-        std::make_shared<Util::Image>(
-            "../assets/Button/Button_SinglePlayer.png");
-    std::shared_ptr<Util::Image> m_ButtonSetting =
-        std::make_shared<Util::Image>("../assets/Button/Button_Setting.png");
-    std::shared_ptr<Util::Image> m_ButtonExit =
-        std::make_shared<Util::Image>("../assets/Button/Button_Exit.png");
 
-    std::shared_ptr<Util::Image> m_ButtonExtra =
-        std::make_shared<Util::Image>("../assets/Button/Button_Extras.png");
+    MenuUI m_MenuUI;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MENUSCENE_HPP

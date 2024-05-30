@@ -12,7 +12,6 @@ int main(int, char **) {
 
         context->Setup();
 
-
         switch (app.GetCurrentState()) {
         case App::State::START:
             app.Start();
@@ -30,8 +29,6 @@ int main(int, char **) {
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         context->Update();
-
-
     }
     return 0;
 }
