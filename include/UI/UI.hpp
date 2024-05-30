@@ -35,9 +35,13 @@ public:
     std::unique_ptr<Structure> getSelectedBuilding();
     bool getIfAnyBuildingReadyToBuild(); // 避免Scene收到空的getSelectedBuilding
 
-    std::shared_ptr<Avatar> getUnitFromUI();
-    bool getIfUnitReadyToSpawn() {
-        return m_UIScriptProcess->getIfReadytoSpawn();
+    bool ifUnitReadyToSpawn() {
+        if (m_UIScriptProcess->getIfReadytoSpawn()) {
+            m_UIScriptProcess->setIfReadytoSpawn(false);
+            return true;
+        } else {
+            return false;
+        };
     }
     void setIfUnitReadyToSpawn(bool b) {
         m_UIScriptProcess->setIfReadytoSpawn(b);
@@ -45,6 +49,11 @@ public:
 
     void
     checkExistBuilding(std::vector<std::shared_ptr<Structure>> buildingList);
+
+public:
+    UnitType getUnitTypeReadyToBeSpawned() {
+        return m_UIScriptProcess->GetCurrentInfType();
+    };
 
 private:
     std::shared_ptr<UIScriptProcess> m_UIScriptProcess =

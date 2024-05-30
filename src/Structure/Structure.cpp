@@ -119,3 +119,43 @@ std::vector<glm::vec2> Structure::getAbsoluteOccupiedArea() {
     }
     return Area;
 }
+
+std::vector<glm::vec2> Structure::getNearbyArea() {
+    std::vector<glm::vec2> area = {};
+    float minx = 99999;
+    float maxx = -99999;
+    float miny = 99999;
+    float maxy = -99999;
+
+    for (auto i : getAbsoluteOccupiedArea()) {
+        if (minx > i.x) {
+            minx = i.x;
+        }
+        if (maxx < i.x) {
+            maxx = i.x;
+        }
+        if (miny > i.y) {
+            miny = i.y;
+        }
+        if (maxy < i.y) {
+            maxy = i.y;
+        }
+    }
+
+    minx -= 1;
+    miny -= 1;
+    maxx += 1;
+    maxy += 1;
+
+    for (int i = minx; i <= maxx; i++) {
+        area.push_back(glm::vec2(i, miny));
+        area.push_back(glm::vec2(i, maxy));
+    }
+
+    for (int j = miny + 1; j <= maxy - 1; j++) {
+        area.push_back(glm::vec2(minx, j));
+        area.push_back(glm::vec2(maxx, j));
+    }
+
+    return area;
+}

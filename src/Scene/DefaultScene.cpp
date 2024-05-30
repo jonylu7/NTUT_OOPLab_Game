@@ -51,8 +51,8 @@ void DefaultScene::Update() {
     m_UI->checkExistBuilding(m_GameObjectManager->getStructureManager()
                                  ->getStructureArray()
                                  ->getBuiltStructureArray());
-    if (m_UI->getIfUnitReadyToSpawn()) {
+    if (m_UI->ifUnitReadyToSpawn()) {
         m_GameObjectManager->spawnToWayPoint(
-            m_UI->getUnitFromUI()->getID().getUnitType(), HouseType::MY);
+            m_UI->getUnitTypeReadyToBeSpawned(), HouseType::MY);
     }
 }

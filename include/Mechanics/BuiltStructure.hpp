@@ -83,12 +83,11 @@ public:
     glm::vec2 getPlayerBarrackSpawnCell() {
         for (auto i : m_BuiltStructure) {
             if (std::dynamic_pointer_cast<Barracks>(i)) {
-                glm::vec2 ogSpawnPoint = i->GetObjectLocation();
-                while (!m_Map->getTileByCellPosition(ogSpawnPoint)
-                            ->getWalkable()) {
-                    ogSpawnPoint.x -= 1;
+                for (auto i : i->getNearbyArea()) {
+                    if (m_Map->ifWalkable(i)) {
+                        return i;
+                    }
                 }
-                return ogSpawnPoint;
             }
         }
     }
@@ -97,10 +96,9 @@ public:
             if (std::dynamic_pointer_cast<Barracks>(i)) {
                 return MapUtil::GlobalCoordToCellCoord(
                     std::dynamic_pointer_cast<Barracks>(i)
-                        ->GetWayPointLocation());
+                        ->getWaypointLocation());
             }
         }
-        return m_PlayerWayPointCell;
     }
 
     bool ifBarrackBuilt() {

@@ -50,9 +50,9 @@ void SandBoxScene::Update() {
     m_UI->checkExistBuilding(m_GameObjectManager->getStructureManager()
                                  ->getStructureArray()
                                  ->getBuiltStructureArray());
-    if (m_UI->getIfUnitReadyToSpawn()) {
-        m_GameObjectManager->getAvatarManager()->AppendAvatar(
-            m_UI->getUnitFromUI());
+    if (m_UI->ifUnitReadyToSpawn()) {
+        m_GameObjectManager->spawnToWayPoint(
+            m_UI->getUnitTypeReadyToBeSpawned(), HouseType::MY);
     }
 }
 void SandBoxScene::stageStart() {
