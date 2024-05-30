@@ -26,6 +26,8 @@ protected:
     float m_MovementSpeed = 1.F;
     glm::vec2 m_PrevCell;
 
+    int m_Corner = 0;
+
 public:
     enum class AvatarStandingCorner {
         CENTER,
@@ -55,14 +57,15 @@ public:
             if (!m_MovePath.empty()) {
                 setCurrentDir(m_MovePath.front());
             } else {
-                finishedmovingUpdate();
+                finishedmovingUpdate(AvatarStandingCorner(m_Corner));
             }
         }
         moveToNextCell();
     }
 
-    void finishedmovingUpdate() {
-        moveToCellCorner(AvatarStandingCorner::CENTER);
+    void finishedmovingUpdate(
+        AvatarStandingCorner corner = AvatarStandingCorner::CENTER) {
+        moveToCellCorner(corner);
         setCurrentDir(MoveDirection::IDLE);
     }
 
@@ -90,5 +93,8 @@ public:
     }
 
     void setMovementSpeed(float speed) { m_MovementSpeed = speed; }
+
+    int getStandingCorner() { return m_Corner; }
+    void setStandingCorner(int value) { m_Corner = value; }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MOVING_HPP
