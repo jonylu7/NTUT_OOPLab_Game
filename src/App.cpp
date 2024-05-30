@@ -7,10 +7,11 @@ void App::Start() {
 }
 
 void App::Update() {
-    if (Util::Input::IfExit()) {
+    if (Util::Input::IfExit() || menuScene.ifExit()) {
         m_CurrentState = State::END;
     }
-    if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE)) {
+    if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE) &&
+        menuScene.getSceneMode() != MenuScene::SceneMode::MENU) {
         m_Paused = true;
     }
     if (m_Paused) {

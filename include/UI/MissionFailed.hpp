@@ -4,10 +4,10 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MISSIONACCOMPLISHED_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MISSIONACCOMPLISHED_HPP
-class MissionAccomplisehdUI {
+class MissionFailedUI {
 public:
-    MissionAccomplisehdUI() {}
-    ~MissionAccomplisehdUI() {}
+    MissionFailedUI() {}
+    ~MissionFailedUI() {}
     void Update() {
         if (m_ContinueButton->ifClicked()) {
             m_UIStatus->setUIStatusType(UIStatusType::UI_CONTINUE);
