@@ -5,12 +5,12 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MISSIONACCOMPLISHED_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MISSIONACCOMPLISHED_HPP
 #include "UI/Button.hpp"
-#include "UI/UIStatus.hpp"
-class MissionAccomplishedUI {
+#include "UI/UI.hpp"
+class MissionAccomplishedUI : public UI {
 public:
     MissionAccomplishedUI() {}
     ~MissionAccomplishedUI() {}
-    void Update() {
+    void Update() override {
         if (m_ContinueButton->ifClicked()) {
             m_UIStatus->setUIStatusType(UIStatusType::UI_CONTINUE);
         } else if (m_ExitButton->ifClicked()) {
@@ -19,7 +19,7 @@ public:
         Draw();
     }
 
-    void Draw() {
+    void Draw() override {
         m_PausedImage->Draw(
             Util::Transform({glm::vec2(0, 70), float(0), glm::vec2(0.8, 0.8)}),
             1);
@@ -27,13 +27,10 @@ public:
         m_ExitButton->Draw();
     }
 
-public:
-    std::shared_ptr<UIStatus> getUIStatus() { return m_UIStatus; }
-
 private:
-    std::shared_ptr<UIStatus> m_UIStatus = std::make_shared<UIStatus>();
     std::shared_ptr<Util::Image> m_PausedImage =
         std::make_shared<Util::Image>("../assets/images/MA.png");
+
     std::shared_ptr<Button> m_ContinueButton = std::make_shared<Button>(
         std::make_shared<Util::Image>("../assets/images/continue.png"), 1, true,
         Util::Transform({glm::vec2(300, -100), float(0), glm::vec2(0.4, 0.4)}));

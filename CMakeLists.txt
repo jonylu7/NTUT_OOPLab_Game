@@ -111,7 +111,7 @@ set(SRC_FILES
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
 
-        ${SRC_DIR}/UI/UI.cpp
+        ${SRC_DIR}/UI/IngameUI.cpp
 
         ${SRC_DIR}/Map/YAMLReader.cpp
         ${SRC_DIR}/Map/TerrainConfig.cpp
@@ -221,6 +221,7 @@ set(INCLUDE_FILES
 
         ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
         ${INCLUDE_DIR}/UI/UI.hpp
+        ${INCLUDE_DIR}/UI/IngameUI.hpp
         ${INCLUDE_DIR}/UI/UIStatus.hpp
 
 

@@ -5,12 +5,12 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_MENUUI_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_MENUUI_HPP
 #include "Button.hpp"
-#include "UI/UIStatus.hpp"
-class MenuUI {
+#include "UI/UI.hpp"
+class MenuUI : public UI {
 public:
     MenuUI() {}
     ~MenuUI() {}
-    void Update() {
+    void Update() override {
         if (m_StartButton->ifClicked()) {
             m_UIStatus->setUIStatusType(UIStatusType::UI_START);
         } else if (m_ExitButton->ifClicked()) {
@@ -19,7 +19,7 @@ public:
         Draw();
     }
 
-    void Draw() {
+    void Draw() override {
         m_Title->Draw(
             Util::Transform({glm::vec2(0, 70), float(0), glm::vec2(0.6, 0.6)}),
             1);
@@ -27,11 +27,7 @@ public:
         m_ExitButton->Draw();
     }
 
-public:
-    std::shared_ptr<UIStatus> getUIStatus() { return m_UIStatus; }
-
 private:
-    std::shared_ptr<UIStatus> m_UIStatus = std::make_shared<UIStatus>();
     std::shared_ptr<Util::Image> m_Title =
         std::make_shared<Util::Image>("../assets/images/cnc_title.jpg");
     std::shared_ptr<Button> m_StartButton = std::make_shared<Button>(

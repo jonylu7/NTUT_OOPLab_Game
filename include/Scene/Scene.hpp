@@ -22,7 +22,7 @@
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
-#include "UI/UI.hpp"
+#include "UI/IngameUI.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"

@@ -2,7 +2,7 @@
 // Created by 盧威任 on 3/3/24.
 //
 
-#include "UI/UI.hpp"
+#include "UI/IngameUI.hpp"
 #include "Map/Map.hpp"
 
 std::unordered_map<UnitType, unsigned int> UIClass::s_unitConstructCount;
