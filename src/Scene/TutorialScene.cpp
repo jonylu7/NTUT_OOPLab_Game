@@ -28,10 +28,13 @@ void TutorialScene::Start() {
     stageStart();
 }
 void TutorialScene::Update() {
+    stageUpdate();
+    if (m_stage == TutorialStages::STAGE_FINAL) {
+        return;
+    }
+
     m_GameObjectManager->Update();
     m_EnemyObjectManager->Update();
-
-    stageUpdate();
     Util::Transform trans;
     m_Map->Draw(trans, 0);
     m_SceneCamera->Update();
@@ -97,6 +100,10 @@ void TutorialScene::stageUpdate() {
     }
     case TutorialStages::STAGE4: {
         stage4Update();
+        break;
+    }
+    case TutorialStages::STAGE_FINAL: {
+        stageFinalUpdate();
         break;
     }
     }
@@ -197,16 +204,22 @@ void TutorialScene::initStage4() {
 void TutorialScene::stage4Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
-    int enemy_count = 0;
+    int enemy_deadcount = 0;
     for (auto i : m_EnemyObjectManager->getAvatarManager()->getAvatarArray()) {
         if (*i->getHealth()->getLivingStatus() == LivingStatus::DEAD) {
-            enemy_count++;
+            enemy_deadcount++;
         }
     }
-    if (enemy_count >= 3) {
-        // End?
+    if (enemy_deadcount >= 3 ||
+        Util::Input::IsKeyDown(Util::Keycode::DEBUG_KEY)) {
         initFinalStage();
     }
 }
 
-void TutorialScene::initFinalStage() {}
+void TutorialScene::initFinalStage() {
+    m_stage = TutorialStages::STAGE_FINAL;
+}
+
+void TutorialScene::stageFinalUpdate() {
+    m_MUI.Update();
+}

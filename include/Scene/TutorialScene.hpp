@@ -7,16 +7,15 @@
 #include "AI/EnemyScripts.hpp"
 #include "Cursor.hpp"
 #include "Scene.hpp"
-// #include "Mechanics/GameObjectID.hpp"
+#include "UI/MissionAccomplishedUI.hpp"
 #include "Util/Prop.hpp"
 #include "pch.hpp"
 
 #define DEBUG_KEY P
 
-enum class TutorialStages { STAGE1, STAGE2, STAGE3, STAGE4 };
+enum class TutorialStages { STAGE1, STAGE2, STAGE3, STAGE4, STAGE_FINAL };
 
 class TutorialScene : public Scene {
-    enum class Stages { STAGE1, STAGE2, STAGE3, STAGE4 };
 
 public:
     TutorialScene(){};
@@ -27,10 +26,13 @@ public:
 private:
     void stageStart();
     void stageUpdate();
+    // update
     void stage1Update();
     void stage2Update();
     void stage3Update();
     void stage4Update();
+    void stageFinalUpdate();
+    // init
     void initStage2();
     void initStage3();
     void initStage4();
@@ -48,5 +50,7 @@ private:
         std::make_shared<Util::GameObject>();
     std::shared_ptr<Prop> m_cellProp = std::make_shared<Prop>();
     TutorialStages m_stage;
+
+    MissionAccomplishedUI m_MUI;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_TUTORIALSCENE_HPP
