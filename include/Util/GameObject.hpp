@@ -20,7 +20,7 @@ namespace Util {
  */
 class GameObject {
 public:
-    Util::Transform m_Transform; // IDC if this should be here.
+    Util::Transform m_Transform;
 
 public:
     /**
@@ -37,14 +37,17 @@ public:
      * @param children The children of the game object.
      * @param movingRelativeToCamera Whether the object can move relative to
      * camera position
+     * @param transfrom predefined transform
      */
     GameObject(const std::shared_ptr<Core::Drawable> &drawable,
                const float zIndex, const bool visible = true,
-               const bool movingRelativeToCamera = true)
+               const bool movingRelativeToCamera = true,
+               const Util::Transform transfrom = Util::Transform())
         : m_Drawable(std::move(drawable)),
           m_ZIndex(zIndex),
           m_Visible(visible),
-          b_MovingRelativeToCamera(movingRelativeToCamera) {}
+          b_MovingRelativeToCamera(movingRelativeToCamera),
+          m_Transform(transfrom) {}
 
     /**
      * @brief Copy constructor.
@@ -74,6 +77,8 @@ public:
      * @return The z-index of the game object.
      */
     float GetZIndex() const { return m_ZIndex; }
+
+    void SetTransform(Util::Transform transform) { m_Transform = transform; }
 
     /**
      * @brief Get the transform of the game object.

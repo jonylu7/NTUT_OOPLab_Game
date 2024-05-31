@@ -8,20 +8,47 @@
 #include "Display/Line.hpp"
 #include "HighLight.h"
 #include "Map/MapUtility.hpp"
-#include "Structure/IWayPoint.hpp"
 #include "Structure/Structure.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "WayPoint.hpp"
 
-class WayPointStructure : public Structure, public IWayPointStructure {
+class WayPointStructure : public Structure {
 protected:
     std::shared_ptr<WayPoint> m_wayPoint = std::make_shared<WayPoint>();
     HighLight m_HighLight;
     Grid m_Grid;
     Line m_Line;
     std::vector<Line> m_lineVector;
+
+    glm::vec2 m_WaypointLocation = {-10, -10};
+    bool m_WaypointSetted = false;
+
+public:
+    bool ifWaypointSetted() {
+        if (m_WaypointLocation == glm::vec2(-10, -10)) {
+            return false;
+        } else {
+            return true;
+        };
+    }
+    glm::vec2 getWaypointLocation() {
+        if (ifWaypointSetted()) {
+            return this->m_WaypointLocation;
+        } else {
+            return getNearbyArea()[0];
+        }
+    }
+
+    void
+    setWaypointLocationByCellCoord(glm::vec2 newLocation) { //=DrawLocation+Cell
+
+        newLocation = {newLocation.x * CELL_SIZE.x,
+                       newLocation.y * CELL_SIZE.y};
+        this->m_WaypointLocation = {newLocation.x + 0.5 * CELL_SIZE.x,
+                                    newLocation.y + 0.5 * CELL_SIZE.y};
+    };
 
 public:
     WayPointStructure(

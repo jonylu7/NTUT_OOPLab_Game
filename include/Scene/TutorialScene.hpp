@@ -7,23 +7,36 @@
 #include "AI/EnemyScripts.hpp"
 #include "Cursor.hpp"
 #include "Scene.hpp"
-// #include "Mechanics/GameObjectID.hpp"
-#include "Task.hpp"
+#include "UI/MissionAccomplishedUI.hpp"
 #include "Util/Prop.hpp"
-#include <glm/glm.hpp>
+#include "pch.hpp"
 
 #define DEBUG_KEY P
 
+enum class TutorialStages { STAGE1, STAGE2, STAGE3, STAGE4, STAGE_FINAL };
 
 class TutorialScene : public Scene {
-    enum class Stages { STAGE1, STAGE2, STAGE3, STAGE4 };
+
 public:
     TutorialScene(){};
     ~TutorialScene(){};
     void Start() override;
     void Update() override;
+
+private:
     void stageStart();
     void stageUpdate();
+    // update
+    void stage1Update();
+    void stage2Update();
+    void stage3Update();
+    void stage4Update();
+    void stageFinalUpdate();
+    // init
+    void initStage2();
+    void initStage3();
+    void initStage4();
+    void initFinalStage();
 
 private:
     SpriteSheet m_SpriteSheet;
@@ -31,8 +44,11 @@ private:
     Grid testGrid;
     std::shared_ptr<EnemyScripts> m_EnemyScripts =
         std::make_shared<EnemyScripts>();
-    std::shared_ptr<Task> m_Text = std::make_shared<Task>();
+    std::shared_ptr<Util::GameObject> m_PlayerObjectivesText =
+        std::make_shared<Util::GameObject>();
     std::shared_ptr<Prop> m_cellProp = std::make_shared<Prop>();
-    Stages m_stage;
+    TutorialStages m_stage;
+
+    MissionAccomplishedUI m_MUI;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_TUTORIALSCENE_HPP

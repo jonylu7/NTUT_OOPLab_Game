@@ -47,8 +47,8 @@ public:
         return true;
     }
 
-    std::vector<std::shared_ptr<Structure>> *getBuiltStructureArray() {
-        return &m_BuiltStructure;
+    std::vector<std::shared_ptr<Structure>> getBuiltStructureArray() {
+        return m_BuiltStructure;
     }
 
     void StartBuiltStructure() {
@@ -77,30 +77,63 @@ public:
         m_BuiltStructure.push_back(structure);
     }
 
-    void updateAvatarSpawnLocation() {
+public:
+    // glm::vec2 getEnemyBarrackCell() { return m_EnemyBarrackCell; }
+    // glm::vec2 getEnemyWayPointCell() { return m_EnemyWayPointCell; }
+    glm::vec2 getPlayerBarrackSpawnCell() {
         for (auto i : m_BuiltStructure) {
             if (std::dynamic_pointer_cast<Barracks>(i)) {
-                m_PlayerBarrackCell = MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
-                m_PlayerWayPointCell =MapUtil::GlobalCoordToCellCoord(
-                    std::dynamic_pointer_cast<Barracks>(i)
-                        ->GetWayPointLocation());
-                int count = 0;
-                int offsetX = 1,offsetY=1;
-                while(m_Map->getTileByCellPosition(m_PlayerWayPointCell)->getAvatars().size()>=4){
-                    offsetX = (rand() % 7*(count/5)) - 3*(count/5);
-                    offsetY = (rand() % 7*(count/5)) - 3*(count/5);
-                    count++;
-                    std::dynamic_pointer_cast<Barracks>(i)->SetWayPointLocationByCellCoord({m_PlayerWayPointCell.x+offsetX,m_PlayerWayPointCell.y+offsetY});
-                    m_PlayerWayPointCell =MapUtil::GlobalCoordToCellCoord(
-                        std::dynamic_pointer_cast<Barracks>(i)
-                            ->GetWayPointLocation());
+                for (auto i : i->getNearbyArea()) {
+                    if (m_Map->ifWalkable(i)) {
+                        return i;
+                    }
                 }
             }
         }
     }
+    glm::vec2 getPlayerBarrackWayPointCell() {
+        for (auto i : m_BuiltStructure) {
+            if (std::dynamic_pointer_cast<Barracks>(i)) {
+                return MapUtil::GlobalCoordToCellCoord(
+                    std::dynamic_pointer_cast<Barracks>(i)
+                        ->getWaypointLocation());
+            }
+        }
+    }
 
-    glm::vec2 getPlayerBarrackCell() { return {m_PlayerBarrackCell.x-1,m_PlayerBarrackCell.y-1}; }
-    glm::vec2 getPlayerWayPointCell() { return m_PlayerWayPointCell; }
+    bool ifBarrackBuilt() {
+        for (auto i : m_BuiltStructure) {
+            if (i->getID().getUnitType() == UnitType::BARRACKS) {
+                return true;
+            }
+        }
+        return false;
+    }
+    bool ifPowerPlantBuilt() {
+        for (auto i : m_BuiltStructure) {
+            if (i->getID().getUnitType() == UnitType::POWER_PLANT) {
+                return true;
+            }
+        }
+        return false;
+    }
+    bool ifWarFactoryBuilt() {
+        for (auto i : m_BuiltStructure) {
+            if (i->getID().getUnitType() == UnitType::WAR_FACT) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool ifOreRefinaryBuilt() {
+        for (auto i : m_BuiltStructure) {
+            if (i->getID().getUnitType() == UnitType::ORE_REF) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();

@@ -2,7 +2,7 @@
 // Created by 盧威任 on 3/3/24.
 //
 
-#include "UI/UI.hpp"
+#include "UI/IngameUI.hpp"
 #include "Map/Map.hpp"
 
 std::unordered_map<UnitType, unsigned int> UIClass::s_unitConstructCount;
@@ -425,7 +425,7 @@ void UIClass::checkExistBuilding(
     for (auto i : buildingList) {
         if (std::dynamic_pointer_cast<Barracks>(i) && !b_barackBuilt) {
             m_barrackTargetCell = MapUtil::GlobalCoordToCellCoord(
-                std::dynamic_pointer_cast<Barracks>(i)->GetWayPointLocation());
+                std::dynamic_pointer_cast<Barracks>(i)->getWaypointLocation());
             b_barackBuilt = true;
             m_barrackCell =
                 MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
@@ -433,7 +433,7 @@ void UIClass::checkExistBuilding(
                    !b_warfactoryBuilt) {
             m_warfactoryTargetCell = MapUtil::GlobalCoordToCellCoord(
                 std::dynamic_pointer_cast<WarFactory>(i)
-                    ->GetWayPointLocation());
+                    ->getWaypointLocation());
             b_warfactoryBuilt = true;
             m_warfactoryCell =
                 MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
@@ -441,24 +441,10 @@ void UIClass::checkExistBuilding(
                    !b_orerefineryBuilt) {
             m_orerefineryTargetCell = MapUtil::GlobalCoordToCellCoord(
                 std::dynamic_pointer_cast<OreRefinery>(i)
-                    ->GetWayPointLocation());
+                    ->getWaypointLocation());
             b_orerefineryBuilt = true;
             m_orerefineryCell =
                 MapUtil::GlobalCoordToCellCoord(i->GetObjectLocation());
         }
     }
-}
-
-std::shared_ptr<Avatar> UIClass::getUnitFromUI() {
-    printf("(UI)return to GOM\n");
-    auto Avatar = m_UIScriptProcess->spawnAvatar();
-    m_UIScriptProcess->setIfReadytoSpawn(false);
-    if (std::dynamic_pointer_cast<Infantry>(Avatar)) {
-
-        Avatar->Start({m_barrackCell.x + 1, m_barrackCell.y - 1});
-
-        // Avatar->setDestinationCell(m_barrackTargetCell);
-    }
-    printf("(UI)return to GOM success\n");
-    return Avatar;
 }

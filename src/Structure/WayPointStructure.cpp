@@ -7,7 +7,7 @@
 void WayPointStructure::whenSelected() {
     if (this->getSelected() && this->getStructureOrder()->getBuilt()) {
         if (Util::Input::IsKeyPressed(Util::Keycode(Util::Keycode::MOUSE_RB))) {
-            this->SetWayPointLocationByCellCoord(
+            this->setWaypointLocationByCellCoord(
                 MapUtil::GlobalCoordToCellCoord(MapUtil::ScreenToGlobalCoord(
                     Util::Input::GetCursorPosition())));
         }
@@ -22,8 +22,8 @@ void WayPointStructure::SetAttachVisible(bool visible) {
 }
 void WayPointStructure::attachmentUpdate() {
     m_HighLight.SetObjectLocation(this->GetDrawLocation());
-    m_wayPoint->SetObjectLocation(this->GetWayPointLocation());
-    m_Grid.setLine(GetDrawLocation(), GetWayPointLocation(),
+    m_wayPoint->SetObjectLocation(this->getWaypointLocation());
+    m_Grid.setLine(GetDrawLocation(), getWaypointLocation(),
                    glm::vec3(0, 0, 1));
     m_wayPoint->Draw();
     m_HighLight.Draw();

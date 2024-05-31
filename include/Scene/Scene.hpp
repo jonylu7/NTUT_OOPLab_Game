@@ -22,7 +22,7 @@
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
 #include "Structure/WayPoint.hpp"
-#include "UI/UI.hpp"
+#include "UI/IngameUI.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -54,7 +54,7 @@ protected:
     std::shared_ptr<UnitManager> m_EnemyObjectManager =
         std::make_shared<UnitManager>();
     Util::Renderer m_Renderer;
-    UIClass m_UI;
+    std::shared_ptr<UIClass> m_UI = std::make_shared<UIClass>();
     std::shared_ptr<Player> m_Player = std::make_shared<Player>();
 };
 

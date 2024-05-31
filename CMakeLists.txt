@@ -84,8 +84,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/App.cpp
 
-        ${SRC_DIR}/Enemy/Enemy.cpp
-
+        ${SRC_DIR}/AI/Enemy.cpp
         ${SRC_DIR}/AI/EnemyScripts.cpp
 
         ${SRC_DIR}/Structure/Structure.cpp
@@ -101,7 +100,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/Scene/MapScene.cpp
         ${SRC_DIR}/Scene/TutorialScene.cpp
-        ${SRC_DIR}/Scene/SandboxScene.cpp
+        ${SRC_DIR}/Scene/SandBoxScene.cpp
 
         ${SRC_DIR}/Avatar/Runner.cpp
         ${SRC_DIR}/Avatar/Avatar.cpp
@@ -112,7 +111,7 @@ set(SRC_FILES
         ${SRC_DIR}/Scene/DefaultScene.cpp
         ${SRC_DIR}/Camera.cpp
 
-        ${SRC_DIR}/UI/UI.cpp
+        ${SRC_DIR}/UI/IngameUI.cpp
 
         ${SRC_DIR}/Map/YAMLReader.cpp
         ${SRC_DIR}/Map/TerrainConfig.cpp
@@ -123,6 +122,7 @@ set(SRC_FILES
         ${SRC_DIR}/Mechanics/GameObjectID.cpp
         ${SRC_DIR}/Mechanics/CursorSelection.cpp
         ${SRC_DIR}/Mechanics/AvatarManager.cpp
+        ${SRC_DIR}/Mechanics/UnitManager.cpp
 
 )
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -201,9 +201,9 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Structure/IWayPointStructure.hpp
         ${INCLUDE_DIR}/HighLight.h
         ${INCLUDE_DIR}/House.hpp
-        ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
+
         ${INCLUDE_DIR}/DrawOverlays.hpp
-        ${INCLUDE_DIR}/UI/UI.hpp
+
         ${INCLUDE_DIR}/Player.hpp
 
         ${INCLUDE_DIR}/Structure/Barracks.hpp
@@ -219,15 +219,22 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Avatar/Runner.hpp
         ${INCLUDE_DIR}/Avatar/Hunter.hpp
 
+        ${INCLUDE_DIR}/UI/UIScriptProcess.hpp
+        ${INCLUDE_DIR}/UI/UI.hpp
+        ${INCLUDE_DIR}/UI/IngameUI.hpp
+        ${INCLUDE_DIR}/UI/UIStatus.hpp
+
 
         ${INCLUDE_DIR}/Scene/Scene.hpp
         ${INCLUDE_DIR}/Scene/TutorialScene.hpp
-        ${INCLUDE_DIR}/Scene/SandboxScene.hpp
+        ${INCLUDE_DIR}/Scene/SandBoxScene.hpp
+
 
 
         ${INCLUDE_DIR}/Enemy/Enemy.hpp
         ${INCLUDE_DIR}/Enemy/EnemyScripts.hpp
         ${INCLUDE_DIR}/Enemy/AIGroupCommander.hpp
+       
 
         ${INCLUDE_DIR}/Core/Context.hpp
         ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp

@@ -206,8 +206,6 @@ void UIScriptProcess::SetIfFinished(UnitType type, bool value) {
         b_ADVPowerPlant = value;
         break;
     default:
-        // Handle the case when type doesn't match any of the options
-        // For example, you might throw an exception or set a default value
         break;
     }
 }

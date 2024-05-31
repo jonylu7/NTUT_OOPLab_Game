@@ -9,17 +9,20 @@
 
 #define SPACE 4
 
+
 enum class SpawnMode { BUILDINGS,AVATAR};
 class EnemyScripts{
+
 private:
     std::shared_ptr<UnitManager> m_GameObjectManager;
     std::shared_ptr<UnitManager> m_EnemyObjectManager;
     std::shared_ptr<MapClass> m_Map;
     std::shared_ptr<AIGroupCommander> m_AIGroupCommander;
 
-    glm::vec2 m_baseCell = {20,20};
+    glm::vec2 m_baseCell = {20, 20};
     int constructCountX = 0;
     int constructCountY = 0;
+
 
     float m_buildingCDTime=0;
     float m_AvatarCDTime=0;
