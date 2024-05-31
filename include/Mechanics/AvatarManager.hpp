@@ -35,6 +35,8 @@ public:
 
     void assignAttackOrderToAvatar(std::shared_ptr<Avatar> unit,
                                    glm::vec2 destcell);
+    void assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
+                                                  glm::vec2 destcell,HouseType myHouse);
     int getAvatarSize(){
         return static_cast<int>(m_AvatarArray.size());
     }

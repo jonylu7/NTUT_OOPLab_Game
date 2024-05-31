@@ -31,12 +31,18 @@ public:
 
 
     void setAllTroopToAttackMode(){
+        if(m_defensiveGroup.empty()){
+            return;
+        }
         for(auto i : m_defensiveGroup){
             addTroopToOffensiveGroup(i);
         }
         m_defensiveGroup.clear();
     }
     void setTroopToAttackMode(int num){
+        if(m_defensiveGroup.empty()){
+            return;
+        }
         int max  =  static_cast<int>(m_defensiveGroup.size());
         for(int i=max-1;i>=0 && num>=max-i;i--){
             addTroopToOffensiveGroup(m_defensiveGroup[i]);
@@ -77,7 +83,7 @@ protected:
             t++;
         }
         std::vector<std::shared_ptr<Avatar>> temp = m_AIAvatarManager->getAvatarArray();
-        for(int i=static_cast<int>(temp.size());i>=0;i--){
+        for(int i=static_cast<int>(temp.size())-1;i>=0;i--){
             if(temp[i]->getAIType()==AI_Type::NONE){
                 temp[i]->setAIType(AI_Type::DEFENCE);
                 m_defensiveGroup.push_back(temp[i]);
@@ -104,7 +110,7 @@ protected:
             for(auto i : m_PlayerUnitManager->getAvatarManager()->getAvatarArray()){
                 if(i->getDistance(unit->getCurrentLocationInCell())<=AUTO_FIND_RANGE){
                     //attack
-                    m_AIAvatarManager->assignAttackOrderToAvatar(unit,i->getCurrentLocationInCell());
+                    m_AIAvatarManager->assignAttackOrderToAvatar(unit,i->getCurrentLocationInCell(),HouseType::ENEMY);
                     return;
                 }
             }
@@ -115,15 +121,18 @@ protected:
                 return;
             }
             //attack
-            m_AIAvatarManager->assignAttackOrderToAvatar(unit,targetCell);
+            m_AIAvatarManager->assignAttackOrderToAvatar(unit,targetCell,HouseType::ENEMY);
             break;
         }
     }
     void updateOffensiveTroopAttackTarget(){
         for(auto i : m_offensiveGroup){
             if(i.size()>0){
-                if (m_AIAvatarManager->ifAvatarHasNemesis(i.front())){
+                if (!m_AIAvatarManager->ifAvatarHasNemesis(i.front())){
                     // find new target
+                    if(m_PlayerUnitManager->getAvatarCount()==0){
+                        return;
+                    }
                     glm::vec2 targetCell = m_Map->findEnemyInRange(
                         100, i.front()->getCurrentLocationInCell(),
                         HouseType::ENEMY);
@@ -132,8 +141,9 @@ protected:
                     }
                     // attack
                     for (auto j : i) {
+                        m_AIAvatarManager->assignMoveOrderToAvatar(j,targetCell);
                         m_AIAvatarManager->assignAttackOrderToAvatar(
-                            j, targetCell);
+                            j, targetCell,HouseType::ENEMY);
                     }
                 }
             }
