@@ -29,8 +29,6 @@ private:
     SpriteSheet m_SpriteSheet;
     std::shared_ptr<CursorClass> m_Cursor = std::make_shared<CursorClass>();
     Grid testGrid;
-    std::shared_ptr<EnemyPlayer> m_Enemy =
-        std::make_shared<EnemyPlayer>(SceneMode::TUTORIAL);
     std::shared_ptr<EnemyScripts> m_EnemyScripts =
         std::make_shared<EnemyScripts>();
     std::shared_ptr<Task> m_Text = std::make_shared<Task>();

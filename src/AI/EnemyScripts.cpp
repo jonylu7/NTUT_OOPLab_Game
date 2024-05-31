@@ -2,11 +2,14 @@
 // Created by nudle on 2024/5/23.
 //
 #include "AI/EnemyScripts.hpp"
+
+#define MAX_TROOPS_SIZE 25
 void EnemyScripts::Start(std::shared_ptr<UnitManager> GameObjectManager,std::shared_ptr<UnitManager> EnemyObjectManager,std::shared_ptr<MapClass> map,bool active){
     m_GameObjectManager=GameObjectManager;
     m_EnemyObjectManager = EnemyObjectManager;
     m_Map=map;
     m_active = active;
+    m_AIGroupCommander = std::make_shared<AIGroupCommander>(GameObjectManager,EnemyObjectManager,map);
 }
 
 void EnemyScripts::Update(){
@@ -39,6 +42,7 @@ void EnemyScripts::Update(){
             m_EnemyObjectManager->addTotalCurrency(m_avatarCost/m_AvatarCDTime*(-1.f));
         }
         modeUpdate();
+        m_AIGroupCommander->Update();
     }
 
 }
@@ -53,14 +57,20 @@ void EnemyScripts::modeUpdate(){
         }else{
             if(m_GameObjectManager->getAvatarCount()/m_EnemyObjectManager->getAvatarCount()<=0.5){
                 //Attack , set all troop to attack mode , set defensive Troop = 0
-                updateAllTroopStates();
+                //updateAllTroopStates();
+                m_AIGroupCommander->setAllTroopToAttackMode();
             }else{
                 //Safe now , build adv or spawn troop
-                if(!ifBuiltADV()){
+                if(m_AIGroupCommander->getDefensiveTroopSize()>25){
+                    m_AIGroupCommander->setTroopToAttackMode(m_AIGroupCommander->getDefensiveTroopSize()-25);
+                }
+                if(!ifBuiltADV() && m_EnemyObjectManager->getAvatarCount()<MAX_TROOPS_SIZE){
                     buildADV();
                     spawnUnit();
-                }else{
+                }else if(m_EnemyObjectManager->getAvatarCount()<MAX_TROOPS_SIZE){
                     spawnUnit();
+                }else{
+
                 }
             }
         }
@@ -134,7 +144,7 @@ void EnemyScripts::buildADV(){
 }
 
 void EnemyScripts::spawnUnit(){
-    if(m_selectedAvatarType!=UnitType::NONE||m_EnemyObjectManager->getAvatarCount()>20){
+    if(m_selectedAvatarType!=UnitType::NONE){
         return;
     }
     if(m_EnemyObjectManager->getAvatarCount()<=25 && m_EnemyObjectManager->getTotalCurrency()> 100){

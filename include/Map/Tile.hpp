@@ -117,6 +117,31 @@ public:
         return false;
     }
 
+    bool ifEnemyAtTile(HouseType myHouse) {
+        if(myHouse==HouseType::MY){
+            if (m_Structure->getID().getHouse() == HouseType::ENEMY) {
+                return true;
+            }
+            for (auto a : m_Avatars) {
+                if (a->getID().getHouse() == HouseType::ENEMY) {
+                    return true;
+                }
+            }
+            return false;
+        }else if(myHouse==HouseType::ENEMY){
+            if (m_Structure->getID().getHouse() == HouseType::MY) {
+                return true;
+            }
+            for (auto a : m_Avatars) {
+                if (a->getID().getHouse() == HouseType::MY) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+
 private:
     bool m_TerrainBuildable;
     bool m_TerrainWalkable;

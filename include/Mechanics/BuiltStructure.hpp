@@ -84,6 +84,17 @@ public:
                 m_PlayerWayPointCell =MapUtil::GlobalCoordToCellCoord(
                     std::dynamic_pointer_cast<Barracks>(i)
                         ->GetWayPointLocation());
+                int count = 0;
+                int offsetX = 1,offsetY=1;
+                while(m_Map->getTileByCellPosition(m_PlayerWayPointCell)->getAvatars().size()>=4){
+                    offsetX = (rand() % 7*(count/5)) - 3*(count/5);
+                    offsetY = (rand() % 7*(count/5)) - 3*(count/5);
+                    count++;
+                    std::dynamic_pointer_cast<Barracks>(i)->SetWayPointLocationByCellCoord({m_PlayerWayPointCell.x+offsetX,m_PlayerWayPointCell.y+offsetY});
+                    m_PlayerWayPointCell =MapUtil::GlobalCoordToCellCoord(
+                        std::dynamic_pointer_cast<Barracks>(i)
+                            ->GetWayPointLocation());
+                }
             }
         }
     }

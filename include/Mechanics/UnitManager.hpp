@@ -74,13 +74,6 @@ public:
 
     void spawn(std::shared_ptr<MapClass> m_Map, UnitType unit,
                HouseType house) {
-
-        if (house == HouseType::ENEMY) {
-            // m_Enemy->addUnitConstructCount(unit, 1);
-        } else {
-            //                m_Player->setUnitConstructCount(unit, 1);
-        }
-
         switch (unit) {
         case UnitType::INFANTRY: {
             auto avatar = std::make_shared<Infantry>(house);
@@ -90,14 +83,12 @@ public:
                     .x == -1) {
                 return;
             }
-
             avatar->Start(m_StructureManager->getStructureArray()
                               ->getPlayerBarrackCell());
             m_AvatarManager->assignMoveOrderToAvatar(avatar,{m_StructureManager->getStructureArray()->getPlayerWayPointCell()});
             m_AvatarManager->AppendAvatar(avatar);
-            m_troopSize+=1;
+            addUnitConstructCount(unit,1);
         }
-
         default: {
             printf("(GOM)error! try to spawn unknown type\n");
             break;
@@ -112,9 +103,9 @@ public:
             auto structure = std::make_shared<Barracks>(house);
             auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
             structure->Start(globalPos);
-            structure->SetWayPointLocationByCellCoord({cellPos.x+2,cellPos.y-2});
             m_StructureManager->getStructureArray()->buildNewStructure(
                 structure, true);
+            structure->SetWayPointLocationByCellCoord({cellPos.x+2,cellPos.y+2});
             break;
         }
         case UnitType::ORE_REF: {
@@ -153,10 +144,7 @@ public:
         case UnitType::INFANTRY: {
             auto avatar = std::make_shared<Infantry>(house);
             avatar->Start(cellPos);
-            //            avatar ->setNewDestination(cellPos);
-//            m_AvatarManager->assignMoveOrderToAvatar(avatar,{cellPos.x+1,cellPos.y+1});
             m_AvatarManager->AppendAvatar(avatar);
-            m_troopSize+=1;
             break;
         }
         case UnitType::NONE: {
@@ -168,6 +156,9 @@ public:
             break;
         }
         }
+        if(unit!=UnitType::NONE){
+            addUnitConstructCount(unit,1);
+        }
     }
 
     void addUnitConstructCount(UnitType type, int value) {
@@ -177,14 +168,14 @@ public:
         return unitCount[type];
     }
     int getAvatarCount(){
-        return unitCount[UnitType::INFANTRY];
-    }
-    void addAvatarCount(UnitType type,int value){
-        unitCount[type] += value;
+        val = m_AvatarManager->getAvatarSize();
+        return val;
     }
 
+
+
 private:
-    std::unordered_map<UnitType, unsigned int> unitCount;
+    std::unordered_map<UnitType,int> unitCount;
     std::shared_ptr<CursorSelection> m_CursorSelection =
         std::make_shared<CursorSelection>();
     std::shared_ptr<StructureManager> m_StructureManager =
@@ -194,7 +185,8 @@ private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
-    int m_troopSize = 0;
+
+    int val=0;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP

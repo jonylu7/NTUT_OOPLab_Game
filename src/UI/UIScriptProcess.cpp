@@ -229,7 +229,7 @@ std::shared_ptr<Avatar> UIScriptProcess::spawnAvatar() {
     //    printf("(UISC)spawnAvatar\n");
     switch (m_currentInfType) {
     case UnitType::INFANTRY: {
-        return std::make_unique<Infantry>();
+        return std::make_unique<Infantry>(HouseType::MY);
     }
     }
 }
