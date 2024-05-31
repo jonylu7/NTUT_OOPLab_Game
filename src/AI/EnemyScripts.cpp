@@ -11,6 +11,7 @@ void EnemyScripts::Start(std::shared_ptr<UnitManager> GameObjectManager,std::sha
     m_Map = map;
     m_active = active;
     m_AIGroupCommander = std::make_shared<AIGroupCommander>(GameObjectManager,EnemyObjectManager,map);
+    m_AIGroupCommander->Start();
 }
 
 void EnemyScripts::Update() {
@@ -53,27 +54,30 @@ void EnemyScripts::modeUpdate() {
     if (!ifBuiltBasic()) {
         buildBasic();
     } else {
-        if (m_EnemyObjectManager->getAvatarCount() == 0 ||
-            (m_GameObjectManager->getAvatarCount() /
-                     m_EnemyObjectManager->getAvatarCount() >=
+        float playerAvatarCount = m_GameObjectManager->getAvatarCount();
+        float enemyAvatarCount = m_EnemyObjectManager->getAvatarCount();
+        if (enemyAvatarCount == 0 ||
+            (playerAvatarCount /
+                     enemyAvatarCount >=
                  2 &&
-             m_GameObjectManager->getAvatarCount() != 0)) {
+             playerAvatarCount != 0)) {
             // Defense mode , spawn Troop only
             spawnUnit();
         }else{
-            if(m_GameObjectManager->getAvatarCount()/m_EnemyObjectManager->getAvatarCount()<=0.5){
+            if(playerAvatarCount/enemyAvatarCount<=0.5){
                 //Attack , set all troop to attack mode , set defensive Troop = 0
                 //updateAllTroopStates();
                 m_AIGroupCommander->setAllTroopToAttackMode();
+                spawnUnit();
             }else{
                 //Safe now , build adv or spawn troop
                 if(m_AIGroupCommander->getDefensiveTroopSize()>25){
                     m_AIGroupCommander->setTroopToAttackMode(m_AIGroupCommander->getDefensiveTroopSize()-25);
                 }
-                if(!ifBuiltADV() && m_EnemyObjectManager->getAvatarCount()<MAX_TROOPS_SIZE){
+                if(!ifBuiltADV() && enemyAvatarCount<MAX_TROOPS_SIZE){
                     buildADV();
                     spawnUnit();
-                }else if(m_EnemyObjectManager->getAvatarCount()<MAX_TROOPS_SIZE){
+                }else if(enemyAvatarCount<MAX_TROOPS_SIZE){
 
                     spawnUnit();
                 }else{

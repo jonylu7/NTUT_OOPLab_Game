@@ -11,7 +11,7 @@ void TutorialScene::Start() {
     m_EnemyObjectManager->Start(m_Map);
     m_GameObjectManager->setTotalCurrency(5000);
     m_EnemyObjectManager->setTotalCurrency(5000);
-    m_UI.Start(m_Map, m_GameObjectManager);
+    m_UI->Start(m_Map, m_GameObjectManager);
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                          MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 

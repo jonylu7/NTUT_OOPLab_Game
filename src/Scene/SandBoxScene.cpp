@@ -101,9 +101,9 @@ void SandBoxScene::stageStart() {
         break;
     }
     case Stages::STAGE4: {
-        m_GameObjectManager->spawn(m_Map, UnitType::BARRACKS, HouseType::MY,{5,5});
+        m_GameObjectManager->spawn( UnitType::BARRACKS, HouseType::MY,{5,5});
         for(int i=0;i<30;i++){
-            m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY);
+            m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::MY,{10,10});
         }
         m_stage = Stages::END;
         break;
@@ -133,7 +133,7 @@ void SandBoxScene::stageUpdate() {
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_4)) {
             m_stage = Stages::STAGE4;
             m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager,
-                                  m_Map, false);
+                                  m_Map, true);
             stageStart();
         }
     }

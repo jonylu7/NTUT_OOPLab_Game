@@ -63,8 +63,7 @@ public:
         return unitCount[type];
     }
     int getAvatarCount(){
-        val = m_AvatarManager->getAvatarSize();
-        return val;
+        return m_AvatarManager->getAvatarSize();;
     }
 
 
@@ -82,8 +81,6 @@ private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::chrono::high_resolution_clock::time_point m_StartTime;
     double m_lastElapsed = 0.F;
-
-    int val=0;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
