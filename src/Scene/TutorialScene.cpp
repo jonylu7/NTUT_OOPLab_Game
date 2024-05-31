@@ -10,9 +10,9 @@ void TutorialScene::Start() {
                 64, 64);
     m_GameObjectManager->Start(m_Map);
     m_EnemyObjectManager->Start(m_Map);
+    m_GameObjectManager->setTotalCurrency(5000);
+    m_EnemyObjectManager->setTotalCurrency(5000);
     m_UI->Start(m_Map, m_GameObjectManager);
-    m_Player->setTotalCurrency(5000);
-    m_Enemy->setTotalCurrency(5000);
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                          MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 

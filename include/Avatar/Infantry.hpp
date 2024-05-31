@@ -19,7 +19,6 @@ public:
         // setHp(50);
         getMoving()->setMovementSpeed(4);
     }
-
 private:
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_INFANTRY_HPP

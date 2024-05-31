@@ -55,6 +55,20 @@ void AvatarManager::assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
         }
     }
 }
+void AvatarManager::assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
+                                              glm::vec2 destcell,HouseType myHouse) {
+    m_NemesisManager->removeNemesis(avatar);
+    if (m_Map->getTileByCellPosition(destcell)->ifEnemyAtTile(myHouse)) {
+        if (m_Map->getTileByCellPosition(destcell)->ifStructureExists()) {
+            m_NemesisManager->addNemesis(
+                avatar, m_Map->getTileByCellPosition(destcell)->getStructure());
+        } else {
+            m_NemesisManager->addNemesis(
+                avatar,
+                m_Map->getTileByCellPosition(destcell)->getAvatars()[0]);
+        }
+    }
+}
 
 void AvatarManager::assignOrderToMyAvatar(std::shared_ptr<Avatar> avatar) {
     if (avatar->getID().getHouseType() == HouseType::MY) {
