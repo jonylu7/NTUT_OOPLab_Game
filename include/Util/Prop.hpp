@@ -10,8 +10,8 @@ public:
     Prop(bool selectable = false)
         : Structure(selectable) {}
     ~Prop() override {}
-    void Start(glm::vec2 width) override {
-        m_width = width;
+    void Start(glm::vec2 size) override {
+        m_Size = size;
         this->SetAttachVisible(true);
         SetZIndex(8);
         m_HighLight.SetZIndex(10);
@@ -37,9 +37,9 @@ public:
         m_Transform.translation = m_DrawLocation;
     }
     bool ifOverlaps(glm::vec2 cell) {
-        if ((cell.x > getLocationCell().x - m_width.x &&
+        if ((cell.x > getLocationCell().x - m_Size.x &&
              cell.x < getLocationCell().x) &&
-            (cell.y > getLocationCell().y - m_width.y &&
+            (cell.y > getLocationCell().y - m_Size.y &&
              cell.y < getLocationCell().y)) {
             return true;
         }
@@ -51,7 +51,7 @@ public:
     }
 
 private:
-    glm::vec2 m_width = {1, 1};
+    glm::vec2 m_Size = {1, 1};
     glm::vec2 m_highlightOffset = {0, 0};
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PROP_HPP

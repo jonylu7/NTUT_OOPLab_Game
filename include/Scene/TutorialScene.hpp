@@ -26,13 +26,13 @@ public:
 private:
     void stageStart();
     void stageUpdate();
-    // update
+    // update stage
     void stage1Update();
     void stage2Update();
     void stage3Update();
     void stage4Update();
     void stageFinalUpdate();
-    // init
+    // init stage
     void initStage2();
     void initStage3();
     void initStage4();

@@ -6,7 +6,8 @@
 void TutorialScene::Start() {
 
     LOG_TRACE("Start");
-    m_Map->Init(100, 100);
+    m_Map->Init(MapBinReader::readBin("../assets/map/ore-lord/map.bin", 64, 64),
+                64, 64);
     m_GameObjectManager->Start(m_Map);
     m_EnemyObjectManager->Start(m_Map);
     m_UI->Start(m_Map, m_GameObjectManager);
@@ -15,16 +16,7 @@ void TutorialScene::Start() {
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                          MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 
-    //    m_EnemyScripts->Start(m_Enemy,m_GameObjectManager,
-    //    m_EnemyObjectManager, m_Map);
-
     m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 5});
-    // combat test
-    // m_EnemyObjectManager->spawn(m_Map, UnitType::INFANTRY, HouseType::ENEMY,
-    //                            {6, 6});
-    // m_EnemyObjectManager->spawn(m_Map, UnitType::BARRACKS, HouseType::ENEMY,
-    //                            {10, 10});
-
     stageStart();
 }
 void TutorialScene::Update() {
@@ -165,7 +157,7 @@ void TutorialScene::initStage3() {
         std::make_unique<Util::Image>("../assets/sprites/Task/Task3.png"));
 
     m_cellProp->setHighLightImage("../assets/sprites/Task/Task_Cell_Text3.png");
-    m_cellProp->setScale({2, 2});
+    m_cellProp->setScale({1, 1});
     m_cellProp->setObjectLocation({850, 850}, 0);
     m_cellProp->Start({4, 4});
     m_stage = TutorialStages::STAGE3;
@@ -174,15 +166,16 @@ void TutorialScene::initStage3() {
 void TutorialScene::stage3Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
-    int avatarCount = 0;
+    int avataroverlapscount = 0;
     for (auto i : m_GameObjectManager->getAvatarManager()->getAvatarArray()) {
         if (i->getHouseType() == HouseType::MY) {
             if (m_cellProp->ifOverlaps(i->getMoving()->getCurrentCell())) {
-                avatarCount++;
+                avataroverlapscount++;
             }
         }
     }
-    if (avatarCount >= 4 || Util::Input::IsKeyDown(Util::Keycode::DEBUG_KEY)) {
+    if (avataroverlapscount >= 4 ||
+        Util::Input::IsKeyDown(Util::Keycode::DEBUG_KEY)) {
         // change next stage's text&prop here
         initStage4();
     }
@@ -204,13 +197,8 @@ void TutorialScene::initStage4() {
 void TutorialScene::stage4Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
-    int enemy_deadcount = 0;
-    for (auto i : m_EnemyObjectManager->getAvatarManager()->getAvatarArray()) {
-        if (*i->getHealth()->getLivingStatus() == LivingStatus::DEAD) {
-            enemy_deadcount++;
-        }
-    }
-    if (enemy_deadcount >= 3 ||
+    if (m_EnemyObjectManager->getAvatarManager()->getAvatarArray().size() ==
+            0 ||
         Util::Input::IsKeyDown(Util::Keycode::DEBUG_KEY)) {
         initFinalStage();
     }
