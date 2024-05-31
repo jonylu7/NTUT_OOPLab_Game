@@ -102,9 +102,8 @@ void SandBoxScene::stageStart() {
     }
     case Stages::STAGE4: {
         m_GameObjectManager->spawn( UnitType::BARRACKS, HouseType::MY,{5,5});
-        for(int i=0;i<30;i++){
-            m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::MY,{10,10});
-        }
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 7});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 6});
         m_stage = Stages::END;
         break;
     }
