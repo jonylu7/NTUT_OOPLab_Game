@@ -73,22 +73,18 @@ protected:
         updateOffensiveTroopAttackTarget();
     }
     void updateDefensiveGroup(){
-        int t=0;
-        for(auto i : m_defensiveGroup){
-            if(i->getHealth()->ifDead()){
-                m_defensiveGroup.erase(m_defensiveGroup.begin()+t);
+        for(int i = static_cast<int>(m_defensiveGroup.size());i>0;--i ){
+            if(m_defensiveGroup[i-1]->getHealth()->ifDead()){
+                m_defensiveGroup.erase(m_defensiveGroup.begin()+i-1);
             }else{
-                autoAttack(i,AUTO_ATTACK_METHOD);
+                autoAttack(m_defensiveGroup[i-1],AUTO_ATTACK_METHOD);
             };
-            t++;
         }
         std::vector<std::shared_ptr<Avatar>> temp = m_AIAvatarManager->getAvatarArray();
         for(int i=static_cast<int>(temp.size())-1;i>=0;i--){
             if(temp[i]->getAIType()==AI_Type::NONE){
                 temp[i]->setAIType(AI_Type::DEFENCE);
                 m_defensiveGroup.push_back(temp[i]);
-            }else{
-                break;
             }
         }
     }
@@ -140,10 +136,13 @@ protected:
                         return;
                     }
                     // attack
-                    for (auto j : i) {
-                        m_AIAvatarManager->assignMoveOrderToAvatar(j,targetCell);
+                    for (int j=static_cast<int>(i.size());j>0;--j) {
+                        if(i[j-1]->getHealth()->ifDead()){
+                            i.erase(i.begin()+j-1);
+                        }
+                        m_AIAvatarManager->assignMoveOrderToAvatar(i[j-1],targetCell);
                         m_AIAvatarManager->assignAttackOrderToAvatar(
-                            j, targetCell,HouseType::ENEMY);
+                            i[j-1], targetCell,HouseType::ENEMY);
                     }
                 }
             }

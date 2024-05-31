@@ -78,7 +78,6 @@ void EnemyScripts::modeUpdate() {
                     buildADV();
                     spawnUnit();
                 }else if(enemyAvatarCount<MAX_TROOPS_SIZE){
-
                     spawnUnit();
                 }else{
 
