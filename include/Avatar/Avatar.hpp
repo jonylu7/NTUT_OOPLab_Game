@@ -20,8 +20,10 @@ class Avatar : public Util::GameObject, public Selectable, public Huntable {
 
 public:
     Avatar(){};
-    Avatar(UnitType unit, HouseType house)
-        : m_ID(GameObjectID(UnitType::NONE, house)){};
+    Avatar(UnitType unit, HouseType house, Weapon weapon = COLT_45)
+        : m_ID(GameObjectID(UnitType::NONE, house)) {
+        getAttackAndDamage()->setWeapon(std::make_shared<Weapon>(weapon));
+    };
     ~Avatar() override{};
 
     virtual void Start(glm::vec2 spawnlocationcell);

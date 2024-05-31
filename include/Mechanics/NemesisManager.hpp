@@ -35,8 +35,9 @@ public:
         }
         if (hunter->getDistance(
                 m_Nemesis[hunter]->getCurrentLocationInCell()) <=
-            hunter->getAttackAndDamage()->getWeapon()->getFireRange() *
-                CELL_SIZE.x) // check with in range
+            hunter->getAttackAndDamage()
+                ->getWeapon()
+                ->getFireRange()) // check with in range
         {
             return true;
         } else {

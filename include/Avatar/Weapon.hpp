@@ -72,6 +72,6 @@ private:
     WeaponType m_Type;
 };
 
-const Weapon COLT_45(180, 5.75, 100, 100, WeaponType::COLT_45);
+const Weapon COLT_45(180, 4, 100, 100, WeaponType::COLT_45);
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_WEAPON_HPP
