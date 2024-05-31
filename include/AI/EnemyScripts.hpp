@@ -4,8 +4,8 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_ENEMYSCRIPTS_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_ENEMYSCRIPTS_HPP
-#include "Enemy.hpp"
 #include "Mechanics/UnitManager.hpp"
+#include "AIGroupCommander.hpp"
 
 #define SPACE 4
 
@@ -17,6 +17,7 @@ private:
     std::shared_ptr<UnitManager> m_GameObjectManager;
     std::shared_ptr<UnitManager> m_EnemyObjectManager;
     std::shared_ptr<MapClass> m_Map;
+    std::shared_ptr<AIGroupCommander> m_AIGroupCommander;
 
     glm::vec2 m_baseCell = {20, 20};
     int constructCountX = 0;

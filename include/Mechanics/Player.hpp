@@ -16,16 +16,14 @@ public:
     void addFixedPower(int value) { m_FixedPower += value; }
 
     int getTotalCurrency() { return m_TotalCurrency; }
-    int getMaxTroopSize() { return m_MaxTroopSize; }
+
 
 protected:
     int
     getTotalPower(std::vector<std::shared_ptr<Structure>> m_BuiltStructure) {
         int totalPower = 0;
         for (int i = 0; i < m_BuiltStructure.size(); i++) {
-            if(m_BuiltStructure[i]->getHouseType()==HouseType::MY){
-                totalPower += m_BuiltStructure[i]->getElectricPower();
-            }
+            totalPower += m_BuiltStructure[i]->getElectricPower();
         }
         return totalPower;
     }

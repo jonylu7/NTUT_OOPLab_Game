@@ -22,8 +22,8 @@ public:
             "../assets/sprites/ADVPowerPlants_SpriteSheet.png", 72, 72, 13, 0);
         m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                          false, INTERVAL, false);
-        m_RelativeOccupiedArea = {{0, 0}, {0, 1}, {0, 2},
-                                  {1, 0}, {1, 1}, {1, 2}};
+        m_RelativeOccupiedArea = {{0, 0}, {0, 1},
+                                  {1, 0}, {1, 1},{2,0},{2,1}};
     }
     void SetObjectLocation(glm::vec2 location) override {
         location = MapUtil::PositionStickToGrid(location);

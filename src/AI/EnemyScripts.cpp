@@ -2,13 +2,16 @@
 // Created by nudle on 2024/5/23.
 //
 #include "AI/EnemyScripts.hpp"
-void EnemyScripts::Start(std::shared_ptr<UnitManager> GameObjectManager,
-                         std::shared_ptr<UnitManager> EnemyObjectManager,
-                         std::shared_ptr<MapClass> map, bool active) {
-    m_GameObjectManager = GameObjectManager;
+
+#define MAX_TROOPS_SIZE 25
+void EnemyScripts::Start(std::shared_ptr<UnitManager> GameObjectManager,std::shared_ptr<UnitManager> EnemyObjectManager,std::shared_ptr<MapClass> map,bool active){
+    m_GameObjectManager=GameObjectManager;
+
     m_EnemyObjectManager = EnemyObjectManager;
     m_Map = map;
     m_active = active;
+    m_AIGroupCommander = std::make_shared<AIGroupCommander>(GameObjectManager,EnemyObjectManager,map);
+    m_AIGroupCommander->Start();
 }
 
 void EnemyScripts::Update() {
@@ -43,6 +46,7 @@ void EnemyScripts::Update() {
                                                    m_AvatarCDTime * (-1.f));
         }
         modeUpdate();
+        m_AIGroupCommander->Update();
     }
 }
 
@@ -50,27 +54,33 @@ void EnemyScripts::modeUpdate() {
     if (!ifBuiltBasic()) {
         buildBasic();
     } else {
-        if (m_EnemyObjectManager->getAvatarCount() == 0 ||
-            (m_GameObjectManager->getAvatarCount() /
-                     m_EnemyObjectManager->getAvatarCount() >=
+        float playerAvatarCount = m_GameObjectManager->getAvatarCount();
+        float enemyAvatarCount = m_EnemyObjectManager->getAvatarCount();
+        if (enemyAvatarCount == 0 ||
+            (playerAvatarCount /
+                     enemyAvatarCount >=
                  2 &&
-             m_GameObjectManager->getAvatarCount() != 0)) {
+             playerAvatarCount != 0)) {
             // Defense mode , spawn Troop only
             spawnUnit();
-        } else {
-            if (m_GameObjectManager->getAvatarCount() /
-                    m_EnemyObjectManager->getAvatarCount() <=
-                0.5) {
-                // Attack , set all troop to attack mode , set defensive Troop =
-                // 0
-                updateAllTroopStates();
-            } else {
-                // Safe now , build adv or spawn troop
-                if (!ifBuiltADV()) {
+        }else{
+            if(playerAvatarCount/enemyAvatarCount<=0.5){
+                //Attack , set all troop to attack mode , set defensive Troop = 0
+                //updateAllTroopStates();
+                m_AIGroupCommander->setAllTroopToAttackMode();
+                spawnUnit();
+            }else{
+                //Safe now , build adv or spawn troop
+                if(m_AIGroupCommander->getDefensiveTroopSize()>25){
+                    m_AIGroupCommander->setTroopToAttackMode(m_AIGroupCommander->getDefensiveTroopSize()-25);
+                }
+                if(!ifBuiltADV() && enemyAvatarCount<MAX_TROOPS_SIZE){
                     buildADV();
                     spawnUnit();
-                } else {
+                }else if(enemyAvatarCount<MAX_TROOPS_SIZE){
                     spawnUnit();
+                }else{
+
                 }
             }
         }
@@ -93,6 +103,7 @@ void EnemyScripts::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
             m_buildingCDTime = time;
         }
     }
+
 
     if (cheat) {
         m_AvatarCDTime *= CHEAT;
@@ -152,6 +163,7 @@ void EnemyScripts::buildADV() {
     }
 }
 
+
 void EnemyScripts::spawnUnit() {
     if (m_selectedAvatarType != UnitType::NONE ||
         m_EnemyObjectManager->getAvatarCount() > 50) {
@@ -173,7 +185,7 @@ void EnemyScripts::UpdateSpawnScript(SpawnMode spawnMode) {
         if (m_selectedBuildingType == UnitType::NONE) {
             return;
         }
-        m_GameObjectManager->spawn(
+        m_EnemyObjectManager->spawn(
             m_selectedBuildingType, HouseType::ENEMY,
             {m_baseCell.x + constructCountX, m_baseCell.y + constructCountY});
         m_EnemyObjectManager->addUnitConstructCount(m_selectedBuildingType, 1);
@@ -193,7 +205,7 @@ void EnemyScripts::UpdateSpawnScript(SpawnMode spawnMode) {
             return;
         }
         if (m_selectedAvatarType == UnitType::INFANTRY) {
-            m_GameObjectManager->spawnToWayPoint(m_selectedAvatarType,
+            m_EnemyObjectManager->spawnToWayPoint(m_selectedAvatarType,
                                                  HouseType::ENEMY);
             setCost(0, SpawnMode::AVATAR);
             setCDTime(0.f, SpawnMode::AVATAR);
