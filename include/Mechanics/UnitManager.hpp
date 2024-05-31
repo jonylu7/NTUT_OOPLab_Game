@@ -22,7 +22,7 @@
 
 #include <utility>
 
-class UnitManager : public Player {
+class UnitManager {
 public:
     UnitManager() {}
     ~UnitManager() {}
@@ -38,18 +38,12 @@ public:
     void Update();
 
 public:
-    int getTotalPower() {
-        return Player::getTotalPower(
-            m_StructureManager->getStructureArray()->getBuiltStructureArray());
-    }
     std::shared_ptr<AvatarManager> getAvatarManager() {
         return m_AvatarManager;
     }
     std::shared_ptr<StructureManager> getStructureManager() {
         return m_StructureManager;
     }
-
-    int updateCurrency();
 
     void spawnToWayPoint(UnitType unit, HouseType house);
     void spawn(UnitType unit, HouseType house, glm::vec2 cellPos);

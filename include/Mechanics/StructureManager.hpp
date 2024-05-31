@@ -45,6 +45,16 @@ public:
         return m_BuiltStructure;
     }
 
+    int getStructurePower() {
+        int totalPower = 0;
+        for (auto pstruct : m_BuiltStructure->getBuiltStructureArray()) {
+            if (pstruct->getHouseType() == HouseType::MY) {
+                totalPower += pstruct->getElectricPower();
+            }
+        }
+        return totalPower;
+    }
+
 protected:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::shared_ptr<BuiltStructure> m_BuiltStructure =

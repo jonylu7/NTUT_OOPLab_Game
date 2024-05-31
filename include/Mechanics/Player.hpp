@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_PLAYER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_PLAYER_HPP
-#include "Structure/Structure.hpp"
+#include "Mechanics/UnitManager.hpp"
 class Player {
 public:
     Player() {}
@@ -15,22 +15,34 @@ public:
     void setFixedPower(int value) { m_FixedPower = value; }
     void addFixedPower(int value) { m_FixedPower += value; }
 
+public:
+    void Start(std::shared_ptr<MapClass> map) { m_UnitManager->Start(map); }
+    void Update() {
+        updateCurrency();
+        m_UnitManager->Update();
+    }
+
+public:
+    int getTotalPower() {
+        return m_UnitManager->getStructureManager()->getStructurePower() +
+               m_FixedPower;
+    }
     int getTotalCurrency() { return m_TotalCurrency; }
     int getMaxTroopSize() { return m_MaxTroopSize; }
 
-protected:
-    int
-    getTotalPower(std::vector<std::shared_ptr<Structure>> m_BuiltStructure) {
-        int totalPower = 0;
-        for (int i = 0; i < m_BuiltStructure.size(); i++) {
-            if(m_BuiltStructure[i]->getHouseType()==HouseType::MY){
-                totalPower += m_BuiltStructure[i]->getElectricPower();
+private:
+    void updateCurrency() {
+        // count 10s
+        for (auto i : m_StructureManager->getStructureArray()
+                          ->getBuiltStructureArray()) {
+            if (std::dynamic_pointer_cast<OreRefinery>(i)) {
+                m_TotalCurrency += 150;
             }
         }
-        return totalPower;
     }
 
-protected:
+private:
+    std::shared_ptr<UnitManager> m_UnitManager = st::make_shared<UnitManager>();
     int m_MaxTroopSize = 200;
     int m_FixedPower = 0;
     float m_TotalCurrency = 0;
