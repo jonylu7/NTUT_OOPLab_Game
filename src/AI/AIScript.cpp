@@ -1,20 +1,23 @@
 //
 // Created by nudle on 2024/5/23.
 //
-#include "AI/EnemyScripts.hpp"
+#include "AI/AIScript.hpp"
 
 #define MAX_TROOPS_SIZE 25
-void EnemyScripts::Start(std::shared_ptr<UnitManager> GameObjectManager,std::shared_ptr<UnitManager> EnemyObjectManager,std::shared_ptr<MapClass> map,bool active){
-    m_GameObjectManager=GameObjectManager;
+void AIScript::Start(std::shared_ptr<UnitManager> GameObjectManager,
+                     std::shared_ptr<UnitManager> EnemyObjectManager,
+                     std::shared_ptr<MapClass> map, bool active) {
+    m_GameObjectManager = GameObjectManager;
 
     m_EnemyObjectManager = EnemyObjectManager;
     m_Map = map;
     m_active = active;
-    m_AIGroupCommander = std::make_shared<AIGroupCommander>(GameObjectManager,EnemyObjectManager,map);
+    m_AIGroupCommander = std::make_shared<AIGroupCommander>(
+        GameObjectManager, EnemyObjectManager, map);
     m_AIGroupCommander->Start();
 }
 
-void EnemyScripts::Update() {
+void AIScript::Update() {
     if (!m_active) {
         return;
     }
@@ -50,38 +53,36 @@ void EnemyScripts::Update() {
     }
 }
 
-void EnemyScripts::modeUpdate() {
+void AIScript::modeUpdate() {
     if (!ifBuiltBasic()) {
         buildBasic();
     } else {
         float playerAvatarCount = m_GameObjectManager->getAvatarCount();
         float enemyAvatarCount = m_EnemyObjectManager->getAvatarCount();
         if (enemyAvatarCount == 0 ||
-            (playerAvatarCount /
-                     enemyAvatarCount >=
-                 2 &&
+            (playerAvatarCount / enemyAvatarCount >= 2 &&
              playerAvatarCount != 0)) {
             // Defense mode , spawn Troop only
             spawnUnit();
-        }else{
-            if(playerAvatarCount/enemyAvatarCount<=0.5){
-                //Attack , set all troop to attack mode , set defensive Troop = 0
-                //updateAllTroopStates();
+        } else {
+            if (playerAvatarCount / enemyAvatarCount <= 0.5) {
+                // Attack , set all troop to attack mode , set defensive Troop =
+                // 0 updateAllTroopStates();
                 m_AIGroupCommander->setAllTroopToAttackMode();
                 spawnUnit();
-            }else{
-                //Safe now , build adv or spawn troop
-                if(m_AIGroupCommander->getDefensiveTroopSize()>25){
-                    m_AIGroupCommander->setTroopToAttackMode(m_AIGroupCommander->getDefensiveTroopSize()-25);
+            } else {
+                // Safe now , build adv or spawn troop
+                if (m_AIGroupCommander->getDefensiveTroopSize() > 25) {
+                    m_AIGroupCommander->setTroopToAttackMode(
+                        m_AIGroupCommander->getDefensiveTroopSize() - 25);
                 }
-                if(!ifBuiltADV() && enemyAvatarCount<MAX_TROOPS_SIZE){
+                if (!ifBuiltADV() && enemyAvatarCount < MAX_TROOPS_SIZE) {
                     buildADV();
                     spawnUnit();
-                }else if(enemyAvatarCount<MAX_TROOPS_SIZE){
+                } else if (enemyAvatarCount < MAX_TROOPS_SIZE) {
 
                     spawnUnit();
-                }else{
-
+                } else {
                 }
             }
         }
@@ -89,7 +90,7 @@ void EnemyScripts::modeUpdate() {
     offensiveUpdate();
 }
 
-void EnemyScripts::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
+void AIScript::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
     if (spawnMode == SpawnMode::AVATAR) {
         if (m_EnemyObjectManager->getTotalPower() <= 0) {
             m_AvatarCDTime = time * 2;
@@ -105,14 +106,13 @@ void EnemyScripts::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
         }
     }
 
-
     if (cheat) {
         m_AvatarCDTime *= CHEAT;
         m_buildingCDTime *= CHEAT;
     }
 }
 
-void EnemyScripts::setCost(float cost, SpawnMode spawnMode) {
+void AIScript::setCost(float cost, SpawnMode spawnMode) {
     if (spawnMode == SpawnMode::AVATAR) {
         m_avatarCost = cost;
     }
@@ -121,7 +121,7 @@ void EnemyScripts::setCost(float cost, SpawnMode spawnMode) {
     }
 }
 
-void EnemyScripts::buildBasic() {
+void AIScript::buildBasic() {
     if (m_selectedBuildingType != UnitType::NONE) {
         return;
     }
@@ -146,7 +146,7 @@ void EnemyScripts::buildBasic() {
     }
 }
 
-void EnemyScripts::buildADV() {
+void AIScript::buildADV() {
     if (m_selectedBuildingType != UnitType::NONE) {
         return;
     }
@@ -164,8 +164,7 @@ void EnemyScripts::buildADV() {
     }
 }
 
-
-void EnemyScripts::spawnUnit() {
+void AIScript::spawnUnit() {
     if (m_selectedAvatarType != UnitType::NONE ||
         m_EnemyObjectManager->getAvatarCount() > 50) {
         return;
@@ -178,7 +177,7 @@ void EnemyScripts::spawnUnit() {
     }
 }
 
-void EnemyScripts::UpdateSpawnScript(SpawnMode spawnMode) {
+void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
     // issue , avatar spawn and structure spawn should be separated CD time , so
     // can spawn avatar and structure same time
 
@@ -207,7 +206,7 @@ void EnemyScripts::UpdateSpawnScript(SpawnMode spawnMode) {
         }
         if (m_selectedAvatarType == UnitType::INFANTRY) {
             m_EnemyObjectManager->spawnToWayPoint(m_selectedAvatarType,
-                                                 HouseType::ENEMY);
+                                                  HouseType::ENEMY);
             setCost(0, SpawnMode::AVATAR);
             setCDTime(0.f, SpawnMode::AVATAR);
             m_selectedAvatarType = UnitType::NONE;

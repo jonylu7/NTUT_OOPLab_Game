@@ -84,8 +84,8 @@ set(SRC_FILES
 
         ${SRC_DIR}/App.cpp
 
-        ${SRC_DIR}/AI/Enemy.cpp
-        ${SRC_DIR}/AI/EnemyScripts.cpp
+        ${SRC_DIR}/AI/AI.cpp
+        ${SRC_DIR}/AI/AIScript.cpp
 
         ${SRC_DIR}/Structure/Structure.cpp
         ${SRC_DIR}/Structure/WayPoint.cpp
@@ -230,11 +230,10 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Scene/SandBoxScene.hpp
 
 
-
-        ${INCLUDE_DIR}/Enemy/Enemy.hpp
-        ${INCLUDE_DIR}/Enemy/EnemyScripts.hpp
+        ${INCLUDE_DIR}/Enemy/AI.hpp
+        ${INCLUDE_DIR}/Enemy/AIScript.hpp
         ${INCLUDE_DIR}/Enemy/AIGroupCommander.hpp
-       
+
 
         ${INCLUDE_DIR}/Core/Context.hpp
         ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp
