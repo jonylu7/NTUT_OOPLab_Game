@@ -11,7 +11,6 @@
 #include "Mechanics/AvatarManager.hpp"
 #include "Mechanics/BuiltStructure.hpp"
 #include "Mechanics/CursorSelection.hpp"
-#include "Mechanics/Player.hpp"
 #include "Mechanics/StructureManager.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"

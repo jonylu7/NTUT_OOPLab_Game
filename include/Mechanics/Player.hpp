@@ -9,11 +9,6 @@ class Player {
 public:
     Player() {}
     ~Player() {}
-    void setTotalCurrency(int value) { m_TotalCurrency = value; }
-    void addTotalCurrency(float value) { m_TotalCurrency += value; };
-
-    void setFixedPower(int value) { m_FixedPower = value; }
-    void addFixedPower(int value) { m_FixedPower += value; }
 
 public:
     void Start(std::shared_ptr<MapClass> map) { m_UnitManager->Start(map); }
@@ -30,10 +25,18 @@ public:
     int getTotalCurrency() { return m_TotalCurrency; }
     int getMaxTroopSize() { return m_MaxTroopSize; }
 
+    // set and add
+    void setTotalCurrency(int value) { m_TotalCurrency = value; }
+    void addTotalCurrency(float value) { m_TotalCurrency += value; };
+
+    void setFixedPower(int value) { m_FixedPower = value; }
+    void addFixedPower(int value) { m_FixedPower += value; }
+
 private:
     void updateCurrency() {
         // count 10s
-        for (auto i : m_StructureManager->getStructureArray()
+        for (auto i : m_UnitManager->getStructureManager()
+                          ->getStructureArray()
                           ->getBuiltStructureArray()) {
             if (std::dynamic_pointer_cast<OreRefinery>(i)) {
                 m_TotalCurrency += 150;
@@ -42,7 +45,8 @@ private:
     }
 
 private:
-    std::shared_ptr<UnitManager> m_UnitManager = st::make_shared<UnitManager>();
+    std::shared_ptr<UnitManager> m_UnitManager =
+        std::make_shared<UnitManager>();
     int m_MaxTroopSize = 200;
     int m_FixedPower = 0;
     float m_TotalCurrency = 0;

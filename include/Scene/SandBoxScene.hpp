@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_SANDBOXSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_SANDBOXSCENE_HPP
-#include "AI/EnemyScripts.hpp"
+#include "AI/AIScript.hpp"
 #include "Cursor.hpp"
 #include "Scene.hpp"
 #include "Util/Prop.hpp"
@@ -29,8 +29,7 @@ private:
     Grid testGrid;
     std::shared_ptr<EnemyPlayer> m_Enemy =
         std::make_shared<EnemyPlayer>(SceneMode::TUTORIAL);
-    std::shared_ptr<EnemyScripts> m_EnemyScripts =
-        std::make_shared<EnemyScripts>();
+    std::shared_ptr<AIScript> m_EnemyScripts = std::make_shared<AIScript>();
     Stages m_stage = Stages::START;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SANDBOXSCENE_HPP

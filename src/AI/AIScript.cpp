@@ -1,17 +1,17 @@
 //
 // Created by nudle on 2024/5/23.
 //
-#include "AI/EnemyScripts.hpp"
-void EnemyScripts::Start(std::shared_ptr<UnitManager> GameObjectManager,
-                         std::shared_ptr<UnitManager> EnemyObjectManager,
-                         std::shared_ptr<MapClass> map, bool active) {
+#include "AI/AIScript.hpp"
+void AIScript::Start(std::shared_ptr<UnitManager> GameObjectManager,
+                     std::shared_ptr<UnitManager> EnemyObjectManager,
+                     std::shared_ptr<MapClass> map, bool active) {
     m_GameObjectManager = GameObjectManager;
     m_EnemyObjectManager = EnemyObjectManager;
     m_Map = map;
     m_active = active;
 }
 
-void EnemyScripts::Update() {
+void AIScript::Update() {
     if (!m_active) {
         return;
     }
@@ -46,7 +46,7 @@ void EnemyScripts::Update() {
     }
 }
 
-void EnemyScripts::modeUpdate() {
+void AIScript::modeUpdate() {
     if (!ifBuiltBasic()) {
         buildBasic();
     } else {
@@ -78,7 +78,7 @@ void EnemyScripts::modeUpdate() {
     offensiveUpdate();
 }
 
-void EnemyScripts::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
+void AIScript::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
     if (spawnMode == SpawnMode::AVATAR) {
         if (m_EnemyObjectManager->getTotalPower() <= 0) {
             m_AvatarCDTime = time * 2;
@@ -100,7 +100,7 @@ void EnemyScripts::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
     }
 }
 
-void EnemyScripts::setCost(float cost, SpawnMode spawnMode) {
+void AIScript::setCost(float cost, SpawnMode spawnMode) {
     if (spawnMode == SpawnMode::AVATAR) {
         m_avatarCost = cost;
     }
@@ -109,7 +109,7 @@ void EnemyScripts::setCost(float cost, SpawnMode spawnMode) {
     }
 }
 
-void EnemyScripts::buildBasic() {
+void AIScript::buildBasic() {
     if (m_selectedBuildingType != UnitType::NONE) {
         return;
     }
@@ -134,7 +134,7 @@ void EnemyScripts::buildBasic() {
     }
 }
 
-void EnemyScripts::buildADV() {
+void AIScript::buildADV() {
     if (m_selectedBuildingType != UnitType::NONE) {
         return;
     }
@@ -152,7 +152,7 @@ void EnemyScripts::buildADV() {
     }
 }
 
-void EnemyScripts::spawnUnit() {
+void AIScript::spawnUnit() {
     if (m_selectedAvatarType != UnitType::NONE ||
         m_EnemyObjectManager->getAvatarCount() > 50) {
         return;
@@ -165,7 +165,7 @@ void EnemyScripts::spawnUnit() {
     }
 }
 
-void EnemyScripts::UpdateSpawnScript(SpawnMode spawnMode) {
+void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
     // issue , avatar spawn and structure spawn should be separated CD time , so
     // can spawn avatar and structure same time
 
