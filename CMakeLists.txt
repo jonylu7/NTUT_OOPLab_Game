@@ -230,8 +230,11 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Scene/SandBoxScene.hpp
 
 
-        ${INCLUDE_DIR}/AI/Enemy.hpp
-        ${INCLUDE_DIR}/AI/EnemyScripts.hpp
+
+        ${INCLUDE_DIR}/Enemy/Enemy.hpp
+        ${INCLUDE_DIR}/Enemy/EnemyScripts.hpp
+        ${INCLUDE_DIR}/Enemy/AIGroupCommander.hpp
+       
 
         ${INCLUDE_DIR}/Core/Context.hpp
         ${INCLUDE_DIR}/Core/DebugMessageCallback.hpp

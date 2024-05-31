@@ -55,6 +55,35 @@ public:
         getTileByCellPosition(position)->removeStructure();
     }
 
+    glm::vec2 findEnemyInRange(int attackRange,glm::vec2 myCell,HouseType myHouse){
+        glm::vec2 NullPos={-1,-1};
+        int x,y=1;
+        int r=1;
+        for(r=1;r<attackRange;r++){
+            y=r;
+            for(x=-1*r;x<r;x++){
+                if(getTileByCellPosition({myCell.x+x,myCell.y+y})->ifEnemyAtTile(myHouse)){
+                    return {myCell.x+x,myCell.y+y};
+                }
+            }
+            for(y=r-1;y>=-1*r;y--){
+                if(getTileByCellPosition({myCell.x+x,myCell.y+y})->ifEnemyAtTile(myHouse)){
+                    return {myCell.x+x,myCell.y+y};
+                }
+            }
+            for(x=r-1;x>-1*r;x--){
+                if(getTileByCellPosition({myCell.x+x,myCell.y+y})->ifEnemyAtTile(myHouse)){
+                    return {myCell.x+x,myCell.y+y};
+                }
+            }
+            for(y=-1*r+1;y<r;y++){
+                if(getTileByCellPosition({myCell.x+x,myCell.y+y})->ifEnemyAtTile(myHouse)){
+                    return {myCell.x+x,myCell.y+y};
+                }
+            }
+        }
+        return NullPos;
+    }
 protected:
     void InitGrid();
 

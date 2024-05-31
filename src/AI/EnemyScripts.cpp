@@ -2,13 +2,15 @@
 // Created by nudle on 2024/5/23.
 //
 #include "AI/EnemyScripts.hpp"
-void EnemyScripts::Start(std::shared_ptr<UnitManager> GameObjectManager,
-                         std::shared_ptr<UnitManager> EnemyObjectManager,
-                         std::shared_ptr<MapClass> map, bool active) {
-    m_GameObjectManager = GameObjectManager;
+
+#define MAX_TROOPS_SIZE 25
+void EnemyScripts::Start(std::shared_ptr<UnitManager> GameObjectManager,std::shared_ptr<UnitManager> EnemyObjectManager,std::shared_ptr<MapClass> map,bool active){
+    m_GameObjectManager=GameObjectManager;
+
     m_EnemyObjectManager = EnemyObjectManager;
     m_Map = map;
     m_active = active;
+    m_AIGroupCommander = std::make_shared<AIGroupCommander>(GameObjectManager,EnemyObjectManager,map);
 }
 
 void EnemyScripts::Update() {
@@ -43,6 +45,7 @@ void EnemyScripts::Update() {
                                                    m_AvatarCDTime * (-1.f));
         }
         modeUpdate();
+        m_AIGroupCommander->Update();
     }
 }
 
@@ -57,20 +60,24 @@ void EnemyScripts::modeUpdate() {
              m_GameObjectManager->getAvatarCount() != 0)) {
             // Defense mode , spawn Troop only
             spawnUnit();
-        } else {
-            if (m_GameObjectManager->getAvatarCount() /
-                    m_EnemyObjectManager->getAvatarCount() <=
-                0.5) {
-                // Attack , set all troop to attack mode , set defensive Troop =
-                // 0
-                updateAllTroopStates();
-            } else {
-                // Safe now , build adv or spawn troop
-                if (!ifBuiltADV()) {
+        }else{
+            if(m_GameObjectManager->getAvatarCount()/m_EnemyObjectManager->getAvatarCount()<=0.5){
+                //Attack , set all troop to attack mode , set defensive Troop = 0
+                //updateAllTroopStates();
+                m_AIGroupCommander->setAllTroopToAttackMode();
+            }else{
+                //Safe now , build adv or spawn troop
+                if(m_AIGroupCommander->getDefensiveTroopSize()>25){
+                    m_AIGroupCommander->setTroopToAttackMode(m_AIGroupCommander->getDefensiveTroopSize()-25);
+                }
+                if(!ifBuiltADV() && m_EnemyObjectManager->getAvatarCount()<MAX_TROOPS_SIZE){
                     buildADV();
                     spawnUnit();
-                } else {
+                }else if(m_EnemyObjectManager->getAvatarCount()<MAX_TROOPS_SIZE){
+
                     spawnUnit();
+                }else{
+
                 }
             }
         }
@@ -93,6 +100,7 @@ void EnemyScripts::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
             m_buildingCDTime = time;
         }
     }
+
 
     if (cheat) {
         m_AvatarCDTime *= CHEAT;
@@ -151,6 +159,7 @@ void EnemyScripts::buildADV() {
         m_selectedBuildingType = UnitType::ADV_POWER_PLANT;
     }
 }
+
 
 void EnemyScripts::spawnUnit() {
     if (m_selectedAvatarType != UnitType::NONE ||

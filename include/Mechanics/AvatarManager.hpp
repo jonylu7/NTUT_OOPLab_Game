@@ -35,7 +35,12 @@ public:
 
     void assignAttackOrderToAvatar(std::shared_ptr<Avatar> unit,
                                    glm::vec2 destcell);
-
+    int getAvatarSize(){
+        return static_cast<int>(m_AvatarArray.size());
+    }
+    bool ifAvatarHasNemesis(std::shared_ptr<Avatar> unit){
+        return m_NemesisManager->ifAvatarHasNemesis(unit);
+    }
 protected:
     void assignOrderToMyAvatar(std::shared_ptr<Avatar> unit);
     void updateTileWhileAvatarMoving(std::shared_ptr<Avatar> unit);
