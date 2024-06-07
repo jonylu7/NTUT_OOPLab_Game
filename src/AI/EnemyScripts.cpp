@@ -166,7 +166,7 @@ void EnemyScripts::buildADV() {
 
 void EnemyScripts::spawnUnit() {
     if (m_selectedAvatarType != UnitType::NONE ||
-        m_EnemyObjectManager->getAvatarCount() > 50) {
+        m_EnemyObjectManager->getAvatarCount() > 16) {
         return;
     }
     if (m_EnemyObjectManager->getAvatarCount() <= 25 &&

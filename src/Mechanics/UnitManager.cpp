@@ -104,14 +104,12 @@ void UnitManager::Update() {
     m_AvatarManager->Update();
     m_CursorSelection->Update();
 
+    m_mainDeltaTime += m_Time.GetDeltaTime();
     // currency update
-    std::chrono::high_resolution_clock::time_point m_currentTime =
-        std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed = m_currentTime - m_StartTime;
-    if (elapsed.count() - m_lastElapsed >= 1) { // update every second
-        m_lastElapsed = elapsed.count();
+    if (m_mainDeltaTime >= 1) {
+        m_mainDeltaTime = 0;
+        updateCurrency();
     }
-
     m_StructureManager->SelectingBuildSite();
 }
 

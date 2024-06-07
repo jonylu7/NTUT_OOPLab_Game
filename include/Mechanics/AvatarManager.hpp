@@ -43,6 +43,9 @@ public:
     bool ifAvatarHasNemesis(std::shared_ptr<Avatar> unit){
         return m_NemesisManager->ifAvatarHasNemesis(unit);
     }
+    glm::vec2 getAvatarNemesisCell(std::shared_ptr<Avatar> unit){
+        return m_NemesisManager->getNemesisCell(unit);
+    }
 protected:
     void assignOrderToMyAvatar(std::shared_ptr<Avatar> unit);
     void updateTileWhileAvatarMoving(std::shared_ptr<Avatar> unit);

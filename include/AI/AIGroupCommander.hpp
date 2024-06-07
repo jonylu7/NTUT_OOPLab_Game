@@ -5,6 +5,7 @@
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AIGROUPCOMMANDER_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_AIGROUPCOMMANDER_HPP
 #include "Mechanics/UnitManager.hpp"
+#include "Avatar/Avatar.hpp"
 #define GROUP_SIZE 4
 #define AUTO_FIND_RANGE 4
 #define AUTO_ATTACK_METHOD 2
@@ -122,31 +123,62 @@ protected:
         }
     }
     void updateOffensiveTroopAttackTarget(){
-        for(auto i : m_offensiveGroup){
-            if(i.size()>0){
-                if (!m_AIAvatarManager->ifAvatarHasNemesis(i.front())){
+        for(int i = static_cast<int>(m_offensiveGroup.size());i>0;--i){
+            auto& currentGroup =  m_offensiveGroup[i-1];
+            printf("(updateOffensiveTroopAttackTarget)groupSize : %d\n",static_cast<int>(currentGroup.size()));
+            if(!currentGroup.empty()){
+                if (!m_AIAvatarManager->ifAvatarHasNemesis(currentGroup.front())){
                     // find new target
-                    if(m_PlayerUnitManager->getAvatarCount()==0){
-                        return;
-                    }
-                    glm::vec2 targetCell = m_Map->findEnemyInRange(
-                        100, i.front()->getCurrentLocationInCell(),
-                        HouseType::ENEMY);
-                    if (targetCell.x == -1 && targetCell.y == -1) {
-                        return;
+                    glm::vec2 targetCell = findTargetForOffensiveUnit(currentGroup.front());
+                    if(targetCell.x==-1.f){
+                        printf("(updateOffensiveTroopAttackTarget) No Target\n");
+                        break;
                     }
                     // attack
-                    for (int j=static_cast<int>(i.size());j>0;--j) {
-                        if(i[j-1]->getHealth()->ifDead()){
-                            i.erase(i.begin()+j-1);
+                    for (int j=static_cast<int>(currentGroup.size());j>0;--j) {
+                        if(currentGroup[j-1]->getHealth()->ifDead()){
+                            currentGroup.erase(currentGroup.begin()+j-1);
+                        }else{
+                            m_AIAvatarManager->assignAttackOrderToAvatar(
+                                currentGroup[j-1], targetCell,HouseType::ENEMY);
                         }
-                        m_AIAvatarManager->assignMoveOrderToAvatar(i[j-1],targetCell);
-                        m_AIAvatarManager->assignAttackOrderToAvatar(
-                            i[j-1], targetCell,HouseType::ENEMY);
                     }
+                }else{
+                    glm::vec2 targetCell = m_AIAvatarManager->getAvatarNemesisCell(currentGroup.front());
+                    printf("(updateOffensiveTroopAttackTarget)AvatarHasNemesis : {%d,%d}\n",static_cast<int>(targetCell.x),static_cast<int>(targetCell.y));
+                }
+            }else{
+                m_offensiveGroup.erase(m_offensiveGroup.begin()+i-1);
+            }
+        }
+    }
+
+    glm::vec2 findTargetForOffensiveUnit(std::shared_ptr<Avatar> unit){
+        glm::vec2 targetCell = {-1.f,-1.f};
+        //issue: empty group should delete before this
+        if(false&&static_cast<int>(m_offensiveGroup.size())>=static_cast<int>(m_PlayerUnitManager->getAvatarManager()->getAvatarArray().size())){
+            if(!m_PlayerUnitManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
+                targetCell=m_PlayerUnitManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().front()->getCurrentLocationInCell();
+            }
+            for(auto i : m_PlayerUnitManager->getStructureManager()->getStructureArray()->getBuiltStructureArray()){
+                if(unit->getDistance(i->getCurrentLocationInCell())<unit->getDistance(targetCell)){
+                    //attack
+                    targetCell = i->getCurrentLocationInCell();
+                }
+            }
+        }else{
+            if(!m_PlayerUnitManager->getAvatarManager()->getAvatarArray().empty()){
+                targetCell=m_PlayerUnitManager->getAvatarManager()->getAvatarArray().front()->getCurrentLocationInCell();
+            }
+            for(auto i : m_PlayerUnitManager->getAvatarManager()->getAvatarArray()){
+                if(i->getDistance(unit->getCurrentLocationInCell())<unit->getDistance(targetCell)){
+                    //attack
+                    targetCell = i->getCurrentLocationInCell();
                 }
             }
         }
+        printf("(findTargetForOffensiveUnit) TargetCell : {%d,%d}\n",targetCell.x,targetCell.y);
+        return targetCell;
     }
 };
 

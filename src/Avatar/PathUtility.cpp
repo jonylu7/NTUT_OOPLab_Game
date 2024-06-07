@@ -85,9 +85,6 @@ MoveDirection PathUtility::getDirByRelativeCells(glm::vec2 currentcell,
     int destinationCellY = destinationcell.y;
     int currCellX = currentcell.x;
     int currCellY = currentcell.y;
-    printf("(findNextCellDir)Cell now :{%.d,%.d}\n(find)Cell destination : "
-           "{%.d,%.d}\n",
-           currCellX, currCellY, destinationCellX, destinationCellY);
     int xDiff = destinationCellX - currCellX;
     int yDiff = destinationCellY - currCellY;
     int xAbs = abs(xDiff);
@@ -125,7 +122,34 @@ MoveDirection PathUtility::getDirByRelativeCells(glm::vec2 currentcell,
             }
         }
     }
+    printf("-----\n(PathUtil)Cell now :{%.d,%.d}\n(PathUtil)Cell destination : "
+           "{%.d,%.d}\n(PathUtil)Dir : %s\n-----\n",
+           currCellX, currCellY, destinationCellX, destinationCellY,debug_dirToString(direction).c_str());
     return direction;
+}
+std::string PathUtility::debug_dirToString(MoveDirection dir){
+    switch (dir) {
+    case MoveDirection::UP:
+        return "Up";
+    case MoveDirection::UP_RIGHT:
+        return "Up Right";
+    case MoveDirection::UP_LEFT:
+        return "Up Left";
+    case MoveDirection::RIGHT:
+        return "Right";
+    case MoveDirection::LEFT:
+        return "Left";
+    case MoveDirection::DOWN_RIGHT:
+        return "Down Right";
+    case MoveDirection::DOWN_LEFT:
+        return "Down Left";
+    case MoveDirection::DOWN:
+        return "Down";
+    case MoveDirection::IDLE:
+        return "Idle";
+    default:
+        return "Unknown";
+    }
 }
 
 glm::vec2 PathUtility::getNextCellByCurrent(MoveDirection currentdir,
