@@ -156,16 +156,10 @@ protected:
     glm::vec2 findTargetForOffensiveUnit(std::shared_ptr<Avatar> unit){
         glm::vec2 targetCell = {-1.f,-1.f};
         //issue: empty group should delete before this
-        if(false&&static_cast<int>(m_offensiveGroup.size())>=static_cast<int>(m_PlayerUnitManager->getAvatarManager()->getAvatarArray().size())){
-            if(!m_PlayerUnitManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
-                targetCell=m_PlayerUnitManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().front()->getCurrentLocationInCell();
-            }
-            for(auto i : m_PlayerUnitManager->getStructureManager()->getStructureArray()->getBuiltStructureArray()){
-                if(unit->getDistance(i->getCurrentLocationInCell())<unit->getDistance(targetCell)){
-                    //attack
-                    targetCell = i->getCurrentLocationInCell();
-                }
-            }
+        if(static_cast<int>(m_offensiveGroup.size())>=static_cast<int>(m_PlayerUnitManager->getAvatarManager()->getAvatarArray().size())){
+            targetCell = m_Map->findEnemyInRange(200,unit->getCurrentLocationInCell(),HouseType::ENEMY);
+            //attack
+            m_AIAvatarManager->assignAttackOrderToAvatar(unit,targetCell,HouseType::ENEMY);
         }else{
             if(!m_PlayerUnitManager->getAvatarManager()->getAvatarArray().empty()){
                 targetCell=m_PlayerUnitManager->getAvatarManager()->getAvatarArray().front()->getCurrentLocationInCell();
@@ -173,6 +167,9 @@ protected:
             for(auto i : m_PlayerUnitManager->getAvatarManager()->getAvatarArray()){
                 if(i->getDistance(unit->getCurrentLocationInCell())<unit->getDistance(targetCell)){
                     //attack
+                    if(m_AIAvatarManager->ifAvatarHasNemesis(m_Map->getTileByCellPosition(targetCell)->getAvatars().front())){
+                        continue;
+                    }
                     targetCell = i->getCurrentLocationInCell();
                 }
             }
