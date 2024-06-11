@@ -22,6 +22,7 @@
 
 #include <utility>
 
+
 class UnitManager : public Player {
 public:
     UnitManager() {}
@@ -65,8 +66,13 @@ public:
         return m_AvatarManager->getAvatarSize();;
     }
 
+    void setCheatMode(bool cheat){
+        m_cheat=cheat;
+    }
 
-
+    bool getCheatMode(){
+        return m_cheat;
+    }
 
 
 private:
@@ -80,6 +86,7 @@ private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     float m_mainDeltaTime = 0;
     Util::Time m_Time;
+    bool m_cheat=false;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
