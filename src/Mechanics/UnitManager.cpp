@@ -25,7 +25,6 @@ void UnitManager::spawnToWayPoint(UnitType unit, HouseType house) {
             avatar, m_StructureManager->getStructureArray()
                         ->getPlayerBarrackWayPointCell());
         m_AvatarManager->AppendAvatar(avatar);
-        m_troopSize += 1;
     }
 
     default: {
@@ -42,54 +41,48 @@ void UnitManager::spawn(UnitType unit, HouseType house, glm::vec2 cellPos) {
         auto structure = std::make_shared<Barracks>(house);
         auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
         structure->Start(globalPos);
-        structure->setWaypointLocationByCellCoord(
-            {cellPos.x + 2, cellPos.y - 2});
-        m_StructureManager->getStructureArray()->buildNewStructure(structure,
-                                                                   true);
+        m_StructureManager->getStructureArray()->buildNewStructure(
+            structure, true);
+        structure->setWaypointLocationByCellCoord({cellPos.x+2,cellPos.y+2});
         break;
     }
     case UnitType::ORE_REF: {
         auto structure = std::make_shared<OreRefinery>(house);
         auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
         structure->Start(globalPos);
-        m_StructureManager->getStructureArray()->buildNewStructure(structure,
-                                                                   true);
+        m_StructureManager->getStructureArray()->buildNewStructure(
+            structure, true);
         break;
     }
     case UnitType::POWER_PLANT: {
         auto structure = std::make_shared<PowerPlants>(house);
         auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
         structure->Start(globalPos);
-        m_StructureManager->getStructureArray()->buildNewStructure(structure,
-                                                                   true);
+        m_StructureManager->getStructureArray()->buildNewStructure(
+            structure, true);
         break;
     }
     case UnitType::WAR_FACT: {
         auto structure = std::make_shared<WarFactory>(house);
         auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
         structure->Start(globalPos);
-        structure->setWaypointLocationByCellCoord(
-            {cellPos.x + 2, cellPos.y - 2});
-        m_StructureManager->getStructureArray()->buildNewStructure(structure,
-                                                                   true);
+        structure->setWaypointLocationByCellCoord({cellPos.x+2,cellPos.y-2});
+        m_StructureManager->getStructureArray()->buildNewStructure(
+            structure, true);
         break;
     }
     case UnitType::ADV_POWER_PLANT: {
         auto structure = std::make_shared<ADVPowerPlants>(house);
         auto globalPos = MapUtil::CellCoordToGlobal(cellPos);
         structure->Start(globalPos);
-        m_StructureManager->getStructureArray()->buildNewStructure(structure,
-                                                                   true);
+        m_StructureManager->getStructureArray()->buildNewStructure(
+            structure, true);
         break;
     }
     case UnitType::INFANTRY: {
         auto avatar = std::make_shared<Infantry>(house);
         avatar->Start(cellPos);
-        //            avatar ->setNewDestination(cellPos);
-        m_AvatarManager->assignMoveOrderToAvatar(
-            avatar, {cellPos.x + 1, cellPos.y + 1});
         m_AvatarManager->AppendAvatar(avatar);
-        m_troopSize += 1;
         break;
     }
     case UnitType::NONE: {
@@ -101,6 +94,9 @@ void UnitManager::spawn(UnitType unit, HouseType house, glm::vec2 cellPos) {
         break;
     }
     }
+    if(unit!=UnitType::NONE){
+        addUnitConstructCount(unit,1);
+    }
 }
 
 void UnitManager::Update() {
@@ -108,14 +104,12 @@ void UnitManager::Update() {
     m_AvatarManager->Update();
     m_CursorSelection->Update();
 
+    m_mainDeltaTime += m_Time.GetDeltaTime();
     // currency update
-    std::chrono::high_resolution_clock::time_point m_currentTime =
-        std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed = m_currentTime - m_StartTime;
-    if (elapsed.count() - m_lastElapsed >= 1) { // update every second
-        m_lastElapsed = elapsed.count();
+    if (m_mainDeltaTime >= 1) {
+        m_mainDeltaTime = 0;
+        updateCurrency();
     }
-
     m_StructureManager->SelectingBuildSite();
 }
 

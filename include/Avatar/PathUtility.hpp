@@ -33,6 +33,8 @@ public:
                                     MoveDirection currentdir);
     static MoveDirection findNewDirWhenCrash(Side side, glm::vec2 currentcell,
                                              MoveDirection currentdir);
+    static std::string debug_dirToString(MoveDirection dir);
+
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_PATHUTILITY_HPP

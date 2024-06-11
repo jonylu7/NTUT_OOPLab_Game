@@ -29,6 +29,12 @@ public:
             return false;
         }
     }
+    glm::vec2 getNemesisCell(std::shared_ptr<Avatar> avatar){
+        if(!ifAvatarHasNemesis(avatar)){
+            return {-1.f,-1.f};
+        }
+        return m_Nemesis[avatar]->getCurrentLocationInCell();
+    }
     bool ifNemesisWithinWeaponRange(std::shared_ptr<Avatar> hunter) {
         if (ifAvatarHasNemesis(hunter) == false) {
             return false;

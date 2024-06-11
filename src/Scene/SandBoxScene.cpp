@@ -101,10 +101,9 @@ void SandBoxScene::stageStart() {
         break;
     }
     case Stages::STAGE4: {
-        for (int i = 0; i < 50; i++) {
-            m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
-                                        {30 + i / 5, 5 + i % 5});
-        }
+        m_GameObjectManager->spawn( UnitType::BARRACKS, HouseType::MY,{7,5});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {7, 9});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {7, 8});
         m_stage = Stages::END;
         break;
     }
@@ -133,11 +132,11 @@ void SandBoxScene::stageUpdate() {
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_4)) {
             m_stage = Stages::STAGE4;
             m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager,
-                                  m_Map, false);
+                                  m_Map, true);
             stageStart();
         }
     }
-    if (Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
-        m_Enemy->addTotalCurrency(500);
+    if (Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY )) {
+        m_EnemyObjectManager->addTotalCurrency(500);
     }
 }

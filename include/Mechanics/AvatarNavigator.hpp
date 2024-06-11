@@ -39,5 +39,6 @@ public:
 
 private:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
+    MoveDirection recursionCrashHandler(MoveDirection currentDir,int count);
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_AVATARNAVIGATOR_HPP

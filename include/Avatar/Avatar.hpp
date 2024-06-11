@@ -15,7 +15,7 @@
 #include "Selectable.hpp"
 #include "Unit/Huntable.hpp"
 #include "Util/Image.hpp"
-
+enum class AI_Type{NONE,DEFENCE,ATTACK};
 class Avatar : public Util::GameObject, public Selectable, public Huntable {
 
 public:
@@ -62,6 +62,12 @@ public:
 
     void DrawAvatar();
 
+    void setAIType(AI_Type type){
+        m_aiType=type;
+    }
+    AI_Type getAIType(){
+        return m_aiType;
+    }
 public:
     GameObjectID getID() { return m_ID; }
 
@@ -104,5 +110,6 @@ protected:
 
 private:
     GameObjectID m_ID;
+    AI_Type m_aiType = AI_Type::NONE;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_AVATAR_HPP

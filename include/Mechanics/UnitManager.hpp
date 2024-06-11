@@ -32,7 +32,6 @@ public:
 
         m_AvatarManager->Start(m_Map);
         m_CursorSelection->Start(m_Map);
-        m_StartTime = std::chrono::high_resolution_clock::now();
     }
 
     void Update();
@@ -49,6 +48,7 @@ public:
         return m_StructureManager;
     }
 
+
     int updateCurrency();
 
     void spawnToWayPoint(UnitType unit, HouseType house);
@@ -57,12 +57,20 @@ public:
     void addUnitConstructCount(UnitType type, int value) {
         unitCount[type] += value;
     }
-    int getUnitConstructCount(UnitType type) { return unitCount[type]; }
-    int getAvatarCount() { return unitCount[UnitType::INFANTRY]; }
-    void addAvatarCount(UnitType type, int value) { unitCount[type] += value; }
+
+    int getUnitConstructCount(UnitType type){
+        return unitCount[type];
+    }
+    int getAvatarCount(){
+        return m_AvatarManager->getAvatarSize();;
+    }
+
+
+
+
 
 private:
-    std::unordered_map<UnitType, unsigned int> unitCount;
+    std::unordered_map<UnitType,int> unitCount;
     std::shared_ptr<CursorSelection> m_CursorSelection =
         std::make_shared<CursorSelection>();
     std::shared_ptr<StructureManager> m_StructureManager =
@@ -70,9 +78,8 @@ private:
     std::shared_ptr<AvatarManager> m_AvatarManager =
         std::make_shared<AvatarManager>();
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
-    std::chrono::high_resolution_clock::time_point m_StartTime;
-    double m_lastElapsed = 0.F;
-    int m_troopSize = 0;
+    float m_mainDeltaTime = 0;
+    Util::Time m_Time;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP
