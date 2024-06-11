@@ -20,8 +20,11 @@ public:
     }
 
     void Draw() override {
+        m_BackgroundImage->Draw(
+            Util::Transform({glm::vec2(0, 0), float(0), glm::vec2(0.68, 0.68)}),
+            0.1);
         m_Title->Draw(
-            Util::Transform({glm::vec2(0, 70), float(0), glm::vec2(0.6, 0.6)}),
+            Util::Transform({glm::vec2(0, 40), float(0), glm::vec2(0.6, 0.6)}),
             1);
         m_StartButton->Draw();
         m_ExitButton->Draw();
@@ -29,13 +32,15 @@ public:
 
 private:
     std::shared_ptr<Util::Image> m_Title =
-        std::make_shared<Util::Image>("../assets/images/cnc_title.jpg");
+        std::make_shared<Util::Image>("../assets/images/cnc_title.png");
+    std::shared_ptr<Util::Image> m_BackgroundImage =
+        std::make_shared<Util::Image>("../assets/images/menu_image.png");
     std::shared_ptr<Button> m_StartButton = std::make_shared<Button>(
         std::make_shared<Util::Image>("../assets/images/start.png"), 1, true,
         Util::Transform({glm::vec2(0, -100), float(0), glm::vec2(0.4, 0.4)}));
 
     std::shared_ptr<Button> m_ExitButton = std::make_shared<Button>(
         std::make_shared<Util::Image>("../assets/images/exit.png"), 1, true,
-        Util::Transform({glm::vec2(0, -200), float(0), glm::vec2(0.4, 0.4)}));
+        Util::Transform({glm::vec2(0, -160), float(0), glm::vec2(0.4, 0.4)}));
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MENUUI_HPP

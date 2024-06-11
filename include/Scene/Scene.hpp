@@ -54,7 +54,7 @@ protected:
     std::shared_ptr<UnitManager> m_EnemyObjectManager =
         std::make_shared<UnitManager>();
     Util::Renderer m_Renderer;
-    std::shared_ptr<UIClass> m_UI = std::make_shared<UIClass>();
+    std::shared_ptr<IngamUI> m_UI = std::make_shared<IngamUI>();
     std::shared_ptr<Player> m_Player = std::make_shared<Player>();
 };
 

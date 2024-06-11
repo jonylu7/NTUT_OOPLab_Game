@@ -16,7 +16,7 @@
 #include "pch.hpp"
 #include <unordered_map>
 
-class UIClass {
+class IngamUI {
 public:
     void Start(std::shared_ptr<MapClass> map,
                std::shared_ptr<UnitManager> gameobjectmanager);

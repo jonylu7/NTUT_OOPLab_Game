@@ -5,9 +5,9 @@
 #include "UI/IngameUI.hpp"
 #include "Map/Map.hpp"
 
-std::unordered_map<UnitType, unsigned int> UIClass::s_unitConstructCount;
+std::unordered_map<UnitType, unsigned int> IngamUI::s_unitConstructCount;
 
-void UIClass::Start(std::shared_ptr<MapClass> map,
+void IngamUI::Start(std::shared_ptr<MapClass> map,
                     std::shared_ptr<UnitManager> gameobjectmanager) {
     InitUnitQueue();
     // start
@@ -23,12 +23,12 @@ void UIClass::Start(std::shared_ptr<MapClass> map,
         "../assets/sprites/ICON_Allied_Vehicles.png", 64, 48, 12, 0);
 }
 
-void UIClass::Update() {
+void IngamUI::Update() {
     ShowPlayerConstructionMenu();
     m_UIScriptProcess->Update(getIfAnyBuildingReadyToBuild());
 }
 
-void UIClass::ShowPlayerStatus() {
+void IngamUI::ShowPlayerStatus() {
     glm::vec2 CursorGlobalPosition = MapUtil::ScreenToGlobalCoord(
         glm::vec2(Util::Input::GetCursorPosition()));
     ImGui::Text(std::string("X: " + std::to_string(CursorGlobalPosition.x) +
@@ -47,7 +47,7 @@ void UIClass::ShowPlayerStatus() {
     ImGui::PushFont(sacker_med);
 }
 
-void UIClass::ShowHeaderSection() {
+void IngamUI::ShowHeaderSection() {
 
     if (ImGui::Button("Grid on")) {
         m_Map->setGridActive(true);
@@ -66,7 +66,7 @@ void UIClass::ShowHeaderSection() {
 
     ImGui::PopFont();
 }
-void UIClass::ShowPlayerConstructionMenu() {
+void IngamUI::ShowPlayerConstructionMenu() {
     auto windowSettings = ImGuiWindowFlags_NoMove |
                           ImGuiWindowFlags_NoScrollbar |
                           ImGuiWindowFlags_NoResize;
@@ -91,7 +91,7 @@ void UIClass::ShowPlayerConstructionMenu() {
 }
 
 std::vector<ImVec2>
-UIClass::getSpriteSheetCoordByIndex(std::shared_ptr<SpriteSheet> spritesheet,
+IngamUI::getSpriteSheetCoordByIndex(std::shared_ptr<SpriteSheet> spritesheet,
                                     int index) {
     return std::vector<ImVec2>(
         {ImVec2(
@@ -104,7 +104,7 @@ UIClass::getSpriteSheetCoordByIndex(std::shared_ptr<SpriteSheet> spritesheet,
                  .y)});
 }
 
-void UIClass::ShowBuildingTab() {
+void IngamUI::ShowBuildingTab() {
     if (ImGui::BeginTabItem("Build")) {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 7)) {
             // power plants
@@ -215,7 +215,7 @@ void UIClass::ShowBuildingTab() {
     }
 };
 
-void UIClass::ShowInfantryTab() {
+void IngamUI::ShowInfantryTab() {
     ImDrawList *dl = ImGui::GetWindowDrawList();
     ImVec2 p = ImGui::GetCursorScreenPos();
     if (ImGui::BeginTabItem("Inf")) {
@@ -260,7 +260,7 @@ void UIClass::ShowInfantryTab() {
         ImGui::EndTabItem();
     }
 };
-void UIClass::ShowDefTab() {
+void IngamUI::ShowDefTab() {
     if (ImGui::BeginTabItem("Def")) {
         if (getImageButtonBySpriteSheetIndex(m_StructureIconSpriteSheet, 18)) {
             // sandbags
@@ -283,7 +283,7 @@ void UIClass::ShowDefTab() {
         ImGui::EndTabItem();
     }
 };
-void UIClass::ShowVehTab() {
+void IngamUI::ShowVehTab() {
     if (ImGui::BeginTabItem("Veh")) {
         if (getImageButtonBySpriteSheetIndex(m_VehiclesIconSpriteSheet, 0)) {
             // lightTank
@@ -343,7 +343,7 @@ void UIClass::ShowVehTab() {
     }
 };
 
-bool UIClass::getImageButtonBySpriteSheetIndex(
+bool IngamUI::getImageButtonBySpriteSheetIndex(
     std::shared_ptr<SpriteSheet> spritesheet, int index) {
 
     auto uvcoord = getSpriteSheetCoordByIndex(spritesheet, index);
@@ -353,19 +353,19 @@ bool UIClass::getImageButtonBySpriteSheetIndex(
         uvcoord[0], uvcoord[1]);
 }
 
-void UIClass::InitUnitQueue() {
-    UIClass::s_unitConstructCount[UnitType::POWER_PLANT] = 0;
-    UIClass::s_unitConstructCount[UnitType::BARRACKS] = 0;
-    UIClass::s_unitConstructCount[UnitType::ORE_REF] = 0;
-    UIClass::s_unitConstructCount[UnitType::WAR_FACT] = 0;
-    UIClass::s_unitConstructCount[UnitType::ADV_POWER_PLANT] = 0;
-    UIClass::s_unitConstructCount[UnitType::SANDBAGS] = 0;
-    UIClass::s_unitConstructCount[UnitType::PILLBOX] = 0;
-    UIClass::s_unitConstructCount[UnitType::TURRET] = 0;
-    UIClass::s_unitConstructCount[UnitType::INFANTRY] = 0;
-    UIClass::s_unitConstructCount[UnitType::TRUCK] = 0;
+void IngamUI::InitUnitQueue() {
+    IngamUI::s_unitConstructCount[UnitType::POWER_PLANT] = 0;
+    IngamUI::s_unitConstructCount[UnitType::BARRACKS] = 0;
+    IngamUI::s_unitConstructCount[UnitType::ORE_REF] = 0;
+    IngamUI::s_unitConstructCount[UnitType::WAR_FACT] = 0;
+    IngamUI::s_unitConstructCount[UnitType::ADV_POWER_PLANT] = 0;
+    IngamUI::s_unitConstructCount[UnitType::SANDBAGS] = 0;
+    IngamUI::s_unitConstructCount[UnitType::PILLBOX] = 0;
+    IngamUI::s_unitConstructCount[UnitType::TURRET] = 0;
+    IngamUI::s_unitConstructCount[UnitType::INFANTRY] = 0;
+    IngamUI::s_unitConstructCount[UnitType::TRUCK] = 0;
 }
-std::unique_ptr<Structure> UIClass::getSelectedBuilding() {
+std::unique_ptr<Structure> IngamUI::getSelectedBuilding() {
     switch (m_selectedStructureType) {
     case UnitType::BARRACKS: {
         setUnitConstructCount(UnitType::BARRACKS, 1);
@@ -403,7 +403,7 @@ std::unique_ptr<Structure> UIClass::getSelectedBuilding() {
     }
 }
 
-bool UIClass::getIfAnyBuildingReadyToBuild() {
+bool IngamUI::getIfAnyBuildingReadyToBuild() {
 
     return m_selectedStructureType != UnitType::NONE &&
            (m_UIScriptProcess->GetIfFinishedBuilding(UnitType::BARRACKS) ||
@@ -414,7 +414,7 @@ bool UIClass::getIfAnyBuildingReadyToBuild() {
                 UnitType::ADV_POWER_PLANT));
 }
 
-void UIClass::checkExistBuilding(
+void IngamUI::checkExistBuilding(
     std::vector<std::shared_ptr<Structure>> buildingList) {
     b_barackBuilt = false;
     b_warfactoryBuilt = false;
