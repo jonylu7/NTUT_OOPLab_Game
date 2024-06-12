@@ -171,21 +171,26 @@ void UIScriptProcess::Update(bool queueContinue) {
 }
 
 float UIScriptProcess::GetStructureTime(UnitType type) {
+    float returnValue = 0.f;
     if (type == UnitType::POWER_PLANT) {
-        return std::make_shared<PowerPlants>()->getBuildingTime();
+        returnValue = std::make_shared<PowerPlants>()->getBuildingTime();
     }
     if (type == UnitType::BARRACKS) {
-        return std::make_shared<Barracks>()->getBuildingTime();
+        returnValue = std::make_shared<Barracks>()->getBuildingTime();
     }
     if (type == UnitType::ORE_REF) {
-        return std::make_shared<OreRefinery>()->getBuildingTime();
+        returnValue = std::make_shared<OreRefinery>()->getBuildingTime();
     }
     if (type == UnitType::WAR_FACT) {
-        return std::make_shared<WarFactory>()->getBuildingTime();
+        returnValue = std::make_shared<WarFactory>()->getBuildingTime();
     }
     if (type == UnitType::ADV_POWER_PLANT) {
-        return std::make_shared<ADVPowerPlants>()->getBuildingTime();
+        returnValue = std::make_shared<ADVPowerPlants>()->getBuildingTime();
     }
+    if(m_gameObjectManager->getCheatMode()){
+        returnValue *=0.01;
+    }
+    return returnValue;
 }
 
 void UIScriptProcess::SetIfFinished(UnitType type, bool value) {
@@ -218,6 +223,9 @@ void UIScriptProcess::AddToSpawnQueue(UnitType type) {
 float UIScriptProcess::GetSpawnTime(UnitType type) {
     switch (type) {
     case UnitType::INFANTRY: {
+        if(m_gameObjectManager->getCheatMode()){
+            return 0.1F;
+        }
         return 5.F;
     }
     }
@@ -247,22 +255,33 @@ float UIScriptProcess::GetSpawnCountDownTime() {
     }
 }
 int UIScriptProcess::GetObjCost(UnitType type) {
+    int returnValue = 0;
     switch (type) {
     case UnitType::BARRACKS:
-        return std::make_shared<Barracks>()->getBuildingCost();
+        returnValue = std::make_shared<Barracks>()->getBuildingCost();
+        break;
     case UnitType::ORE_REF:
-        return std::make_shared<OreRefinery>()->getBuildingCost();
+        returnValue = std::make_shared<OreRefinery>()->getBuildingCost();
+        break;
     case UnitType::POWER_PLANT:
-        return std::make_shared<PowerPlants>()->getBuildingCost();
+        returnValue = std::make_shared<PowerPlants>()->getBuildingCost();
+        break;
     case UnitType::WAR_FACT:
-        return std::make_shared<WarFactory>()->getBuildingCost();
+        returnValue = std::make_shared<WarFactory>()->getBuildingCost();
+        break;
     case UnitType::ADV_POWER_PLANT:
-        return std::make_shared<ADVPowerPlants>()->getBuildingCost();
+        returnValue = std::make_shared<ADVPowerPlants>()->getBuildingCost();
+        break;
     case UnitType::INFANTRY:
-        return 100;
+        returnValue = 100;
+        break;
     default:
         // Handle the case when type doesn't match any of the options
         // For example, you might throw an exception or set a default value
         break;
     }
+    if(m_gameObjectManager->getCheatMode()){
+        return 1;
+    }
+    return returnValue;
 }

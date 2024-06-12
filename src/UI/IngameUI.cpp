@@ -59,9 +59,11 @@ void IngamUI::ShowHeaderSection() {
     if (ImGui::Button("Cheat Mode On")) {
         // TODO inf money, speed build time and cant player unit health cant be
         // damaged
+        m_gameObjectManager->setCheatMode(true);
     }
     if (ImGui::Button("Cheat Mode off")) {
         // TODO
+        m_gameObjectManager->setCheatMode(false);
     }
 
     ImGui::PopFont();
