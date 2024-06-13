@@ -8,14 +8,14 @@
 #include "Core/Context.hpp"
 #include "Map/MapBinReader.hpp"
 #include "Map/YAMLReader.hpp"
-#include "Mechanics/UnitManager.hpp"
+#include "Mechanics/Player.hpp"
 
 #include "Camera.hpp"
 #include "Display/DrawOverlays.hpp"
 #include "Display/Grid.hpp"
 #include "Display/SpriteSheet.hpp"
 #include "Map/Map.hpp"
-#include "Structure/AdvencePowerPlants.hpp"
+#include "Structure/AdvancePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
@@ -48,13 +48,10 @@ protected:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::shared_ptr<CameraClass> m_SceneCamera =
         std::make_shared<CameraClass>();
-    std::shared_ptr<UnitManager> m_GameObjectManager =
-        std::make_shared<UnitManager>();
-    std::shared_ptr<UnitManager> m_EnemyObjectManager =
-        std::make_shared<UnitManager>();
+    std::shared_ptr<Player> m_Player = std::make_shared<Player>();
+    std::shared_ptr<Player> m_AIPlayer = std::make_shared<Player>();
     Util::Renderer m_Renderer;
     std::shared_ptr<IngamUI> m_UI = std::make_shared<IngamUI>();
-    std::shared_ptr<Player> m_Player = std::make_shared<Player>();
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SCENE_HPP

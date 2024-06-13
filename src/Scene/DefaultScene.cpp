@@ -19,16 +19,16 @@ void DefaultScene::Start() {
      */
 
     // start
-    m_GameObjectManager->Start(m_Map);
-    m_UI->Start(m_Map, m_GameObjectManager);
-    m_GameObjectManager->setTotalCurrency(5000);
+    m_Player->Start(m_Map);
+    m_UI->Start(m_Map, m_Player);
+    m_Player->setTotalCurrency(5000);
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-5, -5)),
                          MapUtil::CellCoordToGlobal(glm::vec2(70, 70)));
 }
 
 void DefaultScene::Update() {
 
-    m_GameObjectManager->Update();
+    m_Player->Update();
 
     Util::Transform trans;
     m_Map->Draw(trans, 0);
@@ -45,14 +45,16 @@ void DefaultScene::Update() {
     // build and spawn stuff
 
     if (m_UI->getIfAnyBuildingReadyToBuild()) {
-        m_GameObjectManager->getStructureManager()->AddStructSelectingBuiltSite(
-            m_UI->getSelectedBuilding());
+        m_Player->getUnitManager()
+            ->getStructureManager()
+            ->AddStructSelectingBuiltSite(m_UI->getSelectedBuilding());
     }
-    m_UI->checkExistBuilding(m_GameObjectManager->getStructureManager()
+    m_UI->checkExistBuilding(m_Player->getUnitManager()
+                                 ->getStructureManager()
                                  ->getStructureArray()
                                  ->getBuiltStructureArray());
     if (m_UI->ifUnitReadyToSpawn()) {
-        m_GameObjectManager->spawnToWayPoint(
+        m_Player->getUnitManager()->spawnToWayPoint(
             m_UI->getUnitTypeReadyToBeSpawned(), HouseType::MY);
     }
 }

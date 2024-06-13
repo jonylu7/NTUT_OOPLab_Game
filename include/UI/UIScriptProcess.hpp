@@ -8,8 +8,7 @@
 #include "Avatar/Infantry.hpp"
 #include "Mechanics/GameObjectID.hpp"
 #include "Mechanics/Player.hpp"
-#include "Mechanics/UnitManager.hpp"
-#include "Structure/AdvencePowerPlants.hpp"
+#include "Structure/AdvancePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
@@ -22,7 +21,7 @@
 
 class UIScriptProcess {
 private:
-    std::shared_ptr<UnitManager> m_gameObjectManager;
+    std::shared_ptr<Player> m_Player;
 
     // building
     bool b_Baracks = false;
@@ -63,9 +62,7 @@ public:
     UIScriptProcess(){};
     ~UIScriptProcess(){};
 
-    void Start(std::shared_ptr<UnitManager> gameObjectManager) {
-        m_gameObjectManager = gameObjectManager;
-    }
+    void Start(std::shared_ptr<Player> player) { m_Player = player; }
 
     // Getter/Setter
     bool GetIfFinishedBuilding(UnitType type);
@@ -102,7 +99,5 @@ public:
     std::shared_ptr<Avatar> spawnAvatar();
     bool getIfReadytoSpawn() { return b_isReadyToSpawn; }
     void setIfReadytoSpawn(bool b) { b_isReadyToSpawn = b; }
-
-    // import from scene
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UISCRIPTPROCESS_HPP

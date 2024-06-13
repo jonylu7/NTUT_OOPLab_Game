@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_TUTORIALSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_TUTORIALSCENE_HPP
-#include "AI/AIScripts.hpp"
+#include "AI/AIGeneral.hpp"
 #include "Cursor.hpp"
 #include "Scene.hpp"
 #include "UI/MissionAccomplishedUI.hpp"
@@ -46,7 +46,7 @@ private:
     SpriteSheet m_SpriteSheet;
     std::shared_ptr<CursorClass> m_Cursor = std::make_shared<CursorClass>();
     Grid testGrid;
-    std::shared_ptr<AIScript> m_EnemyScripts = std::make_shared<AIScript>();
+    std::shared_ptr<AIGeneral> m_EnemyScripts = std::make_shared<AIGeneral>();
     std::shared_ptr<Util::GameObject> m_PlayerObjectivesText =
         std::make_shared<Util::GameObject>();
     std::shared_ptr<Prop> m_cellProp = std::make_shared<Prop>();

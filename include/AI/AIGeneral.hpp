@@ -2,15 +2,15 @@
 // Created by nudle on 2024/5/2.
 //
 
-#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AISCRIPTS_HPP
-#define PRACTICALTOOLSFORSIMPLEDESIGN_AISCRIPTS_HPP
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AIGENERAL_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_AIGENERAL_HPP
 #include "AIGroupCommander.hpp"
 #include "Mechanics/UnitManager.hpp"
 
 #define SPACE 4
 
 enum class SpawnMode { BUILDINGS, AVATAR };
-class AIScript {
+class AIGeneral {
 
 private:
     std::shared_ptr<UnitManager> m_GameObjectManager;
@@ -38,8 +38,8 @@ private:
     bool m_active;
 
 public:
-    AIScript(){};
-    ~AIScript(){};
+    AIGeneral(){};
+    ~AIGeneral(){};
     void Start(std::shared_ptr<UnitManager> GameObjectManager,
                std::shared_ptr<UnitManager> EnemyObjectManager,
                std::shared_ptr<MapClass> map, bool active = true);
@@ -78,4 +78,4 @@ public:
     void spawnUnit();
     void UpdateSpawnScript(SpawnMode spawnMode);
 };
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_AISCRIPTS_HPP
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_AIGENERAL_HPP

@@ -8,15 +8,16 @@ void TutorialScene::Start() {
     LOG_TRACE("Start");
     m_Map->Init(MapBinReader::readBin("../assets/map/ore-lord/map.bin", 64, 64),
                 64, 64);
-    m_GameObjectManager->Start(m_Map);
-    m_EnemyObjectManager->Start(m_Map);
-    m_GameObjectManager->setTotalCurrency(5000);
-    m_EnemyObjectManager->setTotalCurrency(5000);
-    m_UI->Start(m_Map, m_GameObjectManager);
+    m_Player->Start(m_Map);
+    m_AIPlayer->Start(m_Map);
+    m_Player->setTotalCurrency(5000);
+    m_AIPlayer->setTotalCurrency(5000);
+    m_UI->Start(m_Map, m_Player);
     m_SceneCamera->Start(MapUtil::CellCoordToGlobal(glm::vec2(-10, -10)),
                          MapUtil::CellCoordToGlobal(glm::vec2(100, 100)));
 
-    m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {5, 5});
+    m_Player->getUnitManager()->spawn(UnitType::INFANTRY, HouseType::MY,
+                                      {5, 5});
     stageStart();
 }
 void TutorialScene::Update() {
@@ -24,8 +25,8 @@ void TutorialScene::Update() {
     if (m_stage == TutorialStages::STAGE_FINAL) {
         return;
     }
-    m_GameObjectManager->Update();
-    m_EnemyObjectManager->Update();
+    m_Player->Update();
+    m_AIPlayer->Update();
     Util::Transform trans;
     m_Map->Draw(trans, 0);
     m_SceneCamera->Update();
@@ -43,14 +44,16 @@ void TutorialScene::Update() {
         MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition())));
 
     if (m_UI->getIfAnyBuildingReadyToBuild()) {
-        m_GameObjectManager->getStructureManager()->AddStructSelectingBuiltSite(
-            m_UI->getSelectedBuilding());
+        m_Player->getUnitManager()
+            ->getStructureManager()
+            ->AddStructSelectingBuiltSite(m_UI->getSelectedBuilding());
     }
-    m_UI->checkExistBuilding(m_GameObjectManager->getStructureManager()
+    m_UI->checkExistBuilding(m_Player->getUnitManager()
+                                 ->getStructureManager()
                                  ->getStructureArray()
                                  ->getBuiltStructureArray());
     if (m_UI->ifUnitReadyToSpawn()) {
-        m_GameObjectManager->spawnToWayPoint(
+        m_Player->getUnitManager()->spawnToWayPoint(
             m_UI->getUnitTypeReadyToBeSpawned(), HouseType::MY);
     }
 }
@@ -103,7 +106,8 @@ void TutorialScene::stageUpdate() {
 void TutorialScene::stage1Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
-    for (auto i : m_GameObjectManager->getAvatarManager()->getAvatarArray()) {
+    for (auto i :
+         m_Player->getUnitManager()->getAvatarManager()->getAvatarArray()) {
 
         if ((i->getSelected() &&
              m_cellProp->ifOverlaps(i->getMoving()->getCurrentCell())) ||
@@ -129,20 +133,24 @@ void TutorialScene::stage2Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
     int structCount = 0;
-    for (auto i : (m_GameObjectManager->getStructureManager()
+    for (auto i : (m_Player->getUnitManager()
+                       ->getStructureManager()
                        ->getStructureArray()
                        ->getBuiltStructureArray())) {
         if (i->getHouseType() == HouseType::MY) {
             structCount++;
         }
     }
-    if (m_GameObjectManager->getStructureManager()
+    if (m_Player->getUnitManager()
+                ->getStructureManager()
                 ->getStructureArray()
                 ->ifBarrackBuilt() &&
-            m_GameObjectManager->getStructureManager()
+            m_Player->getUnitManager()
+                ->getStructureManager()
                 ->getStructureArray()
                 ->ifPowerPlantBuilt() &&
-            m_GameObjectManager->getStructureManager()
+            m_Player->getUnitManager()
+                ->getStructureManager()
                 ->getStructureArray()
                 ->ifOreRefinaryBuilt() ||
         Util::Input::IsKeyDown(Util::Keycode::DEBUG_KEY)) {
@@ -166,7 +174,8 @@ void TutorialScene::stage3Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
     int avataroverlapscount = 0;
-    for (auto i : m_GameObjectManager->getAvatarManager()->getAvatarArray()) {
+    for (auto i :
+         m_Player->getUnitManager()->getAvatarManager()->getAvatarArray()) {
         if (i->getHouseType() == HouseType::MY) {
             if (m_cellProp->ifOverlaps(i->getMoving()->getCurrentCell())) {
                 avataroverlapscount++;
@@ -187,17 +196,22 @@ void TutorialScene::initStage4() {
     m_cellProp->setScale({4, 3});
     m_cellProp->setObjectLocation({1200, 850}, 0);
     m_cellProp->Start({8, 6});
-    m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {24, 17});
-    m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {26, 18});
-    m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {25, 17});
+    m_AIPlayer->getUnitManager()->spawn(UnitType::INFANTRY, HouseType::ENEMY,
+                                        {24, 17});
+    m_AIPlayer->getUnitManager()->spawn(UnitType::INFANTRY, HouseType::ENEMY,
+                                        {26, 18});
+    m_AIPlayer->getUnitManager()->spawn(UnitType::INFANTRY, HouseType::ENEMY,
+                                        {25, 17});
     m_stage = TutorialStages::STAGE4;
 }
 
 void TutorialScene::stage4Update() {
     m_PlayerObjectivesText->Draw();
     m_cellProp->Update();
-    if (m_EnemyObjectManager->getAvatarManager()->getAvatarArray().size() ==
-            0 ||
+    if (m_AIPlayer->getUnitManager()
+                ->getAvatarManager()
+                ->getAvatarArray()
+                .size() == 0 ||
         Util::Input::IsKeyDown(Util::Keycode::DEBUG_KEY)) {
         initFinalStage();
     }

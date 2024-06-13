@@ -78,8 +78,6 @@ public:
     }
 
 public:
-    // glm::vec2 getEnemyBarrackCell() { return m_EnemyBarrackCell; }
-    // glm::vec2 getEnemyWayPointCell() { return m_EnemyWayPointCell; }
     glm::vec2 getPlayerBarrackSpawnCell() {
         for (auto i : m_BuiltStructure) {
             if (std::dynamic_pointer_cast<Barracks>(i)) {

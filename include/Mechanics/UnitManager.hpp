@@ -11,9 +11,8 @@
 #include "Mechanics/AvatarManager.hpp"
 #include "Mechanics/BuiltStructure.hpp"
 #include "Mechanics/CursorSelection.hpp"
-#include "Mechanics/Player.hpp"
 #include "Mechanics/StructureManager.hpp"
-#include "Structure/AdvencePowerPlants.hpp"
+#include "Structure/AdvancePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
@@ -22,8 +21,7 @@
 
 #include <utility>
 
-
-class UnitManager : public Player {
+class UnitManager {
 public:
     UnitManager() {}
     ~UnitManager() {}
@@ -38,19 +36,12 @@ public:
     void Update();
 
 public:
-    int getTotalPower() {
-        return Player::getTotalPower(
-            m_StructureManager->getStructureArray()->getBuiltStructureArray());
-    }
     std::shared_ptr<AvatarManager> getAvatarManager() {
         return m_AvatarManager;
     }
     std::shared_ptr<StructureManager> getStructureManager() {
         return m_StructureManager;
     }
-
-
-    int updateCurrency();
 
     void spawnToWayPoint(UnitType unit, HouseType house);
     void spawn(UnitType unit, HouseType house, glm::vec2 cellPos);
@@ -59,24 +50,11 @@ public:
         unitCount[type] += value;
     }
 
-    int getUnitConstructCount(UnitType type){
-        return unitCount[type];
-    }
-    int getAvatarCount(){
-        return m_AvatarManager->getAvatarSize();;
-    }
-
-    void setCheatMode(bool cheat){
-        m_cheat=cheat;
-    }
-
-    bool getCheatMode(){
-        return m_cheat;
-    }
-
+    int getUnitConstructCount(UnitType type) { return unitCount[type]; }
+    int getAvatarCount() { return m_AvatarManager->getAvatarSize(); }
 
 private:
-    std::unordered_map<UnitType,int> unitCount;
+    std::unordered_map<UnitType, int> unitCount;
     std::shared_ptr<CursorSelection> m_CursorSelection =
         std::make_shared<CursorSelection>();
     std::shared_ptr<StructureManager> m_StructureManager =
@@ -84,9 +62,6 @@ private:
     std::shared_ptr<AvatarManager> m_AvatarManager =
         std::make_shared<AvatarManager>();
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
-    float m_mainDeltaTime = 0;
-    Util::Time m_Time;
-    bool m_cheat=false;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_UNITMANAGER_HPP

@@ -8,12 +8,12 @@
 std::unordered_map<UnitType, unsigned int> IngamUI::s_unitConstructCount;
 
 void IngamUI::Start(std::shared_ptr<MapClass> map,
-                    std::shared_ptr<UnitManager> gameobjectmanager) {
+                    std::shared_ptr<Player> player) {
     InitUnitQueue();
     // start
     this->m_Map = map;
-    m_gameObjectManager = gameobjectmanager;
-    m_UIScriptProcess->Start(gameobjectmanager);
+    m_Player = player;
+    m_UIScriptProcess->Start(player);
 
     m_StructureIconSpriteSheet->Start(
         "../assets/sprites/ICON_Allied_Structure.png", 64, 48, 24, 0);
@@ -40,10 +40,8 @@ void IngamUI::ShowPlayerStatus() {
                     .c_str());
     // ImGui::Text(fmt::format("Zoom: {}",
     // m_SceneCamera.getCameraZoom()).c_str());
-    ImGui::Text(
-        fmt::format("$ {}", m_gameObjectManager->getTotalCurrency()).c_str());
-    ImGui::Text(
-        fmt::format("Power {}", m_gameObjectManager->getTotalPower()).c_str());
+    ImGui::Text(fmt::format("$ {}", m_Player->getTotalCurrency()).c_str());
+    ImGui::Text(fmt::format("Power {}", m_Player->getTotalPower()).c_str());
     ImGui::PushFont(sacker_med);
 }
 
@@ -59,11 +57,11 @@ void IngamUI::ShowHeaderSection() {
     if (ImGui::Button("Cheat Mode On")) {
         // TODO inf money, speed build time and cant player unit health cant be
         // damaged
-        m_gameObjectManager->setCheatMode(true);
+        m_Player->setCheatMode(true);
     }
     if (ImGui::Button("Cheat Mode off")) {
         // TODO
-        m_gameObjectManager->setCheatMode(false);
+        m_Player->setCheatMode(false);
     }
 
     ImGui::PopFont();

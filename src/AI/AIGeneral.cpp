@@ -1,12 +1,12 @@
 //
 // Created by nudle on 2024/5/23.
 //
-#include "AI/AIScripts.hpp"
+#include "AI/AIGeneral.hpp"
 
 #define MAX_TROOPS_SIZE 25
-void AIScript::Start(std::shared_ptr<UnitManager> GameObjectManager,
-                     std::shared_ptr<UnitManager> EnemyObjectManager,
-                     std::shared_ptr<MapClass> map, bool active) {
+void AIGeneral::Start(std::shared_ptr<UnitManager> GameObjectManager,
+                      std::shared_ptr<UnitManager> EnemyObjectManager,
+                      std::shared_ptr<MapClass> map, bool active) {
     m_GameObjectManager = GameObjectManager;
 
     m_EnemyObjectManager = EnemyObjectManager;
@@ -17,7 +17,7 @@ void AIScript::Start(std::shared_ptr<UnitManager> GameObjectManager,
     m_AIGroupCommander->Start();
 }
 
-void AIScript::Update() {
+void AIGeneral::Update() {
     if (!m_active) {
         return;
     }
@@ -53,7 +53,7 @@ void AIScript::Update() {
     }
 }
 
-void AIScript::modeUpdate() {
+void AIGeneral::modeUpdate() {
     if (!ifBuiltBasic()) {
         buildBasic();
     } else {
@@ -89,7 +89,7 @@ void AIScript::modeUpdate() {
     offensiveUpdate();
 }
 
-void AIScript::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
+void AIGeneral::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
     if (spawnMode == SpawnMode::AVATAR) {
         if (m_EnemyObjectManager->getTotalPower() <= 0) {
             m_AvatarCDTime = time * 2;
@@ -111,7 +111,7 @@ void AIScript::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
     }
 }
 
-void AIScript::setCost(float cost, SpawnMode spawnMode) {
+void AIGeneral::setCost(float cost, SpawnMode spawnMode) {
     if (spawnMode == SpawnMode::AVATAR) {
         m_avatarCost = cost;
     }
@@ -120,7 +120,7 @@ void AIScript::setCost(float cost, SpawnMode spawnMode) {
     }
 }
 
-void AIScript::buildBasic() {
+void AIGeneral::buildBasic() {
     if (m_selectedBuildingType != UnitType::NONE) {
         return;
     }
@@ -145,7 +145,7 @@ void AIScript::buildBasic() {
     }
 }
 
-void AIScript::buildADV() {
+void AIGeneral::buildADV() {
     if (m_selectedBuildingType != UnitType::NONE) {
         return;
     }
@@ -163,7 +163,7 @@ void AIScript::buildADV() {
     }
 }
 
-void AIScript::spawnUnit() {
+void AIGeneral::spawnUnit() {
     if (m_selectedAvatarType != UnitType::NONE ||
         m_EnemyObjectManager->getAvatarCount() > 16) {
         return;
@@ -176,7 +176,7 @@ void AIScript::spawnUnit() {
     }
 }
 
-void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
+void AIGeneral::UpdateSpawnScript(SpawnMode spawnMode) {
     // issue , avatar spawn and structure spawn should be separated CD time , so
     // can spawn avatar and structure same time
 
