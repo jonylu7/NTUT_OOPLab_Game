@@ -23,7 +23,7 @@ public:
     void Update() {
         m_UnitManager->Update();
 
-        if (m_mainDeltaTime >= 1) {
+        if (m_mainDeltaTime >= 30) {
             m_mainDeltaTime = 0;
             updateCurrency();
         }
