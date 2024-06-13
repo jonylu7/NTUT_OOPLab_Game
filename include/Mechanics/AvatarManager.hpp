@@ -43,6 +43,9 @@ public:
     bool ifAvatarHasNemesis(std::shared_ptr<Avatar> unit){
         return m_NemesisManager->ifAvatarHasNemesis(unit);
     }
+    bool ifAvatarHasHunter(std::shared_ptr<Avatar> unit){
+        return m_NemesisManager->ifAvatarHasNemesis(unit);
+    }
     glm::vec2 getAvatarNemesisCell(std::shared_ptr<Avatar> unit){
         return m_NemesisManager->getNemesisCell(unit);
     }

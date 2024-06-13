@@ -113,7 +113,9 @@ public:
     glm::vec2 getCurrentLocationInCell() override {
         return getAbsoluteOccupiedArea()[0];
     };
-
+    glm::vec2 getTopRightCell(){
+        return getAbsoluteOccupiedArea()[-1];
+    };
 protected:
     float m_ElectricPower;
     float m_BuildingTime;
