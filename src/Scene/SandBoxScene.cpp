@@ -127,26 +127,26 @@ void SandBoxScene::stageUpdate() {
     if (m_stage == Stages::START) {
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_1)) {
             m_stage = Stages::STAGE1;
-            m_EnemyScripts->Start(m_Player->getUnitManager(),
-                                  m_AIPlayer->getUnitManager(), m_Map);
+            m_EnemyScripts->Start(m_Player->getUnitManager(), m_AIPlayer,
+                                  m_Map);
             stageStart();
         }
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_2)) {
             m_stage = Stages::STAGE2;
-            m_EnemyScripts->Start(m_Player->getUnitManager(),
-                                  m_AIPlayer->getUnitManager(), m_Map);
+            m_EnemyScripts->Start(m_Player->getUnitManager(), m_AIPlayer,
+                                  m_Map);
             stageStart();
         }
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_3)) {
             m_stage = Stages::STAGE3;
-            m_EnemyScripts->Start(m_Player->getUnitManager(),
-                                  m_AIPlayer->getUnitManager(), m_Map);
+            m_EnemyScripts->Start(m_Player->getUnitManager(), m_AIPlayer,
+                                  m_Map);
             stageStart();
         }
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_4)) {
             m_stage = Stages::STAGE4;
-            m_EnemyScripts->Start(m_Player->getUnitManager(),
-                                  m_AIPlayer->getUnitManager(), m_Map, true);
+            m_EnemyScripts->Start(m_Player->getUnitManager(), m_AIPlayer, m_Map,
+                                  true);
             stageStart();
         }
     }

@@ -37,10 +37,13 @@ public:
         for (auto i : m_UnitManager->getStructureManager()
                           ->getStructureArray()
                           ->getBuiltStructureArray()) {
-            power +=
-                std::dynamic_pointer_cast<PowerPlants>(i)->getElectricPower();
-            power += std::dynamic_pointer_cast<ADVPowerPlants>(i)
-                         ->getElectricPower();
+            if (std::dynamic_pointer_cast<PowerPlants>(i)) {
+                power += std::dynamic_pointer_cast<PowerPlants>(i)
+                             ->getElectricPower();
+            } else if (std::dynamic_pointer_cast<ADVPowerPlants>(i)) {
+                power += std::dynamic_pointer_cast<ADVPowerPlants>(i)
+                             ->getElectricPower();
+            }
         }
         return power + m_FixedPower;
     }
