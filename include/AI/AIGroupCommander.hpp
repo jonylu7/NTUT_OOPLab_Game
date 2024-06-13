@@ -156,7 +156,7 @@ protected:
     glm::vec2 findTargetForOffensiveUnit(std::shared_ptr<Avatar> unit){
         glm::vec2 targetCell = {-1.f,-1.f};
         //issue: empty group should delete before this
-        if(static_cast<int>(m_offensiveGroup.size())>=static_cast<int>(m_PlayerUnitManager->getAvatarManager()->getAvatarArray().size())){
+        if(false&&static_cast<int>(m_offensiveGroup.size())>=static_cast<int>(m_PlayerUnitManager->getAvatarManager()->getAvatarArray().size())){
             targetCell = m_Map->findEnemyInRange(200,unit->getCurrentLocationInCell(),HouseType::ENEMY);
             //attack
             m_AIAvatarManager->assignAttackOrderToAvatar(unit,targetCell,HouseType::ENEMY);
