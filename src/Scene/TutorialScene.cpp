@@ -158,7 +158,7 @@ void TutorialScene::initStage3() {
     m_cellProp->setHighLightImage("../assets/sprites/Task/Task_Cell_Text3.png");
     m_cellProp->setScale({1, 1});
     m_cellProp->setObjectLocation({850, 850}, 0);
-    m_cellProp->Start({4, 4});
+    m_cellProp->Start({2, 2});
     m_stage = TutorialStages::STAGE3;
 }
 
