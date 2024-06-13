@@ -69,8 +69,6 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
         }
 
         // if next to be obstacle, turn findNewDirWhenCrash
-        if () {
-        }
 
         // walk along
         path.push_back(currentdir);

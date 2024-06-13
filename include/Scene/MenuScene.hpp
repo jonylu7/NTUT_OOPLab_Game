@@ -13,7 +13,7 @@
 
 class MenuScene : public Scene {
 public:
-    enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL, SANDBOX };
+    enum class SceneMode { DEFAULT, MAP, MENU, TUTORIAL, SANDBOX, SKIRMISH };
 
 public:
     MenuScene()
@@ -52,6 +52,11 @@ public:
             if (Util::Input::IsKeyPressed(Util::Keycode::S)) {
                 m_CurrentMode = SceneMode::SANDBOX;
             }
+            if (m_TutorialScene->getMissionAccomplishedUI()
+                    ->getUIStatus()
+                    ->getUIStatusType() == UIStatusType::UI_CONTINUE) {
+                m_CurrentMode = SceneMode::SKIRMISH;
+            }
         }
 
         switch (m_CurrentMode) {
@@ -70,6 +75,9 @@ public:
         case (SceneMode::MENU):
             m_MenuUI.Update();
             break;
+        case (SceneMode::SKIRMISH):
+            // skirmish update()
+            break;
         }
     }
 
@@ -77,7 +85,10 @@ public:
 
     bool ifExit() {
         if (m_MenuUI.getUIStatus()->getUIStatusType() ==
-            UIStatusType::UI_EXIT) {
+                UIStatusType::UI_EXIT ||
+            m_TutorialScene->getMissionAccomplishedUI()
+                    ->getUIStatus()
+                    ->getUIStatusType() == UIStatusType::UI_EXIT) {
             return true;
         }
         return false;

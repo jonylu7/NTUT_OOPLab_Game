@@ -24,7 +24,6 @@ void TutorialScene::Update() {
     if (m_stage == TutorialStages::STAGE_FINAL) {
         return;
     }
-
     m_GameObjectManager->Update();
     m_EnemyObjectManager->Update();
     Util::Transform trans;
@@ -209,5 +208,5 @@ void TutorialScene::initFinalStage() {
 }
 
 void TutorialScene::stageFinalUpdate() {
-    m_MUI.Update();
+    m_MUI->Update();
 }

@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_TUTORIALSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_TUTORIALSCENE_HPP
-#include "AI/EnemyScripts.hpp"
+#include "AI/AIScripts.hpp"
 #include "Cursor.hpp"
 #include "Scene.hpp"
 #include "UI/MissionAccomplishedUI.hpp"
@@ -22,6 +22,10 @@ public:
     ~TutorialScene(){};
     void Start() override;
     void Update() override;
+
+    std::shared_ptr<MissionAccomplishedUI> getMissionAccomplishedUI() {
+        return m_MUI;
+    }
 
 private:
     void stageStart();
@@ -42,13 +46,13 @@ private:
     SpriteSheet m_SpriteSheet;
     std::shared_ptr<CursorClass> m_Cursor = std::make_shared<CursorClass>();
     Grid testGrid;
-    std::shared_ptr<EnemyScripts> m_EnemyScripts =
-        std::make_shared<EnemyScripts>();
+    std::shared_ptr<AIScript> m_EnemyScripts = std::make_shared<AIScript>();
     std::shared_ptr<Util::GameObject> m_PlayerObjectivesText =
         std::make_shared<Util::GameObject>();
     std::shared_ptr<Prop> m_cellProp = std::make_shared<Prop>();
     TutorialStages m_stage;
 
-    MissionAccomplishedUI m_MUI;
+    std::shared_ptr<MissionAccomplishedUI> m_MUI =
+        std::make_shared<MissionAccomplishedUI>();
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_TUTORIALSCENE_HPP

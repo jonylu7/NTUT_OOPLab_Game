@@ -17,7 +17,6 @@
 #include "Map/Map.hpp"
 #include "Structure/AdvencePowerPlants.hpp"
 #include "Structure/Barracks.hpp"
-#include "Structure/IWayPoint.hpp"
 #include "Structure/OreRefinery.hpp"
 #include "Structure/PowerPlants.hpp"
 #include "Structure/WarFactory.hpp"
