@@ -32,12 +32,6 @@ void Avatar::Update() {
                 getAvatarOrder()->setAvatarOrder(AvatarOrderType::NO_ORDER);
             }
         } else if (getAvatarOrder()->getAvatarOrder() ==
-                   AvatarOrderType::CHASE) {
-            m_Moving->moveUpdate();
-            if (getMoving()->getCurrentDir() == MoveDirection::IDLE) {
-                getAvatarOrder()->setAvatarOrder(AvatarOrderType::NO_ORDER);
-            }
-        }else if (getAvatarOrder()->getAvatarOrder() ==
                    AvatarOrderType::NO_ORDER) {
             noorderUpdate();
         } else if (getAvatarOrder()->getAvatarOrder() ==

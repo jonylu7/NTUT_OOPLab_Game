@@ -2,19 +2,19 @@
 // Created by nudle on 2024/5/2.
 //
 
-#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AISCRIPTS_HPP
-#define PRACTICALTOOLSFORSIMPLEDESIGN_AISCRIPTS_HPP
+#ifndef PRACTICALTOOLSFORSIMPLEDESIGN_AIGENERAL_HPP
+#define PRACTICALTOOLSFORSIMPLEDESIGN_AIGENERAL_HPP
 #include "AIGroupCommander.hpp"
-#include "Mechanics/UnitManager.hpp"
+#include "Mechanics/Player.hpp"
 
 #define SPACE 4
 
 enum class SpawnMode { BUILDINGS, AVATAR };
-class AIScript {
+class AIGeneral {
 
 private:
     std::shared_ptr<UnitManager> m_GameObjectManager;
-    std::shared_ptr<UnitManager> m_EnemyObjectManager;
+    std::shared_ptr<Player> m_AIPlayer;
     std::shared_ptr<MapClass> m_Map;
     std::shared_ptr<AIGroupCommander> m_AIGroupCommander;
 
@@ -38,11 +38,11 @@ private:
     bool m_active;
 
 public:
-    AIScript(){};
-    ~AIScript(){};
+    AIGeneral(){};
+    ~AIGeneral(){};
     void Start(std::shared_ptr<UnitManager> GameObjectManager,
-               std::shared_ptr<UnitManager> EnemyObjectManager,
-               std::shared_ptr<MapClass> map, bool active = true);
+               std::shared_ptr<Player> AIPlayer, std::shared_ptr<MapClass> map,
+               bool active = true);
     void Update();
     void modeUpdate();
     void offensiveUpdate() {
@@ -59,17 +59,17 @@ public:
     void setCost(float cost, SpawnMode spawnMode);
 
     bool ifBuiltBasic() {
-        return m_EnemyObjectManager->getUnitConstructCount(
+        return m_AIPlayer->getUnitManager()->getUnitConstructCount(
                    UnitType::POWER_PLANT) >= 1 &&
-               m_EnemyObjectManager->getUnitConstructCount(UnitType::ORE_REF) >=
-                   1 &&
-               m_EnemyObjectManager->getUnitConstructCount(
+               m_AIPlayer->getUnitManager()->getUnitConstructCount(
+                   UnitType::ORE_REF) >= 1 &&
+               m_AIPlayer->getUnitManager()->getUnitConstructCount(
                    UnitType::BARRACKS) >= 1;
     }
     bool ifBuiltADV() {
-        return m_EnemyObjectManager->getUnitConstructCount(
+        return m_AIPlayer->getUnitManager()->getUnitConstructCount(
                    UnitType::WAR_FACT) >= 1 &&
-               m_EnemyObjectManager->getUnitConstructCount(
+               m_AIPlayer->getUnitManager()->getUnitConstructCount(
                    UnitType::ADV_POWER_PLANT) >= 1;
     }
 
@@ -78,4 +78,4 @@ public:
     void spawnUnit();
     void UpdateSpawnScript(SpawnMode spawnMode);
 };
-#endif // PRACTICALTOOLSFORSIMPLEDESIGN_AISCRIPTS_HPP
+#endif // PRACTICALTOOLSFORSIMPLEDESIGN_AIGENERAL_HPP

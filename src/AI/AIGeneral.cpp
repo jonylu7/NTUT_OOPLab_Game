@@ -1,23 +1,23 @@
 //
 // Created by nudle on 2024/5/23.
 //
-#include "AI/AIScripts.hpp"
+#include "AI/AIGeneral.hpp"
 
 #define MAX_TROOPS_SIZE 25
-void AIScript::Start(std::shared_ptr<UnitManager> GameObjectManager,
-                     std::shared_ptr<UnitManager> EnemyObjectManager,
-                     std::shared_ptr<MapClass> map, bool active) {
+void AIGeneral::Start(std::shared_ptr<UnitManager> GameObjectManager,
+                      std::shared_ptr<Player> AIPlayer,
+                      std::shared_ptr<MapClass> map, bool active) {
     m_GameObjectManager = GameObjectManager;
 
-    m_EnemyObjectManager = EnemyObjectManager;
+    m_AIPlayer = AIPlayer;
     m_Map = map;
     m_active = active;
     m_AIGroupCommander = std::make_shared<AIGroupCommander>(
-        GameObjectManager, EnemyObjectManager, map);
+        GameObjectManager, m_AIPlayer->getUnitManager(), map);
     m_AIGroupCommander->Start();
 }
 
-void AIScript::Update() {
+void AIGeneral::Update() {
     if (!m_active) {
         return;
     }
@@ -37,28 +37,28 @@ void AIScript::Update() {
     if (m_mainDeltaTime >= 1) {
         m_mainDeltaTime = 0;
         if (m_buildingCDTime < 1.f) {
-            m_EnemyObjectManager->addTotalCurrency(m_buildingCost / (-1.f));
+            m_AIPlayer->addTotalCurrency(m_buildingCost / (-1.f));
         } else {
-            m_EnemyObjectManager->addTotalCurrency(m_buildingCost /
-                                                   m_buildingCDTime * (-1.f));
+            m_AIPlayer->addTotalCurrency(m_buildingCost / m_buildingCDTime *
+                                         (-1.f));
         }
         if (m_AvatarCDTime < 1.f) {
-            m_EnemyObjectManager->addTotalCurrency(m_avatarCost / (-1.f));
+            m_AIPlayer->addTotalCurrency(m_avatarCost / (-1.f));
         } else {
-            m_EnemyObjectManager->addTotalCurrency(m_avatarCost /
-                                                   m_AvatarCDTime * (-1.f));
+            m_AIPlayer->addTotalCurrency(m_avatarCost / m_AvatarCDTime *
+                                         (-1.f));
         }
         modeUpdate();
         m_AIGroupCommander->Update();
     }
 }
 
-void AIScript::modeUpdate() {
+void AIGeneral::modeUpdate() {
     if (!ifBuiltBasic()) {
         buildBasic();
     } else {
         float playerAvatarCount = m_GameObjectManager->getAvatarCount();
-        float enemyAvatarCount = m_EnemyObjectManager->getAvatarCount();
+        float enemyAvatarCount = m_AIPlayer->getUnitManager()->getAvatarCount();
         if (enemyAvatarCount == 0 ||
             (playerAvatarCount / enemyAvatarCount >= 2 &&
              playerAvatarCount != 0)) {
@@ -89,16 +89,16 @@ void AIScript::modeUpdate() {
     offensiveUpdate();
 }
 
-void AIScript::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
+void AIGeneral::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
     if (spawnMode == SpawnMode::AVATAR) {
-        if (m_EnemyObjectManager->getTotalPower() <= 0) {
+        if (m_AIPlayer->getTotalPower() <= 0) {
             m_AvatarCDTime = time * 2;
         } else {
             m_AvatarCDTime = time;
         }
     }
     if (spawnMode == SpawnMode::BUILDINGS) {
-        if (m_EnemyObjectManager->getTotalPower() <= 0) {
+        if (m_AIPlayer->getTotalPower() <= 0) {
             m_buildingCDTime = time * 2;
         } else {
             m_buildingCDTime = time;
@@ -111,7 +111,7 @@ void AIScript::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
     }
 }
 
-void AIScript::setCost(float cost, SpawnMode spawnMode) {
+void AIGeneral::setCost(float cost, SpawnMode spawnMode) {
     if (spawnMode == SpawnMode::AVATAR) {
         m_avatarCost = cost;
     }
@@ -120,63 +120,64 @@ void AIScript::setCost(float cost, SpawnMode spawnMode) {
     }
 }
 
-void AIScript::buildBasic() {
+void AIGeneral::buildBasic() {
     if (m_selectedBuildingType != UnitType::NONE) {
         return;
     }
-    if (m_EnemyObjectManager->getUnitConstructCount(UnitType::POWER_PLANT) <
-            1 &&
-        m_EnemyObjectManager->getTotalCurrency() > 300) {
+    if (m_AIPlayer->getUnitManager()->getUnitConstructCount(
+            UnitType::POWER_PLANT) < 1 &&
+        m_AIPlayer->getTotalCurrency() > 300) {
         setCDTime(15.f, SpawnMode::BUILDINGS);
         setCost(300, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::POWER_PLANT;
-    } else if (m_EnemyObjectManager->getUnitConstructCount(UnitType::ORE_REF) <
-                   1 &&
-               m_EnemyObjectManager->getTotalCurrency() > 2000) {
+    } else if (m_AIPlayer->getUnitManager()->getUnitConstructCount(
+                   UnitType::ORE_REF) < 1 &&
+               m_AIPlayer->getTotalCurrency() > 2000) {
         setCDTime(100.f, SpawnMode::BUILDINGS);
         setCost(2000, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::ORE_REF;
-    } else if (m_EnemyObjectManager->getUnitConstructCount(UnitType::BARRACKS) <
-                   1 &&
-               m_EnemyObjectManager->getTotalCurrency() > 300) {
+    } else if (m_AIPlayer->getUnitManager()->getUnitConstructCount(
+                   UnitType::BARRACKS) < 1 &&
+               m_AIPlayer->getTotalCurrency() > 300) {
         setCDTime(15.f, SpawnMode::BUILDINGS);
         setCost(300, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::BARRACKS;
     }
 }
 
-void AIScript::buildADV() {
+void AIGeneral::buildADV() {
     if (m_selectedBuildingType != UnitType::NONE) {
         return;
     }
-    if (m_EnemyObjectManager->getUnitConstructCount(UnitType::WAR_FACT) < 1 &&
-        m_EnemyObjectManager->getTotalCurrency() > 2000) {
+    if (m_AIPlayer->getUnitManager()->getUnitConstructCount(
+            UnitType::WAR_FACT) < 1 &&
+        m_AIPlayer->getTotalCurrency() > 2000) {
         setCDTime(100.f, SpawnMode::BUILDINGS);
         setCost(2000, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::WAR_FACT;
-    } else if (m_EnemyObjectManager->getUnitConstructCount(
+    } else if (m_AIPlayer->getUnitManager()->getUnitConstructCount(
                    UnitType::ADV_POWER_PLANT) < 1 &&
-               m_EnemyObjectManager->getTotalCurrency() > 500) {
+               m_AIPlayer->getTotalCurrency() > 500) {
         setCDTime(25.f, SpawnMode::BUILDINGS);
         setCost(500, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::ADV_POWER_PLANT;
     }
 }
 
-void AIScript::spawnUnit() {
+void AIGeneral::spawnUnit() {
     if (m_selectedAvatarType != UnitType::NONE ||
-        m_EnemyObjectManager->getAvatarCount() > 16) {
+        m_AIPlayer->getUnitManager()->getAvatarCount() > 16) {
         return;
     }
-    if (m_EnemyObjectManager->getAvatarCount() <= 25 &&
-        m_EnemyObjectManager->getTotalCurrency() > 100) {
+    if (m_AIPlayer->getUnitManager()->getAvatarCount() <= 25 &&
+        m_AIPlayer->getTotalCurrency() > 100) {
         setCDTime(5.f, SpawnMode::AVATAR);
         setCost(100, SpawnMode::AVATAR);
         m_selectedAvatarType = UnitType::INFANTRY;
     }
 }
 
-void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
+void AIGeneral::UpdateSpawnScript(SpawnMode spawnMode) {
     // issue , avatar spawn and structure spawn should be separated CD time , so
     // can spawn avatar and structure same time
 
@@ -184,10 +185,11 @@ void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
         if (m_selectedBuildingType == UnitType::NONE) {
             return;
         }
-        m_EnemyObjectManager->spawn(
+        m_AIPlayer->getUnitManager()->spawn(
             m_selectedBuildingType, HouseType::ENEMY,
             {m_baseCell.x + constructCountX, m_baseCell.y + constructCountY});
-        m_EnemyObjectManager->addUnitConstructCount(m_selectedBuildingType, 1);
+        m_AIPlayer->getUnitManager()->addUnitConstructCount(
+            m_selectedBuildingType, 1);
         setCost(0, SpawnMode::BUILDINGS);
         setCDTime(0.f, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::NONE;
@@ -204,8 +206,8 @@ void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
             return;
         }
         if (m_selectedAvatarType == UnitType::INFANTRY) {
-            m_EnemyObjectManager->spawnToWayPoint(m_selectedAvatarType,
-                                                  HouseType::ENEMY);
+            m_AIPlayer->getUnitManager()->spawnToWayPoint(m_selectedAvatarType,
+                                                          HouseType::ENEMY);
             setCost(0, SpawnMode::AVATAR);
             setCDTime(0.f, SpawnMode::AVATAR);
             m_selectedAvatarType = UnitType::NONE;

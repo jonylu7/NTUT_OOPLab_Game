@@ -25,18 +25,16 @@ void AvatarManager::Update() {
                 updateTileWhileAvatarMoving(m_AvatarArray[i]);
             }
 
-            if (m_AvatarArray[i]->getAvatarOrder()->getAvatarOrder() ==
-                AvatarOrderType::CHASE) {
-                updateTileWhileAvatarMoving(m_AvatarArray[i]);
-            }
-
-            if(m_AvatarArray[i]->getAvatarOrder()->getAvatarOrder()==AvatarOrderType::CHASE && m_AvatarArray[i]->getMoving()->ifMovePathEmpty()){
-                glm::vec2 targetCell = m_NemesisManager->getNemesisCell(m_AvatarArray[i]);
-                auto queue =
-                    m_Navigator->findPath(m_AvatarArray[i]->getMoving()->getCurrentCell(), targetCell);
+            /* wtf 誰寫的 出來面對
+            if (m_AvatarArray[i]->getMoving()->ifMovePathEmpty()) {
+                glm::vec2 targetCell =
+                    m_NemesisManager->getNemesisCell(m_AvatarArray[i]);
+                auto queue = m_Navigator->findPath(
+                    m_AvatarArray[i]->getMoving()->getCurrentCell(),
+                    targetCell);
                 m_AvatarArray[i]->getMoving()->setMovePath(queue);
-                m_AvatarArray[i]->getAvatarOrder()->setAvatarOrder(AvatarOrderType::CHASE);
             }
+             */
 
             // give order to avatar
             if (m_AvatarArray[i]->getSelected()) {
@@ -69,7 +67,8 @@ void AvatarManager::assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
     }
 }
 void AvatarManager::assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
-                                              glm::vec2 destcell,HouseType myHouse) {
+                                              glm::vec2 destcell,
+                                              HouseType myHouse) {
     m_NemesisManager->removeNemesis(avatar);
     if (m_Map->getTileByCellPosition(destcell)->ifEnemyAtTile(myHouse)) {
         if (m_Map->getTileByCellPosition(destcell)->ifStructureExists()) {
@@ -80,10 +79,9 @@ void AvatarManager::assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
                 avatar,
                 m_Map->getTileByCellPosition(destcell)->getAvatars()[0]);
         }
-        auto queue =
-            m_Navigator->findPath(avatar->getMoving()->getCurrentCell(), destcell);
+        auto queue = m_Navigator->findPath(
+            avatar->getMoving()->getCurrentCell(), destcell);
         avatar->getMoving()->setMovePath(queue);
-        avatar->getAvatarOrder()->setAvatarOrder(AvatarOrderType::CHASE);
     }
 }
 

@@ -18,8 +18,7 @@
 
 class IngamUI {
 public:
-    void Start(std::shared_ptr<MapClass> map,
-               std::shared_ptr<UnitManager> gameobjectmanager);
+    void Start(std::shared_ptr<MapClass> map, std::shared_ptr<Player> player);
     void Update();
 
     static unsigned int getUnitConstructCount(UnitType type) {
@@ -116,7 +115,7 @@ private:
 
     // ptr import from scene
     std::shared_ptr<MapClass> m_Map;
-    std::shared_ptr<UnitManager> m_gameObjectManager;
+    std::shared_ptr<Player> m_Player;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_INGAMEUI_HPP

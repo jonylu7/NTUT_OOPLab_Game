@@ -4,7 +4,7 @@
 
 #ifndef PRACTICALTOOLSFORSIMPLEDESIGN_SANDBOXSCENE_HPP
 #define PRACTICALTOOLSFORSIMPLEDESIGN_SANDBOXSCENE_HPP
-#include "AI/AIScripts.hpp"
+#include "AI/AIGeneral.hpp"
 #include "Cursor.hpp"
 #include "Scene.hpp"
 #include "Util/Prop.hpp"
@@ -27,7 +27,7 @@ private:
     SpriteSheet m_SpriteSheet;
     std::shared_ptr<CursorClass> m_Cursor = std::make_shared<CursorClass>();
     Grid testGrid;
-    std::shared_ptr<AIScript> m_EnemyScripts = std::make_shared<AIScript>();
+    std::shared_ptr<AIGeneral> m_EnemyScripts = std::make_shared<AIGeneral>();
     Stages m_stage = Stages::START;
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SANDBOXSCENE_HPP
