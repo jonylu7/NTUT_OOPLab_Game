@@ -37,10 +37,10 @@ public:
         m_Transform.translation = m_DrawLocation;
     }
     bool ifOverlaps(glm::vec2 cell) {
-        if ((cell.x > getLocationCell().x - m_Size.x &&
-             cell.x < getLocationCell().x) &&
-            (cell.y > getLocationCell().y - m_Size.y &&
-             cell.y < getLocationCell().y)) {
+        if ((cell.x >= getLocationCell().x - m_Size.x &&
+             cell.x <= getLocationCell().x) &&
+            (cell.y >= getLocationCell().y - m_Size.y &&
+             cell.y <= getLocationCell().y)) {
             return true;
         }
         return false;

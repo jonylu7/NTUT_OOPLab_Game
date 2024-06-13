@@ -37,10 +37,5 @@ public:
         int _y = location.y / CELL_SIZE.y;
         return {_x * CELL_SIZE.x, _y * CELL_SIZE.y};
     }
-    static float findDistance(glm::vec2 cell1, glm::vec2 cell2) {
-        float dx = cell2.x - cell1.x;
-        float dy = cell2.y - cell1.y;
-        return sqrt(dx * dx + dy * dy);
-    }
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_MAPUTILITY_HPP
