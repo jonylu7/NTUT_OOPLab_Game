@@ -14,7 +14,7 @@ std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
     Side whichSideToTouchObstacle = randomlyChooseSide();
 
     int count = 0;
-    while (currentcell != destinationcell && count<100) {
+    while (currentcell != destinationcell && count < 100) {
         printf("(findPath)\n");
         count++;
         std::vector<MoveDirection> staightDirque;
@@ -69,6 +69,8 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
         }
 
         // if next to be obstacle, turn findNewDirWhenCrash
+        if () {
+        }
 
         // walk along
         path.push_back(currentdir);
@@ -158,18 +160,19 @@ MoveDirection AvatarNavigator::findNewDirWhenCrash(Side side,
             break;
         }
         }
-//        newdir=recursionCrashHandler(newdir,crashCount);
+        //        newdir=recursionCrashHandler(newdir,crashCount);
         crashCount++;
     }
     return newdir;
 }
-MoveDirection AvatarNavigator::recursionCrashHandler(MoveDirection currentDir,int count){
+MoveDirection AvatarNavigator::recursionCrashHandler(MoveDirection currentDir,
+                                                     int count) {
     int enumSize = 8;
     int newDirValue = (static_cast<int>(currentDir) + count) % enumSize;
     if (newDirValue < 0) {
         newDirValue += enumSize;
     }
-    printf("(recursionCrashHandler)crashCount : %d\n",count);
+    printf("(recursionCrashHandler)crashCount : %d\n", count);
     return static_cast<MoveDirection>(newDirValue);
 }
 bool AvatarNavigator::isTouchedByObstacle(Side side, glm::vec2 currentcell,
