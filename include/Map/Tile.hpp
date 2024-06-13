@@ -52,9 +52,9 @@ public:
     void pushAvatars(std::shared_ptr<Avatar> avatar) {
         avatar->getMoving()->setStandingCorner(m_Avatars.size());
         m_Avatars.push_back(avatar);
-        if (m_Avatars.size() == 4) {
-            setWalkable(false);
-        }
+        // if (m_Avatars.size() == 4) {
+        //    setWalkable(false);
+        //}
     }
 
     std::vector<std::shared_ptr<Avatar>> getAvatars() { return m_Avatars; }
@@ -119,7 +119,7 @@ public:
     }
 
     bool ifEnemyAtTile(HouseType myHouse) {
-        if(myHouse==HouseType::MY){
+        if (myHouse == HouseType::MY) {
             if (m_Structure->getID().getHouse() == HouseType::ENEMY) {
                 return true;
             }
@@ -129,7 +129,7 @@ public:
                 }
             }
             return false;
-        }else if(myHouse==HouseType::ENEMY){
+        } else if (myHouse == HouseType::ENEMY) {
             if (m_Structure->getID().getHouse() == HouseType::MY) {
                 return true;
             }
@@ -141,7 +141,6 @@ public:
             return false;
         }
     }
-
 
 private:
     bool m_TerrainBuildable;
