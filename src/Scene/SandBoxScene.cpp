@@ -153,4 +153,11 @@ void SandBoxScene::stageUpdate() {
     if (Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
         m_AIPlayer->addTotalCurrency(500);
     }
+
+    if (m_AIPlayer->ifLose()) {
+        // ma
+    }
+    if (m_Player->ifLose()) {
+        // ma
+    }
 }

@@ -48,12 +48,21 @@ public:
         return power + m_FixedPower;
     }
 
+    bool ifLose() {
+        if (m_UnitManager->getStructureManager()
+                ->getStructureArray()
+                ->getBuiltStructureArray()
+                .size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     bool getCheatMode() { return m_cheat; }
     void setCheatMode(bool cheat) { m_cheat = cheat; }
 
 private:
     void updateCurrency() {
-
         for (auto i : m_UnitManager->getStructureManager()
                           ->getStructureArray()
                           ->getBuiltStructureArray()) {
