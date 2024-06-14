@@ -131,8 +131,8 @@ void AIScript::setCost(float cost, SpawnMode spawnMode) {
 
 void AIScript::buildBasic() {
     if (m_selectedBuildingType != UnitType::NONE) {
-        if (m_selectedBuildingType != UnitType::ORE_REF &&
-            m_EnemyObjectManager->getTotalCurrency() > 2000 + 100 - m_paid) {
+        if (m_selectedBuildingType == UnitType::ORE_REF &&
+            m_EnemyObjectManager->getTotalCurrency() > 2000 + 100 + static_cast<int>(m_paid)) {
             spawnUnit();
         }
         return;
