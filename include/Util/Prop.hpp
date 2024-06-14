@@ -13,8 +13,8 @@ public:
     void Start(glm::vec2 size) override {
         m_Size = size;
         this->SetAttachVisible(true);
-        SetZIndex(8);
-        m_HighLight.SetZIndex(10);
+        SetZIndex(0.7);
+        m_HighLight.SetZIndex(0.8);
     }
     void attachmentUpdate() override {
         m_HighLight.SetObjectLocation(
