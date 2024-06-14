@@ -56,6 +56,9 @@ public:
                     ->getUIStatus()
                     ->getUIStatusType() == UIStatusType::UI_CONTINUE) {
                 m_CurrentMode = SceneMode::SKIRMISH;
+                m_MenuUI.getUIStatus()->setUIStatusType(
+                    UIStatusType::UI_DEFAULT);
+                m_SandBoxScene->setStage(true);
             }
         }
         if (m_TutorialScene->getMissionAccomplishedUI()
@@ -82,6 +85,7 @@ public:
             break;
         case (SceneMode::SKIRMISH):
             // skirmish update()
+            m_SandBoxScene->Update();
             break;
         }
     }

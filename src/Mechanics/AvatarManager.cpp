@@ -71,19 +71,24 @@ void AvatarManager::assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
 void AvatarManager::assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
                                               glm::vec2 destcell,HouseType myHouse) {
     m_NemesisManager->removeNemesis(avatar);
-    if (m_Map->getTileByCellPosition(destcell)->ifEnemyAtTile(myHouse)) {
+    bool condition = m_Map->getTileByCellPosition(destcell)->ifEnemyAtTile(myHouse);
+    if (condition) {
         if (m_Map->getTileByCellPosition(destcell)->ifStructureExists()) {
             m_NemesisManager->addNemesis(
                 avatar, m_Map->getTileByCellPosition(destcell)->getStructure());
+            auto queue =
+                m_Navigator->findPath(avatar->getMoving()->getCurrentCell(), {destcell.x+1,destcell.y+1});
+            avatar->getMoving()->setMovePath(queue);
+            avatar->getAvatarOrder()->setAvatarOrder(AvatarOrderType::CHASE);
         } else {
             m_NemesisManager->addNemesis(
                 avatar,
                 m_Map->getTileByCellPosition(destcell)->getAvatars()[0]);
+            auto queue =
+                m_Navigator->findPath(avatar->getMoving()->getCurrentCell(), destcell);
+            avatar->getMoving()->setMovePath(queue);
+            avatar->getAvatarOrder()->setAvatarOrder(AvatarOrderType::CHASE);
         }
-        auto queue =
-            m_Navigator->findPath(avatar->getMoving()->getCurrentCell(), destcell);
-        avatar->getMoving()->setMovePath(queue);
-        avatar->getAvatarOrder()->setAvatarOrder(AvatarOrderType::CHASE);
     }
 }
 

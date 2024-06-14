@@ -3,7 +3,7 @@
 //
 #include "AI/AIScripts.hpp"
 
-#define MAX_TROOPS_SIZE 25
+#define MAX_TROOPS_SIZE 50
 void AIScript::Start(std::shared_ptr<UnitManager> GameObjectManager,
                      std::shared_ptr<UnitManager> EnemyObjectManager,
                      std::shared_ptr<MapClass> map, bool active) {
@@ -105,18 +105,24 @@ void AIScript::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
         }
     }
 
-    if (cheat) {
-        m_AvatarCDTime *= CHEAT;
-        m_buildingCDTime *= CHEAT;
+    if (m_EnemyObjectManager->getCheatMode()) {
+        m_AvatarCDTime *= 0.01;
+        m_buildingCDTime *= 0.01;
     }
 }
 
 void AIScript::setCost(float cost, SpawnMode spawnMode) {
     if (spawnMode == SpawnMode::AVATAR) {
         m_avatarCost = cost;
+        if(m_EnemyObjectManager->getCheatMode()){
+            m_avatarCost = 1;
+        }
     }
     if (spawnMode == SpawnMode::BUILDINGS) {
         m_buildingCost = cost;
+        if(m_EnemyObjectManager->getCheatMode()){
+            m_buildingCost = 1;
+        }
     }
 }
 
