@@ -140,12 +140,14 @@ void SandBoxScene::stageUpdate() {
             m_stage = Stages::STAGE3;
             m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager,
                                   m_Map);
+
             stageStart();
         }
         if (Util::Input::IsKeyPressed(Util::Keycode::NUM_4)) {
             m_stage = Stages::STAGE4;
             m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager,
                                   m_Map, true);
+            m_EnemyObjectManager->setCheatMode(true);
             stageStart();
         }
     }else if(m_stage == Stages::FORMAL_START){
@@ -156,15 +158,11 @@ void SandBoxScene::stageUpdate() {
     }
 
     if(m_stage == Stages::PLAYER_WON){
-        
+
     }else if(m_stage == Stages::AI_WON){
 
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY )) {
-        if(m_EnemyObjectManager->getCheatMode()){
-            m_EnemyObjectManager->setCheatMode(false);
-        }else{
-            m_EnemyObjectManager->setCheatMode(true);
-        }
+        m_EnemyObjectManager->setCheatMode(true);
     }
 }
