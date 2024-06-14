@@ -1,9 +1,9 @@
 //
 // Created by 盧威任 on 3/18/24.
 //
-#include <iomanip>
 #include "Map/YAMLReader.hpp"
 #include "Map/Tile.hpp"
+#include <iomanip>
 
 std::string YAMLReader::convertYAMLTileToImagePath(int id, int index) {
     std::string indexStr = std::to_string(index); // Example string
@@ -58,6 +58,9 @@ std::shared_ptr<TileClass> YAMLReader::convertYAMLTileToTileClass(int id,
     std::shared_ptr<TileClass> tile =
         std::move(TerrainConfig::GetConfig(terrainName));
     tile->setTileImage(convertYAMLTileToImagePath(id, index));
+    if (terrainName == "River") {
+        return tile;
+    }
     // tile->setTileImage(image);
 
     return tile;

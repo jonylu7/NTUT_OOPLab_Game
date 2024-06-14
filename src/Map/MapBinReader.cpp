@@ -67,7 +67,6 @@ MapBinReader::readBin(const std::string filepath, int width, int hieght) {
 
     // Close the file
     file.close();
-
     return fullmap;
 }
 

@@ -67,15 +67,17 @@ void MapClass::Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
     InitGrid();
 
     for (int i = 0; i < m_Map.size(); i++) {
+        // y
         for (int j = 0; j < m_Map[i].size(); j++) {
+            // x
 
-            auto findResult = m_Tiles.find(m_Map[i][j]->getTileImagePath());
+            auto findResult = m_Tiles.find(m_Map[j][i]->getTileImagePath());
             if (findResult != m_Tiles.end()) {
-                m_Tiles[m_Map[i][j]->getTileImagePath()].push_back(
-                    glm::vec2(i, m_MapHeight - j));
+                m_Tiles[m_Map[j][i]->getTileImagePath()].push_back(
+                    glm::vec2(j, m_MapHeight - i));
             } else {
-                m_Tiles[m_Map[i][j]->getTileImagePath()] =
-                    std::vector<glm::vec2>({glm::vec2(i, m_MapHeight - j)});
+                m_Tiles[m_Map[j][i]->getTileImagePath()] =
+                    std::vector<glm::vec2>({glm::vec2(j, m_MapHeight - i)});
             }
         }
     }

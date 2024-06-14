@@ -74,17 +74,19 @@ protected:
             for (int j = 0; j < static_cast<int>(i.size()); j++) {
                 if (i[j]->getHealth()->ifDead()) {
                     i.erase(i.begin() + j);
+                    j--;
                 }
             }
         }
         updateOffensiveTroopAttackTarget();
     }
     void updateDefensiveGroup() {
-        for (int i = static_cast<int>(m_defensiveGroup.size()); i > 0; --i) {
-            if (m_defensiveGroup[i - 1]->getHealth()->ifDead()) {
-                m_defensiveGroup.erase(m_defensiveGroup.begin() + i - 1);
+        for (int i = 0; i < static_cast<int>(m_defensiveGroup.size()); i++) {
+            if (m_defensiveGroup[i]->getHealth()->ifDead()) {
+                m_defensiveGroup.erase(m_defensiveGroup.begin() + i);
+                i--;
             } else {
-                autoAttack(m_defensiveGroup[i - 1], AUTO_ATTACK_METHOD);
+                autoAttack(m_defensiveGroup[i], AUTO_ATTACK_METHOD);
             };
         }
         std::vector<std::shared_ptr<Avatar>> temp =
