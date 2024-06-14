@@ -180,7 +180,7 @@ void SandBoxScene::stageUpdate() {
     if (m_stage == Stages::PLAYER_WON || m_stage == Stages::AI_WON) {
         m_Text->Draw();
     }
-    if (Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
+    if (Util::Input::IsKeyPressed(Util::Keycode::AI_CHEAT_KEY)) {
         m_EnemyObjectManager->setCheatMode(true);
     }
 }

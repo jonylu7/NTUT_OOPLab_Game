@@ -12,6 +12,7 @@
 #include <glm/glm.hpp>
 
 #define DEBUG_KEY P
+#define AI_CHEAT_KEY Q
 
 class SandBoxScene : public Scene {
     enum class Stages {

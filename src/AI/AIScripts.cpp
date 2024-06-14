@@ -38,9 +38,9 @@ void AIScript::Update() {
         m_mainDeltaTime = 0;
         if (m_buildingCDTime < 1.f) {
             m_EnemyObjectManager->addTotalCurrency(m_buildingCost / (-1.f));
-            m_paid += m_buildingCost /m_buildingCDTime * (-1.f);
+            m_paid += m_buildingCost / m_buildingCDTime * (-1.f);
         } else {
-            m_paid += m_buildingCost /m_buildingCDTime * (-1.f);
+            m_paid += m_buildingCost / m_buildingCDTime * (-1.f);
             m_EnemyObjectManager->addTotalCurrency(m_buildingCost /
                                                    m_buildingCDTime * (-1.f));
         }
@@ -116,14 +116,14 @@ void AIScript::setCDTime(float time, SpawnMode spawnMode, bool cheat) {
 void AIScript::setCost(float cost, SpawnMode spawnMode) {
     if (spawnMode == SpawnMode::AVATAR) {
         m_avatarCost = cost;
-        if(m_EnemyObjectManager->getCheatMode()){
+        if (m_EnemyObjectManager->getCheatMode()) {
             m_avatarCost = 1;
         }
     }
     if (spawnMode == SpawnMode::BUILDINGS) {
         m_buildingCost = cost;
         m_paid = 0;
-        if(m_EnemyObjectManager->getCheatMode()){
+        if (m_EnemyObjectManager->getCheatMode()) {
             m_buildingCost = 1;
         }
     }
@@ -131,7 +131,8 @@ void AIScript::setCost(float cost, SpawnMode spawnMode) {
 
 void AIScript::buildBasic() {
     if (m_selectedBuildingType != UnitType::NONE) {
-        if(m_selectedBuildingType != UnitType::ORE_REF && m_EnemyObjectManager->getTotalCurrency() > 2000+100-m_paid){
+        if (m_selectedBuildingType != UnitType::ORE_REF &&
+            m_EnemyObjectManager->getTotalCurrency() > 2000 + 100 - m_paid) {
             spawnUnit();
         }
         return;
@@ -149,8 +150,8 @@ void AIScript::buildBasic() {
         setCost(300, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::BARRACKS;
     } else if (m_EnemyObjectManager->getUnitConstructCount(UnitType::ORE_REF) <
-            1 &&
-        m_EnemyObjectManager->getTotalCurrency() > 2000) {
+                   1 &&
+               m_EnemyObjectManager->getTotalCurrency() > 2000) {
         setCDTime(100.f, SpawnMode::BUILDINGS);
         setCost(2000, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::ORE_REF;
@@ -177,7 +178,10 @@ void AIScript::buildADV() {
 
 void AIScript::spawnUnit() {
     if (m_selectedAvatarType != UnitType::NONE ||
-        m_EnemyObjectManager->getAvatarCount() > MAX_TROOPS_SIZE) {
+        m_EnemyObjectManager->getAvatarCount() > MAX_TROOPS_SIZE ||
+        m_EnemyObjectManager->getStructureManager()
+                ->getStructureArray()
+                ->ifBarrackBuilt() == false) {
         return;
     }
     if (m_EnemyObjectManager->getAvatarCount() <= MAX_TROOPS_SIZE &&
@@ -216,7 +220,10 @@ void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
             return;
         }
         if (m_selectedAvatarType == UnitType::INFANTRY) {
-            m_EnemyObjectManager->setBarrackWayPointByCell({m_baseCell.x-1+5*(m_EnemyObjectManager->getAvatarCount()%3),m_baseCell.y-1});
+            m_EnemyObjectManager->setBarrackWayPointByCell(
+                {m_baseCell.x - 1 +
+                     5 * (m_EnemyObjectManager->getAvatarCount() % 3),
+                 m_baseCell.y - 1});
             m_EnemyObjectManager->spawnToWayPoint(m_selectedAvatarType,
                                                   HouseType::ENEMY);
             setCost(0, SpawnMode::AVATAR);
