@@ -32,6 +32,12 @@ private:
     std::shared_ptr<CursorClass> m_Cursor = std::make_shared<CursorClass>();
     Grid testGrid;
     std::shared_ptr<AIScript> m_EnemyScripts = std::make_shared<AIScript>();
+    std::shared_ptr<UnitManager> m_GameObjectManager =
+        std::make_shared<UnitManager>();
+    std::shared_ptr<UnitManager> m_EnemyObjectManager =
+        std::make_shared<UnitManager>();
     Stages m_stage = Stages::START;
+    std::shared_ptr<Util::GameObject> m_Text =
+        std::make_shared<Util::GameObject>();
 };
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_SANDBOXSCENE_HPP

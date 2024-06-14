@@ -114,7 +114,7 @@ protected:
             break;
         case 2:
             glm::vec2 targetCell = m_Map->findEnemyInRange(AUTO_FIND_RANGE,unit->getCurrentLocationInCell(),HouseType::ENEMY);
-            if(targetCell.x == -1.f && targetCell.y == -1.f){
+            if(targetCell.x < 0 ){
                 return;
             }
             //attack

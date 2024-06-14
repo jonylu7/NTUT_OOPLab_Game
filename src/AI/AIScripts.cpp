@@ -136,18 +136,18 @@ void AIScript::buildBasic() {
         setCDTime(15.f, SpawnMode::BUILDINGS);
         setCost(300, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::POWER_PLANT;
-    } else if (m_EnemyObjectManager->getUnitConstructCount(UnitType::ORE_REF) <
-                   1 &&
-               m_EnemyObjectManager->getTotalCurrency() > 2000) {
-        setCDTime(100.f, SpawnMode::BUILDINGS);
-        setCost(2000, SpawnMode::BUILDINGS);
-        m_selectedBuildingType = UnitType::ORE_REF;
     } else if (m_EnemyObjectManager->getUnitConstructCount(UnitType::BARRACKS) <
                    1 &&
                m_EnemyObjectManager->getTotalCurrency() > 300) {
         setCDTime(15.f, SpawnMode::BUILDINGS);
         setCost(300, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::BARRACKS;
+    } else if (m_EnemyObjectManager->getUnitConstructCount(UnitType::ORE_REF) <
+            1 &&
+        m_EnemyObjectManager->getTotalCurrency() > 2000) {
+        setCDTime(100.f, SpawnMode::BUILDINGS);
+        setCost(2000, SpawnMode::BUILDINGS);
+        m_selectedBuildingType = UnitType::ORE_REF;
     }
 }
 
@@ -210,6 +210,7 @@ void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
             return;
         }
         if (m_selectedAvatarType == UnitType::INFANTRY) {
+            m_EnemyObjectManager->setBarrackWayPointByCell({m_baseCell.x-1+5*(m_EnemyObjectManager->getAvatarCount()%3),m_baseCell.y-1});
             m_EnemyObjectManager->spawnToWayPoint(m_selectedAvatarType,
                                                   HouseType::ENEMY);
             setCost(0, SpawnMode::AVATAR);

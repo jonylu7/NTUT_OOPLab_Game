@@ -45,6 +45,10 @@ public:
         return m_BuiltStructure;
     }
 
+    void setBarrackWayPointByCell(glm::vec2 cell){
+        m_BuiltStructure->setBarrackWayPointByCell(cell);
+    }
+
 protected:
     std::shared_ptr<MapClass> m_Map = std::make_shared<MapClass>();
     std::shared_ptr<BuiltStructure> m_BuiltStructure =
