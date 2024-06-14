@@ -55,7 +55,7 @@ void SandBoxScene::Update() {
             m_UI->getUnitTypeReadyToBeSpawned(), HouseType::MY);
     }
     if(m_stage==Stages::FORMAL_UPDATE){
-        if(m_GameObjectManager->getAvatarManager()->getAvatarArray().empty()&&m_GameObjectManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
+        if(m_GameObjectManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
             m_stage=Stages::AI_WON;
             m_Text->SetDrawable(
                 std::make_unique<Util::Image>("../assets/sprites/Task/AIWon.png"));
@@ -66,7 +66,7 @@ void SandBoxScene::Update() {
             trans.scale = {0.7, 0.7};
             m_Text->SetTransform(trans);
         }
-        if(m_EnemyObjectManager->getAvatarManager()->getAvatarArray().empty()&&m_EnemyObjectManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
+        if(m_EnemyObjectManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
             m_stage=Stages::PLAYER_WON;
             m_Text->SetDrawable(
                 std::make_unique<Util::Image>("../assets/sprites/Task/PlayerWon.png"));
@@ -132,8 +132,8 @@ void SandBoxScene::stageStart() {
         break;
     }
     case Stages::FORMAL_START:{
-        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {7, 9});
-        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {36, 36});
+        m_GameObjectManager->spawn(UnitType::POWER_PLANT, HouseType::MY, {7, 9});
+        m_EnemyObjectManager->spawn(UnitType::POWER_PLANT, HouseType::ENEMY, {20, 30});
         break;
     }
     }
