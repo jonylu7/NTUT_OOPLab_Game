@@ -58,6 +58,11 @@ public:
                 m_CurrentMode = SceneMode::SKIRMISH;
             }
         }
+        if (m_TutorialScene->getMissionAccomplishedUI()
+                ->getUIStatus()
+                ->getUIStatusType() == UIStatusType::UI_CONTINUE) {
+            m_CurrentMode = SceneMode::SANDBOX;
+        }
 
         switch (m_CurrentMode) {
         case (SceneMode::MAP):
