@@ -23,7 +23,7 @@ void SandBoxScene::Start() {
 void SandBoxScene::Update() {
     m_GameObjectManager->Update();
     m_EnemyObjectManager->Update();
-    if (m_stage != Stages::START && m_stage != Stages::FORMAL) {
+    if (m_stage != Stages::START && m_stage != Stages::FORMAL_START) {
         m_EnemyScripts->Update();
     }
     stageUpdate();
@@ -53,6 +53,14 @@ void SandBoxScene::Update() {
     if (m_UI->ifUnitReadyToSpawn()) {
         m_GameObjectManager->spawnToWayPoint(
             m_UI->getUnitTypeReadyToBeSpawned(), HouseType::MY);
+    }
+    if(m_stage==Stages::FORMAL_UPDATE){
+        if(m_GameObjectManager->getAvatarManager()->getAvatarArray().empty()&&m_GameObjectManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
+            m_stage=Stages::AI_WON;
+        }
+        if(m_EnemyObjectManager->getAvatarManager()->getAvatarArray().empty()&&m_EnemyObjectManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
+            m_stage=Stages::PLAYER_WON;
+        }
     }
 }
 void SandBoxScene::stageStart() {
@@ -108,7 +116,8 @@ void SandBoxScene::stageStart() {
         break;
     }
     case Stages::FORMAL_UPDATE:{
-        m_stage = Stages::END;
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {7, 9});
+        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {18, 18});
         break;
     }
     }
@@ -144,6 +153,12 @@ void SandBoxScene::stageUpdate() {
         m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager,
                               m_Map, true);
         stageStart();
+    }
+
+    if(m_stage == Stages::PLAYER_WON){
+        
+    }else if(m_stage == Stages::AI_WON){
+
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY )) {
         if(m_EnemyObjectManager->getCheatMode()){

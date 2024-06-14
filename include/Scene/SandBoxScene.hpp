@@ -13,7 +13,7 @@
 #define DEBUG_KEY P
 
 class SandBoxScene : public Scene {
-    enum class Stages { STAGE1, STAGE2, STAGE3, STAGE4, START, END ,FORMAL_START ,FORMAL_UPDATE};
+    enum class Stages { STAGE1, STAGE2, STAGE3, STAGE4, START, END ,FORMAL_START ,FORMAL_UPDATE ,PLAYER_WON ,AI_WON};
 
 public:
     SandBoxScene(){};
