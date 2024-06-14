@@ -61,10 +61,10 @@ public:
         if (m_CurrentMode==SceneMode::TUTORIAL&&m_TutorialScene->getMissionAccomplishedUI()
                 ->getUIStatus()
                 ->getUIStatusType() == UIStatusType::UI_CONTINUE) {
-            m_CurrentMode = SceneMode::SKIRMISH;
             m_MenuUI.getUIStatus()->setUIStatusType(
                 UIStatusType::UI_DEFAULT);
             m_SandBoxScene->setStage(true);
+            m_CurrentMode = SceneMode::SANDBOX;
         }
 
         switch (m_CurrentMode) {
