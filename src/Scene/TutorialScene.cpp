@@ -41,6 +41,17 @@ void TutorialScene::Update() {
 
     auto tile = m_Map->getTileByCellPosition(MapUtil::GlobalCoordToCellCoord(
         MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition())));
+    /*
+        std::cout
+            << MapUtil::GlobalCoordToCellCoord(
+                   MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()))
+                   .x
+            << " "
+            << MapUtil::GlobalCoordToCellCoord(
+                   MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()))
+                   .y
+            << " " << tile->getTileImagePath() << std::endl;
+            */
 
     if (m_UI->getIfAnyBuildingReadyToBuild()) {
         m_GameObjectManager->getStructureManager()->AddStructSelectingBuiltSite(
