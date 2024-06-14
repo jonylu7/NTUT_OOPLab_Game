@@ -18,7 +18,7 @@ private:
     std::shared_ptr<MapClass> m_Map;
     std::shared_ptr<AIGroupCommander> m_AIGroupCommander;
 
-    glm::vec2 m_baseCell = {20, 20};
+    glm::vec2 m_baseCell = {20, 30};
     int constructCountX = 0;
     int constructCountY = 0;
 
