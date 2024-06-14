@@ -132,7 +132,8 @@ void AIScript::setCost(float cost, SpawnMode spawnMode) {
 void AIScript::buildBasic() {
     if (m_selectedBuildingType != UnitType::NONE) {
         if (m_selectedBuildingType == UnitType::ORE_REF &&
-            m_EnemyObjectManager->getTotalCurrency() > 2000 + 100 + static_cast<int>(m_paid)) {
+            m_EnemyObjectManager->getTotalCurrency() >
+                2000 + 100 + static_cast<int>(m_paid)) {
             spawnUnit();
         }
         return;
@@ -216,7 +217,10 @@ void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
         }
     }
     if (spawnMode == SpawnMode::AVATAR) {
-        if (m_selectedAvatarType == UnitType::NONE) {
+        if (m_selectedAvatarType == UnitType::NONE ||
+            m_EnemyObjectManager->getStructureManager()
+                    ->getStructureArray()
+                    ->ifBarrackBuilt() == false) {
             return;
         }
         if (m_selectedAvatarType == UnitType::INFANTRY) {
@@ -224,6 +228,7 @@ void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
                 {m_baseCell.x - 1 +
                      5 * (m_EnemyObjectManager->getAvatarCount() % 3),
                  m_baseCell.y - 1});
+
             m_EnemyObjectManager->spawnToWayPoint(m_selectedAvatarType,
                                                   HouseType::ENEMY);
             setCost(0, SpawnMode::AVATAR);
