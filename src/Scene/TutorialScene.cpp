@@ -4,7 +4,7 @@
 #include "Scene/TutorialScene.hpp"
 
 void TutorialScene::Start() {
-
+    m_PlayerObjectivesText->SetZIndex(3);
     LOG_TRACE("Start");
     m_Map->Init(MapBinReader::readBin("../assets/map/ore-lord/map.bin", 64, 64),
                 64, 64);
@@ -122,6 +122,7 @@ void TutorialScene::initStage2() {
     m_cellProp->setScale({6, 4});
     m_cellProp->setObjectLocation({600, 1000}, 0);
     m_cellProp->Start({12, 8});
+
     m_stage = TutorialStages::STAGE2;
 };
 
@@ -152,6 +153,7 @@ void TutorialScene::stage2Update() {
 }
 
 void TutorialScene::initStage3() {
+
     m_PlayerObjectivesText->SetDrawable(
         std::make_unique<Util::Image>("../assets/sprites/Task/Task3.png"));
 

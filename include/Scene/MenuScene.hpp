@@ -33,8 +33,6 @@ public:
                 m_BGM.Play();
             }
             if (Util::Input::IsKeyPressed(Util::Keycode::K)) {
-                m_BGM.LoadMedia("../assets/BGM/Jimmy_Scott-Sycamore_Trees.mp3");
-                m_BGM.Play();
             }
             if (Util::Input::IsKeyPressed(Util::Keycode::M)) {
                 m_CurrentMode = SceneMode::MAP;
@@ -47,25 +45,22 @@ public:
                     UIStatusType::UI_START) {
                 m_MenuUI.getUIStatus()->setUIStatusType(
                     UIStatusType::UI_DEFAULT);
+                m_BGM.Play();
                 m_CurrentMode = SceneMode::TUTORIAL;
             }
             if (Util::Input::IsKeyPressed(Util::Keycode::S)) {
                 m_CurrentMode = SceneMode::SANDBOX;
             }
-            if (m_TutorialScene->getMissionAccomplishedUI()
+        }
+        if (m_CurrentMode == SceneMode::TUTORIAL &&
+            m_TutorialScene->getMissionAccomplishedUI()
                     ->getUIStatus()
                     ->getUIStatusType() == UIStatusType::UI_CONTINUE) {
-                m_CurrentMode = SceneMode::SKIRMISH;
-            }
-        }
-        if (m_CurrentMode==SceneMode::TUTORIAL&&m_TutorialScene->getMissionAccomplishedUI()
-                ->getUIStatus()
-                ->getUIStatusType() == UIStatusType::UI_CONTINUE) {
-            m_CurrentMode = SceneMode::SKIRMISH;
-            m_MenuUI.getUIStatus()->setUIStatusType(
-                UIStatusType::UI_DEFAULT);
+            m_MenuUI.getUIStatus()->setUIStatusType(UIStatusType::UI_DEFAULT);
             m_SandBoxScene->setStage(true);
+            m_CurrentMode = SceneMode::SANDBOX;
         }
+
         switch (m_CurrentMode) {
         case (SceneMode::MAP):
             m_MapScene->Update();
@@ -82,10 +77,6 @@ public:
         case (SceneMode::MENU):
             m_MenuUI.Update();
             break;
-        case (SceneMode::SKIRMISH):
-            // skirmish update()
-            m_SandBoxScene->Update();
-            break;
         }
     }
 
@@ -96,7 +87,9 @@ public:
                 UIStatusType::UI_EXIT ||
             m_TutorialScene->getMissionAccomplishedUI()
                     ->getUIStatus()
-                    ->getUIStatusType() == UIStatusType::UI_EXIT) {
+                    ->getUIStatusType() == UIStatusType::UI_EXIT ||
+            m_SandBoxScene->getWonUI()->getUIStatus()->getUIStatusType() ==
+                UIStatusType::UI_EXIT) {
             return true;
         }
         return false;

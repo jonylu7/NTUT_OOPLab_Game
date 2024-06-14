@@ -196,12 +196,6 @@ void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
         if (m_selectedBuildingType == UnitType::NONE) {
             return;
         }
-        if (constructCountX > 10) {
-            constructCountY += 5;
-            constructCountX = 0;
-        } else {
-            constructCountX += 5;
-        }
         m_EnemyObjectManager->spawn(
             m_selectedBuildingType, HouseType::ENEMY,
             {m_baseCell.x + constructCountX, m_baseCell.y + constructCountY});
@@ -210,6 +204,12 @@ void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
         setCDTime(0.f, SpawnMode::BUILDINGS);
         m_selectedBuildingType = UnitType::NONE;
 
+        if (constructCountX > 10) {
+            constructCountY += 5;
+            constructCountX = 0;
+        } else {
+            constructCountX += 5;
+        }
     }
     if (spawnMode == SpawnMode::AVATAR) {
         if (m_selectedAvatarType == UnitType::NONE) {
