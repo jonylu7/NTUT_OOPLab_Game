@@ -60,13 +60,14 @@ void SandBoxScene::Update() {
     }
     if (m_stage == Stages::FORMAL_UPDATE) {
         if (m_GameObjectManager->getAvatarManager()->getAvatarArray().empty() &&
-            m_GameObjectManager->getStructureManager()
-                ->getStructureArray()
-                ->getBuiltStructureArray()
-                .empty()) {
+                m_GameObjectManager->getStructureManager()
+                    ->getStructureArray()
+                    ->getBuiltStructureArray()
+                    .empty() ||
+            Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
             m_stage = Stages::AI_WON;
             m_WUI->setPausedImage(
-                std::make_shared<Util::Image>("assets/images/AIWon.png"));
+                std::make_shared<Util::Image>("../assets/images/AIWon.png"));
         }
         if (m_EnemyObjectManager->getAvatarManager()
                 ->getAvatarArray()
@@ -76,8 +77,8 @@ void SandBoxScene::Update() {
                 ->getBuiltStructureArray()
                 .empty()) {
             m_stage = Stages::PLAYER_WON;
-            m_WUI->setPausedImage(
-                std::make_shared<Util::Image>("assets/images/PlayerWon.png"));
+            m_WUI->setPausedImage(std::make_shared<Util::Image>(
+                "../assets/images/PlayerWon.png"));
         }
     }
 }

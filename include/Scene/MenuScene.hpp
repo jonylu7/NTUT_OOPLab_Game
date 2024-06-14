@@ -61,14 +61,6 @@ public:
             m_CurrentMode = SceneMode::SANDBOX;
         }
 
-        if (m_CurrentMode == SceneMode::SANDBOX &&
-            m_SandBoxScene->getWonUI()->getUIStatus()->getUIStatusType() ==
-                UIStatusType::UI_RESTART) {
-            m_SandBoxScene->Start();
-            m_SandBoxScene->setStage(true);
-            m_CurrentMode = SceneMode::SANDBOX;
-        }
-
         switch (m_CurrentMode) {
         case (SceneMode::MAP):
             m_MapScene->Update();
@@ -84,10 +76,6 @@ public:
             break;
         case (SceneMode::MENU):
             m_MenuUI.Update();
-            break;
-        case (SceneMode::SKIRMISH):
-            // skirmish update()
-            m_SandBoxScene->Update();
             break;
         }
     }
