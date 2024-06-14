@@ -133,7 +133,7 @@ void SandBoxScene::stageStart() {
     }
     case Stages::FORMAL_START:{
         m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {7, 9});
-        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {18, 18});
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {36, 36});
         break;
     }
     }

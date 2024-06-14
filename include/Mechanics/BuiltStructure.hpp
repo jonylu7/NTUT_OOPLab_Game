@@ -100,6 +100,15 @@ public:
             }
         }
     }
+    void setBarrackWayPointByCell(glm::vec2 cell){
+        if(ifBarrackBuilt()){
+            for(auto i:m_BuiltStructure){
+                if(i->getID().getUnitType() == UnitType::BARRACKS){
+                    std::dynamic_pointer_cast<Barracks>(i) ->setWaypointLocationByCellCoord(cell);
+                }
+            }
+        }
+    }
 
     bool ifBarrackBuilt() {
         for (auto i : m_BuiltStructure) {

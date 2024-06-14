@@ -74,6 +74,9 @@ public:
         return m_cheat;
     }
 
+    void setBarrackWayPointByCell(glm::vec2 cell){
+        m_StructureManager->setBarrackWayPointByCell(cell);
+    }
 
 private:
     std::unordered_map<UnitType,int> unitCount;
