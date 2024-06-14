@@ -56,12 +56,16 @@ public:
                     ->getUIStatus()
                     ->getUIStatusType() == UIStatusType::UI_CONTINUE) {
                 m_CurrentMode = SceneMode::SKIRMISH;
-                m_MenuUI.getUIStatus()->setUIStatusType(
-                    UIStatusType::UI_DEFAULT);
-                m_SandBoxScene->setStage(true);
             }
         }
-
+        if (m_CurrentMode==SceneMode::TUTORIAL&&m_TutorialScene->getMissionAccomplishedUI()
+                ->getUIStatus()
+                ->getUIStatusType() == UIStatusType::UI_CONTINUE) {
+            m_CurrentMode = SceneMode::SKIRMISH;
+            m_MenuUI.getUIStatus()->setUIStatusType(
+                UIStatusType::UI_DEFAULT);
+            m_SandBoxScene->setStage(true);
+        }
         switch (m_CurrentMode) {
         case (SceneMode::MAP):
             m_MapScene->Update();
