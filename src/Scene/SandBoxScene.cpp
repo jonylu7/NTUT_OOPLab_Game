@@ -58,6 +58,7 @@ void SandBoxScene::Update() {
         m_GameObjectManager->spawnToWayPoint(
             m_UI->getUnitTypeReadyToBeSpawned(), HouseType::MY);
     }
+
     if (m_stage == Stages::FORMAL_UPDATE) {
         if (m_GameObjectManager->getAvatarManager()->getAvatarArray().empty() &&
                 m_GameObjectManager->getStructureManager()
@@ -134,6 +135,7 @@ void SandBoxScene::stageStart() {
         m_stage = Stages::END;
         break;
     }
+
     case Stages::FORMAL_START: {
         m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {7, 9});
         m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY,
