@@ -23,7 +23,7 @@ void SandBoxScene::Start() {
 void SandBoxScene::Update() {
     m_GameObjectManager->Update();
     m_EnemyObjectManager->Update();
-    if (m_stage != Stages::START) {
+    if (m_stage != Stages::START && m_stage != Stages::FORMAL) {
         m_EnemyScripts->Update();
     }
     stageUpdate();
@@ -107,6 +107,10 @@ void SandBoxScene::stageStart() {
         m_stage = Stages::END;
         break;
     }
+    case Stages::FORMAL_UPDATE:{
+        m_stage = Stages::END;
+        break;
+    }
     }
 }
 void SandBoxScene::stageUpdate() {
@@ -135,8 +139,17 @@ void SandBoxScene::stageUpdate() {
                                   m_Map, true);
             stageStart();
         }
+    }else if(m_stage == Stages::FORMAL_START){
+        m_stage = Stages::FORMAL_UPDATE;
+        m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager,
+                              m_Map, true);
+        stageStart();
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY )) {
-        m_EnemyObjectManager->addTotalCurrency(500);
+        if(m_EnemyObjectManager->getCheatMode()){
+            m_EnemyObjectManager->setCheatMode(false);
+        }else{
+            m_EnemyObjectManager->setCheatMode(true);
+        }
     }
 }

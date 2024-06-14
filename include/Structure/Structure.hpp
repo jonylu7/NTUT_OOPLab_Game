@@ -20,7 +20,7 @@
 #include "Util/TransformUtils.hpp"
 #include "glm/glm.hpp"
 #define DEFAULT_ZINDEX 15
-#define CHEAT 0.01
+#define CHEAT 1
 #define INTERVAL 50
 
 class Structure : public Util::GameObject, public Selectable, public Huntable {
@@ -111,10 +111,11 @@ public:
         m_Order->setStructureOrder(StructureOrderType::TAKEN_DAMAGE);
     };
     glm::vec2 getCurrentLocationInCell() override {
-        return getAbsoluteOccupiedArea()[0];
+        return getAbsoluteOccupiedArea().front();
     };
     glm::vec2 getTopRightCell(){
-        return getAbsoluteOccupiedArea()[-1];
+        glm::vec2 returnValue = getAbsoluteOccupiedArea().back();
+        return returnValue;
     };
 protected:
     float m_ElectricPower;

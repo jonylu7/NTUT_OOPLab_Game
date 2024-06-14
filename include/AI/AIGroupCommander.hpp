@@ -114,7 +114,7 @@ protected:
             break;
         case 2:
             glm::vec2 targetCell = m_Map->findEnemyInRange(AUTO_FIND_RANGE,unit->getCurrentLocationInCell(),HouseType::ENEMY);
-            if(targetCell.x == -1 && targetCell.y == -1){
+            if(targetCell.x == -1.f && targetCell.y == -1.f){
                 return;
             }
             //attack
@@ -130,7 +130,7 @@ protected:
                 if (!m_AIAvatarManager->ifAvatarHasNemesis(currentGroup.front())){
                     // find new target
                     glm::vec2 targetCell = findTargetForOffensiveUnit(currentGroup.front());
-                    if(targetCell.x==-1.f){
+                    if(targetCell.x<0){
                         printf("(updateOffensiveTroopAttackTarget) No Target\n");
                         break;
                     }
@@ -154,12 +154,19 @@ protected:
     }
 
     glm::vec2 findTargetForOffensiveUnit(std::shared_ptr<Avatar> unit){
-        glm::vec2 targetCell = {-1.f,-1.f};
+        glm::vec2 targetCell = {-10.f,-10.f};
         //issue: empty group should delete before this
-        if(false&&static_cast<int>(m_offensiveGroup.size())>=static_cast<int>(m_PlayerUnitManager->getAvatarManager()->getAvatarArray().size())){
-            targetCell = m_Map->findEnemyInRange(200,unit->getCurrentLocationInCell(),HouseType::ENEMY);
-            //attack
-            m_AIAvatarManager->assignAttackOrderToAvatar(unit,targetCell,HouseType::ENEMY);
+        if(static_cast<int>(m_offensiveGroup.size())>=static_cast<int>(m_PlayerUnitManager->getAvatarManager()->getAvatarArray().size())){
+            if(!m_PlayerUnitManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
+                targetCell=m_PlayerUnitManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().front()->getTopRightCell();
+            }else{
+                return targetCell;
+            }
+            for(auto i:m_PlayerUnitManager->getStructureManager()->getStructureArray()->getBuiltStructureArray()){
+                if(unit->getDistance(i->getTopRightCell())<unit->getDistance(targetCell)){
+                    targetCell = i->getTopRightCell();
+                }
+            }
         }else{
             if(!m_PlayerUnitManager->getAvatarManager()->getAvatarArray().empty()){
                 targetCell=m_PlayerUnitManager->getAvatarManager()->getAvatarArray().front()->getCurrentLocationInCell();
