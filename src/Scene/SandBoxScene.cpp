@@ -70,12 +70,13 @@ void SandBoxScene::Update() {
                 std::make_shared<Util::Image>("../assets/images/AIWon.png"));
         }
         if (m_EnemyObjectManager->getAvatarManager()
-                ->getAvatarArray()
-                .empty() &&
-            m_EnemyObjectManager->getStructureManager()
-                ->getStructureArray()
-                ->getBuiltStructureArray()
-                .empty()) {
+                    ->getAvatarArray()
+                    .empty() &&
+                m_EnemyObjectManager->getStructureManager()
+                    ->getStructureArray()
+                    ->getBuiltStructureArray()
+                    .empty() ||
+            Util::Input::IsKeyPressed(Util::Keycode::K)) {
             m_stage = Stages::PLAYER_WON;
             m_WUI->setPausedImage(std::make_shared<Util::Image>(
                 "../assets/images/PlayerWon.png"));
