@@ -15,14 +15,15 @@ public:
 
           };
     PowerPlants(HouseType house)
-        : Structure(100.F, 15.F * CHEAT, 300.F,400.F,
-                    GameObjectID(UnitType::POWER_PLANT, house),std::make_shared<Health>(100, 0.7)){};
+        : Structure(100.F, 15.F * CHEAT, 300.F, 400.F,
+                    GameObjectID(UnitType::POWER_PLANT, house),
+                    std::make_shared<Health>(100, 0.7)){};
     void SetSpriteSheet() override {
         m_StructureSpriteSheet->Start(
             "../assets/sprites/PowerPlants_SpriteSheet.png", 48, 48, 13, 0);
         m_RelativeOccupiedArea = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
-        m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
-                                                         false, INTERVAL, false);
+        m_SpriteSheetAnimation->initSpriteSheetAnimation(
+            m_StructureSpriteSheet, false, INTERVAL, false);
     }
     void SetObjectLocation(glm::vec2 location) override {
         location = MapUtil::PositionStickToGrid(location);
