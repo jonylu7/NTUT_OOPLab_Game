@@ -64,6 +64,7 @@ public:
         if (m_TutorialScene->getMissionAccomplishedUI()
                 ->getUIStatus()
                 ->getUIStatusType() == UIStatusType::UI_CONTINUE) {
+            m_SandBoxScene->setStage(true);
             m_CurrentMode = SceneMode::SANDBOX;
         }
 
