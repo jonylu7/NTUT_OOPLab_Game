@@ -57,9 +57,25 @@ void SandBoxScene::Update() {
     if(m_stage==Stages::FORMAL_UPDATE){
         if(m_GameObjectManager->getAvatarManager()->getAvatarArray().empty()&&m_GameObjectManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
             m_stage=Stages::AI_WON;
+            m_Text->SetDrawable(
+                std::make_unique<Util::Image>("../assets/sprites/Task/AIWon.png"));
+            m_Text->SetVisible(true);
+            m_Text->setMovingRelativeToCamera(false);
+            Util::Transform trans;
+            trans.translation = {40, 5};
+            trans.scale = {0.7, 0.7};
+            m_Text->SetTransform(trans);
         }
         if(m_EnemyObjectManager->getAvatarManager()->getAvatarArray().empty()&&m_EnemyObjectManager->getStructureManager()->getStructureArray()->getBuiltStructureArray().empty()){
             m_stage=Stages::PLAYER_WON;
+            m_Text->SetDrawable(
+                std::make_unique<Util::Image>("../assets/sprites/Task/PlayerWon.png"));
+            m_Text->SetVisible(true);
+            m_Text->setMovingRelativeToCamera(false);
+            Util::Transform trans;
+            trans.translation = {40, 5};
+            trans.scale = {0.7, 0.7};
+            m_Text->SetTransform(trans);
         }
     }
 }
@@ -115,9 +131,9 @@ void SandBoxScene::stageStart() {
         m_stage = Stages::END;
         break;
     }
-    case Stages::FORMAL_UPDATE:{
+    case Stages::FORMAL_START:{
         m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::MY, {7, 9});
-        m_GameObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {18, 18});
+        m_EnemyObjectManager->spawn(UnitType::INFANTRY, HouseType::ENEMY, {18, 18});
         break;
     }
     }
@@ -151,16 +167,14 @@ void SandBoxScene::stageUpdate() {
             stageStart();
         }
     }else if(m_stage == Stages::FORMAL_START){
-        m_stage = Stages::FORMAL_UPDATE;
         m_EnemyScripts->Start(m_GameObjectManager, m_EnemyObjectManager,
                               m_Map, true);
         stageStart();
+        m_stage = Stages::FORMAL_UPDATE;
     }
 
-    if(m_stage == Stages::PLAYER_WON){
-
-    }else if(m_stage == Stages::AI_WON){
-
+    if(m_stage == Stages::PLAYER_WON || m_stage == Stages::AI_WON) {
+        m_Text->Draw();
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY )) {
         m_EnemyObjectManager->setCheatMode(true);
