@@ -66,6 +66,7 @@ public:
                 UIStatusType::UI_DEFAULT);
             m_SandBoxScene->setStage(true);
         }
+
         switch (m_CurrentMode) {
         case (SceneMode::MAP):
             m_MapScene->Update();
