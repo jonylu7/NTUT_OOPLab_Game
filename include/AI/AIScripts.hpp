@@ -36,6 +36,7 @@ private:
     Util::Time m_Time;
 
     bool m_active;
+    float m_paid =0;
 
 public:
     AIScript(){};

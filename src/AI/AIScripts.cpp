@@ -3,7 +3,7 @@
 //
 #include "AI/AIScripts.hpp"
 
-#define MAX_TROOPS_SIZE 50
+#define MAX_TROOPS_SIZE 30
 void AIScript::Start(std::shared_ptr<UnitManager> GameObjectManager,
                      std::shared_ptr<UnitManager> EnemyObjectManager,
                      std::shared_ptr<MapClass> map, bool active) {
@@ -38,7 +38,9 @@ void AIScript::Update() {
         m_mainDeltaTime = 0;
         if (m_buildingCDTime < 1.f) {
             m_EnemyObjectManager->addTotalCurrency(m_buildingCost / (-1.f));
+            m_paid += m_buildingCost /m_buildingCDTime * (-1.f);
         } else {
+            m_paid += m_buildingCost /m_buildingCDTime * (-1.f);
             m_EnemyObjectManager->addTotalCurrency(m_buildingCost /
                                                    m_buildingCDTime * (-1.f));
         }
@@ -120,6 +122,7 @@ void AIScript::setCost(float cost, SpawnMode spawnMode) {
     }
     if (spawnMode == SpawnMode::BUILDINGS) {
         m_buildingCost = cost;
+        m_paid = 0;
         if(m_EnemyObjectManager->getCheatMode()){
             m_buildingCost = 1;
         }
@@ -128,7 +131,7 @@ void AIScript::setCost(float cost, SpawnMode spawnMode) {
 
 void AIScript::buildBasic() {
     if (m_selectedBuildingType != UnitType::NONE) {
-        if(m_selectedBuildingType != UnitType::ORE_REF && m_EnemyObjectManager->getTotalCurrency() > 2000+100){
+        if(m_selectedBuildingType != UnitType::ORE_REF && m_EnemyObjectManager->getTotalCurrency() > 2000+100-m_paid){
             spawnUnit();
         }
         return;
@@ -174,10 +177,10 @@ void AIScript::buildADV() {
 
 void AIScript::spawnUnit() {
     if (m_selectedAvatarType != UnitType::NONE ||
-        m_EnemyObjectManager->getAvatarCount() > 16) {
+        m_EnemyObjectManager->getAvatarCount() > MAX_TROOPS_SIZE) {
         return;
     }
-    if (m_EnemyObjectManager->getAvatarCount() <= 25 &&
+    if (m_EnemyObjectManager->getAvatarCount() <= MAX_TROOPS_SIZE &&
         m_EnemyObjectManager->getTotalCurrency() > 100) {
         setCDTime(5.f, SpawnMode::AVATAR);
         setCost(100, SpawnMode::AVATAR);
