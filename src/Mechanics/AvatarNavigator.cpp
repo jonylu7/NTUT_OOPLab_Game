@@ -14,7 +14,7 @@ std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
     Side whichSideToTouchObstacle = randomlyChooseSide();
 
     int count = 0;
-    while (currentcell != destinationcell && count < 100) {
+    while (currentcell != destinationcell && count < 10) {
         printf("(findPath)\n");
         count++;
         std::vector<MoveDirection> staightDirque;
@@ -75,7 +75,7 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
         path.push_back(currentdir);
         currentcell =
             PathUtility::getNextCellByCurrent(currentdir, currentcell);
-        if (path.size() > 30) {
+        if (path.size() > 15) {
             return path;
         }
     }
