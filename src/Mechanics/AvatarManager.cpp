@@ -111,6 +111,11 @@ void AvatarManager::assignOrderToMyAvatar(std::shared_ptr<Avatar> avatar) {
 
             auto destcell = MapUtil::GlobalCoordToCellCoord(
                 MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
+            if (destcell.x < 0 || destcell.y < 0 ||
+                destcell.x > m_Map->getWidth() / 2 - 1 ||
+                destcell.y > m_Map->getHeight() / 2 - 1) {
+                return;
+            }
 
             assignMoveOrderToAvatar(avatar, destcell);
             assignAttackOrderToAvatar(avatar, destcell);
