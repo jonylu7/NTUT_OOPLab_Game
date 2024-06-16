@@ -74,7 +74,7 @@ public:
                 auto it = m_Avatars.begin() + i;
                 m_Avatars.erase(it);
                 i--;
-
+                // fix this
                 if (m_Avatars.size() < 4) {
                     setWalkable(true);
                 }
