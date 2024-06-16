@@ -71,7 +71,7 @@ void TutorialScene::stageStart() {
     m_PlayerObjectivesText->SetVisible(true);
     m_PlayerObjectivesText->setMovingRelativeToCamera(false);
     Util::Transform trans;
-    trans.translation = {40, 5};
+    trans.translation = {840, 5};
     trans.scale = {0.7, 0.7};
     m_PlayerObjectivesText->SetTransform(trans);
 
