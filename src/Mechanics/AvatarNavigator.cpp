@@ -59,7 +59,8 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
                                        glm::vec2 destinationcell) {
 
     std::vector<MoveDirection> path;
-    while (!canResumeWalkingStraight(currentcell, destinationcell)) {
+    while (!(canResumeWalkingStraight(currentcell, destinationcell) ||
+             currentcell == destinationcell)) {
         printf("(moveAlongsideObstacle)\n");
         // if next is not touched by obstacle, turn
         if (!isTouchedByObstacle(side, currentcell, currentdir)) {
@@ -68,6 +69,7 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
         }
 
         // if next to be obstacle, turn findNewDirWhenCrash
+        currentdir = findNewDirWhenCrash(side, currentcell, currentdir);
 
         // walk along
         path.push_back(currentdir);
@@ -77,8 +79,14 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
             return path;
         }
     }
+    // std::vector<sp> findStraightPath(currentcell, destinationcell, )
 
-    return path;
+    if (path.size() == 1) {
+        return std::vector<MoveDirection>();
+    } else {
+        return path;
+        return path;
+    }
 }
 
 MoveDirection AvatarNavigator::findNewDirWhenCrash(Side side,
@@ -294,14 +302,18 @@ bool AvatarNavigator::findStraightPath(glm::vec2 currentcell,
             return ifwalked;
         }
     }
-    return ifwalked;
+    if (path->size() > 1) {
+        return ifwalked;
+    } else {
+        return false;
+    }
 }
 
 bool AvatarNavigator::canResumeWalkingStraight(glm::vec2 currentcell,
                                                glm::vec2 destinationcell) {
     std::vector<MoveDirection> path;
-    auto arrived = findStraightPath(currentcell, destinationcell, &path);
-    if (arrived) {
+    auto walkedS = findStraightPath(currentcell, destinationcell, &path);
+    if (walkedS && path.size() > 3) {
         return true;
     }
     return false;
