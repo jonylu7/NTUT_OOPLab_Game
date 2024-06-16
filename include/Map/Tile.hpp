@@ -75,9 +75,9 @@ public:
                 m_Avatars.erase(it);
                 i--;
 
-                if (m_Avatars.size() < 4) {
-                    setWalkable(true);
-                }
+                // if (m_Avatars.size() < 4) {
+                //     setWalkable(true);
+                // }
                 if (m_Avatars.size() == 0) {
                     setBuildable(true);
                 }

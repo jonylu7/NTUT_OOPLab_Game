@@ -9,8 +9,9 @@ void DefaultScene::Start() {
 
     LOG_TRACE("Start");
     // create map
-    m_Map->Init(60, 60);
-
+    // m_Map->Init(60, 60);
+    m_Map->Init(MapBinReader::readBin("../assets/map/terraint/map.bin", 12, 12),
+                12, 12);
     /*
     m_Map->getTileByCellPosition(glm::vec2(6, 5))->setWalkable(0);
     m_Map->getTileByCellPosition(glm::vec2(7, 5))->setWalkable(0);
@@ -41,6 +42,9 @@ void DefaultScene::Update() {
     if (tileLocation.x >= 0 && tileLocation.y >= 0) {
         m_Cursor->Update(m_Map->getTileByCellPosition(tileLocation));
     }
+    std::cout << tileLocation.x << " " << tileLocation.y << " "
+              << m_Map->getTileByCellPosition(tileLocation)->getTileImagePath()
+              << std::endl;
 
     // build and spawn stuff
 

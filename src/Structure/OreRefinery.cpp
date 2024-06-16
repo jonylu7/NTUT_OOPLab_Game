@@ -4,7 +4,7 @@ void OreRefinery::Start() {
     // Set Texture----------------------------------------
     m_StructureSpriteSheet->Start(
         "../assets/sprites/OreRefinery_SpriteSheet.png", 72, 72, 10, 0);
-    SetRelativeOccupiedArea({{0, 0}, {1, 0}, {1, 1}, {1, 2}, {2, 1}});
+    SetRelativeOccupiedArea({{0, 0}, {2, 0}, {1, 0}, {1, 1}, {0, 1}, {2, 1}});
     m_SpriteSheetAnimation->initSpriteSheetAnimation(m_StructureSpriteSheet,
                                                      false, INTERVAL, false);
     m_wayPoint->SetDrawable(

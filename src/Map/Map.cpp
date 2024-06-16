@@ -70,7 +70,6 @@ void MapClass::Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
         // y
         for (int j = 0; j < m_Map[i].size(); j++) {
             // x
-
             auto findResult = m_Tiles.find(m_Map[j][i]->getTileImagePath());
             if (findResult != m_Tiles.end()) {
                 m_Tiles[m_Map[j][i]->getTileImagePath()].push_back(

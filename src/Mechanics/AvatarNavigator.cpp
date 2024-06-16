@@ -28,7 +28,6 @@ std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
                 dirQue.push_back(i);
                 currentcell = PathUtility::getNextCellByCurrent(i, currentcell);
             }
-            break;
         } else {
 
             auto facingDir = PathUtility::getDirByRelativeCells(
@@ -279,7 +278,7 @@ bool AvatarNavigator::isTouchedByObstacle(Side side, glm::vec2 currentcell,
 bool AvatarNavigator::findStraightPath(glm::vec2 currentcell,
                                        glm::vec2 destinationcell,
                                        std::vector<MoveDirection> *path) {
-
+    bool ifwalked = false;
     while (currentcell != destinationcell) {
         printf("(findStraightPath)\n");
         MoveDirection followingDir =
@@ -290,12 +289,12 @@ bool AvatarNavigator::findStraightPath(glm::vec2 currentcell,
             path->push_back(followingDir);
             currentcell =
                 PathUtility::getNextCellByCurrent(followingDir, currentcell);
+            ifwalked = true;
         } else {
-            // if meet obstacle, stop in front of it, but unknown dir.
-            return false;
+            return ifwalked;
         }
     }
-    return true;
+    return ifwalked;
 }
 
 bool AvatarNavigator::canResumeWalkingStraight(glm::vec2 currentcell,
