@@ -1,11 +1,6 @@
 # Purpose
-
+讓我認識到....不要選一個系統太複雜的遊戲
 # Goal
 
 # Methodology
-
-## Packages used
-1. openGL version 4.1
-2. PTSD game Engine
-3. SDL2
-4. Imgui
+肝、血和淚
