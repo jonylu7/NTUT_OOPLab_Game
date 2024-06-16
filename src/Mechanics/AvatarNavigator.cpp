@@ -6,6 +6,7 @@
 
 std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
                                                     glm::vec2 destinationcell) {
+    glm::vec2 ogcell = currentcell;
     std::deque<MoveDirection> dirQue;
     if (m_Map->getTileByCellPosition(destinationcell)->getWalkable() == false) {
         return dirQue;
@@ -14,7 +15,7 @@ std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
     Side whichSideToTouchObstacle = randomlyChooseSide();
 
     int count = 0;
-    while (currentcell != destinationcell && count < 100) {
+    while (currentcell != destinationcell && count < 10) {
         printf("(findPath)\n");
         count++;
         std::vector<MoveDirection> staightDirque;
@@ -48,6 +49,9 @@ std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
             for (auto i : movealong) {
                 dirQue.push_back(i);
                 currentcell = PathUtility::getNextCellByCurrent(i, currentcell);
+                if (ogcell == currentcell) {
+                    return dirQue;
+                }
             }
         }
     }
@@ -58,6 +62,7 @@ std::vector<MoveDirection>
 AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
                                        MoveDirection currentdir,
                                        glm::vec2 destinationcell) {
+    glm::vec2 ogcell = currentcell;
 
     std::vector<MoveDirection> path;
     while (!canResumeWalkingStraight(currentcell, destinationcell)) {
@@ -74,7 +79,7 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
         path.push_back(currentdir);
         currentcell =
             PathUtility::getNextCellByCurrent(currentdir, currentcell);
-        if (path.size() > 30) {
+        if (path.size() > 30 || ogcell == currentcell) {
             return path;
         }
     }
