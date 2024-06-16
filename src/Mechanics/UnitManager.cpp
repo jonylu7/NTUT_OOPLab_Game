@@ -113,7 +113,7 @@ void UnitManager::Update() {
     m_StructureManager->SelectingBuildSite();
 }
 
-int UnitManager::updateCurrency() {
+void UnitManager::updateCurrency() {
     for (auto i :
          m_StructureManager->getStructureArray()->getBuiltStructureArray()) {
         if (std::dynamic_pointer_cast<OreRefinery>(i)) {

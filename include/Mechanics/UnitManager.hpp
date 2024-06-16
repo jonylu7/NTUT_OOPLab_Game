@@ -50,7 +50,7 @@ public:
     }
 
 
-    int updateCurrency();
+    void updateCurrency();
 
     void spawnToWayPoint(UnitType unit, HouseType house);
     void spawn(UnitType unit, HouseType house, glm::vec2 cellPos);
