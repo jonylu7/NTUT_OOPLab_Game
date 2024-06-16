@@ -85,7 +85,6 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
         return std::vector<MoveDirection>();
     } else {
         return path;
-        return path;
     }
 }
 
