@@ -227,7 +227,7 @@ void AIScript::UpdateSpawnScript(SpawnMode spawnMode) {
             m_EnemyObjectManager->setBarrackWayPointByCell(
                 {m_baseCell.x - 1 +
                      5 * (m_EnemyObjectManager->getAvatarCount() % 3),
-                 m_baseCell.y - 1});
+                 m_baseCell.y - 1  + 5 * (m_EnemyObjectManager->getAvatarCount() % 6 ==0)});
 
             m_EnemyObjectManager->spawnToWayPoint(m_selectedAvatarType,
                                                   HouseType::ENEMY);
