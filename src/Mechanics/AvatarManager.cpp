@@ -53,11 +53,28 @@ void AvatarManager::Update() {
 
 void AvatarManager::assignMoveOrderToAvatar(std::shared_ptr<Avatar> avatar,
                                             glm::vec2 destcell) {
+    /*
     if (m_Map->getTileByCellPosition(destcell)->ifStructureExists() &&
         m_Map->getTileByCellPosition(destcell)->ifEnemyAtTile()) {
         destcell.x -= 2;
         destcell.y -= 2;
     }
+     */
+    bool t = false;
+    int runlimit = 0;
+    while (!m_Map->getTileByCellPosition(destcell)->getWalkable()) {
+        if (t) {
+            destcell.x -= 1;
+        } else {
+            destcell.y -= 1;
+        }
+        t = !(t);
+        runlimit += 1;
+        if (runlimit > 30 || destcell.x < 0 || destcell.y < 0) {
+            break;
+        }
+    }
+
     auto queue =
         m_Navigator->findPath(avatar->getMoving()->getCurrentCell(), destcell);
     avatar->getMoving()->setMovePath(queue);

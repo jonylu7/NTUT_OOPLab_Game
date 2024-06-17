@@ -52,7 +52,7 @@ public:
     void pushAvatars(std::shared_ptr<Avatar> avatar) {
         avatar->getMoving()->setStandingCorner(m_Avatars.size());
         m_Avatars.push_back(avatar);
-        // if (m_Avatars.size() == 4) {
+        // if (m_Avatars.size() >= 5) {
         //    setWalkable(false);
         //}
     }
@@ -75,7 +75,7 @@ public:
                 m_Avatars.erase(it);
                 i--;
 
-                // if (m_Avatars.size() < 4) {
+                // if (m_Avatars.size() < 4 && m_TerrainBuildable) {
                 //     setWalkable(true);
                 // }
                 if (m_Avatars.size() == 0) {
