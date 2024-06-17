@@ -6,51 +6,63 @@
 
 std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
                                                     glm::vec2 destinationcell) {
-    std::deque<MoveDirection> dirQue;
+    glm::vec2 ogcell = currentcell;
+    std::vector<std::deque<MoveDirection>> dirQueComp = {
+        std::deque<MoveDirection>(), std::deque<MoveDirection>()};
     if (m_Map->getTileByCellPosition(destinationcell)->getWalkable() == false) {
-        return dirQue;
+        return dirQueComp[0];
     }
 
-    Side whichSideToTouchObstacle = randomlyChooseSide();
+    for (int s = 0; s < 2; s++) {
+        Side whichSideToTouchObstacle = static_cast<Side>(s);
+        int count = 0;
+        currentcell = ogcell;
+        while (currentcell != destinationcell && count < 10) {
+            printf("(findPath)\n");
+            count++;
+            std::vector<MoveDirection> staightDirque;
+            bool canFindStraightPath =
+                findStraightPath(currentcell, destinationcell, &staightDirque);
 
-    int count = 0;
-    while (currentcell != destinationcell && count < 10) {
-        printf("(findPath)\n");
-        count++;
-        std::vector<MoveDirection> staightDirque;
-        bool canFindStraightPath =
-            findStraightPath(currentcell, destinationcell, &staightDirque);
+            // push newdirque into dirque and update current cell and current
+            // dir
 
-        // push newdirque into dirque and update current cell and current dir
+            if (canFindStraightPath) {
+                for (auto i : staightDirque) {
+                    dirQueComp[s].push_back(i);
+                    currentcell =
+                        PathUtility::getNextCellByCurrent(i, currentcell);
+                }
+            } else {
 
-        if (canFindStraightPath) {
-            for (auto i : staightDirque) {
-                dirQue.push_back(i);
-                currentcell = PathUtility::getNextCellByCurrent(i, currentcell);
-            }
-        } else {
+                auto facingDir = PathUtility::getDirByRelativeCells(
+                    currentcell, destinationcell);
+                // turn
+                MoveDirection turndir;
+                if (m_Map->ifWalkable(PathUtility::getNextCellByCurrent(
+                        facingDir, currentcell)) == false) {
+                    turndir = findNewDirWhenCrash(whichSideToTouchObstacle,
+                                                  currentcell, facingDir);
+                };
 
-            auto facingDir = PathUtility::getDirByRelativeCells(
-                currentcell, destinationcell);
-            // turn
-            MoveDirection turndir;
-            if (m_Map->ifWalkable(PathUtility::getNextCellByCurrent(
-                    facingDir, currentcell)) == false) {
-                turndir = findNewDirWhenCrash(whichSideToTouchObstacle,
-                                              currentcell, facingDir);
-            };
+                std::vector<MoveDirection> movealong =
+                    moveAlongsideObstacle(whichSideToTouchObstacle, currentcell,
+                                          turndir, destinationcell);
 
-            std::vector<MoveDirection> movealong =
-                moveAlongsideObstacle(whichSideToTouchObstacle, currentcell,
-                                      turndir, destinationcell);
-
-            for (auto i : movealong) {
-                dirQue.push_back(i);
-                currentcell = PathUtility::getNextCellByCurrent(i, currentcell);
+                for (auto i : movealong) {
+                    dirQueComp[s].push_back(i);
+                    currentcell =
+                        PathUtility::getNextCellByCurrent(i, currentcell);
+                }
             }
         }
     }
-    return dirQue;
+
+    if (dirQueComp[0].size() > dirQueComp[1].size() && !dirQueComp[1].empty()) {
+        return dirQueComp[1];
+    } else {
+        return dirQueComp[0];
+    }
 }
 
 std::vector<MoveDirection>
