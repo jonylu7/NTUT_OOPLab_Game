@@ -58,9 +58,6 @@ std::shared_ptr<TileClass> YAMLReader::convertYAMLTileToTileClass(int id,
     std::shared_ptr<TileClass> tile =
         std::move(TerrainConfig::GetConfig(terrainName));
     tile->setTileImage(convertYAMLTileToImagePath(id, index));
-    if (terrainName == "River") {
-        return tile;
-    }
     // tile->setTileImage(image);
 
     return tile;

@@ -94,7 +94,7 @@ protected:
     void InitGrid();
 
 private:
-    const glm::vec2 m_MapTransShift = {10, -10};
+    const glm::vec2 m_MapTransShift = {20, 20};
     std::vector<std::shared_ptr<Util::ImageArray>> m_Images;
     std::unordered_map<std::string, std::vector<glm::vec2>> m_Tiles;
     unsigned int m_MapWdith = 0;

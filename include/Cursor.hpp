@@ -26,6 +26,7 @@ public:
 
         DrawCursorSelectionRegion(&start_pos, &end_pos, ImGuiMouseButton_Left);
         Util::Transform trans2;
+        trans2.scale = {1, 1};
         trans2.translation = MapUtil::PositionStickToGrid(
             MapUtil::ScreenToGlobalCoord(Util::Input::GetCursorPosition()));
         m_testdraw.DrawUsingCamera(trans2, 1);

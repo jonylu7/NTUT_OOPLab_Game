@@ -46,14 +46,17 @@ MapBinReader::readBin(const std::string filepath, int width, int hieght) {
 
                 auto tile =
                     YAMLReader::convertYAMLTileToTileClass(imageId, imageIndex);
-                mapRow.push_back(std::make_shared<TileClass>(*tile));
+                // mapRow.push_back(std::make_shared<TileClass>(*tile));
+                mapRow.insert(mapRow.begin() + 0,
+                              std::make_shared<TileClass>(*tile));
                 imageId = 0;
                 k = -1;
                 imageIndex = 0;
                 // std::cout << " " << i << "\n";
 
                 if (((i - 16) / 3) % (width) == 0) {
-                    fullmap.push_back(mapRow);
+                    // fullmap.push_back(mapRow);
+                    fullmap.insert(fullmap.begin() + 0, mapRow);
                     mapRow.clear();
                 }
                 case1hasValue = -1;
