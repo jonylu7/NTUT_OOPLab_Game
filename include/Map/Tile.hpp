@@ -7,7 +7,7 @@
 
 #include "Avatar/Avatar.hpp"
 #include "Mechanics/GameObjectID.hpp"
-#include "Selectable.hpp"
+#include "Unit/Selectable.hpp"
 
 #include "Display/SpriteSheet.hpp"
 #include "Structure/Structure.hpp"

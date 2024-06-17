@@ -74,9 +74,17 @@ void Structure::Update() {
 }
 void Structure::updateFixed() {
     // Attachment and self readjust location and draw---------------
+    /*
+    if (b_StructureAnimationPlayed == false &&
+        m_SpriteSheetAnimation->getFinished()) {
+        b_StructureAnimationPlayed = true;
+    }
+     */
     attachmentUpdate();
     if (m_SpriteSheetAnimation->getFinished()) {
-        m_StructureSpriteSheet->DrawSpriteByIndex(
+        m_StructureSpriteSheet->InitSpritByIndex(
+            m_StructureSpriteSheet->getSize() - 1);
+        m_StructureSpriteSheet->DrawSpriteWithoutChange(
             m_StructureSpriteSheet->getSize() - 1, m_Transform, DEFAULT_ZINDEX);
     } else {
         m_SpriteSheetAnimation->Play();
