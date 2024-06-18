@@ -90,6 +90,10 @@ public:
         return NullPos;
     }
 
+
+    int getWidth() { return m_MapWdith; }
+    int getHeight() { return m_MapHeight; }
+
 protected:
     void InitGrid();
 
