@@ -262,13 +262,13 @@ add_executable(Sample
         ${SRC_DIR}/main.cpp
 )
 target_link_libraries(Sample
+yaml-cpp::yaml-cpp
         SDL2::SDL2main # IDK what happens if we don't link SDL2main
         ${DEPENDENCY_LINK_LIBRARIES}
 )
 ##yaml
-target_link_libraries(Sample yaml-cpp::yaml-cpp ${DEPENDENCY_LINK_LIBRARIES}) # The library or executable that require yaml-cpp library
 
-target_include_directories(Sample SYSTEM PRIVATE
+target_include_directories(Sample SYSTEM PRIVATE 
         ${DEPENDENCY_INCLUDE_DIRS}
 )
 target_include_directories(Sample PRIVATE
@@ -296,6 +296,7 @@ add_executable(Tests
 )
 target_link_libraries(Tests
         GTest::gtest_main
+yaml-cpp::yaml-cpp
         ${DEPENDENCY_LINK_LIBRARIES}
 )
 target_include_directories(Tests SYSTEM PRIVATE
@@ -316,6 +317,7 @@ add_executable(AudioTest
 )
 target_link_libraries(AudioTest
         GTest::gtest_main
+yaml-cpp::yaml-cpp
         ${DEPENDENCY_LINK_LIBRARIES}
 )
 target_include_directories(AudioTest SYSTEM PRIVATE

@@ -121,7 +121,7 @@ void UnitManager::updateCurrency() {
     for (auto i :
          m_StructureManager->getStructureArray()->getBuiltStructureArray()) {
         if (std::dynamic_pointer_cast<OreRefinery>(i)) {
-            addTotalCurrency(150);
+            addTotalCurrency(50);
         }
     }
 }
