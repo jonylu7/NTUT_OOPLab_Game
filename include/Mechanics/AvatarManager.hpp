@@ -36,22 +36,23 @@ public:
     void assignAttackOrderToAvatar(std::shared_ptr<Avatar> unit,
                                    glm::vec2 destcell);
     void assignAttackOrderToAvatar(std::shared_ptr<Avatar> avatar,
-                                                  glm::vec2 destcell,HouseType myHouse);
-    int getAvatarSize(){
-        return static_cast<int>(m_AvatarArray.size());
-    }
-    bool ifAvatarHasNemesis(std::shared_ptr<Avatar> unit){
+                                   glm::vec2 destcell, HouseType myHouse);
+    int getAvatarSize() { return static_cast<int>(m_AvatarArray.size()); }
+    bool ifAvatarHasNemesis(std::shared_ptr<Avatar> unit) {
         return m_NemesisManager->ifAvatarHasNemesis(unit);
     }
-    bool ifAvatarHasHunter(std::shared_ptr<Avatar> unit){
+    bool ifAvatarHasHunter(std::shared_ptr<Avatar> unit) {
         return m_NemesisManager->ifAvatarHasNemesis(unit);
     }
-    glm::vec2 getAvatarNemesisCell(std::shared_ptr<Avatar> unit){
+    glm::vec2 getAvatarNemesisCell(std::shared_ptr<Avatar> unit) {
         return m_NemesisManager->getNemesisCell(unit);
     }
+
 protected:
     void assignOrderToMyAvatar(std::shared_ptr<Avatar> unit);
     void updateTileWhileAvatarMoving(std::shared_ptr<Avatar> unit);
+
+    void findNearestStandableCellWhenFilled(std::shared_ptr<Avatar> avatar);
 
 private:
     std::vector<std::shared_ptr<Avatar>> m_AvatarArray;

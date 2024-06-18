@@ -34,7 +34,8 @@ public:
         UPPER_LEFT,
         UPPER_RIGHT,
         LOWER_LEFT,
-        LOWER_RIGHT
+        LOWER_RIGHT,
+        FILLED
     };
 
     Moving(){};
@@ -72,7 +73,7 @@ public:
     void moveToNextCell();
     void moveToCellCorner(AvatarStandingCorner corner);
     bool ifArrivedAtNextCell();
-
+    int getMovePathSize() { return m_MovePath.size(); }
     void setMovePath(std::deque<MoveDirection> movepath) {
         if (movepath.empty()) {
             m_MovePath = {MoveDirection::IDLE};
@@ -82,6 +83,7 @@ public:
             m_CurrentDir = m_MovePath.front();
         }
         m_PrevCell = getCurrentCell();
+        setStandingCorner(0);
     }
 
     bool ifMovePathEmpty() {

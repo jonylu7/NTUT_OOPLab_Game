@@ -15,7 +15,6 @@ std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
         return dirQueComp[0];
     }
 
-
     for (int s = 0; s < 2; s++) {
         Side whichSideToTouchObstacle = static_cast<Side>(s);
         int count = 0;
@@ -56,7 +55,6 @@ std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
                     dirQueComp[s].push_back(i);
                     currentcell =
                         PathUtility::getNextCellByCurrent(i, currentcell);
-
                 }
             }
         }
@@ -320,7 +318,7 @@ bool AvatarNavigator::findStraightPath(glm::vec2 currentcell,
             return ifwalked;
         }
     }
-    if (path->size() > 1) {
+    if (path->size() > 1 || currentcell == destinationcell) {
         return ifwalked;
     } else {
         return false;

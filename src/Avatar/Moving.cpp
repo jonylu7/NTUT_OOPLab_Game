@@ -85,10 +85,12 @@ bool Moving::ifArrivedAtNextCell() {
 void Moving::moveToCellCorner(AvatarStandingCorner corner) {
     float quaterHeight = CELL_SIZE.y / 4;
     float quaterWidth = CELL_SIZE.x / 4;
+    m_CurrentLocation = MapUtil::CellCoordToGlobal(
+        MapUtil::GlobalCoordToCellCoord(m_CurrentLocation));
     switch (corner) {
     case (AvatarStandingCorner::CENTER):
-        m_CurrentLocation = MapUtil::CellCoordToGlobal(
-            MapUtil::GlobalCoordToCellCoord(m_CurrentLocation));
+        break;
+    case (AvatarStandingCorner::FILLED):
         break;
     case (AvatarStandingCorner::UPPER_LEFT):
         m_CurrentLocation = {m_CurrentLocation.x - quaterWidth,

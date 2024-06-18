@@ -147,6 +147,27 @@ void AvatarManager::updateTileWhileAvatarMoving(
         m_Map->setAvatarByCellPosition(avatar,
                                        avatar->getMoving()->getCurrentCell());
         unitArrayAndLocation[avatar] = avatar->getMoving()->getCurrentCell();
+        if (avatar->getMoving()->getMovePathSize() == 1) {
+            findNearestStandableCellWhenFilled(avatar);
+        }
+    }
+}
+
+void AvatarManager::findNearestStandableCellWhenFilled(
+    std::shared_ptr<Avatar> avatar) {
+    if (avatar->getMoving()->getStandingCorner() == 5) {
+        auto cell = avatar->getMoving()->getCurrentCell();
+        bool c = false;
+        while (m_Map->getTileByCellPosition(cell)->getAvatars().size() >= 5 &&
+               cell.x >= 0 && cell.y >= 0) {
+            if (c) {
+                cell.x -= 1;
+            } else {
+                cell.y -= 1;
+            }
+            c = !(c);
+        }
+        assignMoveOrderToAvatar(avatar, cell);
     }
 }
 

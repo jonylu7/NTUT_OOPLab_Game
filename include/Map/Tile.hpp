@@ -50,8 +50,13 @@ public:
         m_Structure = structure;
     }
     void pushAvatars(std::shared_ptr<Avatar> avatar) {
-        avatar->getMoving()->setStandingCorner(m_Avatars.size());
-        m_Avatars.push_back(avatar);
+        if (m_Avatars.size() > 4) {
+            avatar->getMoving()->setStandingCorner(5);
+        } else {
+            avatar->getMoving()->setStandingCorner(m_Avatars.size());
+            m_Avatars.push_back(avatar);
+        }
+
         // if (m_Avatars.size() >= 5) {
         //    setWalkable(false);
         //}
@@ -74,7 +79,6 @@ public:
                 auto it = m_Avatars.begin() + i;
                 m_Avatars.erase(it);
                 i--;
-
 
                 // if (m_Avatars.size() < 4 && m_TerrainBuildable) {
                 //     setWalkable(true);
