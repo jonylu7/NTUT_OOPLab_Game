@@ -175,14 +175,6 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Scene/MapScene.hpp
 
 
-        ${INCLUDE_DIR}/Mechanics/GameObjectManager.hpp
-        ${INCLUDE_DIR}/Mechanics/NemesisManager.hpp
-        ${INCLUDE_DIR}/Mechanics/GameObjectID.hpp
-        ${INCLUDE_DIR}/Mechanics/CursorSelection.hpp
-        ${INCLUDE_DIR}/Mechanics/Spawn.hpp
-        ${INCLUDE_DIR}/Mechanics/AvatarNavigator.hpp
-
-
         ${INCLUDE_DIR}/App.hpp
         ${INCLUDE_DIR}/Tile.hpp
         ${INCLUDE_DIR}/config.hpp
@@ -246,6 +238,13 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Core/Shader.hpp
         ${INCLUDE_DIR}/Core/Program.hpp
         ${INCLUDE_DIR}/Core/Texture.hpp
+
+        ${INCLUDE_DIR}/Mechanics/GameObjectManager.hpp
+        ${INCLUDE_DIR}/Mechanics/NemesisManager.hpp
+        ${INCLUDE_DIR}/Mechanics/GameObjectID.hpp
+        ${INCLUDE_DIR}/Mechanics/CursorSelection.hpp
+        ${INCLUDE_DIR}/Mechanics/Spawn.hpp
+        ${INCLUDE_DIR}/Mechanics/AvatarNavigator.hpp
 
 )
 
