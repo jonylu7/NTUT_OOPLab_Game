@@ -64,7 +64,7 @@ void SandBoxScene::Update() {
                     ->getStructureArray()
                     ->getBuiltStructureArray()
                     .empty() ||
-            Util::Input::IsKeyPressed(Util::Keycode::DEBUG_KEY)) {
+            Util::Input::IsKeyPressed(Util::Keycode::P)) {
             m_stage = Stages::AI_WON;
             m_WUI->setPausedImage(
                 std::make_shared<Util::Image>("../assets/images/AIWon.png"));
@@ -76,7 +76,7 @@ void SandBoxScene::Update() {
                     ->getStructureArray()
                     ->getBuiltStructureArray()
                     .empty() ||
-            Util::Input::IsKeyPressed(Util::Keycode::K)) {
+            Util::Input::IsKeyPressed(Util::Keycode::A)) {
             m_stage = Stages::PLAYER_WON;
             m_WUI->setPausedImage(std::make_shared<Util::Image>(
                 "../assets/images/PlayerWon.png"));

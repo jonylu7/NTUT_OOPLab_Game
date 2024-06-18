@@ -53,7 +53,7 @@ void MapClass::Draw(const Util::Transform &trans, const float zindex) {
     for (auto i : m_Images) {
         i->DrawUsingCamera(maptrans, zindex);
     }
-    m_Grid.DrawUsingCamera(trans, zindex - 0.2);
+    m_Grid.DrawUsingCamera(trans, zindex + 1.2);
 }
 
 void MapClass::Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
