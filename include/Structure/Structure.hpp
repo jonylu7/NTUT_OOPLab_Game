@@ -10,10 +10,10 @@
 #include "HighLight.h"
 #include "Map/MapUtility.hpp"
 #include "Mechanics/GameObjectID.hpp"
-#include "Selectable.hpp"
 #include "Structure/StructureOrder.hpp"
 #include "Unit/Health.hpp"
 #include "Unit/Huntable.hpp"
+#include "Unit/Selectable.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
@@ -113,10 +113,11 @@ public:
     glm::vec2 getCurrentLocationInCell() override {
         return getAbsoluteOccupiedArea().front();
     };
-    glm::vec2 getTopRightCell(){
+    glm::vec2 getTopRightCell() {
         glm::vec2 returnValue = getAbsoluteOccupiedArea().back();
         return returnValue;
     };
+
 protected:
     float m_ElectricPower;
     float m_BuildingTime;
@@ -144,6 +145,8 @@ protected:
     // attack and damage
     std::shared_ptr<AttackAndDamage> m_AttackAndDamage =
         std::make_shared<AttackAndDamage>();
+
+    bool b_StructureAnimationPlayed = false;
 };
 
 #endif // PRACTICALTOOLSFORSIMPLEDESIGN_STRUCTURE_HPP

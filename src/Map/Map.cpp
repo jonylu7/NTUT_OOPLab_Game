@@ -35,7 +35,7 @@ void MapClass::InitGrid() {
 }
 
 std::shared_ptr<TileClass> MapClass::getTileByCellPosition(glm::vec2 position) {
-
+    position.x = m_MapWdith - position.x - 1;
     if (position.x > m_MapWdith - 1 || position.y > m_MapHeight - 1 ||
         position.x < 0 || position.y < 0) {
         LOG_DEBUG("False Position Getting");
@@ -46,6 +46,7 @@ std::shared_ptr<TileClass> MapClass::getTileByCellPosition(glm::vec2 position) {
 
 void MapClass::Draw(const Util::Transform &trans, const float zindex) {
     auto maptrans = trans;
+    maptrans.scale = {2, 2};
     maptrans.translation.x += m_MapTransShift.x;
     maptrans.translation.y += m_MapTransShift.y;
 
@@ -70,14 +71,13 @@ void MapClass::Init(std::vector<std::vector<std::shared_ptr<TileClass>>> map,
         // y
         for (int j = 0; j < m_Map[i].size(); j++) {
             // x
-
             auto findResult = m_Tiles.find(m_Map[j][i]->getTileImagePath());
             if (findResult != m_Tiles.end()) {
                 m_Tiles[m_Map[j][i]->getTileImagePath()].push_back(
-                    glm::vec2(j, m_MapHeight - i));
+                    glm::vec2(m_MapWdith - j - 1, i));
             } else {
                 m_Tiles[m_Map[j][i]->getTileImagePath()] =
-                    std::vector<glm::vec2>({glm::vec2(j, m_MapHeight - i)});
+                    std::vector<glm::vec2>({glm::vec2(m_MapWdith - j - 1, i)});
             }
         }
     }

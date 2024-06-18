@@ -28,6 +28,11 @@ public:
         m_SpriteSheet[index]->Init();
         m_SpriteSheet[index]->DrawUsingCamera(trans, zIndex);
     }
+    void InitSpritByIndex(int index) { m_SpriteSheet[index]->Init(); }
+
+    void DrawSpriteWithoutChange(int index, Util::Transform trans, int zIndex) {
+        m_SpriteSheet[index]->DrawUsingCamera(trans, zIndex);
+    }
 
     glm::vec2 getSpriteSize() {
         return glm::vec2(m_SpriteWidth, m_SpriteHeight);

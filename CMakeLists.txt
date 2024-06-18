@@ -86,6 +86,7 @@ set(SRC_FILES
 
         ${SRC_DIR}/AI/AI.cpp
         ${SRC_DIR}/AI/AIScripts.cpp
+        ${SRC_DIR}/AI/AIGroupCommander.cpp
 
         ${SRC_DIR}/Structure/Structure.cpp
         ${SRC_DIR}/Structure/WayPoint.cpp
@@ -101,7 +102,7 @@ set(SRC_FILES
         ${SRC_DIR}/Scene/MapScene.cpp
         ${SRC_DIR}/Scene/TutorialScene.cpp
         ${SRC_DIR}/Scene/SandBoxScene.cpp
-        
+
         ${SRC_DIR}/Avatar/Avatar.cpp
         ${SRC_DIR}/Avatar/PathUtility.cpp
         ${SRC_DIR}/Avatar/Moving.cpp
@@ -121,6 +122,8 @@ set(SRC_FILES
         ${SRC_DIR}/Mechanics/CursorSelection.cpp
         ${SRC_DIR}/Mechanics/AvatarManager.cpp
         ${SRC_DIR}/Mechanics/UnitManager.cpp
+        ${SRC_DIR}/Mechanics/BuiltStructure.cpp
+        ${SRC_DIR}/Mechanics/NemesisManager.cpp
 
 )
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -228,9 +231,9 @@ set(INCLUDE_FILES
         ${INCLUDE_DIR}/Scene/SandBoxScene.hpp
 
 
-        ${INCLUDE_DIR}/Enemy/AI.hpp
-        ${INCLUDE_DIR}/Enemy/AIScripts.hpp
-        ${INCLUDE_DIR}/Enemy/AIGroupCommander.hpp
+        ${INCLUDE_DIR}/AI/AI.hpp
+        ${INCLUDE_DIR}/AI/AIScripts.hpp
+        ${INCLUDE_DIR}/AI/AIGroupCommander.hpp
 
 
         ${INCLUDE_DIR}/Core/Context.hpp

@@ -49,4 +49,6 @@ void SpriteSheet::Start(std::string filepath, int spriteWidth, int spriteHeight,
                                                         rightX, bottomY}));
         currentX += spriteWidth + spacing;
     }
+
+    // m_SpriteSheet[m_SpriteSheet.size() - 1]->Init();
 }

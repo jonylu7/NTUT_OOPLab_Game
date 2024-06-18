@@ -7,7 +7,7 @@
 
 #include "Avatar/Avatar.hpp"
 #include "Mechanics/GameObjectID.hpp"
-#include "Selectable.hpp"
+#include "Unit/Selectable.hpp"
 
 #include "Display/SpriteSheet.hpp"
 #include "Structure/Structure.hpp"
@@ -52,7 +52,7 @@ public:
     void pushAvatars(std::shared_ptr<Avatar> avatar) {
         avatar->getMoving()->setStandingCorner(m_Avatars.size());
         m_Avatars.push_back(avatar);
-        // if (m_Avatars.size() == 4) {
+        // if (m_Avatars.size() >= 5) {
         //    setWalkable(false);
         //}
     }
@@ -74,10 +74,12 @@ public:
                 auto it = m_Avatars.begin() + i;
                 m_Avatars.erase(it);
                 i--;
-                // fix this
-                if (m_Avatars.size() < 4) {
-                    setWalkable(true);
-                }
+
+
+                // if (m_Avatars.size() < 4 && m_TerrainBuildable) {
+                //     setWalkable(true);
+                // }
+
                 if (m_Avatars.size() == 0) {
                     setBuildable(true);
                 }

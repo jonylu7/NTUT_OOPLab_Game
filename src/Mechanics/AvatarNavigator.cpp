@@ -7,55 +7,66 @@
 std::deque<MoveDirection> AvatarNavigator::findPath(glm::vec2 currentcell,
                                                     glm::vec2 destinationcell) {
     glm::vec2 ogcell = currentcell;
-    std::deque<MoveDirection> dirQue;
+
+    std::vector<std::deque<MoveDirection>> dirQueComp = {
+        std::deque<MoveDirection>(), std::deque<MoveDirection>()};
+
     if (m_Map->getTileByCellPosition(destinationcell)->getWalkable() == false) {
-        return dirQue;
+        return dirQueComp[0];
     }
 
-    Side whichSideToTouchObstacle = randomlyChooseSide();
 
-    int count = 0;
-    while (currentcell != destinationcell && count < 10) {
-        printf("(findPath)\n");
-        count++;
-        std::vector<MoveDirection> staightDirque;
-        bool canFindStraightPath =
-            findStraightPath(currentcell, destinationcell, &staightDirque);
+    for (int s = 0; s < 2; s++) {
+        Side whichSideToTouchObstacle = static_cast<Side>(s);
+        int count = 0;
+        currentcell = ogcell;
+        while (currentcell != destinationcell && count < 10) {
+            printf("(findPath)\n");
+            count++;
+            std::vector<MoveDirection> staightDirque;
+            bool canFindStraightPath =
+                findStraightPath(currentcell, destinationcell, &staightDirque);
 
-        // push newdirque into dirque and update current cell and current dir
+            // push newdirque into dirque and update current cell and current
+            // dir
 
-        if (canFindStraightPath) {
-            for (auto i : staightDirque) {
-                dirQue.push_back(i);
-                currentcell = PathUtility::getNextCellByCurrent(i, currentcell);
-            }
-            break;
-        } else {
+            if (canFindStraightPath) {
+                for (auto i : staightDirque) {
+                    dirQueComp[s].push_back(i);
+                    currentcell =
+                        PathUtility::getNextCellByCurrent(i, currentcell);
+                }
+            } else {
 
-            auto facingDir = PathUtility::getDirByRelativeCells(
-                currentcell, destinationcell);
-            // turn
-            MoveDirection turndir;
-            if (m_Map->ifWalkable(PathUtility::getNextCellByCurrent(
-                    facingDir, currentcell)) == false) {
-                turndir = findNewDirWhenCrash(whichSideToTouchObstacle,
-                                              currentcell, facingDir);
-            };
+                auto facingDir = PathUtility::getDirByRelativeCells(
+                    currentcell, destinationcell);
+                // turn
+                MoveDirection turndir;
+                if (m_Map->ifWalkable(PathUtility::getNextCellByCurrent(
+                        facingDir, currentcell)) == false) {
+                    turndir = findNewDirWhenCrash(whichSideToTouchObstacle,
+                                                  currentcell, facingDir);
+                };
 
-            std::vector<MoveDirection> movealong =
-                moveAlongsideObstacle(whichSideToTouchObstacle, currentcell,
-                                      turndir, destinationcell);
+                std::vector<MoveDirection> movealong =
+                    moveAlongsideObstacle(whichSideToTouchObstacle, currentcell,
+                                          turndir, destinationcell);
 
-            for (auto i : movealong) {
-                dirQue.push_back(i);
-                currentcell = PathUtility::getNextCellByCurrent(i, currentcell);
-                if (ogcell == currentcell) {
-                    return dirQue;
+                for (auto i : movealong) {
+                    dirQueComp[s].push_back(i);
+                    currentcell =
+                        PathUtility::getNextCellByCurrent(i, currentcell);
+
                 }
             }
         }
     }
-    return dirQue;
+
+    if (dirQueComp[0].size() > dirQueComp[1].size() && !dirQueComp[1].empty()) {
+        return dirQueComp[1];
+    } else {
+        return dirQueComp[0];
+    }
 }
 
 std::vector<MoveDirection>
@@ -65,7 +76,8 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
     glm::vec2 ogcell = currentcell;
 
     std::vector<MoveDirection> path;
-    while (!canResumeWalkingStraight(currentcell, destinationcell)) {
+    while (!(canResumeWalkingStraight(currentcell, destinationcell) ||
+             currentcell == destinationcell)) {
         printf("(moveAlongsideObstacle)\n");
         // if next is not touched by obstacle, turn
         if (!isTouchedByObstacle(side, currentcell, currentdir)) {
@@ -74,17 +86,25 @@ AvatarNavigator::moveAlongsideObstacle(Side side, glm::vec2 currentcell,
         }
 
         // if next to be obstacle, turn findNewDirWhenCrash
+        currentdir = findNewDirWhenCrash(side, currentcell, currentdir);
 
         // walk along
         path.push_back(currentdir);
         currentcell =
             PathUtility::getNextCellByCurrent(currentdir, currentcell);
+
         if (path.size() > 30 || ogcell == currentcell) {
+
             return path;
         }
     }
+    // std::vector<sp> findStraightPath(currentcell, destinationcell, )
 
-    return path;
+    if (path.size() == 1) {
+        return std::vector<MoveDirection>();
+    } else {
+        return path;
+    }
 }
 
 MoveDirection AvatarNavigator::findNewDirWhenCrash(Side side,
@@ -284,7 +304,7 @@ bool AvatarNavigator::isTouchedByObstacle(Side side, glm::vec2 currentcell,
 bool AvatarNavigator::findStraightPath(glm::vec2 currentcell,
                                        glm::vec2 destinationcell,
                                        std::vector<MoveDirection> *path) {
-
+    bool ifwalked = false;
     while (currentcell != destinationcell) {
         printf("(findStraightPath)\n");
         MoveDirection followingDir =
@@ -295,19 +315,23 @@ bool AvatarNavigator::findStraightPath(glm::vec2 currentcell,
             path->push_back(followingDir);
             currentcell =
                 PathUtility::getNextCellByCurrent(followingDir, currentcell);
+            ifwalked = true;
         } else {
-            // if meet obstacle, stop in front of it, but unknown dir.
-            return false;
+            return ifwalked;
         }
     }
-    return true;
+    if (path->size() > 1) {
+        return ifwalked;
+    } else {
+        return false;
+    }
 }
 
 bool AvatarNavigator::canResumeWalkingStraight(glm::vec2 currentcell,
                                                glm::vec2 destinationcell) {
     std::vector<MoveDirection> path;
-    auto arrived = findStraightPath(currentcell, destinationcell, &path);
-    if (arrived) {
+    auto walkedS = findStraightPath(currentcell, destinationcell, &path);
+    if (walkedS && path.size() > 3) {
         return true;
     }
     return false;

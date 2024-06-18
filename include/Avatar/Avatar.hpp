@@ -12,10 +12,10 @@
 #include "Display/SpriteSheetAnimation.hpp"
 #include "Map/MapUtility.hpp"
 #include "Mechanics/GameObjectID.hpp"
-#include "Selectable.hpp"
 #include "Unit/Huntable.hpp"
+#include "Unit/Selectable.hpp"
 #include "Util/Image.hpp"
-enum class AI_Type{NONE,DEFENCE,ATTACK};
+enum class AI_Type { NONE, DEFENCE, ATTACK };
 class Avatar : public Util::GameObject, public Selectable, public Huntable {
 
 public:
@@ -62,12 +62,9 @@ public:
 
     void DrawAvatar();
 
-    void setAIType(AI_Type type){
-        m_aiType=type;
-    }
-    AI_Type getAIType(){
-        return m_aiType;
-    }
+    void setAIType(AI_Type type) { m_aiType = type; }
+    AI_Type getAIType() { return m_aiType; }
+
 public:
     GameObjectID getID() { return m_ID; }
 
