@@ -2,7 +2,7 @@
 A Command and Conquer: Red Alert mimic developed for learning OOP style programming.
 
 # Methodology
-Manily, Blood Sweet and Tears and C++, OpenGL and PTSD Engine. 
+Mainly, Blood Sweet and Tears and also C++, OpenGL and PTSD Engine. 
 
 
 # How to run the project
