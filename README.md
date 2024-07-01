@@ -1,5 +1,5 @@
 # Purpose
-A Command and Conquer mimic developed for the purpose of learning OOP style programming.
+A Command and Conquer: Red Alert mimic developed for learning OOP style programming.
 
 # Methodology
 Manily, Blood Sweet and Tears and C++, OpenGL and PTSD Engine. 
@@ -16,6 +16,7 @@ cd build
 cmake ..
 make
 ./Sample
+```
 
 
 # Authors
