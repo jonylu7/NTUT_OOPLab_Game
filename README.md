@@ -1,6 +1,22 @@
 # Purpose
-讓我認識到....不要選一個系統太複雜的遊戲
-# Goal
+A Command and Conquer mimic developed for the purpose of learning OOP style programming.
 
 # Methodology
-肝、血和淚
+Manily, Blood Sweet and Tears and C++, OpenGL and PTSD Engine. 
+
+
+# How to run the project
+Before you run the game, please be notice that the project had been only tested out on MacBook Air M1.
+Therefore, there might be some unknown issues on Windows machine.
+
+1. clone the project and open the folder in terminal
+2. run the following commad
+```mkdir build
+cd build
+cmake ..
+make
+./Sample
+
+
+# Authors
+By 盧威任 and 杜坤瀚
